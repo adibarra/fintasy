@@ -4,8 +4,6 @@
 # dependencies / cache
 .yarn/
 .npm/
-.venv/
-__pycache__/
 node_modules/
 
 # attribute files
