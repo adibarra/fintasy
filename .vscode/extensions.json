@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "streetsidesoftware.code-spell-checker",
+    "editorconfig.editorconfig",
+    "mhutchie.git-graph",
+    "eamodio.gitlens",
+    "antfu.goto-alias",
+    "antfu.iconify",
+    "ecmel.vscode-html-css",
+    "christian-kohler.path-intellisense",
+    "albert.tabout",
+    "antfu.unocss",
+    "vue.volar"
+  ]
+}

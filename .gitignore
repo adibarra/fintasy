@@ -1,0 +1,16 @@
+# ide
+.idea/
+
+# package managers
+.yarn/
+.npm/
+
+# modules
+node_modules/
+
+# attribute files
+.DS_Store
+*:Zone.Identifier
+
+# files
+.env*

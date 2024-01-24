@@ -1,0 +1,8 @@
+{
+  "name": "server",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "python3 src/main.py"
+  }
+}

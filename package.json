@@ -1,0 +1,26 @@
+{
+  "name": "fraud-detector",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@8.14.3",
+  "description": "Credit Card fraud detection using Machine Learning - CS.3354 Project",
+  "contributors": [
+    "adibarra <github@adibarra.com> (https://adibarra.com)"
+  ],
+  "scripts": {
+    "build": "pnpm -r run clean:all && pnpm install && pnpm -r run build",
+    "clean": "pnpm -r run clean",
+    "clean:all": "pnpm -r run clean:all && rm -rf node_modules/",
+    "dev": "pnpm install && pnpm -r run dev",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "pnpm -r run start",
+    "taze": "taze major -r -I"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.6.3",
+    "eslint": "^8.56.0",
+    "taze": "^0.13.1"
+  }
+}
