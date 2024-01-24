@@ -4,9 +4,9 @@
 # dependencies / cache
 .yarn/
 .npm/
+.venv/
 __pycache__/
 node_modules/
-venv/
 
 # attribute files
 .DS_Store
