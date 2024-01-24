@@ -1,7 +1,7 @@
 # CS.3354 Project: fraud-detector
 
 #### [Live Demo](https://fraud-detector.adibarra.com)
-`// todo: setup github actions for auto deploy to server`
+`// todo: setup github actions for auto deploy to server on push`
 
 ## Overview
 
@@ -49,3 +49,14 @@ make sure you are in the repo's root directory before running these commands (th
   $ pnpm start
   # access the webapp here: https://localhost:3000
 ```
+
+|    Scripts     |               Description                |
+|----------------|------------------------------------------|
+| pnpm clean     | removes build artifacts                  |
+| pnpm clean:all | removes build artifacts and dependencies |
+| pnpm lint      | prints warnings about code formatting    |
+| pnpm lint:fix  | auto-fixes the code formatting           |
+| pnpm install   | installs dependencies for entire project |
+| pnpm dev       | runs development environment             |
+| pnpm build     | builds the app for production            |
+| pnpm start     | runs the built app for production        |
