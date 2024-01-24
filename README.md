@@ -20,7 +20,7 @@ Using some distribution of linux or installing WSL2 is *strongly* recommended. W
 VSCode is the recommended IDE for development in this repo. This repo is already set up with multiple extensions that make the development experience much better. It also fully supports WSL2 and even recommends it for some languages.
 
 ### Project Setup
-From here on out, all instructions assume you are running WSL2 (or linux) with VSCode.
+From here on out, all instructions assume you are running WSL2 (or linux).
 ```bash
   # run the following commands in your terminal
 
@@ -30,22 +30,23 @@ From here on out, all instructions assume you are running WSL2 (or linux) with V
   # make sure you have the following dependencies installed
   $ sudo apt install -y curl git python3 python3-pip
 
+  # update pip to the latest version
+  $ python3 -m pip install --upgrade pip
+
+  # install python virtualenv to prevent any python dependency issues
+  $ python3 -m pip install virtualenv
+
   # nvm is a Node.js version manager (https://github.com/nvm-sh/nvm#installing-and-updating)
   # it will ensure you are running the correct version of Node for this project
   $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+  # close and reopen your terminal after running the command above
 
-  # pnpm is a js package manager (https://pnpm.io/installation#using-npm)
-  # it is preferred over npm due to its incredible speed and storage space efficiency
+  # pnpm is a JS package manager (https://pnpm.io/installation#using-npm)
+  # it is preferred over npm (the default) due to its incredible speed and storage space efficiency
   $ npm install -g pnpm
-
-  # install python virtualenv to prevent any python dependency issues
-  $ python3 -m pip install --upgrade pip
-  $ python3 -m pip install virtualenv
 
   # create a directory for the project
   $ mkdir -p ~/projects/ && cd ~/projects/
-
-  $ git clone https://github.com/adibarra/fraud-detector.git
 ```
 
 1. Now open VSCode.
@@ -72,6 +73,7 @@ Make sure you are in the repo's root directory before running these commands (th
   # access the webapp here: https://localhost:3000
 ```
 
+## Project Scripts
 |    Scripts     |               Description                |
 |----------------|------------------------------------------|
 | pnpm clean     | removes build artifacts                  |
