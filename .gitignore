@@ -1,11 +1,10 @@
 # ide
 .idea/
 
-# package managers
+# dependencies / cache
 .yarn/
 .npm/
-
-# dependencies
+__pycache__/
 node_modules/
 venv/
 
@@ -13,5 +12,5 @@ venv/
 .DS_Store
 *:Zone.Identifier
 
-# files
+# other
 .env*
