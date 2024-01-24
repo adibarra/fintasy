@@ -39,6 +39,7 @@ From here on out, all instructions assume you are running WSL2 (or linux).
   # nvm is a Node.js version manager (https://github.com/nvm-sh/nvm#installing-and-updating)
   # it will ensure you are running the correct version of Node for this project
   $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
   # close and reopen your terminal after running the command above
 
   # pnpm is a JS package manager (https://pnpm.io/installation#using-npm)
