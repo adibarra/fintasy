@@ -1,6 +1,6 @@
 # CS.3354 Project: fraud-detector
 
-#### [Live Demo](https://fraud-detector.adibarra.com)
+## [Live Demo](https://fraud-detector.adibarra.com)
 `// todo: setup github actions for auto deploy to server on push`
 
 ## Overview
