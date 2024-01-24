@@ -15,7 +15,7 @@
     "dev": "pnpm install && pnpm -r run dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "start": "pnpm -r run start",
+    "start": "pnpm install && pnpm -r run start",
     "taze": "taze major -r -I"
   },
   "devDependencies": {
