@@ -21,13 +21,13 @@ importers:
   packages/client:
     dependencies:
       '@unhead/vue':
-        specifier: ^1.8.9
+        specifier: ^1.8.10
         version: 1.8.10(vue@3.4.15)
       '@unocss/reset':
         specifier: ^0.58.3
         version: 0.58.3
       '@vueuse/core':
-        specifier: ^10.7.1
+        specifier: ^10.7.2
         version: 10.7.2(vue@3.4.15)
       '@vueuse/head':
         specifier: ^2.0.0
@@ -36,7 +36,7 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       vue:
-        specifier: ^3.4.6
+        specifier: ^3.4.15
         version: 3.4.15(typescript@5.3.3)
       vue-demi:
         specifier: ^0.14.6
@@ -46,7 +46,7 @@ importers:
         version: 4.2.5(vue@3.4.15)
     devDependencies:
       '@iconify-json/carbon':
-        specifier: ^1.1.27
+        specifier: ^1.1.28
         version: 1.1.28
       '@iconify-json/line-md':
         specifier: ^1.1.33
@@ -55,8 +55,8 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@types/node':
-        specifier: ^20.11.5
-        version: 20.11.5
+        specifier: ^20.11.6
+        version: 20.11.6
       '@types/nprogress':
         specifier: ^0.2.3
         version: 0.2.3
@@ -67,7 +67,7 @@ importers:
         specifier: ^4.6.2
         version: 4.6.2(vite@5.0.12)(vue@3.4.15)
       '@vue-macros/volar':
-        specifier: ^0.18.10
+        specifier: ^0.18.11
         version: 0.18.11(@vue-macros/reactivity-transform@0.4.3)(typescript@5.3.3)(vue@3.4.15)
       critters:
         specifier: ^0.0.20
@@ -82,20 +82,20 @@ importers:
         specifier: ^0.58.3
         version: 0.58.3(postcss@8.4.33)(vite@5.0.12)
       unplugin-auto-import:
-        specifier: ^0.17.3
-        version: 0.17.3(@vueuse/core@10.7.2)
+        specifier: ^0.17.4
+        version: 0.17.4(@vueuse/core@10.7.2)
       unplugin-vue-components:
         specifier: ^0.26.0
         version: 0.26.0(vue@3.4.15)
       unplugin-vue-macros:
-        specifier: ^2.7.9
+        specifier: ^2.7.10
         version: 2.7.10(@vueuse/core@10.7.2)(typescript@5.3.3)(vite@5.0.12)(vue@3.4.15)
       unplugin-vue-markdown:
         specifier: ^0.25.2
         version: 0.25.2(vite@5.0.12)
       vite:
-        specifier: ^5.0.11
-        version: 5.0.12(@types/node@20.11.5)
+        specifier: ^5.0.12
+        version: 5.0.12(@types/node@20.11.6)
       vite-bundle-visualizer:
         specifier: ^1.0.0
         version: 1.0.0
@@ -111,6 +111,8 @@ importers:
       vite-ssg:
         specifier: ^0.23.6
         version: 0.23.6(critters@0.0.20)(vite@5.0.12)(vue-router@4.2.5)(vue@3.4.15)
+
+  packages/server: {}
 
 packages:
 
@@ -1364,8 +1366,8 @@ packages:
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
     dev: true
 
-  /@types/node@20.11.5:
-    resolution: {integrity: sha512-g557vgQjUUfN76MZAN/dt1z3dzcUsimuysco0KeluHgrPdJXkP/XdAURgyO2W9fZWHRtRBiVKzKn8vyOAwlG+w==}
+  /@types/node@20.11.6:
+    resolution: {integrity: sha512-+EOokTnksGVgip2PbYbr3xnR7kZigh4LbybAfBAw5BpnQ+FqBYUsvCEjYd70IXKlbohQ64mzEYmMtlWUY8q//Q==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -1571,7 +1573,7 @@ packages:
       '@unocss/core': 0.58.3
       '@unocss/reset': 0.58.3
       '@unocss/vite': 0.58.3(vite@5.0.12)
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -1794,7 +1796,7 @@ packages:
       chokidar: 3.5.3
       fast-glob: 3.3.2
       magic-string: 0.30.5
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -1806,7 +1808,7 @@ packages:
       vite: ^4.0.0 || ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
       vue: 3.4.15(typescript@5.3.3)
     dev: true
 
@@ -1998,7 +2000,7 @@ packages:
         optional: true
     dependencies:
       sirv: 2.0.4
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
       vue: 3.4.15(typescript@5.3.3)
     transitivePeerDependencies:
       - typescript
@@ -6023,15 +6025,15 @@ packages:
       '@unocss/transformer-directives': 0.58.3
       '@unocss/transformer-variant-group': 0.58.3
       '@unocss/vite': 0.58.3(vite@5.0.12)
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
     transitivePeerDependencies:
       - postcss
       - rollup
       - supports-color
     dev: true
 
-  /unplugin-auto-import@0.17.3(@vueuse/core@10.7.2):
-    resolution: {integrity: sha512-0cn0wr8X579TtdZKUAps0dDVrYzttx38ImdxZjmCeNlMDJX8UuSjO83vFqgS4ClNDIGWAute+xl9j5vRSX+vsw==}
+  /unplugin-auto-import@0.17.4(@vueuse/core@10.7.2):
+    resolution: {integrity: sha512-sInr7+UOeFMtiRCr7lYZXouTnVqXNUJtN5yN5GDzg6Sr2rwY5ZWZmqf4yvItYCm8mq1PdzPw3oojYHgZAJnTRQ==}
     engines: {node: '>=14'}
     peerDependencies:
       '@nuxt/kit': ^3.2.2
@@ -6075,7 +6077,7 @@ packages:
     dependencies:
       '@antfu/utils': 0.7.7
       unplugin: 1.6.0
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
     dev: true
 
   /unplugin-vue-components@0.26.0(vue@3.4.15):
@@ -6175,7 +6177,7 @@ packages:
       '@types/markdown-it': 13.0.7
       markdown-it: 13.0.2
       unplugin: 1.6.0
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -6266,7 +6268,7 @@ packages:
       json5: 2.2.3
       local-pkg: 0.5.0
       picocolors: 1.0.0
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
       yaml: 2.3.4
     transitivePeerDependencies:
       - supports-color
@@ -6281,7 +6283,7 @@ packages:
     dependencies:
       debug: 4.3.4
       fast-glob: 3.3.2
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
       vue: 3.4.15(typescript@5.3.3)
       vue-router: 4.2.5(vue@3.4.15)
     transitivePeerDependencies:
@@ -6297,7 +6299,7 @@ packages:
       clean-css: 5.3.3
       flat-cache: 3.2.0
       picocolors: 1.0.0
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
     transitivePeerDependencies:
       - debug
     dev: true
@@ -6326,7 +6328,7 @@ packages:
       jsdom: 23.2.0
       kolorist: 1.8.0
       prettier: 3.2.4
-      vite: 5.0.12(@types/node@20.11.5)
+      vite: 5.0.12(@types/node@20.11.6)
       vue: 3.4.15(typescript@5.3.3)
       vue-router: 4.2.5(vue@3.4.15)
       yargs: 17.7.2
@@ -6337,7 +6339,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /vite@5.0.12(@types/node@20.11.5):
+  /vite@5.0.12(@types/node@20.11.6):
     resolution: {integrity: sha512-4hsnEkG3q0N4Tzf1+t6NdN9dg/L3BM+q8SWgbSPnJvrgH2kgdyzfVJwbR1ic69/4uMJJ/3dqDZZE5/WwqW8U1w==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -6365,7 +6367,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.5
+      '@types/node': 20.11.6
       esbuild: 0.19.12
       postcss: 8.4.33
       rollup: 4.9.6
