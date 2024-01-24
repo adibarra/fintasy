@@ -14,6 +14,8 @@
     "unhead",
     "unocss",
     "unplugin",
+    "venv",
+    "virtualenv",
     "vueuse",
     "webfont"
   ],
@@ -58,5 +60,10 @@
     "jsonc",
     "yaml",
     "toml"
-  ]
+  ],
+
+  // Help VSCode find the venv path
+  "python.defaultInterpreterPath": "packages/server/.venv",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true
 }
