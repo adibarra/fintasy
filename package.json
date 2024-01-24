@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@8.14.3",
-  "description": "Credit Card fraud detection using Machine Learning - CS.3354 Project",
+  "description": "CS.3354 Project: Credit Card fraud detection using Machine Learning",
   "contributors": [
     "adibarra <github@adibarra.com> (https://adibarra.com)"
   ],
