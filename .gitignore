@@ -5,8 +5,9 @@
 .yarn/
 .npm/
 
-# modules
+# dependencies
 node_modules/
+venv/
 
 # attribute files
 .DS_Store
