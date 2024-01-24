@@ -29,6 +29,10 @@ From here on out, all instructions assume you are running WSL2 with VSCode.
   # pnpm is a js package manager (https://pnpm.io/installation#using-npm)
   # it is preferred over npm due to its incredible speed and storage space efficiency
   $ npm install -g pnpm
+
+  # install python3-venv to prevent any python dependency issues
+  $ python3 -m pip install --upgrade pip
+  $ python3 -m pip install virtualenv
 ```
 
 ## Run Project
