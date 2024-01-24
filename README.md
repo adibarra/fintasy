@@ -30,7 +30,7 @@ From here on out, all instructions assume you are running WSL2 with VSCode.
   # it is preferred over npm due to its incredible speed and storage space efficiency
   $ npm install -g pnpm
 
-  # install python3-venv to prevent any python dependency issues
+  # install python virtualenv to prevent any python dependency issues
   $ python3 -m pip install --upgrade pip
   $ python3 -m pip install virtualenv
 ```
