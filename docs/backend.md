@@ -1,7 +1,7 @@
 # Backend Design
 `// todo: brief intro`
 
-## Why use Python
+## Why use Python+Flask
 `// todo: explain why we used python`
 
 ## Design Goals
