@@ -14,10 +14,10 @@ A detailed outline of the project's design can be found [here](./docs/design.md)
 Below are some instructions and recommendations for getting the project up and running.
 
 ### WSL2
-I would *strongly* suggest installing and using WSL2. WSL or Windows Subsystem for Linux is a Windows module built by Microsoft that allows you to run a full linux distribution transparently on your machine. Instructions for installing WSL2 can be found [here](https://learn.microsoft.com/en-us/windows/wsl/install).
+Using some distribution of linux or installing WSL2 is *strongly* recommended. WSL (Windows Subsystem for Linux) allows you to run a full linux distribution as needed with little overhead on your machine. Instructions for installing WSL2 can be found [here](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-### IDE (Development Only)
-I strongly suggest installing VSCode. This repo is already set up with multiple extensions that make the development experience much better. It also fully supports WSL2 and even recommends it for some languages.
+### IDE
+VSCode is the recommended IDE for development in this repo. This repo is already set up with multiple extensions that make the development experience much better. It also fully supports WSL2 and even recommends it for some languages.
 
 ### Project Setup
 From here on out, all instructions assume you are running WSL2 with VSCode.
