@@ -19,17 +19,17 @@ Vue was chosen as the framework for the frontend because it is a very lightweigh
 We also chose to use Vite-SSG as part of the build process. This is a static site generator that is built on top of vite for Vue. It allows us to build our webapp into a static site that can be hosted anywhere. This is a huge benefit because it allows us to use static file hosting and Content Delivery Networks (CDNs). This means that the site's assets will be cached, making it much faster and more responsive.
 
 ## Project Structure
-The frontend is organized into a few primary directories:
+The frontend can be found at `packages/client/`. It is organized into a few primary directories:
 - `src/` - contains all the source code
 - `public/` - contains all the static files
 
 ### `src/`
-The `src/` directory is where all the source code for the webapp is stored. It is organized into a few subdirectories:
-- `components/` - reusable components
-- `layouts/` - the layouts used for generating pages
-- `pages/` - the pages that make up the webapp
-- `modules/` - dynamically installed modules
-- `styles/` - the stylesheets used
+The `src/` directory is where all the source code for the frontend is stored. It is organized into a few subdirectories:
+- `components/` - contains all the reusable components
+- `layouts/` - contains all the page layouts
+- `pages/` - contains all the pages
+- `modules/` - contains all the dynamically installed modules
+- `styles/` - contains all the stylesheets
 
 ### `public/`
-The `public/` directory is where all the static files are stored. This includes images and other assets.
+The `public/` directory is where all the static files are stored. This includes images and other assets that are served by the frontend.

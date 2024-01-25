@@ -1,5 +1,5 @@
 # API Design
-
+The API will be responsible for handling all requests from the frontend as an interface to the backend.
 `// todo: this is all placeholder data as an example`
 
 ## API Routes
@@ -41,3 +41,31 @@
 | `date_created`                 | `datetime`  | Date transaction was created   |
 | `date_updated`                 | `datetime`  | Date transaction was updated   |
 
+## API Status Codes
+| Code                           | Description                    |
+| ------------------------------ | ------------------------------ |
+| `200`                          | Success                        |
+| `201`                          | Success + Created              |
+| `400`                          | Bad Request                    |
+| `401`                          | Unauthorized                   |
+| `404`                          | Not Found                      |
+| `500`                          | Internal Server Error          |
+
+## API Responses
+### Success (200, 201)
+```json
+{
+  "status": 200, // or 201
+  "message": "Success", // or Created
+  "data": { /* data goes here */ }
+}
+```
+
+### Error (400, 401, 404, 500)
+```json
+{
+  "status": 400, // or 401, 404, 500
+  "message": "Bad Request" // or Unauthorized, Not Found, Internal Server Error
+  // notice no data property here
+}
+```
