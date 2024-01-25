@@ -1,12 +1,11 @@
 # API Design
-The API will be responsible for handling all requests from the frontend as an interface to the backend.
+The API is designed as a RESTful API. This means that it will be stateless and will use HTTP methods to interact with the backend. It is responsible for handling all frontend to backend interactions.
 `// todo: this is all placeholder data as an example`
 
 ## API Routes
 ### User
 | Route                          | Method      | Description                    |
 | ------------------------------ | ----------- | ------------------------------ |
-| `/api/v1/users`                | `GET`       | Get all users                  |
 | `/api/v1/users`                | `POST`      | Create a new user              |
 | `/api/v1/users/<id>`           | `GET`       | Get a user by ID               |
 | `/api/v1/users/<id>`           | `PUT`       | Update a user by ID            |
@@ -15,7 +14,6 @@ The API will be responsible for handling all requests from the frontend as an in
 ### Transaction
 | Route                          | Method      | Description                    |
 | ------------------------------ | ----------- | ------------------------------ |
-| `/api/v1/transactions`         | `GET`       | Get all transactions           |
 | `/api/v1/transactions`         | `POST`      | Create a new transaction       |
 | `/api/v1/transactions/<id>`    | `GET`       | Get a transaction by ID        |
 | `/api/v1/transactions/<id>`    | `PUT`       | Update a transaction by ID     |
@@ -44,28 +42,27 @@ The API will be responsible for handling all requests from the frontend as an in
 ## API Status Codes
 | Code                           | Description                    |
 | ------------------------------ | ------------------------------ |
-| `200`                          | Success                        |
-| `201`                          | Success + Created              |
+| `200`                          | Ok                             |
 | `400`                          | Bad Request                    |
 | `401`                          | Unauthorized                   |
 | `404`                          | Not Found                      |
 | `500`                          | Internal Server Error          |
 
-## API Responses
-### Success (200, 201)
+## API Response Types
+### Success
 ```json
 {
-  "status": 200, // or 201
-  "message": "Success", // or Created
+  "status": 200,
+  "message": "Ok",
   "data": { /* data goes here */ }
 }
 ```
 
-### Error (400, 401, 404, 500)
+### Error
 ```json
 {
   "status": 400, // or 401, 404, 500
-  "message": "Bad Request" // or Unauthorized, Not Found, Internal Server Error
-  // notice no data property here
+  "message": "Bad Request", // or Unauthorized, Not Found, Internal Server Error
+  // no data property for errors
 }
 ```
