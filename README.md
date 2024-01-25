@@ -20,6 +20,9 @@ Using some distribution of linux or installing WSL2 is *strongly* recommended. W
 ### IDE
 VSCode is the recommended IDE for development in this repo. This repo is already set up with multiple extensions that make the development experience much better. It also fully supports WSL2 and even recommends it for some languages.
 
+### Additional Tooling
+- [Insomnia](https://insomnia.rest/): Recommended for testing and debugging the API.
+
 ### Project Setup
 From here on out, all instructions assume you are running WSL2 (or linux).
 ```bash
