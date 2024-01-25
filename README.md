@@ -54,14 +54,12 @@ From here on out, all instructions assume you are running WSL2 (or linux).
   $ mkdir -p ~/projects/ && cd ~/projects/
 ```
 
-1. Now open VSCode.
-2. Click the green `Remote-WSL` button in the bottom left corner of the window. It has an icon with two arrows pointing at each other.
-3. Select `Remote-WSL: New Window`. This will open a new VSCode window that is running in WSL2.
-4. Now open the `projects/` directory in the new window.
-5. Press `Ctrl+Shift+P` and type `Git: clone`. Select `Clone from GitHub`.
-6. You should now be prompted to login to your GitHub account. Sign in.
-7. Type `adibarra/fraud-detector`. Select it, clone it into the `projects/` folder, then open the new folder.
-8. You will be prompted if you would like to automatically install the [recommended extensions](.vscode/extensions.json) for this project. Select yes.
+1. Now open another Terminal window.
+2. Type `code ~/projects` to open your new projects directory in VSCode. You can close this window after.
+3. In VSCode, press `Ctrl+Shift+P` and type `Git: clone`. Select `Clone from GitHub`.
+4. You should now be prompted to login to your GitHub account. Sign in.
+5. Type `adibarra/fraud-detector`. Select it, clone it into the `projects/` folder, then open the new folder.
+6. You may be prompted about automatically installing the [recommended extensions](.vscode/extensions.json) for this project. Select yes.
 
 ## Run Project
 Make sure you are in the repo's root directory before running these commands (the one this README file is in).
