@@ -12,6 +12,7 @@ A detailed overview of the project's design can be found [here](./docs/design.md
 
 ## Install and setup the project
 Below are some instructions and recommendations for getting the project up and running.
+
 `// todo: note to self, investigate building and using a docker image for development. it would make setup much easier`
 
 ### WSL2
@@ -52,14 +53,18 @@ From here on out, all instructions assume you are running WSL2 (or linux).
 
   # create a directory for the project
   $ mkdir -p ~/projects/ && cd ~/projects/
-```
 
-1. Now open another Terminal window.
-2. Type `code ~/projects` to open your new projects directory in VSCode. You can close this window after.
-3. In VSCode, press `Ctrl+Shift+P` and type `Git: clone`. Select `Clone from GitHub`.
-4. You should now be prompted to login to your GitHub account. Sign in.
-5. Type `adibarra/fraud-detector`. Select it, clone it into the `projects/` folder, then open the new folder.
-6. You may be prompted about automatically installing the [recommended extensions](.vscode/extensions.json) for this project. Select yes.
+  # open the directory in VSCode
+  $ code ~/projects
+
+  # you can now close this terminal window and continue in VSCode
+```
+1. In VSCode, press `Ctrl+Shift+P` and type `Git: clone`. Select `Clone from GitHub`.
+2. You should now be prompted to login to your GitHub account. Sign in.
+3. Type `adibarra/fraud-detector`. Select it.
+4. Hit `OK` without changing the folder, then click `Open` when prompted.
+5. You may be prompted about automatically installing the [recommended extensions](.vscode/extensions.json) for this project. Select yes.
+6. Setup is now complete.
 
 ## Run Project
 Make sure you are in the repo's root directory before running these commands (the one this README file is in).
