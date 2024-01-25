@@ -7,8 +7,8 @@
 ### Python
 `// todo: explain why we used python`
 
-### Flask
-`// todo: explain why we used flask`
+### Flask `// todo: are we using flask? maybe FastAPI?`
+`// todo: explain why we used flask (or FastAPI)`
 
 ### ML Fraud Detector
 `// todo: explain ml model design choices`
