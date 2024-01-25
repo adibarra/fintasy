@@ -1,14 +1,8 @@
-# ide
 .idea/
-
-# dependencies / cache
 .yarn/
 .npm/
 node_modules/
 
-# attribute files
 .DS_Store
 *:Zone.Identifier
-
-# other
 .env*
