@@ -1,6 +1,5 @@
 # Overall Project Design
-
-The project will consist of three distinct parts. The frontend, which handles the user interface, and the backend, which does most of the work in the background, and the database which stores all used data.
+The project will consist of two distinct parts. The frontend, backend. The repository itself is a mono-repo meaning that all of the code for the project, including the frontend, backend, and database, will be stored in this repository. The following sections will go into more detail about each of these parts.
 
 
 ## Frontend

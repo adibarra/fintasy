@@ -12,6 +12,7 @@ A detailed overview of the project's design can be found [here](./docs/design.md
 
 ## Install and setup the project
 Below are some instructions and recommendations for getting the project up and running.
+`// todo: note to self, investigate building and using a docker image for development. it would make setup much easier`
 
 ### WSL2
 Using some distribution of linux or installing WSL2 is *strongly* recommended. WSL (Windows Subsystem for Linux) allows you to run an almost complete linux distribution as needed with little overhead on your machine. Instructions for installing WSL2 can be found [here](https://learn.microsoft.com/en-us/windows/wsl/install). This is important because much of the project's tooling is designed to be run on linux and may not work on Windows.

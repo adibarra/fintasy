@@ -7,9 +7,6 @@
 ## Design Goals
 `// todo: explain some design goals`
 
-## API Design
-`// todo: description of api design choices`
-
 ## ML Fraud Detector Design
 `// todo: description of ml model design choices`
 
