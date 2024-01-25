@@ -1,17 +1,27 @@
 # Backend Design
 `// todo: brief intro`
 
-## Why use Python+Flask
-`// todo: explain why we used python`
-
 ## Design Goals
 `// todo: explain some design goals`
 
-## API Design
-`// todo: description of api design choices`
+### Python
+`// todo: explain why we used python`
 
-## ML Fraud Detector Design
-`// todo: description of ml model design choices`
+### Flask `// todo: are we using flask? maybe FastAPI?`
+`// todo: explain why we used flask (or FastAPI)`
 
-## Overall Design
-`// todo: explain why we designed the backend this way`
+### ML Fraud Detector
+`// todo: explain ml model design choices`
+
+## Project Structure
+The backend can be found at `packages/server/`. It is organized into a few primary directories:
+- `src/` - contains all the source code
+- `public/` - contains all the static files
+
+### `src/`
+The `src/` directory is where all the source code for the backend is stored. It is organized into a few subdirectories:
+- `routes/` - contains all the routes for the API
+- `services/` - contains all the services for the API
+
+### `public/`
+The `public/` directory is where all the static files are stored. This includes images and other assets that are served by the backend.
