@@ -13,7 +13,7 @@ A detailed overview of the project's design can be found [here](./docs/design.md
 ## Install and setup the project
 Below are some instructions and recommendations for getting the project up and running.
 
-`// todo: note to self, investigate building and using a docker image for development. it would make setup much easier`
+`// todo: note to self, investigate building and using a docker image for development. it would make setup so much easier`
 
 ### WSL2
 Using some distribution of linux or installing WSL2 is *strongly* recommended. WSL (Windows Subsystem for Linux) allows you to run an almost complete linux distribution as needed with little overhead on your machine. Instructions for installing WSL2 can be found [here](https://learn.microsoft.com/en-us/windows/wsl/install). This is important because much of the project's tooling is designed to be run on linux and may not work on Windows.
@@ -27,7 +27,9 @@ VSCode is the recommended IDE for development in this repo. This repo is already
 ### Project Setup
 From here on out, all instructions assume you are running WSL2 (or linux).
 ```bash
-  # run the following commands in your terminal
+  # # # # # # # # # # # # # # # # # # # # # # # #
+  # Run the following commands in your terminal #
+  # # # # # # # # # # # # # # # # # # # # # # # #
 
   # make sure your system is up to date
   $ sudo apt update && sudo apt upgrade -y
@@ -41,14 +43,16 @@ From here on out, all instructions assume you are running WSL2 (or linux).
   # install python virtualenv to prevent any python dependency issues
   $ python3 -m pip install virtualenv
 
-  # nvm is a Node.js version manager (https://github.com/nvm-sh/nvm#installing-and-updating)
+  # nvm is a Node.js version manager (https://github.com/nvm-sh/nvm)
   # it will ensure you are running the correct version of Node for this project
   $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
-  # close and reopen your terminal after running the command above
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # Close and reopen your terminal after running the command above  #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-  # pnpm is a JS package manager (https://pnpm.io/installation#using-npm)
-  # it is preferred over npm (the default) due to its incredible speed and storage space efficiency
+  # pnpm is a JS package manager (https://pnpm.io/)
+  # it is preferred over npm because it is faster and more storage efficient
   $ npm install -g pnpm
 
   # create a directory for the project
@@ -57,7 +61,9 @@ From here on out, all instructions assume you are running WSL2 (or linux).
   # open the directory in VSCode
   $ code ~/projects
 
-  # you can now close this terminal window and continue in VSCode
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # You can now close this terminal window and continue in VSCode #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 ```
 1. In VSCode, press `Ctrl+Shift+P` and type `Git: clone`. Select `Clone from GitHub`.
 2. You should now be prompted to login to your GitHub account. Sign in.
@@ -69,16 +75,20 @@ From here on out, all instructions assume you are running WSL2 (or linux).
 ## Run Project
 Make sure you are in the repo's root directory before running these commands (the one this README file is in).
 ```bash
-  # run development environment with hot-reload
+  # # # # # # # # # # # # # # # # # # # # # # # #
+  # Run development environment                 #
+  # Access the app here: https://localhost:3333 #
+  # # # # # # # # # # # # # # # # # # # # # # # #
   $ pnpm dev
-  # access the webapp here: https://localhost:3333
 
   # --- OR ---
 
-  # build and run for production
+  # # # # # # # # # # # # # # # # # # # # # # # #
+  # Build and run for production environment    #
+  # Access the app here: https://localhost:3000 #
+  # # # # # # # # # # # # # # # # # # # # # # # #
   $ pnpm build
   $ pnpm start
-  # access the webapp here: https://localhost:3000
 ```
 
 ## Project Scripts
