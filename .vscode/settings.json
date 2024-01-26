@@ -81,5 +81,5 @@
   "python.analysis.autoImportCompletions": true,
 
   // Color highlighting
-  "color-highlight.markerType": "dot-before",
+  "color-highlight.markerType": "dot-before"
 }

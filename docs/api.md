@@ -62,7 +62,7 @@ The API is designed as a RESTful API. This means that it will be stateless and w
 ```json
 {
   "status": 400, // or 401, 404, 500
-  "message": "Bad Request", // or Unauthorized, Not Found, Internal Server Error
+  "message": "Bad Request" // or Unauthorized, Not Found, Internal Server Error
   // no data property for errors
 }
 ```
