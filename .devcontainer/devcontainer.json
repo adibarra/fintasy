@@ -31,9 +31,8 @@
   "portsAttributes": {
     "3000": { "label": "Production" },
     "3333": { "label": "Development - Frontend" },
-    "3332": { "label": "Production - Backend" }
+    "3332": { "label": "Development - Backend" }
   },
   "postCreateCommand": ".devcontainer/postCreateScript.sh",
-  "postStartCommand": ".devcontainer/postStartScript.sh",
-  "postAttachCommand": "git config --global --add safe.directory /workspaces"
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
