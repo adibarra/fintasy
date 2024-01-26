@@ -2,14 +2,26 @@
   "cSpell.words": [
     "antfu",
     "Attributify",
+    "azuretools",
+    "cirolosapio",
     "composables",
+    "corepack",
+    "dbaeumer",
     "demi",
+    "devcontainer",
+    "devcontainers",
+    "eamodio",
+    "ecmel",
     "iconify",
+    "kohler",
+    "mhutchie",
     "micnncim",
+    "naumovs",
     "nocheck",
     "noopener",
     "nprogress",
     "pycache",
+    "tabout",
     "taze",
     "transpiling",
     "typecheck",
@@ -64,8 +76,10 @@
     "toml"
   ],
 
-  // Help VSCode find the venv path
-  "python.defaultInterpreterPath": "packages/server/.venv",
+  // Python settings
   "python.analysis.typeCheckingMode": "basic",
-  "python.analysis.autoImportCompletions": true
+  "python.analysis.autoImportCompletions": true,
+
+  // Color highlighting
+  "color-highlight.markerType": "dot-before",
 }
