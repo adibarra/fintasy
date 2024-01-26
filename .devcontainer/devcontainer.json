@@ -1,0 +1,39 @@
+// For format details, see https://containers.dev/implementors/json_reference/.
+{
+  "name": "fraud-detector",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "lts",
+      "nvmVersion": "latest"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "latest"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "antfu.goto-alias",
+        "antfu.iconify",
+        "antfu.unocss",
+        "christian-kohler.path-intellisense",
+        "dbaeumer.vscode-eslint",
+        "ecmel.vscode-html-css",
+        "editorconfig.editorconfig",
+        "github.vscode-pull-request-github",
+        "streetsidesoftware.code-spell-checker",
+        "vue.volar"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "3000": { "label": "Production" },
+    "3333": { "label": "Development - Frontend" },
+    "3332": { "label": "Production - Backend" }
+  },
+  "postCreateCommand": ".devcontainer/postCreateScript.sh",
+  "postStartCommand": ".devcontainer/postStartScript.sh",
+  "postAttachCommand": "git config --global --add safe.directory /workspaces"
+}
