@@ -3,10 +3,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "vite-ssg build",
+    "build": "pnpm run clean:auto && vite-ssg build",
     "clean": "rm -rf dist/",
-    "clean:all": "rm -rf dist/ .vite-ssg-temp/ node_modules/ src/auto-imports.d.ts src/components.d.ts",
-    "dev": "vite dev --port 3333"
+    "clean:auto": "rm -rf src/auto-imports.d.ts src/components.d.ts",
+    "clean:all": "rm -rf dist/ .vite-ssg-temp/ node_modules/",
+    "dev": "pnpm run clean:auto && vite dev --port 3333"
   },
   "dependencies": {
     "@unhead/vue": "^1.8.10",
