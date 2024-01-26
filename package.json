@@ -4,18 +4,18 @@
   "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@8.14.3",
-  "description": "CS.3354 Project: Credit Card fraud detection using Machine Learning",
+  "description": "CS.3354 Project: Credit card fraud detection using Machine Learning",
   "contributors": [
     "adibarra <github@adibarra.com> (https://adibarra.com)"
   ],
   "scripts": {
-    "build": "pnpm -r run clean:all && pnpm install && pnpm -r run build",
+    "build": "pnpm -r run clean:all && pnpm i && pnpm -r run build",
     "clean": "pnpm -r run clean",
     "clean:all": "pnpm -r run clean:all && rm -rf node_modules/",
-    "dev": "pnpm install && pnpm -r run dev",
+    "dev": "pnpm i && pnpm -r run dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "start": "pnpm install && pnpm -r run start",
+    "start": "pnpm i && pnpm -r run start",
     "taze": "taze major -r -I"
   },
   "devDependencies": {
