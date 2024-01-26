@@ -7,7 +7,7 @@
 This is our group project for CS.3354 Software Engineering.
 Our goal is to be able to create an application to reliably detect credit card fraud using machine learning. Details about the project's design can be found [here](./docs/design.md).
 
-## Environment Setup
+## Tooling
 #### VSCode
 VSCode is **required** for development in this repo. The repo is currently set up with a few extensions that make it easier to work with this tech stack. It also fully supports devcontainers which are leveraged heavily. Instructions for installing VSCode can be found [here](https://code.visualstudio.com/download).
 
@@ -17,15 +17,15 @@ Docker is **required** for development in this repo. It is used to automatically
 #### Insomnia
 Insomnia is recommended for testing and debugging the API. It allows you to automatically and manually issue http requests. Instructions for installing Insomnia can be found [here](https://insomnia.rest/download).
 
-### Instructions
+### Environment Setup
 1. Open VSCode.
-2. Install the extension [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+2. Install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
 3. Press `Ctrl+Shift+P` and type `Dev Containers: Clone Repository in Container Volume...`.
 4. Click `Clone a repository from GitHub in a Container Volume`.
 5. You should now be prompted to login to your GitHub account. Sign in.
 6. Type `adibarra/fraud-detector`. Select it.
 7. If prompted, select the `main` branch.
-8. Let the container build. This may take a while.
+8. Let the container build. This **will** take a while.
 9. Once the build is complete, you can begin development.
 
 ## Run Project
