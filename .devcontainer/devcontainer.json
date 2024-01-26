@@ -18,6 +18,7 @@
         "antfu.goto-alias",
         "antfu.iconify",
         "antfu.unocss",
+        "charliermarsh.ruff",
         "christian-kohler.path-intellisense",
         "dbaeumer.vscode-eslint",
         "ecmel.vscode-html-css",

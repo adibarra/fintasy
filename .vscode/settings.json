@@ -3,6 +3,7 @@
     "antfu",
     "Attributify",
     "azuretools",
+    "charliermarsh",
     "cirolosapio",
     "composables",
     "corepack",
@@ -80,8 +81,14 @@
   ],
 
   // Python settings
-  "python.analysis.typeCheckingMode": "basic",
-  "python.analysis.autoImportCompletions": true,
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
 
   // Color highlighting
   "color-highlight.markerType": "dot-before"
