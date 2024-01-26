@@ -24,6 +24,7 @@
         "ecmel.vscode-html-css",
         "editorconfig.editorconfig",
         "github.vscode-pull-request-github",
+        "mutantdino.resourcemonitor",
         "streetsidesoftware.code-spell-checker",
         "vue.volar"
       ]

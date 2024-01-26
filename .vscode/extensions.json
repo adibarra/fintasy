@@ -1,19 +1,7 @@
 {
   "recommendations": [
-    "albert.tabout",
-    "antfu.goto-alias",
-    "antfu.iconify",
-    "antfu.unocss",
-    "charliermarsh.ruff",
-    "christian-kohler.path-intellisense",
-    "dbaeumer.vscode-eslint",
     "eamodio.gitlens",
-    "ecmel.vscode-html-css",
-    "editorconfig.editorconfig",
-    "github.vscode-pull-request-github",
     "mhutchie.git-graph",
-    "naumovs.color-highlight",
-    "streetsidesoftware.code-spell-checker",
-    "vue.volar"
+    "naumovs.color-highlight"
   ]
 }
