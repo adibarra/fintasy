@@ -33,5 +33,6 @@
     "3333": { "label": "Development - Frontend" },
     "3332": { "label": "Development - Backend" }
   },
-  "postCreateCommand": ".devcontainer/postCreateCommand.sh"
+  "postCreateCommand": ".devcontainer/postCreateCommand.sh",
+  "postStartCommand": ".devcontainer/postStartCommand.sh"
 }
