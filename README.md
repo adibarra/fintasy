@@ -4,21 +4,18 @@
 `// todo: setup github actions for auto deploy to server on push`
 
 ## Overview
-
 This is our group project for CS.3354 Software Engineering.
-Our goal is to be able to reliably detect credit card fraud using machine learning.
+Our goal is to be able to create an application to reliably detect credit card fraud using machine learning. Details about the project's design can be found [here](./docs/design.md).
 
-A detailed overview of the project's design can be found [here](./docs/design.md).
-
-## Install and Setup
+## Environment Setup
 #### VSCode
-VSCode is recommended for development in this repo. Instructions for installing VSCode can be found [here](https://code.visualstudio.com/download).
+VSCode is **required** for development in this repo. The repo is currently set up with a few extensions that make it easier to work with this tech stack. It also fully supports devcontainers which are leveraged heavily. Instructions for installing VSCode can be found [here](https://code.visualstudio.com/download).
 
 #### Docker
-Docker is recommended for development in this repo. It will automatically install all the dependencies you need and run the project in a container. This is the easiest way to get the project up and running. Instructions for installing Docker can be found [here](https://www.docker.com/products/docker-desktop/).
+Docker is **required** for development in this repo. It is used to automatically install all the dependencies you need into a devcontainer. This is the easiest way to get the project up and running. Instructions for installing Docker can be found [here](https://www.docker.com/products/docker-desktop/).
 
 #### Insomnia
-Insomnia is a program that allows you to manually issue http requests. It is recommended for testing and debugging the API. Instructions for installing Insomnia can be found [here](https://insomnia.rest/download).
+Insomnia is recommended for testing and debugging the API. It allows you to automatically and manually issue http requests. Instructions for installing Insomnia can be found [here](https://insomnia.rest/download).
 
 ### Instructions
 1. Open VSCode.
