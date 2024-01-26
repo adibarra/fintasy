@@ -32,7 +32,7 @@ Insomnia is recommended for testing and debugging the API. It allows you to auto
 Make sure you are in the repo's root directory before running these commands.
 ```bash
   # # # # # # # # # # # # # # # # # # # # # # # #
-  # Run development environment                 #
+  # Start the development environment           #
   # Access the app here: https://localhost:3333 #
   # # # # # # # # # # # # # # # # # # # # # # # #
   $ pnpm dev
@@ -40,7 +40,7 @@ Make sure you are in the repo's root directory before running these commands.
   # --- OR ---
 
   # # # # # # # # # # # # # # # # # # # # # # # #
-  # Build and run for production environment    #
+  # Build and run for production                #
   # Access the app here: https://localhost:3000 #
   # # # # # # # # # # # # # # # # # # # # # # # #
   $ pnpm build
