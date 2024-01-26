@@ -33,6 +33,5 @@
     "3333": { "label": "Development - Frontend" },
     "3332": { "label": "Development - Backend" }
   },
-  "postCreateCommand": ".devcontainer/postCreateScript.sh",
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
+  "postCreateCommand": ".devcontainer/postCreateCommand.sh"
 }
