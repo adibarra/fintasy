@@ -92,13 +92,13 @@ Make sure you are in the repo's root directory before running these commands (th
 ```
 
 ## Project Scripts
-|    Scripts     |               Description                |
-|----------------|------------------------------------------|
-| pnpm clean     | removes build artifacts                  |
-| pnpm clean:all | removes build artifacts and dependencies |
-| pnpm lint      | prints warnings about code formatting    |
-| pnpm lint:fix  | auto-fixes the code formatting           |
-| pnpm install   | installs dependencies for entire project |
-| pnpm dev       | runs development environment             |
-| pnpm build     | builds the app for production            |
-| pnpm start     | runs the built app for production        |
+| Scripts            | Description                                  |
+|--------------------|----------------------------------------------|
+| pnpm clean         | removes build artifacts                      |
+| pnpm clean:all     | removes build artifacts and dependencies     |
+| pnpm lint          | prints warnings about code formatting        |
+| pnpm lint:fix      | auto-fixes the code formatting               |
+| pnpm install       | installs dependencies for entire project     |
+| pnpm dev           | runs development environment                 |
+| pnpm build         | builds the app for production                |
+| pnpm start         | runs the built app for production            |
