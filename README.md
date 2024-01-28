@@ -5,7 +5,7 @@
 
 ## Overview
 This is our group project for CS.3354 Software Engineering.
-Our goal is to be able to create an application to reliably detect credit card fraud using machine learning. Details about the project's design can be found [here](./docs/design.md).
+Our goal is to be able to create an application to reliably detect credit card fraud using machine learning. The project's documentation can be found [here](./docs/index.md).
 
 ## Tooling
 #### VSCode
