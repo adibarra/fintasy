@@ -1,7 +1,7 @@
 // For format details, see https://containers.dev/implementors/json_reference/.
 {
   "name": "fraud-detector",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "image": "mcr.microsoft.com/devcontainers/base:jammy",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "nodeGypDependencies": true,
