@@ -17,16 +17,16 @@ Docker is **required** for development in this repo. It is used to automatically
 #### Insomnia
 Insomnia is recommended for testing and debugging the API. It allows you to automatically and manually issue http requests. Instructions for installing Insomnia can be found [here](https://insomnia.rest/download).
 
-### Environment Setup
-1. Open Docker Desktop. Make sure it is running before continuing.
-2. Open VSCode.
-3. Install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
-4. Press `Ctrl+Shift+P` and type `Dev Containers: Clone Repository in Container Volume...`.
-5. Click `Clone a repository from GitHub in a Container Volume`.
-6. You should now be prompted to login to your GitHub account. Sign in.
-7. Type `adibarra/fraud-detector`. Select it.
-8. If prompted, select the `main` branch.
-9. Let the container build. This **will** take a while.
+## Environment Setup
+1.  Open Docker Desktop. Make sure it is running before continuing.
+2.  Open VSCode.
+3.  Install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
+4.  Press `Ctrl+Shift+P` and type `Dev Containers: Clone Repository in Container Volume...`.
+5.  Click `Clone a repository from GitHub in a Container Volume`.
+6.  You should now be prompted to login to your GitHub account. Sign in.
+7.  Type `adibarra/fraud-detector`. Select it.
+8.  If prompted, select the `main` branch.
+9.  Let the container build. This **will** take a while.
 10. Once the build is complete, you can begin development.
 
 ## Run Project
@@ -34,7 +34,7 @@ Make sure you are in the repo's root directory before running these commands.
 ```bash
   # # # # # # # # # # # # # # # # # # # # # # # #
   # Start the development environment           #
-  # Access the app here: https://localhost:3333 #
+  # Access the app here: http://localhost:3333  #
   # # # # # # # # # # # # # # # # # # # # # # # #
   $ pnpm dev
 
@@ -42,7 +42,7 @@ Make sure you are in the repo's root directory before running these commands.
 
   # # # # # # # # # # # # # # # # # # # # # # # #
   # Build and run for production                #
-  # Access the app here: https://localhost:3000 #
+  # Access the app here: http://localhost:3000  #
   # # # # # # # # # # # # # # # # # # # # # # # #
   $ pnpm build
   $ pnpm start
