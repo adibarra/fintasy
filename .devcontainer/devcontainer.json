@@ -20,6 +20,7 @@
         "antfu.unocss",
         "charliermarsh.ruff",
         "christian-kohler.path-intellisense",
+        "csstools.postcss",
         "dbaeumer.vscode-eslint",
         "ecmel.vscode-html-css",
         "editorconfig.editorconfig",
