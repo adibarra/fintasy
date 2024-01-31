@@ -24,6 +24,7 @@
     "nocheck",
     "noopener",
     "nprogress",
+    "nvmrc",
     "Pausable",
     "pycache",
     "resourcemonitor",
