@@ -26,8 +26,16 @@ Insomnia is recommended for testing and debugging the API. It allows you to auto
 6.  You should now be prompted to login to your GitHub account. Sign in.
 7.  Type `adibarra/fraud-detector`. Select it.
 8.  If prompted, select the `main` branch.
-9.  Let the container build. This **will** take a while.
+9.  Let the container build. This **will** take a while (only the first time).
 10. Once the build is complete, you can begin development.
+
+## Connect to Environment
+You can re-attach the devcontainer by doing the following from a new VSCode window:
+1. Click the `Remote Explorer` tab.
+2. Select `Dev Containers` in the dropdown menu.
+3. Find the `fraud-detector` container.
+4. Click the `->` button to re-attach the container.
+5. You can now continue development.
 
 ## Run Project
 Make sure you are in the repo's root directory before running these commands.
