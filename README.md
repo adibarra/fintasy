@@ -18,6 +18,7 @@ Docker is **required** for development in this repo. It is used to automatically
 Insomnia is recommended for testing and debugging the API. It allows you to automatically and manually issue http requests. Instructions for installing Insomnia can be found [here](https://insomnia.rest/download).
 
 ## Environment Setup
+This is a one-time setup. If you have already done this, you can skip to the next section.
 1.  Open Docker Desktop. Make sure it is running before continuing.
 2.  Open VSCode.
 3.  Install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
@@ -29,7 +30,7 @@ Insomnia is recommended for testing and debugging the API. It allows you to auto
 9.  Let the container build. This **will** take a while (only the first time).
 10. Once the build is complete, you can begin development.
 
-## Connect to Environment
+## Reconnect to Environment
 You can re-attach the devcontainer by doing the following from a new VSCode window:
 1. Click the `Remote Explorer` tab.
 2. Select `Dev Containers` in the dropdown menu.
