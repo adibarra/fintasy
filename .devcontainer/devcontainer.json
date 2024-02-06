@@ -2,6 +2,7 @@
 {
   "name": "fraud-detector",
   "image": "mcr.microsoft.com/devcontainers/base:jammy",
+  "workspaceFolder": "/workspace/fraud-detector",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "nodeGypDependencies": true,
