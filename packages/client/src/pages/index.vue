@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  title: 'Fraud Detector',
+  title: 'Paper Trader',
 })
 </script>
 
