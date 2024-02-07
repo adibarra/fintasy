@@ -3,6 +3,7 @@
     "eamodio.gitlens",
     "mhutchie.git-graph",
     "naumovs.color-highlight",
-    "pkief.material-icon-theme"
+    "pkief.material-icon-theme",
+    "pomdtr.excalidraw-editor"
   ]
 }
