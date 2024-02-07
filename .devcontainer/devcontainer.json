@@ -2,7 +2,7 @@
 {
   "name": "paper-trader",
   "image": "mcr.microsoft.com/devcontainers/base:jammy",
-  "workspaceFolder": "/workspace/paper-trader",
+  "workspaceFolder": "/workspaces/paper-trader",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "nodeGypDependencies": true,
