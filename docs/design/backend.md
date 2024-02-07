@@ -10,9 +10,6 @@
 ### Flask `// todo: are we using flask? maybe FastAPI?`
 `// todo: explain why we used flask (or FastAPI)`
 
-### ML Fraud Detector
-`// todo: explain ml model design choices`
-
 ## Project Structure
 The backend can be found at `packages/server/`. It is organized into a few primary directories:
 - `src/` - contains all the source code
