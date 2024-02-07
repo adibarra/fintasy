@@ -5,7 +5,7 @@
 
 ## Overview
 This is our group project for CS.3354 Software Engineering.
-Our goal is to be able to create an application to host paper trading competitions. The project's documentation can be found [here](./docs/index.md).
+Our goal is to be able to create a platform for paper trading which can also host competitions. The project's documentation can be found [here](./docs/index.md).
 
 ## Tooling
 #### VSCode
