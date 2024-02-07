@@ -21,7 +21,6 @@ It is responsible for the following:
   1. Acting as a static web server for the frontend
   2. Running an API
   3. Interfacing with the database
-  4. Interfacing with the ML model
   5. `// todo: add more here`
 
 ## API Schema

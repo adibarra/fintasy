@@ -1,11 +1,11 @@
-# CS.3354 Project: fraud-detector
+# CS.3354 Project: paper-trader
 
-## [Live Demo](https://fraud-detector.adibarra.com)
+## [Live Demo](https://paper-trader.adibarra.com)
 `// todo: setup github actions for auto deploy to server on push`
 
 ## Overview
 This is our group project for CS.3354 Software Engineering.
-Our goal is to be able to create an application to reliably detect credit card fraud using machine learning. The project's documentation can be found [here](./docs/index.md).
+Our goal is to be able to create an application to host paper trading competitions. The project's documentation can be found [here](./docs/index.md).
 
 ## Tooling
 #### VSCode
@@ -25,7 +25,7 @@ This is a one-time setup. If you have already done this, you can skip to the nex
 4.  Press `Ctrl+Shift+P` and type `Dev Containers: Clone Repository in Container Volume...`.
 5.  Click `Clone a repository from GitHub in a Container Volume`.
 6.  You should now be prompted to login to your GitHub account. Sign in.
-7.  Type `adibarra/fraud-detector`. Select it.
+7.  Type `adibarra/paper-trader`. Select it.
 8.  If prompted, select the `main` branch.
 9.  Let the container build. This **will** take a while (only the first time).
 10. Once the build is complete, you can begin development.
@@ -34,7 +34,7 @@ This is a one-time setup. If you have already done this, you can skip to the nex
 You can re-attach the devcontainer by doing the following from a new VSCode window:
 1. Click the `Remote Explorer` tab.
 2. Select `Dev Containers` in the dropdown menu.
-3. Find the `fraud-detector` container.
+3. Find the `paper-trader` container.
 4. Click the `->` button to re-attach the container.
 5. You can now continue development.
 
