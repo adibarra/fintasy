@@ -1,8 +1,8 @@
 // For format details, see https://containers.dev/implementors/json_reference/.
 {
-  "name": "fraud-detector",
+  "name": "paper-trader",
   "image": "mcr.microsoft.com/devcontainers/base:jammy",
-  "workspaceFolder": "/workspace/fraud-detector",
+  "workspaceFolder": "/workspace/paper-trader",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "nodeGypDependencies": true,
