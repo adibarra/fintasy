@@ -1,0 +1,263 @@
+openapi: 3.0.3
+
+
+# Set project info
+info:
+  title: Fintasy - OpenAPI 3.0
+  description: |-
+    `todo: write description`
+  version: 1.0.0
+
+
+# Set available api servers
+servers:
+  - url: https://localhost:3332/api/v1
+    description: Development
+
+
+# Set catagories
+tags:
+  - name: users
+    description: Perform operations on users
+
+
+# Set up api routes
+paths:
+  /users:
+    post:
+      tags:
+        - users
+      summary: Create user
+      description: Creates a new account for a user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostUser'
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+
+  /users/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - users
+      summary: Get user
+      description: Gets a user by uuid.
+      operationId: getUserByUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the user to be fetched
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - $ref: '#/components/schemas/GetUser'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
+    patch:
+      security:
+        - bearerAuth: []
+      tags:
+        - users
+      summary: Partially update user
+      description: |
+        Partially update a user.
+        All properties are optional.
+      operationId: updateUser
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the user to be updated
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Updated user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchUser'
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - users
+      summary: Delete user
+      description: Delete user.
+      operationId: deleteUser
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the user to be deleted
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+
+components:
+  responses:
+    APIResponseAll:
+      description: Returned for all status codes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponse'
+          examples:
+            '200':
+              $ref: '#/components/examples/200'
+            '400':
+              $ref: '#/components/examples/400'
+            '401':
+              $ref: '#/components/examples/401'
+            '404':
+              $ref: '#/components/examples/404'
+            '500':
+              $ref: '#/components/examples/500'
+
+    APIResponseError:
+      description: An error occurred
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponse'
+          examples:
+            '400':
+              $ref: '#/components/examples/400'
+            '401':
+              $ref: '#/components/examples/401'
+            '404':
+              $ref: '#/components/examples/404'
+            '500':
+              $ref: '#/components/examples/500'
+
+  schemas:
+    APIResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: Ok
+
+    # Schema for POST /users
+    PostUser:
+      type: object
+      required:
+        - email
+        - username
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: cool@example.com
+        username:
+          type: string
+          example: c00lm4n
+        password:
+          type: string
+          example: a1b2c3d4e5f6
+
+    # Schema for PATCH /users/{uuid}
+    PatchUser:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: cool@example.com
+        username:
+          type: string
+          example: c00lm4n
+        password:
+          type: string
+          example: a1b2c3d4e5f6
+
+    # Schema for GET /users/{uuid}
+    GetUser:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - uuid
+            - email
+            - username
+            - created_at
+          properties:
+            uuid:
+              type: string
+              format: uuid
+              example: d383865a-df45-4c4c-bc47-b06253b126a6
+            email:
+              type: string
+              format: email
+              example: cool@example.com
+            username:
+              type: string
+              example: c00lm4n
+            created_at:
+              type: string
+              format: date-time
+              example: 1970-01-01T00:00:00Z
+
+  # Set up examples
+  examples:
+    '200':
+      value:
+        code: 200
+        message: Ok
+    '400':
+      value:
+        code: 400
+        message: Bad Request
+    '401':
+      value:
+        code: 401
+        message: Unauthorized
+    '404':
+      value:
+        code: 404
+        message: Not Found
+    '500':
+      value:
+        code: 500
+        message: Internal Server Error
+
+  # Register authentication
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
