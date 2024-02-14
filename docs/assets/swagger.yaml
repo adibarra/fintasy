@@ -21,6 +21,8 @@ servers:
 tags:
   - name: accounts
     description: Perform operations on accounts
+  - name: transactions
+    description: Perform operations on transactions
   - name: users
     description: Perform operations on users
 
@@ -144,6 +146,54 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/APIResponse'
                   - $ref: '#/components/schemas/AuthPostResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
+  /transactions:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - transactions
+      summary: Create transaction
+      description: Create a new transaction for an account.
+      operationId: createTransaction
+      requestBody:
+        description: Created transaction object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionPostRequest'
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+  /transactions/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - transactions
+      summary: Get transaction
+      description: Gets a transaction by uuid.
+      operationId: getTransactionByUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the transaction to be fetched
+          example:  177d58d6-c33e-465b-a71f-b738a052d13f
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - $ref: '#/components/schemas/TransactionGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
@@ -385,6 +435,72 @@ components:
             token:
               type: string
               example: xxxxxxxxxxxx
+
+    # Schema for POST /transactions
+    TransactionPostRequest:
+      type: object
+      required:
+        - account
+        - symbol
+        - action
+        - quantity
+      properties:
+        account:
+          type: string
+          format: uuid
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+        symbol:
+          type: string
+          example: AAPL
+        action:
+          type: string
+          example: BUY
+        quantity:
+          type: integer
+          example: 10
+
+    # Schema for GET /transactions/{uuid}
+    TransactionGetResponse:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - uuid
+            - account
+            - symbol
+            - action
+            - quantity
+            - price
+            - created_at
+          properties:
+            uuid:
+              type: string
+              format: uuid
+              example: 177d58d6-c33e-465b-a71f-b738a052d13f
+            account:
+              type: string
+              format: uuid
+              example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+            symbol:
+              type: string
+              example: AAPL
+            action:
+              type: string
+              example: BUY
+            quantity:
+              type: integer
+              example: 10
+            price:
+              type: number
+              format: float
+              example: 10_000.00
+            created_at:
+              type: string
+              format: date-time
+              example: 1970-01-01T00:00:00Z
 
     # Schema for POST /users
     UserPostRequest:
