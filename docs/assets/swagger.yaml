@@ -1,11 +1,9 @@
-# If editing this file in the VSCode DevContainer you can use the Swagger Viewer extension to preview the documentation.
+# If editing this file in VSCode, you can use the Swagger Viewer extension to preview the documentation.
 # To do so, open the file and press `Ctrl+Shift+P` and type `Preview Swagger`.
 # This will open a live preview of the documentation from within VSCode.
 
-
 # Set openapi version
 openapi: 3.0.3
-
 
 # Set project info
 info:
@@ -14,18 +12,15 @@ info:
     API Documentation for Fintasy: A competitive paper trading platform.
   version: 1.0.0
 
-
 # Set available api servers
 servers:
   - url: http://localhost:3332/api/v1
     description: Development
 
-
 # Set catagories
 tags:
   - name: users
     description: Perform operations on users
-
 
 # Set up api routes
 paths:
@@ -45,7 +40,6 @@ paths:
       responses:
         default:
           $ref: '#/components/responses/APIResponseAll'
-
 
   /users/{uuid}:
     get:
@@ -123,7 +117,6 @@ paths:
       responses:
         default:
           $ref: '#/components/responses/APIResponseAll'
-
 
 components:
   responses:
