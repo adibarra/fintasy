@@ -102,6 +102,26 @@ paths:
         default:
           $ref: '#/components/responses/APIResponseAll'
 
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - accounts
+      summary: Delete account
+      description: Delete account.
+      operationId: deleteAccount
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the account to be deleted
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
   /auth:
     post:
       tags:
