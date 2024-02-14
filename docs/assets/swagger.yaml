@@ -180,6 +180,7 @@ components:
               $ref: '#/components/examples/500'
 
   schemas:
+    # Schema for base API response
     APIResponse:
       type: object
       required:
@@ -221,7 +222,7 @@ components:
           properties:
             token:
               type: string
-              example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+              example: xxxxxxxxxxxx
 
     # Schema for POST /users
     UserPostRequest:
