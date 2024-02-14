@@ -72,7 +72,12 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/APIResponse'
-                  - $ref: '#/components/schemas/AccountGetResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/AccountGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
@@ -145,7 +150,12 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/APIResponse'
-                  - $ref: '#/components/schemas/AuthPostResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/AuthPostResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
@@ -193,7 +203,12 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/APIResponse'
-                  - $ref: '#/components/schemas/TransactionGetResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/TransactionGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
@@ -239,7 +254,12 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/APIResponse'
-                  - $ref: '#/components/schemas/UserGetResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/UserGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
@@ -362,41 +382,36 @@ components:
     AccountGetResponse:
       type: object
       required:
-        - data
+        - uuid
+        - owner
+        - tournament
+        - name
+        - balance
+        - created_at
       properties:
-        data:
-          type: object
-          required:
-            - uuid
-            - owner
-            - tournament
-            - name
-            - balance
-            - created_at
-          properties:
-            uuid:
-              type: string
-              format: uuid
-              example: 7b4a6ee5-73fe-4de5-9944-c49009057911
-            owner:
-              type: string
-              format: uuid
-              example: d383865a-df45-4c4c-bc47-b06253b126a6
-            tournament:
-              type: string
-              format: uuid
-              example: d383865a-df45-4c4c-bc47-b06253b126a6
-            name:
-              type: string
-              example: Default
-            balance:
-              type: number
-              format: float
-              example: 100_000.00
-            created_at:
-              type: string
-              format: date-time
-              example: 1970-01-01T00:00:00Z
+        uuid:
+          type: string
+          format: uuid
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+        owner:
+          type: string
+          format: uuid
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+        tournament:
+          type: string
+          format: uuid
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+        name:
+          type: string
+          example: Default
+        balance:
+          type: number
+          format: float
+          example: 100_000.00
+        created_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
 
     # Schema for PATCH /accounts/{uuid}
     AccountPatchRequest:
@@ -425,16 +440,11 @@ components:
     AuthPostResponse:
       type: object
       required:
-        - data
+        - token
       properties:
-        data:
-          type: object
-          required:
-            - token
-          properties:
-            token:
-              type: string
-              example: xxxxxxxxxxxx
+        token:
+          type: string
+          example: xxxxxxxxxxxx
 
     # Schema for POST /transactions
     TransactionPostRequest:
@@ -463,44 +473,39 @@ components:
     TransactionGetResponse:
       type: object
       required:
-        - data
+        - uuid
+        - account
+        - symbol
+        - action
+        - quantity
+        - price
+        - created_at
       properties:
-        data:
-          type: object
-          required:
-            - uuid
-            - account
-            - symbol
-            - action
-            - quantity
-            - price
-            - created_at
-          properties:
-            uuid:
-              type: string
-              format: uuid
-              example: 177d58d6-c33e-465b-a71f-b738a052d13f
-            account:
-              type: string
-              format: uuid
-              example: 7b4a6ee5-73fe-4de5-9944-c49009057911
-            symbol:
-              type: string
-              example: AAPL
-            action:
-              type: string
-              example: BUY
-            quantity:
-              type: integer
-              example: 10
-            price:
-              type: number
-              format: float
-              example: 10_000.00
-            created_at:
-              type: string
-              format: date-time
-              example: 1970-01-01T00:00:00Z
+        uuid:
+          type: string
+          format: uuid
+          example: 177d58d6-c33e-465b-a71f-b738a052d13f
+        account:
+          type: string
+          format: uuid
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+        symbol:
+          type: string
+          example: AAPL
+        action:
+          type: string
+          example: BUY
+        quantity:
+          type: integer
+          example: 10
+        price:
+          type: number
+          format: float
+          example: 10_000.00
+        created_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
 
     # Schema for POST /users
     UserPostRequest:
@@ -540,31 +545,26 @@ components:
     UserGetResponse:
       type: object
       required:
-        - data
+        - uuid
+        - email
+        - username
+        - created_at
       properties:
-        data:
-          type: object
-          required:
-            - uuid
-            - email
-            - username
-            - created_at
-          properties:
-            uuid:
-              type: string
-              format: uuid
-              example: d383865a-df45-4c4c-bc47-b06253b126a6
-            email:
-              type: string
-              format: email
-              example: cool@example.com
-            username:
-              type: string
-              example: c00lm4n
-            created_at:
-              type: string
-              format: date-time
-              example: 1970-01-01T00:00:00Z
+        uuid:
+          type: string
+          format: uuid
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+        email:
+          type: string
+          format: email
+          example: cool@example.com
+        username:
+          type: string
+          example: c00lm4n
+        created_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
 
   # Set up examples
   examples:
