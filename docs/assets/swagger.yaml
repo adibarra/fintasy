@@ -382,6 +382,13 @@ components:
               $ref: '#/components/examples/500'
 
   schemas:
+    # Enum for transaction action
+    TransactionAction:
+      type: string
+      enum:
+        - BUY
+        - SELL
+
     # Schema for base API response
     APIResponse:
       type: object
@@ -419,7 +426,7 @@ components:
         - owner
         - tournament
         - name
-        - balance
+        - balance_cents
         - created_at
       properties:
         uuid:
@@ -437,10 +444,9 @@ components:
         name:
           type: string
           example: Default
-        balance:
+        balance_cents:
           type: number
-          format: float
-          example: 100_000.00
+          example: 100_000_00
         created_at:
           type: string
           format: date-time
@@ -496,8 +502,7 @@ components:
           type: string
           example: AAPL
         action:
-          type: string
-          example: BUY
+          $ref: '#/components/schemas/TransactionAction'
         quantity:
           type: integer
           example: 10
@@ -511,7 +516,7 @@ components:
         - symbol
         - action
         - quantity
-        - price
+        - price_cents
         - created_at
       properties:
         uuid:
@@ -526,15 +531,13 @@ components:
           type: string
           example: AAPL
         action:
-          type: string
-          example: BUY
+          $ref: '#/components/schemas/TransactionAction'
         quantity:
           type: integer
           example: 10
-        price:
+        price_cents:
           type: number
-          format: float
-          example: 10_000.00
+          example: 10_000_00
         created_at:
           type: string
           format: date-time
@@ -545,16 +548,15 @@ components:
       type: object
       required:
         - symbol
-        - price
+        - price_cents
         - timestamp
       properties:
         symbol:
           type: string
           example: AAPL
-        price:
+        price_cents:
           type: number
-          format: float
-          example: 1_000.00
+          example: 1_000_00
         timestamp:
           type: string
           format: date-time
@@ -617,8 +619,7 @@ components:
           example: c00lm4n
         balance:
           type: number
-          format: float
-          example: 5.0
+          example: 10
         created_at:
           type: string
           format: date-time
