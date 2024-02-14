@@ -212,6 +212,40 @@ paths:
         default:
           $ref: '#/components/responses/APIResponseError'
 
+  /quote/{symbol}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - market data
+      summary: Get quote
+      description: Gets a quote for a symbol.
+      operationId: getQuoteBySymbol
+      parameters:
+        - name: symbol
+          in: path
+          description: The symbol of the quote to be fetched
+          example: AAPL
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/QuoteGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
   /users:
     post:
       tags:
@@ -503,6 +537,26 @@ components:
           format: float
           example: 10_000.00
         created_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
+
+    # Schema for GET /quote/{symbol}
+    QuoteGetResponse:
+      type: object
+      required:
+        - symbol
+        - price
+        - timestamp
+      properties:
+        symbol:
+          type: string
+          example: AAPL
+        price:
+          type: number
+          format: float
+          example: 1_000.00
+        timestamp:
           type: string
           format: date-time
           example: 1970-01-01T00:00:00Z
