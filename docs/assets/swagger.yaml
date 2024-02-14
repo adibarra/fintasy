@@ -74,6 +74,34 @@ paths:
         default:
           $ref: '#/components/responses/APIResponseError'
 
+    patch:
+      security:
+        - bearerAuth: []
+      tags:
+        - accounts
+      summary: Partially update account
+      description: |
+        Partially update an account.
+        All properties are optional.
+      operationId: updateAccount
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the account to be updated
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Updated account object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountPatchRequest'
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
   /auth:
     post:
       tags:
@@ -254,7 +282,7 @@ components:
         name:
           type: string
           format: uuid
-          example: Default Account
+          example: Default
         tournament:
           type: string
           format: uuid
@@ -299,6 +327,14 @@ components:
               type: string
               format: date-time
               example: 1970-01-01T00:00:00Z
+
+    # Schema for PATCH /accounts/{uuid}
+    AccountPatchRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Default
 
     # Schema for POST /auth
     AuthPostRequest:
