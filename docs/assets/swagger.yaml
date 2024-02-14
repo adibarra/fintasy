@@ -36,7 +36,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostAuthRequest'
+              $ref: '#/components/schemas/AuthPostRequest'
       responses:
         200:
           description: Ok
@@ -45,7 +45,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/APIResponse'
-                  - $ref: '#/components/schemas/PostAuthResponse'
+                  - $ref: '#/components/schemas/AuthPostResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
@@ -61,7 +61,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostUserRequest'
+              $ref: '#/components/schemas/UserPostRequest'
       responses:
         default:
           $ref: '#/components/responses/APIResponseAll'
@@ -91,7 +91,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/APIResponse'
-                  - $ref: '#/components/schemas/GetUserResponse'
+                  - $ref: '#/components/schemas/UserGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
@@ -118,7 +118,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchUserRequest'
+              $ref: '#/components/schemas/UserPatchRequest'
       responses:
         default:
           $ref: '#/components/responses/APIResponseAll'
@@ -194,7 +194,7 @@ components:
           example: Ok
 
     # Schema for POST /auth
-    PostAuthRequest:
+    AuthPostRequest:
       type: object
       required:
         - email
@@ -209,7 +209,7 @@ components:
           example: a1b2c3d4e5f6
 
     # Schema for POST /auth
-    PostAuthResponse:
+    AuthPostResponse:
       type: object
       required:
         - data
@@ -224,7 +224,7 @@ components:
               example: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
     # Schema for POST /users
-    PostUserRequest:
+    UserPostRequest:
       type: object
       required:
         - email
@@ -243,7 +243,7 @@ components:
           example: a1b2c3d4e5f6
 
     # Schema for PATCH /users/{uuid}
-    PatchUserRequest:
+    UserPatchRequest:
       type: object
       properties:
         email:
@@ -258,7 +258,7 @@ components:
           example: a1b2c3d4e5f6
 
     # Schema for GET /users/{uuid}
-    GetUserResponse:
+    UserGetResponse:
       type: object
       required:
         - data
