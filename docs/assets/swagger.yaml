@@ -1,3 +1,9 @@
+# If editing this file in the VSCode DevContainer you can use the Swagger Viewer extension to preview the documentation.
+# To do so, open the file and press `Ctrl+Shift+P` and type `Preview Swagger`.
+# This will open a live preview of the documentation from within VSCode.
+
+
+# Set openapi version
 openapi: 3.0.3
 
 
