@@ -602,6 +602,7 @@ components:
         - uuid
         - email
         - username
+        - balance
         - created_at
       properties:
         uuid:
@@ -615,6 +616,10 @@ components:
         username:
           type: string
           example: c00lm4n
+        balance:
+          type: number
+          format: float
+          example: 5.0
         created_at:
           type: string
           format: date-time
