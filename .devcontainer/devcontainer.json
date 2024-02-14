@@ -19,6 +19,7 @@
         "antfu.goto-alias",
         "antfu.iconify",
         "antfu.unocss",
+        "Arjun.swagger-viewer",
         "charliermarsh.ruff",
         "christian-kohler.path-intellisense",
         "csstools.postcss",
