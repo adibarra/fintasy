@@ -35,7 +35,7 @@ paths:
       tags:
         - accounts
       summary: Create account
-      description: Create a new account for a user.
+      description: Create a new account for a user. Associating to a tournament is optional.
       operationId: createAccount
       requestBody:
         description: Created account object
@@ -401,7 +401,6 @@ components:
       type: object
       required:
         - name
-        - tournament
       properties:
         name:
           type: string
