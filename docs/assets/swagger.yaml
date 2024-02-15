@@ -608,7 +608,7 @@ components:
         - uuid
         - email
         - username
-        - balance
+        - coins
         - created_at
         - updated_at
       properties:
@@ -623,7 +623,7 @@ components:
         username:
           type: string
           example: c00lm4n
-        balance:
+        coins:
           type: number
           example: 10
         created_at:
