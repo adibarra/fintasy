@@ -4,7 +4,7 @@
   <a href="https://fintasy.adibarra.com">
     <img src="https://img.shields.io/badge/Live Demo-offline-red" alt="Live Demo">
   </a>
-  <a href="https://adibarra.github.io/paper-trader/">
+  <a href="https://adibarra.github.io/fintasy/">
     <img src="https://img.shields.io/badge/Documentation-online-green" alt="Live Documentation">
   </a>
   <br />
@@ -32,7 +32,7 @@ This is a one-time setup. If you have already done this, you can skip to the nex
 4.  Press `Ctrl+Shift+P` and type `Dev Containers: Clone Repository in Container Volume...`.
 5.  Click `Clone a repository from GitHub in a Container Volume`.
 6.  You should now be prompted to login to your GitHub account. Sign in.
-7.  Type `adibarra/paper-trader`. Select it.
+7.  Type `adibarra/fintasy`. Select it.
 8.  If prompted, select the `main` branch.
 9.  Let the container build. This **will** take a while (only the first time).
 10. Once the build is complete, you can begin development.
@@ -41,7 +41,7 @@ This is a one-time setup. If you have already done this, you can skip to the nex
 You can re-attach the devcontainer by doing the following from a new VSCode window:
 1. Click the `Remote Explorer` tab.
 2. Select `Dev Containers` in the dropdown menu.
-3. Find the `paper-trader` container.
+3. Find the `fintasy` container.
 4. Click the `→` button to re-attach the container.
 5. You can now continue development.
 

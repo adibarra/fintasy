@@ -1,8 +1,8 @@
 // For format details, see https://containers.dev/implementors/json_reference/.
 {
-  "name": "paper-trader",
+  "name": "fintasy",
   "image": "mcr.microsoft.com/devcontainers/base:jammy",
-  "workspaceFolder": "/workspaces/paper-trader",
+  "workspaceFolder": "/workspaces/fintasy",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "nodeGypDependencies": true,
