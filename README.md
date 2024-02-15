@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/adibarra/fintasy">
-    <img src="./docs/assets/logo.png" alt="Logo" height="192">
+    <img src="docs/assets/logo.png" alt="Logo" height="192">
   </a>
 </p>
 
