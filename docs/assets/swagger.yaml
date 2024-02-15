@@ -212,7 +212,7 @@ paths:
         default:
           $ref: '#/components/responses/APIResponseError'
 
-  /quote/{symbol}:
+  /quotes/{symbol}:
     get:
       security:
         - bearerAuth: []
@@ -543,7 +543,7 @@ components:
           format: date-time
           example: 1970-01-01T00:00:00Z
 
-    # Schema for GET /quote/{symbol}
+    # Schema for GET /quotes/{symbol}
     QuoteGetResponse:
       type: object
       required:
