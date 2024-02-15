@@ -1,4 +1,12 @@
-# CS.3354 Project: Fintasy - Competitive Paper Trading
+# CS.3354 Project: Fintasy
+
+<p align="center">
+  <a href="https://github.com/adibarra/fintasy">
+    <img src="./docs/assets/logo.png" alt="Logo" height="192">
+  </a>
+</p>
+
+<h3 align="center"><strong>Fintasy - A competitive paper trading platform</strong></h3>
 
 <h3 align="center">
   <a href="https://fintasy.adibarra.com">
@@ -8,11 +16,15 @@
     <img src="https://img.shields.io/badge/Documentation-online-green" alt="Live Documentation">
   </a>
   <br />
+  <a href="#tooling">Tooling</a> •
+  <a href="#environment-setup">Environment Setup</a> •
+  <a href="#run-project">Run Project</a> •
+  <a href="#license">License</a>
 </h3>
 
 ## Overview
 This is our group project for CS.3354 Software Engineering.
-Our goal is to be able to create a platform for paper trading which can also host competitions.
+Our goal is to be able to create a platform for paper trading which can also host competitions. The project's documentation can be found here: [Fintasy Documentation](https://adibarra.github.io/fintasy/).
 
 ## Tooling
 #### VSCode
@@ -75,3 +87,6 @@ Make sure you are in the repo's root directory before running these commands.
 | pnpm dev           | runs development environment                 |
 | pnpm build         | builds the app for production                |
 | pnpm start         | runs the built app for production            |
+
+## License
+All rights reserved.
