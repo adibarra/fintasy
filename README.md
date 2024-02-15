@@ -2,6 +2,7 @@
 
 ## [Live Demo](https://paper-trader.adibarra.com)
 `// todo: setup github actions for auto deploy to server on push`
+## [Documentation](./docs/index.md)
 
 ## Overview
 This is our group project for CS.3354 Software Engineering.
