@@ -1,12 +1,18 @@
-# CS.3354 Project: paper-trader
+# CS.3354 Project: Fintasy - Competitive Paper Trading
 
-## [Live Demo](https://paper-trader.adibarra.com)
-`// todo: setup github actions for auto deploy to server on push`
-## [Documentation](./docs/index.md)
+<h3 align="center">
+  <a href="https://fintasy.adibarra.com">
+    <img src="https://img.shields.io/badge/Live Demo-offline-red" alt="Live Demo">
+  </a>
+  <a href="https://adibarra.github.io/paper-trader/">
+    <img src="https://img.shields.io/badge/Documentation-online-green" alt="Live Documentation">
+  </a>
+  <br />
+</h3>
 
 ## Overview
 This is our group project for CS.3354 Software Engineering.
-Our goal is to be able to create a platform for paper trading which can also host competitions. The project's documentation can be found [here](./docs/index.md).
+Our goal is to be able to create a platform for paper trading which can also host competitions.
 
 ## Tooling
 #### VSCode
@@ -36,7 +42,7 @@ You can re-attach the devcontainer by doing the following from a new VSCode wind
 1. Click the `Remote Explorer` tab.
 2. Select `Dev Containers` in the dropdown menu.
 3. Find the `paper-trader` container.
-4. Click the `->` button to re-attach the container.
+4. Click the `→` button to re-attach the container.
 5. You can now continue development.
 
 ## Run Project
