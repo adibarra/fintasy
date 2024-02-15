@@ -428,6 +428,7 @@ components:
         - name
         - balance_cents
         - created_at
+        - updated_at
       properties:
         uuid:
           type: string
@@ -448,6 +449,10 @@ components:
           type: number
           example: 100_000_00
         created_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
+        updated_at:
           type: string
           format: date-time
           example: 1970-01-01T00:00:00Z
@@ -605,6 +610,7 @@ components:
         - username
         - balance
         - created_at
+        - updated_at
       properties:
         uuid:
           type: string
@@ -621,6 +627,10 @@ components:
           type: number
           example: 10
         created_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
+        updated_at:
           type: string
           format: date-time
           example: 1970-01-01T00:00:00Z
