@@ -9,7 +9,7 @@ openapi: 3.0.3
 info:
   title: Fintasy - OpenAPI 3.0
   description: |-
-    API Documentation for Fintasy: A competitive paper trading platform.
+    API Documentation for Fintasy - A competitive paper trading platform.
   version: 1.0.0
 
 # Set available api servers
