@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  title: 'Not Found',
+  title: 'Not Found • Fintasy',
   meta: [
     { name: 'robots', content: 'noindex, nofollow' },
   ],
