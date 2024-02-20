@@ -1,11 +1,25 @@
-
 :root {
-  color-scheme: dark;
-  --c-text: #e5e7eb;
-  --c-primary: #121212;
-  --c-secondary: #1e1e1e;
-  --c-tertiary: #323232;
-  --c-inverse: #f9f9f9;
+  color-scheme: light dark;
+  --c-bg-primary: #ededed;
+  --c-bg-secondary: #e2e2e2;
+  --c-bg-tertiary: #dbdbdb;
+  --c-fg-primary: #d3d3d3;
+  --c-fg-secondary: #cdcdcd;
+  --c-fg-tertiary: #c8c8c8;
+  --c-text: #151515;
+  --c-inverse: #121212;
+  --c-accent: #1da54f;
+}
+
+html.dark {
+  --c-bg-primary: #121212;
+  --c-bg-secondary: #1d1d1d;
+  --c-bg-tertiary: #242424;
+  --c-fg-primary: #2c2c2c;
+  --c-fg-secondary: #323232;
+  --c-fg-tertiary: #373737;
+  --c-text: #eaeaea;
+  --c-inverse: #ededed;
   --c-accent: #4ade80;
 }
 
@@ -15,7 +29,8 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  background: var(--c-primary)
+  background: transparent;
+  background: var(--c-bg-primary)
 }
 
 html, div {
