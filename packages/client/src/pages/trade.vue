@@ -1,13 +1,13 @@
 <script setup lang="ts">
 useHead({
-  title: 'Fintasy',
+  title: 'Trade • Fintasy',
 })
 </script>
 
 <template>
   <main flex flex-col grow px-4>
     <div flex flex-col w-92vw max-w-400 mx-auto my-auto grow>
-      Hello World!
+      <span op-25>(Trading Page)</span>
     </div>
   </main>
 </template>
