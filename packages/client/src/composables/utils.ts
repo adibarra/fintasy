@@ -1,9 +1,3 @@
-const { width, height } = useWindowSize()
-
-export const isMobile = computed<boolean>(() => {
-  return width.value < 640 || height.value < 640
-})
-
 /**
  * Clamps a number between a minimum and maximum value.
  * @param num - The number to clamp.
