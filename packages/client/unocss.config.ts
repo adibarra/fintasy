@@ -11,13 +11,11 @@ import {
 
 export default defineConfig({
   shortcuts: [
-    ['custom-bg', 'bg-[var(--c-primary)]'],
-    ['custom-text', 'text-[var(--c-text)]'],
-    ['custom-accent', 'text-[var(--c-accent)]'],
-    ['custom-link', 'custom-accent outline-none underline-1 hover:underline focus:underline'],
-    ['custom-outline', 'border-[var(--c-inverse)] outline-none rd-1 b-1'],
-    ['custom-outline-hover', 'hover:bg-[var(--c-secondary)] focus:bg-[var(--c-secondary)] focus:b-[var(--c-accent)] focus-within:b-[var(--c-accent)]'],
-    ['custom-icon-btn', 'outline-none inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-[var(--c-accent)] focus:opacity-100 focus:text-[var(--c-accent)]'],
+    [/^(.*)--c-(.*)$/, ([, prefix, c]) => `${prefix}-[var(--c-${c})]`], // bg--c-bg-primary -> bg-[var(--c-bg-primary)], etc.
+    ['fn-link', 'text--c-accent outline-none underline-1 hover:underline focus:underline'],
+    ['fn-icon-btn', 'outline-none inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text--c-accent focus:opacity-100 focus:text--c-accent'],
+    ['fn-outline', 'border--c-inverse outline-none rd-1 b-1'],
+    ['fn-outline-hover', 'hover:bg--c-bg-secondary focus:bg--c-bg-secondary focus:border--c-accent focus-within:border--c-accent'],
     ['text-xs', 'text-[0.75rem] line-height-[1rem]'],
     ['markdown-body', 'text-left m-auto prose'],
   ],
