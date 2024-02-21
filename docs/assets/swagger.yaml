@@ -191,7 +191,7 @@ paths:
         - name: uuid
           in: path
           description: The uuid of the transaction to be fetched
-          example:  177d58d6-c33e-465b-a71f-b738a052d13f
+          example: 177d58d6-c33e-465b-a71f-b738a052d13f
           required: true
           schema:
             type: string

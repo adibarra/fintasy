@@ -1,0 +1,16 @@
+example:
+  hello-world: Hello World!
+
+pages:
+  main:
+    title: Main
+  dashboard:
+    title: Dashboard
+  trade:
+    title: Trade
+
+buttons:
+  go-back: Go Back
+
+errors:
+  not-found: Not Found

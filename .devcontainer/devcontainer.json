@@ -27,6 +27,7 @@
         "ecmel.vscode-html-css",
         "editorconfig.editorconfig",
         "github.vscode-pull-request-github",
+        "lokalise.i18n-ally",
         "mutantdino.resourcemonitor",
         "pomdtr.excalidraw-editor",
         "streetsidesoftware.code-spell-checker",

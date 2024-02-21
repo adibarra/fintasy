@@ -43,7 +43,6 @@ The `src/` directory is where all the source code for the frontend is stored. It
 
 The `public/` directory is where all the static files are stored. This includes images and other assets that are served by the frontend.
 
-
 ## Backend
 `// todo: brief intro`
 
