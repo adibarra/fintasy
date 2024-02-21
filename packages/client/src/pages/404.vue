@@ -1,6 +1,8 @@
 <script setup lang="ts">
+const { t } = useI18n()
+
 useHead({
-  title: 'Not Found • Fintasy',
+  title: `${t('errors.not-found')} • Fintasy`,
   meta: [
     { name: 'robots', content: 'noindex, nofollow' },
   ],
@@ -12,16 +14,16 @@ useHead({
     <div w-fit p-5 mx-auto mt-20vh outline outline-1 rd-2>
       <div font-900 text-4xl>
         <span text-red>404:</span>
-        Not Found
+        {{ $t('errors.not-found') }}
       </div>
       <button
-        title="Go Back"
-        custom-icon-btn flex text-lg mt-2
+        :title="$t('buttons.go-back')"
+        fn-icon-btn flex text-lg mt-2
         @click="$router.back()"
         @keydown.enter="$router.back()"
       >
         <div i-carbon:caret-left text-2xl />
-        Go Back
+        {{ $t('buttons.go-back') }}
       </button>
     </div>
   </main>

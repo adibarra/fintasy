@@ -1,10 +1,16 @@
-button:
-  about: About
-  back: Back
-  go: GO
-  home: Home
-  toggle_dark: Toggle dark mode
-  toggle_langs: Change languages
-intro:
+example:
   hello-world: Hello World!
-not-found: Not found
+
+pages:
+  main:
+    title: Main
+  dashboard:
+    title: Dashboard
+  trade:
+    title: Trade
+
+buttons:
+  go-back: Go Back
+
+errors:
+  not-found: Not Found

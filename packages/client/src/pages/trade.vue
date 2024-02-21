@@ -1,13 +1,15 @@
 <script setup lang="ts">
+const { t } = useI18n()
+
 useHead({
-  title: 'Trade • Fintasy',
+  title: `${t('pages.trade.title')} • Fintasy`,
 })
 </script>
 
 <template>
   <main flex flex-col grow px-4>
     <div flex flex-col w-92vw max-w-400 mx-auto my-auto grow>
-      <span op-25>(Trading Page)</span>
+      {{ $t('example.hello-world') }}
     </div>
   </main>
 </template>

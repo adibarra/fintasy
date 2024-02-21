@@ -9,6 +9,9 @@ import Markdown from 'unplugin-vue-markdown/vite'
 import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
 import VueMacros from 'unplugin-vue-macros/vite'
+import VueI18n from '@intlify/unplugin-vue-i18n/vite'
+import { VitePWA } from 'vite-plugin-pwa'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import VueRouter from 'unplugin-vue-router/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import WebfontDownload from 'vite-plugin-webfont-dl'
@@ -43,6 +46,7 @@ export default defineConfig({
     AutoImport({
       imports: [
         'vue',
+        'vue-i18n',
         '@vueuse/head',
         '@vueuse/core',
         VueRouterAutoImports,
@@ -140,6 +144,12 @@ export default defineConfig({
     onFinished() {
       generateSitemap()
     },
+  },
+
+  // https://github.com/vitest-dev/vitest
+  test: {
+    include: ['tests/**/*.test.ts'],
+    environment: 'jsdom',
   },
 
   ssr: {
