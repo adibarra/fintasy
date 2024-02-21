@@ -11,7 +11,7 @@ import {
 
 export default defineConfig({
   shortcuts: [
-    [/^(.+)--c-([^\)\]\>\s]+)$/, ([, prefix, color]) => {console.log(prefix, color); return `${prefix}-[var(--c-${color})]`}], // bg--c-bg-primary -> bg-[var(--c-bg-primary)], etc.
+    [/^(.+)--c-([^\)\]\>\s]+)$/, ([, prefix, color]) => `${prefix}-[var(--c-${color})]`], // bg--c-bg-primary -> bg-[var(--c-bg-primary)], etc.
     ['fn-link', 'text--c-accent outline-none underline-1 hover:underline focus:underline'],
     ['fn-icon-btn', 'outline-none inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text--c-accent focus:opacity-100 focus:text--c-accent'],
     ['fn-outline', 'border--c-inverse outline-none rd-1 b-1'],
