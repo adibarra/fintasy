@@ -1,7 +1,7 @@
 {
   "name": "fintasy",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
   "packageManager": "pnpm@8.15.3",
   "description": "CS.3354 Project: Competitive paper trading platform",
