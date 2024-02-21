@@ -9,13 +9,9 @@
 <h3 align="center"><strong>Fintasy - A competitive paper trading platform</strong></h3>
 
 <h3 align="center">
-  <a href="https://fintasy.adibarra.com">
-    <img src="https://img.shields.io/website?url=https%3A%2F%2Ffintasy.adibarra.com%2F&up_message=online&up_color=green&down_message=offline&down_color=red&label=Live%20Demo" alt="Live Demo">
-  </a>
-  <a href="https://adibarra.github.io/fintasy/">
-    <img src="https://img.shields.io/website?url=https%3A%2F%2Fadibarra.github.io%2Ffintasy%2F&up_message=online&up_color=green&down_message=offline&down_color=red&label=Documentation
-    " alt="Live Documentation">
-  </a>
+  <img src="https://img.shields.io/website?url=https%3A%2F%2Ffintasy.adibarra.com%2F&up_message=online&up_color=green&down_message=offline&down_color=red&label=Live%20Demo">
+  <img src="https://img.shields.io/website?url=https%3A%2F%2Fadibarra.github.io%2Ffintasy%2F&up_message=online&up_color=green&down_message=offline&down_color=red&label=Documentation
+  ">
   <br />
   <a href="#tooling">Tooling</a> •
   <a href="#environment-setup">Environment Setup</a> •
