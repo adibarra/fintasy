@@ -10,10 +10,10 @@
 
 <h3 align="center">
   <a href="https://fintasy.adibarra.com">
-    <img src="https://img.shields.io/website?url=https%3A%2F%2Ffintasy.adibarra.com%2F&up_message=online&up_color=green&down_message=offline&down_color=red&label=Live%20Demo" alt="Live Demo">
+    <img alt="Live Demo" src="https://img.shields.io/website?url=https%3A%2F%2Ffintasy.adibarra.com%2F&label=Live%20Demo">
   </a>
   <a href="https://adibarra.github.io/fintasy/">
-    <img src="https://img.shields.io/badge/Documentation-online-green" alt="Live Documentation">
+    <img alt="Documentation" src="https://img.shields.io/website?url=https%3A%2F%2Fadibarra.github.io%2Ffintasy%2F&label=Documentation">
   </a>
   <br />
   <a href="#tooling">Tooling</a> •
