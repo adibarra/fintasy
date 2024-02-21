@@ -16,7 +16,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "start": "pnpm i && pnpm -r run start",
-    "taze": "taze major -r -I"
+    "taze": "taze major -r -I",
+    "test": "pnpm -r --parallel run test"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.4",
