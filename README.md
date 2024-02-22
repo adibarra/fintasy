@@ -28,10 +28,10 @@ Our goal is to be able to create a platform for paper trading which can also hos
 
 ## Tooling
 #### VSCode
-VSCode is **required** for development in this repo. The repo is currently set up with a few extensions that make it easier to work with this tech stack. It also fully supports devcontainers which are leveraged heavily. Instructions for installing VSCode can be found [here](https://code.visualstudio.com/download).
+VSCode is **highly recommended**, the repo is currently set up to take advantage of devcontainers which automatically set up all dependencies for you. This is the easiest way to get the project up and running. Instructions for installing VSCode can be found [here](https://code.visualstudio.com/download).
 
 #### Docker
-Docker is **required** for development in this repo. It is used to automatically install all the dependencies you need into a devcontainer. This is the easiest way to get the project up and running. Instructions for installing Docker can be found [here](https://www.docker.com/products/docker-desktop/).
+If you want to take advantage of the devcontainer then docker is **required**. If you are planning on setting up the environment manually then it is not needed. Instructions for installing Docker can be found [here](https://www.docker.com/products/docker-desktop/).
 
 #### Insomnia
 Insomnia is recommended for testing and debugging the API. It allows you to automatically and manually issue http requests. Instructions for installing Insomnia can be found [here](https://insomnia.rest/download).
@@ -49,7 +49,37 @@ This is a one-time setup. If you have already done this, you can skip to the nex
 9.  Let the container build. This **will** take a while (only the first time).
 10. Once the build is complete, you can begin development.
 
-## Reconnect to Environment
+<details>
+<summary>Manual Environment Setup</summary>
+You will need to install the following:
+
+1. [nvm](https://github.com/nvm-sh/nvm)
+2. [Node.js](https://nodejs.org/en/download/) (using nvm install the node version in .nvmrc)
+3. [pnpm](https://pnpm.io/installation) (using node installed via nvm)
+4. [Python](https://www.python.org/downloads/)
+5. [PostgreSQL](https://www.postgresql.org/download/)
+
+After that, the following VSCode extensions are highly recommended for development:
+
+1.  antfu.goto-alias
+2.  antfu.iconify
+3.  antfu.unocss
+4.  Arjun.swagger-viewer
+5.  charliermarsh.ruff
+6.  christian-kohler.path-intellisense
+7.  csstools.postcss
+8.  dbaeumer.vscode-eslint
+9.  ecmel.vscode-html-css
+10. editorconfig.editorconfig
+11. github.vscode-pull-request-github
+12. lokalise.i18n-ally
+13. mutantdino.resourcemonitor
+14. pomdtr.excalidraw-editor
+15. streetsidesoftware.code-spell-checker
+16. vue.volar
+</details>
+
+## Reconnect to Environment (devcontainer)
 You can re-attach the devcontainer by doing the following from a new VSCode window:
 1. Click the `Remote Explorer` tab.
 2. Select `Dev Containers` in the dropdown menu.
