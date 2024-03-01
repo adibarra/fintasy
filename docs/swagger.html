@@ -1,32 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Fintasy - API Docs</title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.4/swagger-ui.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.4/swagger-ui.min.css"
+    />
   </head>
 
   <body>
     <div id="swagger-ui" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.4/swagger-ui-bundle.min.js"> </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.4/swagger-ui-standalone-preset.min.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.4/swagger-ui-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.4/swagger-ui-standalone-preset.min.js"></script>
   </body>
 
   <script>
-    window.onload = function() {
+    window.onload = function () {
       window.ui = SwaggerUIBundle({
-        url: "assets/swagger.yaml",
+        url: 'assets/swagger.yaml',
         dom_id: '#swagger-ui',
         deepLinking: true,
-        presets: [
-          SwaggerUIBundle.presets.apis,
-          SwaggerUIStandalonePreset
-        ],
-        plugins: [
-          SwaggerUIBundle.plugins.DownloadUrl
-        ],
-        layout: "StandaloneLayout"
+        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+        plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+        layout: 'StandaloneLayout',
       })
-  }
+    }
   </script>
 </html>

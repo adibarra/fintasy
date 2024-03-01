@@ -23,21 +23,28 @@
 </h3>
 
 ## Overview
+
 This is our group project for CS.3354 Software Engineering.
 Our goal is to be able to create a platform for paper trading which can also host competitions. The project's documentation can be found here: [Fintasy Documentation](https://adibarra.github.io/fintasy/).
 
 ## Tooling
+
 #### VSCode
+
 VSCode is **highly recommended**, the repo is currently set up to take advantage of devcontainers which automatically set up all dependencies for you. This is the easiest way to get the project up and running. Instructions for installing VSCode can be found [here](https://code.visualstudio.com/download).
 
 #### Docker
+
 If you want to take advantage of the devcontainer then docker is **required**. If you are planning on setting up the environment manually then it is not needed. Instructions for installing Docker can be found [here](https://www.docker.com/products/docker-desktop/).
 
 #### Insomnia
+
 Insomnia is recommended for testing and debugging the API. It allows you to automatically and manually issue http requests. Instructions for installing Insomnia can be found [here](https://insomnia.rest/download).
 
 ## Environment Setup
+
 This is a one-time setup. If you have already done this, you can skip to the next section.
+
 1.  Open Docker Desktop. Make sure it is running before continuing.
 2.  Open VSCode.
 3.  Install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
@@ -80,7 +87,9 @@ After that, the following VSCode extensions are highly recommended for developme
 </details>
 
 ## Reconnect to Environment (devcontainer)
+
 You can re-attach the devcontainer by doing the following from a new VSCode window:
+
 1. Click the `Remote Explorer` tab.
 2. Select `Dev Containers` in the dropdown menu.
 3. Find the `fintasy` container.
@@ -88,7 +97,9 @@ You can re-attach the devcontainer by doing the following from a new VSCode wind
 5. You can now continue development.
 
 ## Run Project
+
 Make sure you are in the repo's root directory before running these commands.
+
 ```bash
   # # # # # # # # # # # # # # # # # # # # # # # #
   # Start the development environment           #
@@ -107,16 +118,18 @@ Make sure you are in the repo's root directory before running these commands.
 ```
 
 ## Project Scripts
-| Scripts            | Description                                  |
-|--------------------|----------------------------------------------|
-| pnpm clean         | removes build artifacts                      |
-| pnpm clean:all     | removes build artifacts and dependencies     |
-| pnpm lint          | prints warnings about code formatting        |
-| pnpm lint:fix      | auto-fixes the code formatting               |
-| pnpm install       | installs dependencies for entire project     |
-| pnpm dev           | runs development environment                 |
-| pnpm build         | builds the app for production                |
-| pnpm start         | runs the built app for production            |
+
+| Scripts        | Description                              |
+| -------------- | ---------------------------------------- |
+| pnpm clean     | removes build artifacts                  |
+| pnpm clean:all | removes build artifacts and dependencies |
+| pnpm lint      | prints warnings about code formatting    |
+| pnpm lint:fix  | auto-fixes the code formatting           |
+| pnpm install   | installs dependencies for entire project |
+| pnpm dev       | runs development environment             |
+| pnpm build     | builds the app for production            |
+| pnpm start     | runs the built app for production        |
 
 ## License
+
 All rights reserved.

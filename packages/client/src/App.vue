@@ -18,7 +18,7 @@ useHead({
 </script>
 
 <template>
-  <div flex flex-col min-h-svh text--c-text>
+  <div flex flex-col text--c-text min-h-svh>
     <RouterView />
   </div>
 </template>
