@@ -11,14 +11,14 @@ useHead({
 
 <template>
   <main grow>
-    <div w-fit p-5 mx-auto mt-20vh outline outline-1 rd-2>
-      <div font-900 text-4xl>
+    <div mx-auto mt-20vh w-fit rd-2 p-5 outline-1 outline>
+      <div text-4xl font-900>
         <span text-red>404:</span>
         {{ $t('errors.not-found') }}
       </div>
       <button
         :title="$t('buttons.go-back')"
-        fn-icon-btn flex text-lg mt-2
+        mt-2 flex text-lg fn-icon-btn
         @click="$router.back()"
         @keydown.enter="$router.back()"
       >

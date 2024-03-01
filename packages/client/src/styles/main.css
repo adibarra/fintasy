@@ -30,15 +30,17 @@ body,
   margin: 0;
   padding: 0;
   background: transparent;
-  background: var(--c-bg-primary)
+  background: var(--c-bg-primary);
 }
 
-html, div {
+html,
+div {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-html::-webkit-scrollbar, div::-webkit-scrollbar {
+html::-webkit-scrollbar,
+div::-webkit-scrollbar {
   display: none;
 }
 

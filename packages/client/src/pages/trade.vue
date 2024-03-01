@@ -7,8 +7,8 @@ useHead({
 </script>
 
 <template>
-  <main flex flex-col grow px-4>
-    <div flex flex-col w-92vw max-w-400 mx-auto my-auto grow>
+  <main flex grow flex-col px-4>
+    <div mx-auto my-auto max-w-400 w-92vw flex grow flex-col>
       {{ $t('example.hello-world') }}
     </div>
   </main>

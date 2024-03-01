@@ -1,8 +1,11 @@
 {
   "recommendations": [
+    "antfu.file-nesting",
     "eamodio.gitlens",
     "mhutchie.git-graph",
+    "mutantdino.resourcemonitor",
     "naumovs.color-highlight",
-    "pkief.material-icon-theme"
+    "pkief.material-icon-theme",
+    "usernamehw.errorlens"
   ]
 }
