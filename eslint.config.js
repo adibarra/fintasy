@@ -1,9 +1,10 @@
+// @ts-check
 import antfu from '@antfu/eslint-config'
 
-export default await antfu({
-  typescript: true,
-  vue: true,
+export default antfu({
+  unocss: true,
+  formatters: true,
   rules: {
-    'antfu/if-newline': 'off',
+    'if-newline': 'off',
   },
 })
