@@ -26,9 +26,10 @@
         "dbaeumer.vscode-eslint",
         "ecmel.vscode-html-css",
         "editorconfig.editorconfig",
+        "github.vscode-github-actions",
         "github.vscode-pull-request-github",
+        "johnsoncodehk.vscode-tsconfig-helper",
         "lokalise.i18n-ally",
-        "mutantdino.resourcemonitor",
         "pomdtr.excalidraw-editor",
         "streetsidesoftware.code-spell-checker",
         "vue.volar"
