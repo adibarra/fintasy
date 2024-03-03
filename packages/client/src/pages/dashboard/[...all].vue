@@ -10,8 +10,9 @@ useHead({
 </script>
 
 <template>
-  <main grow>
-    <div mx-auto mt-20vh w-fit rd-2 p-5 outline-1 outline>
+  <main h-full flex flex-col bg--c-bg-primary p-4 text--c-text>
+    <div h-20vh />
+    <div mx-auto w-fit rd-2 p-5 outline-1 outline>
       <div text-4xl font-900>
         <span text-red>404:</span>
         {{ $t('errors.not-found') }}
@@ -26,10 +27,11 @@ useHead({
         {{ $t('buttons.go-back') }}
       </button>
     </div>
+    <div grow />
   </main>
 </template>
 
 <route lang="yaml">
-meta:
-  layout: default
+  meta:
+    layout: dashboard
 </route>

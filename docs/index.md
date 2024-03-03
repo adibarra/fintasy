@@ -33,9 +33,9 @@ Vue was chosen as the framework for the frontend because it is a very lightweigh
 
 It's developer experience is supported by fantastic tooling like vite. Vite allows us to hot-reload the app during development, this makes development much faster. In addition, there is also a plethora of vue component libraries that we can pull from. This allows us to build the app faster and with less code.
 
-#### Vite-SSG
+#### Vite
 
-We also chose to use Vite-SSG as part of the build process. This is a static site generator that is built on top of vite for Vue. It allows us to build our webapp into a static site that can be hosted anywhere. This is a huge benefit because it allows us to use static file hosting and Content Delivery Networks (CDNs). This means that the site's assets can be cached, making it much faster to load for users.
+We also chose to use Vite as part of the build process. Vite has a static site generator that is built on top of vite for Vue. It allows us to build our webapp into a static site that can be hosted anywhere. This is a huge benefit because it allows us to use static file hosting and Content Delivery Networks (CDNs). This means that the site's assets can be cached, making it much faster to load for users.
 
 ### Project Structure
 

@@ -2,12 +2,15 @@
 
 <!-- Please describe what changes this PR introduces and why they're needed. -->
 
-### Checklist
+- Added this...
+- Removed that...
+- Changed those...
 
-Before submitting the PR, make sure you have done the following:
+### Checklist
 
 <!-- Fill in the checkboxes like this [x] -->
 
+Before submitting the PR, make sure you have done the following:
+
 - [ ] Updated `README.md` and/or `/docs`, if applicable
-- [ ] Ran the linter and fixed all issues, if applicable
 - [ ] Added tests for the changes, if applicable

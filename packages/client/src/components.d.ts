@@ -7,20 +7,23 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Footer: typeof import('./components/Footer.vue')['default']
-    Header: typeof import('./components/Header.vue')['default']
+    Logo: typeof import('./components/Logo.vue')['default']
+    NavBar: typeof import('./components/layout/NavBar.vue')['default']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
     NGlobalStyle: typeof import('naive-ui')['NGlobalStyle']
     NLayout: typeof import('naive-ui')['NLayout']
+    NLayoutContent: typeof import('naive-ui')['NLayoutContent']
+    NLayoutHeader: typeof import('naive-ui')['NLayoutHeader']
     NLayoutSider: typeof import('naive-ui')['NLayoutSider']
     NLoadingBarProvider: typeof import('naive-ui')['NLoadingBarProvider']
     NMenu: typeof import('naive-ui')['NMenu']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
+    NScrollbar: typeof import('naive-ui')['NScrollbar']
     Provider: typeof import('./components/helper/Provider.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Sidebar: typeof import('./components/layout/Sidebar.vue')['default']
+    SideBar: typeof import('./components/layout/SideBar.vue')['default']
   }
 }

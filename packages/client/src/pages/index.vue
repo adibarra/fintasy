@@ -7,9 +7,15 @@ useHead({
 </script>
 
 <template>
-  <main flex grow flex-col px-4>
-    <div mx-auto my-auto max-w-400 w-92vw flex grow flex-col>
-      {{ $t('example.hello-world') }}
-    </div>
+  <main h-full flex grow flex-col bg--c-bg-primary p-4 text--c-text>
+    {{ $t('example.hello-world') }}
+    <a href="/dashboard" text-xl fn-link>
+      {{ t('pages.dashboard.title') }}
+    </a>
   </main>
 </template>
+
+<route lang="yaml">
+  meta:
+    layout: default
+  </route>

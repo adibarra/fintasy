@@ -12,10 +12,11 @@
     "build": "pnpm -r run clean:all && pnpm i && pnpm -r run build",
     "clean": "pnpm -r run clean",
     "clean:all": "pnpm -r run clean:all && rm -rf node_modules/ .pnpm-store/",
-    "dev": "pnpm i && pnpm -r run dev",
+    "dev": "pnpm i && pnpm -r --parallel run dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "npx simple-git-hooks",
+    "preview": "pnpm -r --parallel run preview",
     "start": "pnpm i && pnpm -r run start",
     "taze": "taze major -r -I",
     "test": "pnpm -r --parallel run test"

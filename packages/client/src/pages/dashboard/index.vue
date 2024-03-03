@@ -7,7 +7,9 @@ useHead({
 </script>
 
 <template>
-  {{ $t('example.hello-world') }}
+  <main h-full flex grow flex-col bg--c-bg-primary p-4 text--c-text>
+    {{ $t('example.hello-world') }}
+  </main>
 </template>
 
 <route lang="yaml">
