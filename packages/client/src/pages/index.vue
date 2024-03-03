@@ -12,6 +12,9 @@ useHead({
     <a href="/dashboard" text-xl fn-link>
       {{ t('pages.dashboard.title') }}
     </a>
+    <span op-50>
+      [ pages/index.vue ]
+    </span>
   </main>
 </template>
 
