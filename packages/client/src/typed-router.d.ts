@@ -20,8 +20,11 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...all]': RouteRecordInfo<'/[...all]', '/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
-    '/404': RouteRecordInfo<'/404', '/404', Record<never, never>, Record<never, never>>,
-    '/dashboard': RouteRecordInfo<'/dashboard', '/dashboard', Record<never, never>, Record<never, never>>,
-    '/trade': RouteRecordInfo<'/trade', '/trade', Record<never, never>, Record<never, never>>,
+    '/dashboard/': RouteRecordInfo<'/dashboard/', '/dashboard', Record<never, never>, Record<never, never>>,
+    '/dashboard/[...all]': RouteRecordInfo<'/dashboard/[...all]', '/dashboard/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
+    '/dashboard/help': RouteRecordInfo<'/dashboard/help', '/dashboard/help', Record<never, never>, Record<never, never>>,
+    '/dashboard/settings': RouteRecordInfo<'/dashboard/settings', '/dashboard/settings', Record<never, never>, Record<never, never>>,
+    '/dashboard/tournaments': RouteRecordInfo<'/dashboard/tournaments', '/dashboard/tournaments', Record<never, never>, Record<never, never>>,
+    '/dashboard/trade': RouteRecordInfo<'/dashboard/trade', '/dashboard/trade', Record<never, never>, Record<never, never>>,
   }
 }

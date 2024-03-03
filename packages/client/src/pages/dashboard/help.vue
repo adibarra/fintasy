@@ -2,23 +2,20 @@
 const { t } = useI18n()
 
 useHead({
-  title: `${t('pages.main.title')} • Fintasy`,
+  title: `${t('pages.help.title')} • Fintasy`,
 })
 </script>
 
 <template>
   <main h-full flex grow flex-col bg--c-bg-primary p-4 text--c-text>
     {{ $t('example.hello-world') }}
-    <a href="/dashboard" text-xl fn-link>
-      {{ t('pages.dashboard.title') }}
-    </a>
     <span op-50>
-      [ pages/index.vue ]
+      [ pages/dashboard/help.vue ]
     </span>
   </main>
 </template>
 
 <route lang="yaml">
   meta:
-    layout: default
-  </route>
+    layout: dashboard
+</route>
