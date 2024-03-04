@@ -11,7 +11,7 @@ This is an example of a page that uses the dashboard layout and is also markdown
 
 - We are able to use full markdown syntax here.
 - We can also use custom components like the `router-link` component to add inter-app links to this page.
-  <router-link to="/dashboard">Go to dashboard</router-link>
+  <router-link to="/dashboard">Go to dashboard</router-link> or <router-link to="/dashboard/help/example">Go to another example</router-link>
 
 Click [here](https://www.google.com) to go to Google.
 
@@ -39,7 +39,10 @@ Click me
 However, is recommended to write any necessary html in a vue component in the `/components` folder and import it here instead of writing it directly in the markdown file.
 
 <span op-50>
+  <!-- Some spacers and a temporary footer -->
+  <div h-10 />
   [ pages/dashboard/help/index.md ]
+  <div h-10 />
 </span>
 
 <script setup lang="ts">
