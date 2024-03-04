@@ -1,5 +1,5 @@
 <template>
-  <span my-auto text-2xl>
-    Fintasy
+  <span my-auto text-xl>
+    Logo Here
   </span>
 </template>
