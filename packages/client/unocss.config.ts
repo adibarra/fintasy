@@ -17,7 +17,6 @@ export default defineConfig({
     ['fn-outline', 'border--c-inverse outline-none rd-1 b-1'],
     ['fn-outline-hover', 'hover:bg--c-bg-secondary focus:bg--c-bg-secondary focus:border--c-accent focus-within:border--c-accent'],
     ['text-xs', 'text-[0.75rem] line-height-[1rem]'],
-    ['markdown-body', 'text-left m-auto prose'],
   ],
   presets: [
     presetUno(),
@@ -39,5 +38,5 @@ export default defineConfig({
     transformerDirectives(),
     transformerVariantGroup(),
   ],
-  safelist: ''.split(' '),
+  safelist: 'prose mx-auto text-left'.split(' '),
 })

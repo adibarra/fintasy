@@ -84,4 +84,30 @@ div::-webkit-scrollbar {
   width: 100%;
   height: 2px;
 }
+
+.prose pre:not(.shiki) {
+  padding: 0;
+}
+
+.prose .shiki {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.2em;
+  line-height: 1.4;
+}
+
+.prose img {
+  width: 100%;
+}
+
+.shiki,
+.shiki span {
+  color: var(--shiki-light);
+  background: var(--shiki-light-bg);
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark);
+  background: var(--shiki-dark-bg);
+}
 </style>
