@@ -6,14 +6,20 @@ pages:
     title: Main
   dashboard:
     title: Dashboard
-  trade:
-    title: Trade
-  tournaments:
-    title: Tournaments
-  help:
-    title: Help
-  settings:
-    title: Settings
+    trade:
+      title: Trade
+    tournaments:
+      title: Tournaments
+    help:
+      title: Help
+      index:
+        title: Index
+      faq:
+        title: FAQ
+      Guide:
+        title: Guide
+    settings:
+      title: Settings
 
 buttons:
   go-back: Go Back

@@ -2,7 +2,7 @@
 const { t } = useI18n()
 
 useHead({
-  title: `${t('pages.trade.title')} • Fintasy`,
+  title: `${t('pages.dashboard.trade.title')} • Fintasy`,
 })
 </script>
 
