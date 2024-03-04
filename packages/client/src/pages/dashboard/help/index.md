@@ -49,7 +49,7 @@ However, is recommended to write any necessary html in a vue component in the `/
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 useHead({
-  title: `${t('pages.help.title')} • Fintasy`,
+  title: `${t('pages.dashboard.help.title')} • Fintasy`,
 })
 </script>
 

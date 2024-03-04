@@ -8,7 +8,7 @@ There is nothing else to see here
 <span op-50>
   <!-- Some spacers and a temporary footer -->
   <div h-10 />
-  [ pages/dashboard/help/example.md ]
+  [ pages/dashboard/help/faq.md ]
   <div h-10 />
 </span>
 
@@ -16,7 +16,7 @@ There is nothing else to see here
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 useHead({
-  title: `${t('pages.help.title')} • Fintasy`,
+  title: `${t('pages.dashboard.help.faq.title')} • Fintasy`,
 })
 </script>
 
