@@ -38,6 +38,8 @@
     "pomdtr",
     "pycache",
     "resourcemonitor",
+    "Shiki",
+    "shikijs",
     "sider",
     "tabler",
     "tabout",
@@ -51,6 +53,7 @@
     "venv",
     "vicons",
     "virtualenv",
+    "vitesse",
     "vueuse",
     "webfont"
   ],

@@ -7,15 +7,13 @@ useHead({
 </script>
 
 <template>
-  <main h-full flex grow flex-col bg--c-bg-primary p-4 text--c-text>
-    {{ $t('example.hello-world') }}
-    <a href="/dashboard" text-xl fn-link>
-      {{ t('pages.dashboard.title') }}
-    </a>
-    <span op-50>
-      [ pages/index.vue ]
-    </span>
-  </main>
+  {{ $t('example.hello-world') }}
+  <a href="/dashboard" text-xl fn-link>
+    {{ t('pages.dashboard.title') }}
+  </a>
+  <span op-50>
+    [ pages/index.vue ]
+  </span>
 </template>
 
 <route lang="yaml">

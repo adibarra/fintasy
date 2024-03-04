@@ -1,6 +1,7 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
+import Shiki from '@shikijs/markdown-it'
 import generateSitemap from 'vite-ssg-sitemap'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
@@ -77,9 +78,9 @@ export default defineConfig({
 
     // https://github.com/mdit-vue/unplugin-vue-markdown
     Markdown({
-      wrapperClasses: 'markdown-body',
+      wrapperClasses: 'prose prose-sm mx-auto text-left',
       headEnabled: true,
-      markdownItSetup(md) {
+      async markdownItSetup(md) {
         md.use(LinkAttributes, {
           matcher: (link: string) => /^https?:\/\//.test(link),
           attrs: {
@@ -87,6 +88,13 @@ export default defineConfig({
             rel: 'noopener',
           },
         })
+        md.use(await Shiki({
+          defaultColor: false,
+          themes: {
+            light: 'vitesse-light',
+            dark: 'vitesse-dark',
+          },
+        }))
       },
     }),
 
