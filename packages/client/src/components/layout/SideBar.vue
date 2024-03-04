@@ -47,7 +47,7 @@ function selectAndExpand(key: string) {
 
 watch(() => route.path, () => {
   selectAndExpand(route.path)
-})
+}, { immediate: true })
 </script>
 
 <template>
