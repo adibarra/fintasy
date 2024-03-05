@@ -38,8 +38,8 @@ Click me
 
 However, is recommended to write any necessary html in a vue component in the `/components` folder and import it here instead of writing it directly in the markdown file.
 
+<!-- Some spacers and a temporary footer -->
 <span op-50>
-  <!-- Some spacers and a temporary footer -->
   <div h-10 />
   [ pages/dashboard/help/index.md ]
   <div h-10 />

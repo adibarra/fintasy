@@ -5,8 +5,8 @@ This is another example of a markdown file.
 There is nothing else to see here
 <router-link to="/dashboard/help">Go Back</router-link>
 
+<!-- Some spacers and a temporary footer -->
 <span op-50>
-  <!-- Some spacers and a temporary footer -->
   <div h-10 />
   [ pages/dashboard/help/faq.md ]
   <div h-10 />

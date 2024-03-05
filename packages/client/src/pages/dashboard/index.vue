@@ -8,8 +8,12 @@ useHead({
 
 <template>
   {{ $t('example.hello-world') }}
+
+  <!-- Some spacers and a temporary footer -->
   <span op-50>
+    <div h-10 />
     [ pages/dashboard/index.vue ]
+    <div h-10 />
   </span>
 </template>
 
