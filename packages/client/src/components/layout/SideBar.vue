@@ -24,8 +24,8 @@ const menuOptions1: MenuOption[] = [
 const menuOptions2: MenuOption[] = [
   { key: 'divider-1', type: 'divider' },
   { label: `${t('pages.dashboard.help.title')}`, key: '/dashboard/help', icon: renderIcon(HelpIcon), children: [
-    { label: `${t('pages.dashboard.help.index.title')}`, key: '/dashboard/help', icon: renderIcon(HelpIcon) },
-    { label: `${t('pages.dashboard.help.faq.title')}`, key: '/dashboard/help/faq', icon: renderIcon(HelpIcon) },
+    { label: `${t('pages.dashboard.help.index.title')}`, key: '/dashboard/help' },
+    { label: `${t('pages.dashboard.help.faq.title')}`, key: '/dashboard/help/faq' },
   ] },
   { label: `${t('pages.dashboard.settings.title')}`, key: '/dashboard/settings', icon: renderIcon(SettingsIcon) },
 ]

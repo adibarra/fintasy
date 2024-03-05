@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { Notification as BellIcon } from '@vicons/carbon'
+import {
+  NotificationsOutline as BellIcon,
+  CaretDownOutline as DropdownIcon,
+  RefreshOutline as RefreshIcon,
+} from '@vicons/ionicons5'
+import { useMessage } from 'naive-ui'
 
 const { t } = useI18n()
 const route = useRoute()
+const message = useMessage()
 
 interface Crumb { label: string, key: string }
 const breadcrumbs = computed(() => {
@@ -34,16 +40,27 @@ const user = ref({
   ],
   coins: 50,
   balance: 200,
-  notifications: '99+',
 })
 </script>
 
 <template>
-  <n-layout-header bordered h-45px flex items-center px-2 py-1>
-    <!-- logo should be w-51 to be same size as sidebar items -->
-    <div mr-5 h-full w-51 flex items-center justify-center bg--c-bg-tertiary>
+  <n-layout-header bordered h-48px flex items-center py-1>
+    <!-- parent should be w-55 to match sidebar size -->
+    <div mr-5 h-full w-55 flex items-center justify-center px-2>
       <Logo />
     </div>
+
+    <!-- refresh button -->
+    <n-tooltip>
+      <template #trigger>
+        <n-button text mr-5 @click="$router.go(0)">
+          <n-icon size="20" :depth="2">
+            <RefreshIcon />
+          </n-icon>
+        </n-button>
+      </template>
+      Refresh Page
+    </n-tooltip>
 
     <!-- breadcrumbs keep track of what page you are on -->
     <n-breadcrumb mr-5>
@@ -63,12 +80,12 @@ const user = ref({
     <!-- need to work on look and feel as well as the actual logic for them -->
 
     <!-- coins -->
-    <div ml-8 w-fit flex items-center justify-center bg--c-bg-tertiary px-2>
+    <div ml-5 w-fit flex items-center justify-center bg--c-bg-tertiary px-2 op-85>
       Coins: 🪙 {{ user.coins }}
     </div>
 
     <!-- balance -->
-    <div ml-8 w-fit flex items-center justify-center bg--c-bg-tertiary px-2>
+    <div ml-5 w-fit flex items-center justify-center bg--c-bg-tertiary px-2 op-85>
       Balance: ${{ user.balance }}
     </div>
 
@@ -76,27 +93,27 @@ const user = ref({
     <n-dropdown
       :options="user.accounts"
       trigger="hover"
-      @select="(key) => user.account = user.accounts[key].label"
+      @select="(key, option) => {
+        user.account = user.accounts[key].label
+        message.info(`Selected ${option.label}`)
+      }"
     >
-      <div ml-8 w-fit flex items-center justify-center bg--c-bg-tertiary px-2>
+      <div ml-5 w-fit flex items-center justify-center gap-1 bg--c-bg-tertiary px-2 op-85>
         {{ user.account }}
+        <n-icon :depth="2" size="10">
+          <DropdownIcon />
+        </n-icon>
       </div>
     </n-dropdown>
 
     <!-- notifications with badge -->
-    <n-badge
-      :value="user.notifications"
-      ml-8
-    >
-      <n-avatar
-        size="small"
-        color="transparent"
-        cursor-pointer
+    <n-badge dot processing>
+      <n-icon
+        :depth="2" size="22" ml-5
+        @click="() => message.info(`Clicked notifications`)"
       >
-        <n-icon>
-          <BellIcon />
-        </n-icon>
-      </n-avatar>
+        <BellIcon />
+      </n-icon>
     </n-badge>
 
     <!-- user dropdown -->
@@ -105,14 +122,14 @@ const user = ref({
         { label: 'Profile', key: 'profile' },
         { label: 'Settings', key: 'settings' },
         { label: 'Logout', key: 'logout' },
-
       ]"
       trigger="hover"
+      @select="(key) => message.info(`Selected ${key}`)"
     >
       <n-avatar
         size="small"
         :src="user.avatar"
-        ml-8 mr-5
+        mx-5
       />
     </n-dropdown>
   </n-layout-header>
