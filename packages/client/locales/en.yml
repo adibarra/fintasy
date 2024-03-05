@@ -16,8 +16,6 @@ pages:
         title: Index
       faq:
         title: FAQ
-      Guide:
-        title: Guide
     settings:
       title: Settings
 

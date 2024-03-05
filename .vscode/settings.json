@@ -111,5 +111,11 @@
   },
 
   // Color highlighting
-  "color-highlight.markerType": "dot-before"
+  "color-highlight.markerType": "dot-before",
+
+  // i18n-ally
+  "i18n-ally.enabledFrameworks": ["vue"],
+  "i18n-ally.localesPaths": [
+    "packages/client/locales"
+  ]
 }
