@@ -21,6 +21,9 @@ pages:
     settings:
       title: Settings
 
+misc:
+  home: Home
+
 buttons:
   go-back: Go Back
 

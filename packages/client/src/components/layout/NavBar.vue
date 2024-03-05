@@ -1,26 +1,27 @@
 <script setup lang="ts">
-import { NIcon } from 'naive-ui'
 import { Notification as BellIcon } from '@vicons/carbon'
 
 const { t } = useI18n()
 const route = useRoute()
 
+interface Crumb { label: string, key: string }
 const breadcrumbs = computed(() => {
   const parts = route.path.split('/').filter(Boolean)
 
   let path = ''
-  return parts.map((part: string) => {
+  const crumbs: Crumb[] = parts.map((part: string) => {
     path += `/${part}`
     return {
       label: t(`pages.${path.replaceAll('/', '.').slice(1)}.title`),
       key: path,
     }
   })
-})
 
-function renderIcon(icon: Component) {
-  return () => h(NIcon, null, { default: () => h(icon) })
-}
+  if (crumbs.length === 1)
+    crumbs.push({ label: t('misc.home'), key: crumbs[0].key })
+
+  return crumbs
+})
 
 const user = ref({
   name: 'adibarra',
@@ -87,7 +88,15 @@ const user = ref({
       :value="user.notifications"
       ml-8
     >
-      <n-button :render-icon="renderIcon(BellIcon)" />
+      <n-avatar
+        size="small"
+        color="transparent"
+        cursor-pointer
+      >
+        <n-icon>
+          <BellIcon />
+        </n-icon>
+      </n-avatar>
     </n-badge>
 
     <!-- user dropdown -->
