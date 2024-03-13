@@ -189,7 +189,7 @@ paths:
         - name: uuid
           in: path
           description: The uuid of the portfolio to be fetched
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
           required: true
           schema:
             type: string
@@ -258,6 +258,57 @@ paths:
         default:
           $ref: '#/components/responses/APIResponseAll'
 
+  /portfolios/user/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Get user's portfolios
+      description: Gets all portfolios by owner.
+      operationId: getPortfoliosByUserUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the owner to fetch portfolios for
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+          required: true
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: The number of portfolios to skip
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          description: The maximum number of portfolios to return
+          required: false
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PortfolioGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
   /transactions:
     post:
       security:
@@ -308,6 +359,57 @@ paths:
                     properties:
                       data:
                         $ref: '#/components/schemas/TransactionGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
+  /transactions/portfolio/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - transactions
+      summary: Get portfolio's transactions
+      description: Gets all transactions by portfolio.
+      operationId: getTransactionByUserUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the portfolio to fetch transactions for
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+          required: true
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: The number of transactions to skip
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          description: The maximum number of transactions to return
+          required: false
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/TransactionGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
