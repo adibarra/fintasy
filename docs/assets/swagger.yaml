@@ -19,116 +19,15 @@ servers:
 
 # Set catagories
 tags:
-  - name: accounts
-    description: Perform operations on accounts
-  - name: transactions
-    description: Perform operations on transactions
   - name: users
     description: Perform operations on users
+  - name: portfolios
+    description: Perform operations on portfolios
+  - name: transactions
+    description: Perform operations on transactions
 
 # Set up api routes
 paths:
-  /accounts:
-    post:
-      security:
-        - bearerAuth: []
-      tags:
-        - accounts
-      summary: Create account
-      description: Create a new account for a user. Associating to a tournament is optional.
-      operationId: createAccount
-      requestBody:
-        description: Created account object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccountPostRequest'
-      responses:
-        default:
-          $ref: '#/components/responses/APIResponseAll'
-
-  /accounts/{uuid}:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - accounts
-      summary: Get account
-      description: Gets an account by uuid.
-      operationId: getAccountByUUID
-      parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the account to be fetched
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: Ok
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/APIResponse'
-                  - type: object
-                    required:
-                      - data
-                    properties:
-                      data:
-                        $ref: '#/components/schemas/AccountGetResponse'
-        default:
-          $ref: '#/components/responses/APIResponseError'
-
-    patch:
-      security:
-        - bearerAuth: []
-      tags:
-        - accounts
-      summary: Partially update account
-      description: |
-        Partially update an account.
-        All properties are optional.
-      operationId: updateAccount
-      parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the account to be updated
-          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: Updated account object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccountPatchRequest'
-      responses:
-        default:
-          $ref: '#/components/responses/APIResponseAll'
-
-    delete:
-      security:
-        - bearerAuth: []
-      tags:
-        - accounts
-      summary: Delete account
-      description: Delete account.
-      operationId: deleteAccount
-      parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the account to be deleted
-          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
-          required: true
-          schema:
-            type: string
-      responses:
-        default:
-          $ref: '#/components/responses/APIResponseAll'
-
   /auth:
     post:
       tags:
@@ -156,93 +55,6 @@ paths:
                     properties:
                       data:
                         $ref: '#/components/schemas/AuthPostResponse'
-        default:
-          $ref: '#/components/responses/APIResponseError'
-
-  /transactions:
-    post:
-      security:
-        - bearerAuth: []
-      tags:
-        - transactions
-      summary: Create transaction
-      description: Create a new transaction for an account.
-      operationId: createTransaction
-      requestBody:
-        description: Created transaction object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransactionPostRequest'
-      responses:
-        default:
-          $ref: '#/components/responses/APIResponseAll'
-
-  /transactions/{uuid}:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - transactions
-      summary: Get transaction
-      description: Gets a transaction by uuid.
-      operationId: getTransactionByUUID
-      parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the transaction to be fetched
-          example: 177d58d6-c33e-465b-a71f-b738a052d13f
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: Ok
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/APIResponse'
-                  - type: object
-                    required:
-                      - data
-                    properties:
-                      data:
-                        $ref: '#/components/schemas/TransactionGetResponse'
-        default:
-          $ref: '#/components/responses/APIResponseError'
-
-  /quotes/{symbol}:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - market data
-      summary: Get quote
-      description: Gets a quote for a symbol.
-      operationId: getQuoteBySymbol
-      parameters:
-        - name: symbol
-          in: path
-          description: The symbol of the quote to be fetched
-          example: AAPL
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: Ok
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/APIResponse'
-                  - type: object
-                    required:
-                      - data
-                    properties:
-                      data:
-                        $ref: '#/components/schemas/QuoteGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
@@ -345,6 +157,194 @@ paths:
         default:
           $ref: '#/components/responses/APIResponseAll'
 
+  /portfolios:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Create portfolio
+      description: Create a new portfolio for a user. Associating to a tournament is optional.
+      operationId: createPortfolio
+      requestBody:
+        description: Created portfolio object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortfolioPostRequest'
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+  /portfolios/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Get portfolio
+      description: Gets an portfolio by uuid.
+      operationId: getPortfolioByUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the portfolio to be fetched
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/PortfolioGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
+    patch:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Partially update portfolio
+      description: |
+        Partially update an portfolio.
+        All properties are optional.
+      operationId: updatePortfolio
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the portfolio to be updated
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Updated portfolio object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortfolioPatchRequest'
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Delete portfolio
+      description: Delete portfolio.
+      operationId: deletePortfolio
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the portfolio to be deleted
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+  /transactions:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - transactions
+      summary: Create transaction
+      description: Create a new transaction for an portfolio.
+      operationId: createTransaction
+      requestBody:
+        description: Created transaction object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionPostRequest'
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+  /transactions/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - transactions
+      summary: Get transaction
+      description: Gets a transaction by uuid.
+      operationId: getTransactionByUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the transaction to be fetched
+          example: 177d58d6-c33e-465b-a71f-b738a052d13f
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/TransactionGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
+  /quotes/{symbol}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - market data
+      summary: Get quote
+      description: Gets a quote for a symbol.
+      operationId: getQuoteBySymbol
+      parameters:
+        - name: symbol
+          in: path
+          description: The symbol of the quote to be fetched
+          example: AAPL
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/QuoteGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
 components:
   responses:
     APIResponseAll:
@@ -403,8 +403,8 @@ components:
           type: string
           example: Ok
 
-    # Schema for POST /accounts
-    AccountPostRequest:
+    # Schema for POST /portfolios
+    PortfolioPostRequest:
       type: object
       required:
         - name
@@ -418,8 +418,8 @@ components:
           format: uuid
           example: d383865a-df45-4c4c-bc47-b06253b126a6
 
-    # Schema for GET /accounts/{uuid}
-    AccountGetResponse:
+    # Schema for GET /portfolios/{uuid}
+    PortfolioGetResponse:
       type: object
       required:
         - uuid
@@ -457,8 +457,8 @@ components:
           format: date-time
           example: 1970-01-01T00:00:00Z
 
-    # Schema for PATCH /accounts/{uuid}
-    AccountPatchRequest:
+    # Schema for PATCH /portfolios/{uuid}
+    PortfolioPatchRequest:
       type: object
       properties:
         name:
@@ -494,12 +494,12 @@ components:
     TransactionPostRequest:
       type: object
       required:
-        - account
+        - portfolio
         - symbol
         - action
         - quantity
       properties:
-        account:
+        portfolio:
           type: string
           format: uuid
           example: 7b4a6ee5-73fe-4de5-9944-c49009057911
@@ -517,7 +517,7 @@ components:
       type: object
       required:
         - uuid
-        - account
+        - portfolio
         - symbol
         - action
         - quantity
@@ -528,7 +528,7 @@ components:
           type: string
           format: uuid
           example: 177d58d6-c33e-465b-a71f-b738a052d13f
-        account:
+        portfolio:
           type: string
           format: uuid
           example: 7b4a6ee5-73fe-4de5-9944-c49009057911
