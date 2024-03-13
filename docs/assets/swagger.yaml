@@ -19,6 +19,8 @@ servers:
 
 # Set catagories
 tags:
+  - name: auth
+    description: Perform authentication operations
   - name: users
     description: Perform operations on users
   - name: portfolios
@@ -28,13 +30,13 @@ tags:
 
 # Set up api routes
 paths:
-  /auth:
+  /login:
     post:
       tags:
-        - users
-      summary: Authenticate user
-      description: Authenticate a user.
-      operationId: authenticateUser
+        - auth
+      summary: Login user
+      description: Login a user. This will generate a token for the user.
+      operationId: loginUser
       requestBody:
         description: User credentials
         content:
@@ -57,6 +59,19 @@ paths:
                         $ref: '#/components/schemas/AuthPostResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
+
+  /logout:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - auth
+      summary: Logout user
+      description: Logout a user. This will invalidate the user's token.
+      operationId: logoutUser
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
 
   /users:
     post:
@@ -505,6 +520,99 @@ components:
           type: string
           example: Ok
 
+    # Schema for POST /login
+    AuthPostRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: cool@example.com
+        password:
+          type: string
+          example: a1b2c3d4e5f6
+
+    # Schema for POST /login
+    AuthPostResponse:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+          example: xxxxxxxxxxxx
+
+    # Schema for POST /users
+    UserPostRequest:
+      type: object
+      required:
+        - email
+        - username
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: cool@example.com
+        username:
+          type: string
+          example: c00lm4n
+        password:
+          type: string
+          example: a1b2c3d4e5f6
+
+    # Schema for PATCH /users/{uuid}
+    UserPatchRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: cool@example.com
+        username:
+          type: string
+          example: c00lm4n
+        password:
+          type: string
+          example: a1b2c3d4e5f6
+
+    # Schema for GET /users/{uuid}
+    UserGetResponse:
+      type: object
+      required:
+        - uuid
+        - email
+        - username
+        - coins
+        - created_at
+        - updated_at
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+        email:
+          type: string
+          format: email
+          example: cool@example.com
+        username:
+          type: string
+          example: c00lm4n
+        coins:
+          type: number
+          example: 10
+        created_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
+
     # Schema for POST /portfolios
     PortfolioPostRequest:
       type: object
@@ -566,31 +674,6 @@ components:
         name:
           type: string
           example: Default
-
-    # Schema for POST /auth
-    AuthPostRequest:
-      type: object
-      required:
-        - email
-        - password
-      properties:
-        email:
-          type: string
-          format: email
-          example: cool@example.com
-        password:
-          type: string
-          example: a1b2c3d4e5f6
-
-    # Schema for POST /auth
-    AuthPostResponse:
-      type: object
-      required:
-        - token
-      properties:
-        token:
-          type: string
-          example: xxxxxxxxxxxx
 
     # Schema for POST /transactions
     TransactionPostRequest:
@@ -665,74 +748,6 @@ components:
           type: number
           example: 1_000_00
         timestamp:
-          type: string
-          format: date-time
-          example: 1970-01-01T00:00:00Z
-
-    # Schema for POST /users
-    UserPostRequest:
-      type: object
-      required:
-        - email
-        - username
-        - password
-      properties:
-        email:
-          type: string
-          format: email
-          example: cool@example.com
-        username:
-          type: string
-          example: c00lm4n
-        password:
-          type: string
-          example: a1b2c3d4e5f6
-
-    # Schema for PATCH /users/{uuid}
-    UserPatchRequest:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-          example: cool@example.com
-        username:
-          type: string
-          example: c00lm4n
-        password:
-          type: string
-          example: a1b2c3d4e5f6
-
-    # Schema for GET /users/{uuid}
-    UserGetResponse:
-      type: object
-      required:
-        - uuid
-        - email
-        - username
-        - coins
-        - created_at
-        - updated_at
-      properties:
-        uuid:
-          type: string
-          format: uuid
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
-        email:
-          type: string
-          format: email
-          example: cool@example.com
-        username:
-          type: string
-          example: c00lm4n
-        coins:
-          type: number
-          example: 10
-        created_at:
-          type: string
-          format: date-time
-          example: 1970-01-01T00:00:00Z
-        updated_at:
           type: string
           format: date-time
           example: 1970-01-01T00:00:00Z
