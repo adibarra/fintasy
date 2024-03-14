@@ -148,22 +148,22 @@ export function useAPI() {
 
   interface API_RESPONSE {
     [API_QUERY.POST_SESSION]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
       data?: {
         token: string
       }
     }
     [API_QUERY.DELETE_SESSION]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
     }
     [API_QUERY.POST_USER]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
     }
     [API_QUERY.GET_USER]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
       data?: {
         uuid: string
@@ -175,19 +175,19 @@ export function useAPI() {
       }
     }
     [API_QUERY.PATCH_USER]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
     }
     [API_QUERY.DELETE_USER]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
     }
     [API_QUERY.POST_PORTFOLIO]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
     }
     [API_QUERY.GET_PORTFOLIO]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
       data?: {
         uuid: string
@@ -200,15 +200,15 @@ export function useAPI() {
       }
     }
     [API_QUERY.PATCH_PORTFOLIO]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
     }
     [API_QUERY.DELETE_PORTFOLIO]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
     }
     [API_QUERY.GET_PORTFOLIOS_USER]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
       data?: {
         uuid: string
@@ -221,11 +221,11 @@ export function useAPI() {
       }[]
     }
     [API_QUERY.POST_TRANSACTION]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
     }
     [API_QUERY.GET_TRANSACTION]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
       data?: {
         uuid: string
@@ -238,7 +238,7 @@ export function useAPI() {
       }
     }
     [API_QUERY.GET_TRANSACTIONS_PORTFOLIO]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
       data?: {
         uuid: string
@@ -251,7 +251,7 @@ export function useAPI() {
       }[]
     }
     [API_QUERY.GET_QUOTE]: {
-      code: null | 200 | 400 | 401 | 404 | 500
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
       data?: {
         symbol: string

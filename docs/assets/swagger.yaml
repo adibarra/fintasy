@@ -476,8 +476,12 @@ components:
               $ref: '#/components/examples/400'
             '401':
               $ref: '#/components/examples/401'
+            '403':
+              $ref: '#/components/examples/403'
             '404':
               $ref: '#/components/examples/404'
+            '409':
+              $ref: '#/components/examples/409'
             '500':
               $ref: '#/components/examples/500'
 
@@ -492,8 +496,12 @@ components:
               $ref: '#/components/examples/400'
             '401':
               $ref: '#/components/examples/401'
+            '403':
+              $ref: '#/components/examples/403'
             '404':
               $ref: '#/components/examples/404'
+            '409':
+              $ref: '#/components/examples/409'
             '500':
               $ref: '#/components/examples/500'
 
@@ -765,10 +773,18 @@ components:
       value:
         code: 401
         message: Unauthorized
+    '403':
+      value:
+        code: 403
+        message: Forbidden
     '404':
       value:
         code: 404
         message: Not Found
+    '409':
+      value:
+        code: 409
+        message: Conflict
     '500':
       value:
         code: 500
