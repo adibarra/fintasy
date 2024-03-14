@@ -19,8 +19,8 @@ servers:
 
 # Set catagories
 tags:
-  - name: auth
-    description: Perform authentication operations
+  - name: sessions
+    description: Perform operations on sessions
   - name: users
     description: Perform operations on users
   - name: portfolios
@@ -30,19 +30,19 @@ tags:
 
 # Set up api routes
 paths:
-  /login:
+  /sessions:
     post:
       tags:
-        - auth
-      summary: Login user
-      description: Login a user. This will generate a token for the user.
-      operationId: loginUser
+        - sessions
+      summary: Generate a session token
+      description: This will generate a session token for the user.
+      operationId: createSession
       requestBody:
         description: User credentials
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthPostRequest'
+              $ref: '#/components/schemas/SessionPostRequest'
       responses:
         200:
           description: Ok
@@ -56,19 +56,18 @@ paths:
                       - data
                     properties:
                       data:
-                        $ref: '#/components/schemas/AuthPostResponse'
+                        $ref: '#/components/schemas/SessionPostResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
-  /logout:
-    post:
+    delete:
       security:
         - bearerAuth: []
       tags:
-        - auth
-      summary: Logout user
-      description: Logout a user. This will invalidate the user's token.
-      operationId: logoutUser
+        - sessions
+      summary: Invalidate a session token
+      description: This will invalidate the user's current session token.
+      operationId: deleteSession
       responses:
         default:
           $ref: '#/components/responses/APIResponseAll'
@@ -520,8 +519,8 @@ components:
           type: string
           example: Ok
 
-    # Schema for POST /login
-    AuthPostRequest:
+    # Schema for POST /sessions
+    SessionPostRequest:
       type: object
       required:
         - email
@@ -535,8 +534,8 @@ components:
           type: string
           example: a1b2c3d4e5f6
 
-    # Schema for POST /login
-    AuthPostResponse:
+    # Schema for POST /sessions
+    SessionPostResponse:
       type: object
       required:
         - token
