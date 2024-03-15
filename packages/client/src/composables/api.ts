@@ -4,12 +4,12 @@ export function useAPI() {
   const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:3332/api/v1'
   const sessionToken = useSessionStorage('session-token', '')
 
-  function checkResponse<T extends keyof API_RESPONSE>(response: UseFetchReturn<API_RESPONSE[T]>): API_RESPONSE[T] {
-    if (response.statusCode.value === null)
-      return { code: null, message: 'Request Timed Out' }
-    if (response.data.value === null)
-      return { code: null, message: 'Request Failed' }
-    return response.data.value
+  enum API_QUERY {
+    POST_SESSION, DELETE_SESSION,
+    POST_USER, GET_USER, PATCH_USER, DELETE_USER,
+    POST_PORTFOLIO, GET_PORTFOLIO, PATCH_PORTFOLIO, DELETE_PORTFOLIO, GET_PORTFOLIOS_USER,
+    POST_TRANSACTION, GET_TRANSACTION, GET_TRANSACTIONS_PORTFOLIO,
+    GET_QUOTE,
   }
 
   return {
@@ -44,6 +44,7 @@ export function useAPI() {
     },
     getUser: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_USER]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_USER]>(`${API_BASE}/users/${uuid}`, {
+        method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       })
       return checkResponse<API_QUERY.GET_USER>(response)
@@ -79,6 +80,7 @@ export function useAPI() {
     },
     getPortfolio: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_PORTFOLIO]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_PORTFOLIO]>(`${API_BASE}/portfolios/${uuid}`, {
+        method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       })
       return checkResponse<API_QUERY.GET_PORTFOLIO>(response)
@@ -103,6 +105,7 @@ export function useAPI() {
     },
     getPortfolios: async (owner: string, offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]>(`${API_BASE}/portfolios/user/${owner}&offset=${offset}&limit=${limit}`, {
+        method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       })
       return checkResponse<API_QUERY.GET_PORTFOLIOS_USER>(response)
@@ -120,30 +123,33 @@ export function useAPI() {
     },
     getTransaction: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_TRANSACTION]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_TRANSACTION]>(`${API_BASE}/transactions/${uuid}`, {
+        method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       })
       return checkResponse<API_QUERY.GET_TRANSACTION>(response)
     },
     getTransactions: async (portfolio: string, offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]>(`${API_BASE}/transactions/portfolio/${portfolio}&offset=${offset}&limit=${limit}`, {
+        method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       })
       return checkResponse<API_QUERY.GET_TRANSACTIONS_PORTFOLIO>(response)
     },
     getQuote: async (symbol: string): Promise<API_RESPONSE[API_QUERY.GET_QUOTE]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_QUOTE]>(`${API_BASE}/quotes/${symbol}`, {
+        method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       })
       return checkResponse<API_QUERY.GET_QUOTE>(response)
     },
   }
 
-  enum API_QUERY {
-    POST_SESSION, DELETE_SESSION,
-    POST_USER, GET_USER, PATCH_USER, DELETE_USER,
-    POST_PORTFOLIO, GET_PORTFOLIO, PATCH_PORTFOLIO, DELETE_PORTFOLIO, GET_PORTFOLIOS_USER,
-    POST_TRANSACTION, GET_TRANSACTION, GET_TRANSACTIONS_PORTFOLIO,
-    GET_QUOTE,
+  function checkResponse<T extends keyof API_RESPONSE>(response: UseFetchReturn<API_RESPONSE[T]>): API_RESPONSE[T] {
+    if (response.statusCode.value === null)
+      return { code: null, message: 'Request Timed Out' }
+    if (response.data.value === null)
+      return { code: null, message: 'Request Failed' }
+    return response.data.value
   }
 
   interface API_RESPONSE {
