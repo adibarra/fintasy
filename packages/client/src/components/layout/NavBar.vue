@@ -3,7 +3,6 @@ import {
   NotificationsOutline as BellIcon,
   CaretDownOutline as DropdownIcon,
   RefreshOutline as RefreshIcon,
-  MoonOutline as ThemeIcon,
 } from '@vicons/ionicons5'
 import { useMessage } from 'naive-ui'
 
@@ -80,18 +79,6 @@ const user = ref({
     <!-- just a bunch of placeholders from here on -->
     <!-- need to work on look and feel as well as the actual logic for them -->
 
-    <!-- theme button -->
-    <n-tooltip>
-      <template #trigger>
-        <n-button text mr-5 @click="toggleTheme()">
-          <n-icon size="20" :depth="2">
-            <ThemeIcon />
-          </n-icon>
-        </n-button>
-      </template>
-      Toggle Theme
-    </n-tooltip>
-
     <!-- coins -->
     <div ml-5 w-fit flex items-center justify-center bg--c-bg-tertiary px-2 op-85>
       Coins: 🪙 {{ user.coins }}
@@ -118,6 +105,11 @@ const user = ref({
         </n-icon>
       </div>
     </n-dropdown>
+
+    <!-- theme switch -->
+    <div ml-5 w-fit flex items-center justify-center bg--c-bg-tertiary op-85>
+      <ThemeSwitch />
+    </div>
 
     <!-- notifications with badge -->
     <n-badge dot processing>
