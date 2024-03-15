@@ -1,9 +1,10 @@
-from config import API_HOST, API_PORT, API_ROUTES_DIR, API_STATIC_DIRS
+from config import API_HOST, API_PORT, API_ROUTES_DIR, API_STATIC_DIRS, API_CORS_ORIGINS
 
 print("Server starting up...")
 print("Server should be listening on: http://" + API_HOST + ":" + str(API_PORT))
 print("Server should be serving from:", API_ROUTES_DIR)
-print("Server should also be statically serving from:", API_STATIC_DIRS)
+print("Server should be statically serving from:", API_STATIC_DIRS)
+print("Server should be allowing CORS from:", API_CORS_ORIGINS)
 
 #
 # Main Python Flask (or FastAPI?) code goes here

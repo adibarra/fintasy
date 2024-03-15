@@ -19,129 +19,30 @@ servers:
 
 # Set catagories
 tags:
-  - name: accounts
-    description: Perform operations on accounts
-  - name: transactions
-    description: Perform operations on transactions
+  - name: sessions
+    description: Perform operations on sessions
   - name: users
     description: Perform operations on users
+  - name: portfolios
+    description: Perform operations on portfolios
+  - name: transactions
+    description: Perform operations on transactions
 
 # Set up api routes
 paths:
-  /accounts:
-    post:
-      security:
-        - bearerAuth: []
-      tags:
-        - accounts
-      summary: Create account
-      description: Create a new account for a user. Associating to a tournament is optional.
-      operationId: createAccount
-      requestBody:
-        description: Created account object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccountPostRequest'
-      responses:
-        default:
-          $ref: '#/components/responses/APIResponseAll'
-
-  /accounts/{uuid}:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - accounts
-      summary: Get account
-      description: Gets an account by uuid.
-      operationId: getAccountByUUID
-      parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the account to be fetched
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: Ok
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/APIResponse'
-                  - type: object
-                    required:
-                      - data
-                    properties:
-                      data:
-                        $ref: '#/components/schemas/AccountGetResponse'
-        default:
-          $ref: '#/components/responses/APIResponseError'
-
-    patch:
-      security:
-        - bearerAuth: []
-      tags:
-        - accounts
-      summary: Partially update account
-      description: |
-        Partially update an account.
-        All properties are optional.
-      operationId: updateAccount
-      parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the account to be updated
-          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: Updated account object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccountPatchRequest'
-      responses:
-        default:
-          $ref: '#/components/responses/APIResponseAll'
-
-    delete:
-      security:
-        - bearerAuth: []
-      tags:
-        - accounts
-      summary: Delete account
-      description: Delete account.
-      operationId: deleteAccount
-      parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the account to be deleted
-          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
-          required: true
-          schema:
-            type: string
-      responses:
-        default:
-          $ref: '#/components/responses/APIResponseAll'
-
-  /auth:
+  /sessions:
     post:
       tags:
-        - users
-      summary: Authenticate user
-      description: Authenticate a user.
-      operationId: authenticateUser
+        - sessions
+      summary: Generate a session token
+      description: This will generate a session token for the user.
+      operationId: createSession
       requestBody:
         description: User credentials
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthPostRequest'
+              $ref: '#/components/schemas/SessionPostRequest'
       responses:
         200:
           description: Ok
@@ -155,96 +56,21 @@ paths:
                       - data
                     properties:
                       data:
-                        $ref: '#/components/schemas/AuthPostResponse'
+                        $ref: '#/components/schemas/SessionPostResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
-  /transactions:
-    post:
+    delete:
       security:
         - bearerAuth: []
       tags:
-        - transactions
-      summary: Create transaction
-      description: Create a new transaction for an account.
-      operationId: createTransaction
-      requestBody:
-        description: Created transaction object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransactionPostRequest'
+        - sessions
+      summary: Invalidate a session token
+      description: This will invalidate the user's current session token.
+      operationId: deleteSession
       responses:
         default:
           $ref: '#/components/responses/APIResponseAll'
-
-  /transactions/{uuid}:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - transactions
-      summary: Get transaction
-      description: Gets a transaction by uuid.
-      operationId: getTransactionByUUID
-      parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the transaction to be fetched
-          example: 177d58d6-c33e-465b-a71f-b738a052d13f
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: Ok
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/APIResponse'
-                  - type: object
-                    required:
-                      - data
-                    properties:
-                      data:
-                        $ref: '#/components/schemas/TransactionGetResponse'
-        default:
-          $ref: '#/components/responses/APIResponseError'
-
-  /quotes/{symbol}:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - market data
-      summary: Get quote
-      description: Gets a quote for a symbol.
-      operationId: getQuoteBySymbol
-      parameters:
-        - name: symbol
-          in: path
-          description: The symbol of the quote to be fetched
-          example: AAPL
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: Ok
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/APIResponse'
-                  - type: object
-                    required:
-                      - data
-                    properties:
-                      data:
-                        $ref: '#/components/schemas/QuoteGetResponse'
-        default:
-          $ref: '#/components/responses/APIResponseError'
 
   /users:
     post:
@@ -345,6 +171,296 @@ paths:
         default:
           $ref: '#/components/responses/APIResponseAll'
 
+  /portfolios:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Create portfolio
+      description: Create a new portfolio for a user. Associating to a tournament is optional.
+      operationId: createPortfolio
+      requestBody:
+        description: Created portfolio object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortfolioPostRequest'
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+  /portfolios/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Get portfolio
+      description: Gets an portfolio by uuid.
+      operationId: getPortfolioByUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the portfolio to be fetched
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/PortfolioGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
+    patch:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Partially update portfolio
+      description: |
+        Partially update an portfolio.
+        All properties are optional.
+      operationId: updatePortfolio
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the portfolio to be updated
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Updated portfolio object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortfolioPatchRequest'
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Delete portfolio
+      description: Delete portfolio.
+      operationId: deletePortfolio
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the portfolio to be deleted
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+  /portfolios/user/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Get user's portfolios
+      description: Gets all portfolios by owner.
+      operationId: getPortfoliosByUserUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the owner to fetch portfolios for
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+          required: true
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: The number of portfolios to skip
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          description: The maximum number of portfolios to return
+          required: false
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PortfolioGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
+  /transactions:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - transactions
+      summary: Create transaction
+      description: Create a new transaction for an portfolio.
+      operationId: createTransaction
+      requestBody:
+        description: Created transaction object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionPostRequest'
+      responses:
+        default:
+          $ref: '#/components/responses/APIResponseAll'
+
+  /transactions/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - transactions
+      summary: Get transaction
+      description: Gets a transaction by uuid.
+      operationId: getTransactionByUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the transaction to be fetched
+          example: 177d58d6-c33e-465b-a71f-b738a052d13f
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/TransactionGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
+  /transactions/portfolio/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - transactions
+      summary: Get portfolio's transactions
+      description: Gets all transactions by portfolio.
+      operationId: getTransactionByUserUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the portfolio to fetch transactions for
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+          required: true
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: The number of transactions to skip
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          description: The maximum number of transactions to return
+          required: false
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/TransactionGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
+  /quotes/{symbol}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - market data
+      summary: Get quote
+      description: Gets a quote for a symbol.
+      operationId: getQuoteBySymbol
+      parameters:
+        - name: symbol
+          in: path
+          description: The symbol of the quote to be fetched
+          example: AAPL
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/QuoteGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
 components:
   responses:
     APIResponseAll:
@@ -360,8 +476,12 @@ components:
               $ref: '#/components/examples/400'
             '401':
               $ref: '#/components/examples/401'
+            '403':
+              $ref: '#/components/examples/403'
             '404':
               $ref: '#/components/examples/404'
+            '409':
+              $ref: '#/components/examples/409'
             '500':
               $ref: '#/components/examples/500'
 
@@ -376,8 +496,12 @@ components:
               $ref: '#/components/examples/400'
             '401':
               $ref: '#/components/examples/401'
+            '403':
+              $ref: '#/components/examples/403'
             '404':
               $ref: '#/components/examples/404'
+            '409':
+              $ref: '#/components/examples/409'
             '500':
               $ref: '#/components/examples/500'
 
@@ -403,70 +527,8 @@ components:
           type: string
           example: Ok
 
-    # Schema for POST /accounts
-    AccountPostRequest:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-          format: uuid
-          example: Default
-        tournament:
-          type: string
-          format: uuid
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
-
-    # Schema for GET /accounts/{uuid}
-    AccountGetResponse:
-      type: object
-      required:
-        - uuid
-        - owner
-        - tournament
-        - name
-        - balance_cents
-        - created_at
-        - updated_at
-      properties:
-        uuid:
-          type: string
-          format: uuid
-          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
-        owner:
-          type: string
-          format: uuid
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
-        tournament:
-          type: string
-          format: uuid
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
-        name:
-          type: string
-          example: Default
-        balance_cents:
-          type: number
-          example: 100_000_00
-        created_at:
-          type: string
-          format: date-time
-          example: 1970-01-01T00:00:00Z
-        updated_at:
-          type: string
-          format: date-time
-          example: 1970-01-01T00:00:00Z
-
-    # Schema for PATCH /accounts/{uuid}
-    AccountPatchRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Default
-
-    # Schema for POST /auth
-    AuthPostRequest:
+    # Schema for POST /sessions
+    SessionPostRequest:
       type: object
       required:
         - email
@@ -480,8 +542,8 @@ components:
           type: string
           example: a1b2c3d4e5f6
 
-    # Schema for POST /auth
-    AuthPostResponse:
+    # Schema for POST /sessions
+    SessionPostResponse:
       type: object
       required:
         - token
@@ -489,83 +551,6 @@ components:
         token:
           type: string
           example: xxxxxxxxxxxx
-
-    # Schema for POST /transactions
-    TransactionPostRequest:
-      type: object
-      required:
-        - account
-        - symbol
-        - action
-        - quantity
-      properties:
-        account:
-          type: string
-          format: uuid
-          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
-        symbol:
-          type: string
-          example: AAPL
-        action:
-          $ref: '#/components/schemas/TransactionAction'
-        quantity:
-          type: integer
-          example: 10
-
-    # Schema for GET /transactions/{uuid}
-    TransactionGetResponse:
-      type: object
-      required:
-        - uuid
-        - account
-        - symbol
-        - action
-        - quantity
-        - price_cents
-        - created_at
-      properties:
-        uuid:
-          type: string
-          format: uuid
-          example: 177d58d6-c33e-465b-a71f-b738a052d13f
-        account:
-          type: string
-          format: uuid
-          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
-        symbol:
-          type: string
-          example: AAPL
-        action:
-          $ref: '#/components/schemas/TransactionAction'
-        quantity:
-          type: integer
-          example: 10
-        price_cents:
-          type: number
-          example: 10_000_00
-        created_at:
-          type: string
-          format: date-time
-          example: 1970-01-01T00:00:00Z
-
-    # Schema for GET /quotes/{symbol}
-    QuoteGetResponse:
-      type: object
-      required:
-        - symbol
-        - price_cents
-        - timestamp
-      properties:
-        symbol:
-          type: string
-          example: AAPL
-        price_cents:
-          type: number
-          example: 1_000_00
-        timestamp:
-          type: string
-          format: date-time
-          example: 1970-01-01T00:00:00Z
 
     # Schema for POST /users
     UserPostRequest:
@@ -635,6 +620,145 @@ components:
           format: date-time
           example: 1970-01-01T00:00:00Z
 
+    # Schema for POST /portfolios
+    PortfolioPostRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          format: uuid
+          example: Default
+        tournament:
+          type: string
+          format: uuid
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+
+    # Schema for GET /portfolios/{uuid}
+    PortfolioGetResponse:
+      type: object
+      required:
+        - uuid
+        - owner
+        - tournament
+        - name
+        - balance_cents
+        - created_at
+        - updated_at
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+        owner:
+          type: string
+          format: uuid
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+        tournament:
+          type: string
+          format: uuid
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
+        name:
+          type: string
+          example: Default
+        balance_cents:
+          type: number
+          example: 100_000_00
+        created_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
+
+    # Schema for PATCH /portfolios/{uuid}
+    PortfolioPatchRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Default
+
+    # Schema for POST /transactions
+    TransactionPostRequest:
+      type: object
+      required:
+        - portfolio
+        - symbol
+        - action
+        - quantity
+      properties:
+        portfolio:
+          type: string
+          format: uuid
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+        symbol:
+          type: string
+          example: AAPL
+        action:
+          $ref: '#/components/schemas/TransactionAction'
+        quantity:
+          type: integer
+          example: 10
+
+    # Schema for GET /transactions/{uuid}
+    TransactionGetResponse:
+      type: object
+      required:
+        - uuid
+        - portfolio
+        - symbol
+        - action
+        - quantity
+        - price_cents
+        - created_at
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: 177d58d6-c33e-465b-a71f-b738a052d13f
+        portfolio:
+          type: string
+          format: uuid
+          example: 7b4a6ee5-73fe-4de5-9944-c49009057911
+        symbol:
+          type: string
+          example: AAPL
+        action:
+          $ref: '#/components/schemas/TransactionAction'
+        quantity:
+          type: integer
+          example: 10
+        price_cents:
+          type: number
+          example: 10_000_00
+        created_at:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
+
+    # Schema for GET /quotes/{symbol}
+    QuoteGetResponse:
+      type: object
+      required:
+        - symbol
+        - price_cents
+        - timestamp
+      properties:
+        symbol:
+          type: string
+          example: AAPL
+        price_cents:
+          type: number
+          example: 1_000_00
+        timestamp:
+          type: string
+          format: date-time
+          example: 1970-01-01T00:00:00Z
+
   # Set up examples
   examples:
     '200':
@@ -649,10 +773,18 @@ components:
       value:
         code: 401
         message: Unauthorized
+    '403':
+      value:
+        code: 403
+        message: Forbidden
     '404':
       value:
         code: 404
         message: Not Found
+    '409':
+      value:
+        code: 409
+        message: Conflict
     '500':
       value:
         code: 500

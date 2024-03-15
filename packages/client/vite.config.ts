@@ -164,4 +164,6 @@ export default defineConfig({
     // workaround until they support native ESM
     noExternal: ['workbox-window', /vue-i18n/, 'naive-ui'],
   },
+
+  envDir: path.resolve(__dirname, '..', '..'),
 })
