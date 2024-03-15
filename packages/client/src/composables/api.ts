@@ -12,7 +12,17 @@ export function useAPI() {
     GET_QUOTE,
   }
 
+  enum ACTION {
+    BUY = 'BUY',
+    SELL = 'SELL',
+  }
+
   return {
+    /**
+     * Login to the API and store the session token
+     * @param email the user's email
+     * @param password the user's password
+     */
     login: async (email: string, password: string): Promise<API_RESPONSE[API_QUERY.POST_SESSION]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.POST_SESSION]>(`${API_BASE}/sessions`, {
         method: 'POST',
@@ -24,6 +34,9 @@ export function useAPI() {
         sessionToken.value = data.data?.token ?? ''
       return data
     },
+    /**
+     * Logout of the API and remove the session token
+     */
     logout: async (): Promise<API_RESPONSE[API_QUERY.DELETE_SESSION]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.DELETE_SESSION]>(`${API_BASE}/sessions`, {
         method: 'DELETE',
@@ -34,6 +47,12 @@ export function useAPI() {
         sessionToken.value = ''
       return data
     },
+    /**
+     * Create a new user
+     * @param email the user's email
+     * @param username the user's username
+     * @param password the user's password
+     */
     createUser: async (email: string, username: string, password: string): Promise<API_RESPONSE[API_QUERY.POST_USER]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.POST_USER]>(`${API_BASE}/users`, {
         method: 'POST',
@@ -42,6 +61,10 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.POST_USER>(response)
     },
+    /**
+     * Get user information
+     * @param uuid the user's UUID
+     */
     getUser: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_USER]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_USER]>(`${API_BASE}/users/${uuid}`, {
         method: 'GET',
@@ -49,6 +72,13 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.GET_USER>(response)
     },
+    /**
+     * Update user information
+     * @param uuid the user's UUID
+     * @param email the user's email
+     * @param username the user's username
+     * @param password the user's password
+     */
     updateUser: async (uuid: string, email?: string, username?: string, password?: string): Promise<API_RESPONSE[API_QUERY.PATCH_USER]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.PATCH_USER]>(`${API_BASE}/users/${uuid}`, {
         method: 'PATCH',
@@ -60,6 +90,10 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.PATCH_USER>(response)
     },
+    /**
+     * Delete a user
+     * @param uuid the user's UUID
+     */
     deleteUser: async (uuid: string): Promise<API_RESPONSE[API_QUERY.DELETE_USER]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.DELETE_USER]>(`${API_BASE}/users/${uuid}`, {
         method: 'DELETE',
@@ -67,17 +101,26 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.DELETE_USER>(response)
     },
-    createPortfolio: async (name: string, tournament: string): Promise<API_RESPONSE[API_QUERY.POST_PORTFOLIO]> => {
+    /**
+     * Create a new portfolio
+     * @param name the portfolio name
+     * @param tournament the tournament UUID (optional)
+     */
+    createPortfolio: async (name: string, tournament?: string): Promise<API_RESPONSE[API_QUERY.POST_PORTFOLIO]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.POST_PORTFOLIO]>(`${API_BASE}/portfolios`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
-        body: JSON.stringify({ name, tournament }),
+        body: JSON.stringify(tournament ? { name, tournament } : { name }),
       })
       return checkResponse<API_QUERY.POST_PORTFOLIO>(response)
     },
+    /**
+     * Get portfolio information
+     * @param uuid the portfolio UUID
+     */
     getPortfolio: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_PORTFOLIO]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_PORTFOLIO]>(`${API_BASE}/portfolios/${uuid}`, {
         method: 'GET',
@@ -85,6 +128,11 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.GET_PORTFOLIO>(response)
     },
+    /**
+     * Update portfolio information
+     * @param uuid the portfolio UUID
+     * @param name the portfolio name
+     */
     updatePortfolio: async (uuid: string, name?: string): Promise<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]>(`${API_BASE}/portfolios/${uuid}`, {
         method: 'PATCH',
@@ -96,6 +144,10 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.PATCH_PORTFOLIO>(response)
     },
+    /**
+     * Delete a portfolio
+     * @param uuid the portfolio UUID
+     */
     deletePortfolio: async (uuid: string): Promise<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]>(`${API_BASE}/portfolios/${uuid}`, {
         method: 'DELETE',
@@ -103,6 +155,12 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.DELETE_PORTFOLIO>(response)
     },
+    /**
+     * Get all portfolios owned by a user
+     * @param owner the user's UUID
+     * @param offset the offset to start returning portfolios from
+     * @param limit the maximum number of portfolios to return
+     */
     getPortfolios: async (owner: string, offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]>(`${API_BASE}/portfolios/user/${owner}&offset=${offset}&limit=${limit}`, {
         method: 'GET',
@@ -110,7 +168,14 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.GET_PORTFOLIOS_USER>(response)
     },
-    createTransaction: async (portfolio: string, symbol: string, action: string, quantity: number): Promise<API_RESPONSE[API_QUERY.POST_TRANSACTION]> => {
+    /**
+     * Create a new transaction
+     * @param portfolio the portfolio UUID
+     * @param symbol the stock symbol
+     * @param action the transaction action (BUY or SELL)
+     * @param quantity the number of shares
+     */
+    createTransaction: async (portfolio: string, symbol: string, action: ACTION, quantity: number): Promise<API_RESPONSE[API_QUERY.POST_TRANSACTION]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.POST_TRANSACTION]>(`${API_BASE}/transactions`, {
         method: 'POST',
         headers: {
@@ -121,6 +186,10 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.POST_TRANSACTION>(response)
     },
+    /**
+     * Get transaction information
+     * @param uuid the transaction UUID
+     */
     getTransaction: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_TRANSACTION]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_TRANSACTION]>(`${API_BASE}/transactions/${uuid}`, {
         method: 'GET',
@@ -128,6 +197,12 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.GET_TRANSACTION>(response)
     },
+    /**
+     * Get all transactions for a portfolio
+     * @param portfolio the portfolio UUID
+     * @param offset the offset to start returning transactions from
+     * @param limit the maximum number of transactions to return
+     */
     getTransactions: async (portfolio: string, offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]>(`${API_BASE}/transactions/portfolio/${portfolio}&offset=${offset}&limit=${limit}`, {
         method: 'GET',
@@ -135,6 +210,10 @@ export function useAPI() {
       })
       return checkResponse<API_QUERY.GET_TRANSACTIONS_PORTFOLIO>(response)
     },
+    /**
+     * Get the latest quote for a symbol
+     * @param symbol the stock symbol
+     */
     getQuote: async (symbol: string): Promise<API_RESPONSE[API_QUERY.GET_QUOTE]> => {
       const response = await useFetch<API_RESPONSE[API_QUERY.GET_QUOTE]>(`${API_BASE}/quotes/${symbol}`, {
         method: 'GET',
@@ -237,7 +316,7 @@ export function useAPI() {
         uuid: string
         portfolio: string
         symbol: string
-        action: string
+        action: ACTION
         quantity: number
         price_cents: number
         created_at: string
@@ -250,7 +329,7 @@ export function useAPI() {
         uuid: string
         portfolio: string
         symbol: string
-        action: string
+        action: ACTION
         quantity: number
         price_cents: number
         created_at: string
