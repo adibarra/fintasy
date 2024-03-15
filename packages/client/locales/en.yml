@@ -4,6 +4,8 @@ example:
 pages:
   main:
     title: Main
+  login:
+    title: Login/Register
   dashboard:
     title: Dashboard
     trade:

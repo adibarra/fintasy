@@ -2,7 +2,7 @@
 const { t } = useI18n()
 
 useHead({
-  title: `${t('pages.dashboard.tournaments.title')} • Fintasy`,
+  title: `${t('pages.login.title')} • Fintasy`,
 })
 </script>
 
@@ -10,18 +10,21 @@ useHead({
   {{ $t('example.hello-world') }}
 
   <span>
-    Should be a nice tournaments page. It should look like the wireframe.
+    Should be a login/register UI. If already authenticated redirect to dashboard.
   </span>
+  <a href="/dashboard" text-xl fn-link>
+    {{ t('pages.dashboard.title') }}
+  </a>
 
   <!-- Some spacers and a temporary footer -->
   <span op-50>
     <div h-10 />
-    [ pages/dashboard/tournaments.vue ]
+    [ pages/login.vue ]
     <div h-10 />
   </span>
 </template>
 
 <route lang="yaml">
   meta:
-    layout: dashboard
-</route>
+    layout: default
+  </route>

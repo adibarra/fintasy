@@ -9,6 +9,10 @@ useHead({
 <template>
   {{ $t('example.hello-world') }}
 
+  <span>
+    Should be a nice dashboard page. It should look like the wireframe.
+  </span>
+
   <!-- Some spacers and a temporary footer -->
   <span op-50>
     <div h-10 />

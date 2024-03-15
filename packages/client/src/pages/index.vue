@@ -8,6 +8,13 @@ useHead({
 
 <template>
   {{ $t('example.hello-world') }}
+
+  <span>
+    Should be a nice landing page. Should describe what the project does and have a link somewhere to login/register.
+  </span>
+  <a href="/login" text-xl fn-link>
+    {{ t('pages.login.title') }}
+  </a>
   <a href="/dashboard" text-xl fn-link>
     {{ t('pages.dashboard.title') }}
   </a>
