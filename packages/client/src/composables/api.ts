@@ -9,12 +9,19 @@ export function useAPI() {
     POST_USER, GET_USER, PATCH_USER, DELETE_USER,
     POST_PORTFOLIO, GET_PORTFOLIO, PATCH_PORTFOLIO, DELETE_PORTFOLIO, GET_PORTFOLIOS_USER,
     POST_TRANSACTION, GET_TRANSACTION, GET_TRANSACTIONS_PORTFOLIO,
+    POST_TOURNAMENT, GET_TOURNAMENTS, GET_TOURNAMENT, PATCH_TOURNAMENT, DELETE_TOURNAMENT, GET_TOURNAMENTS_USER,
     GET_QUOTE,
   }
 
   enum ACTION {
     BUY = 'BUY',
     SELL = 'SELL',
+  }
+
+  enum STATUS {
+    SCHEDULED = 'SCHEDULED',
+    ONGOING = 'ONGOING',
+    FINISHED = 'FINISHED',
   }
 
   return {
@@ -158,11 +165,15 @@ export function useAPI() {
     /**
      * Get all portfolios owned by a user
      * @param owner the user's UUID
-     * @param offset the offset to start returning portfolios from
-     * @param limit the maximum number of portfolios to return
+     * @param offset (optional) the offset to start returning portfolios from
+     * @param limit (optional) the maximum number of portfolios to return
      */
     getPortfolios: async (owner: string, offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]>(`${API_BASE}/portfolios/user/${owner}&offset=${offset}&limit=${limit}`, {
+      const params = new URLSearchParams({
+        ...(offset && { offset: offset.toString() }),
+        ...(limit && { limit: limit.toString() }),
+      })
+      const response = await useFetch<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]>(`${API_BASE}/portfolios/user/${owner}&${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       })
@@ -200,15 +211,109 @@ export function useAPI() {
     /**
      * Get all transactions for a portfolio
      * @param portfolio the portfolio UUID
-     * @param offset the offset to start returning transactions from
-     * @param limit the maximum number of transactions to return
+     * @param offset (optional) the offset to start returning transactions from
+     * @param limit (optional) the maximum number of transactions to return
      */
     getTransactions: async (portfolio: string, offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]>(`${API_BASE}/transactions/portfolio/${portfolio}&offset=${offset}&limit=${limit}`, {
+      const params = new URLSearchParams({
+        ...(offset && { offset: offset.toString() }),
+        ...(limit && { limit: limit.toString() }),
+      })
+      const response = await useFetch<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]>(`${API_BASE}/transactions/portfolio/${portfolio}&${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       })
       return checkResponse<API_QUERY.GET_TRANSACTIONS_PORTFOLIO>(response)
+    },
+    /**
+     * Create a new tournament
+     * @param name the tournament name
+     * @param start_date the tournament start date
+     * @param end_date the tournament end date
+     */
+    createTournament: async (name: string, start_date: string, end_date: string): Promise<API_RESPONSE[API_QUERY.POST_TOURNAMENT]> => {
+      const response = await useFetch<API_RESPONSE[API_QUERY.POST_TOURNAMENT]>(`${API_BASE}/tournaments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionToken.value}`,
+        },
+        body: JSON.stringify({ name, start_date, end_date }),
+      })
+      return checkResponse<API_QUERY.POST_TOURNAMENT>(response)
+    },
+    /**
+     * Get all tournaments
+     * @param offset (optional) the offset to start returning tournaments from
+     * @param limit (optional) the maximum number of tournaments to return
+     */
+    getTournaments: async (offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_TOURNAMENTS]> => {
+      const params = new URLSearchParams({
+        ...(offset && { offset: offset.toString() }),
+        ...(limit && { limit: limit.toString() }),
+      })
+      const response = await useFetch<API_RESPONSE[API_QUERY.GET_TOURNAMENTS]>(`${API_BASE}/tournaments&${params}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${sessionToken.value}` },
+      })
+      return checkResponse<API_QUERY.GET_TOURNAMENTS>(response)
+    },
+    /**
+     * Get tournament information
+     * @param uuid the tournament UUID
+     */
+    getTournament: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_TOURNAMENT]> => {
+      const response = await useFetch<API_RESPONSE[API_QUERY.GET_TOURNAMENT]>(`${API_BASE}/tournaments/${uuid}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${sessionToken.value}` },
+      })
+      return checkResponse<API_QUERY.GET_TOURNAMENT>(response)
+    },
+    /**
+     * Update tournament information
+     * @param uuid the tournament UUID
+     * @param name the tournament name
+     * @param start_date the tournament start date
+     * @param end_date the tournament end date
+     */
+    updateTournament: async (uuid: string, name?: string, start_date?: string, end_date?: string): Promise<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]> => {
+      const response = await useFetch<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]>(`${API_BASE}/tournaments/${uuid}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionToken.value}`,
+        },
+        body: JSON.stringify({ name, start_date, end_date }),
+      })
+      return checkResponse<API_QUERY.PATCH_TOURNAMENT>(response)
+    },
+    /**
+     * Delete a tournament
+     * @param uuid the tournament UUID
+     */
+    deleteTournament: async (uuid: string): Promise<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]> => {
+      const response = await useFetch<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]>(`${API_BASE}/tournaments/${uuid}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${sessionToken.value}` },
+      })
+      return checkResponse<API_QUERY.DELETE_TOURNAMENT>(response)
+    },
+    /**
+     * Get all tournaments owned by a user
+     * @param owner the user's UUID
+     * @param offset (optional) the offset to start returning tournaments from
+     * @param limit (optional) the maximum number of tournaments to return
+     */
+    getTournamentsUser: async (owner: string, offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_TOURNAMENTS_USER]> => {
+      const params = new URLSearchParams({
+        ...(offset && { offset: offset.toString() }),
+        ...(limit && { limit: limit.toString() }),
+      })
+      const response = await useFetch<API_RESPONSE[API_QUERY.GET_TOURNAMENTS_USER]>(`${API_BASE}/tournaments/user/${owner}&${params}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${sessionToken.value}` },
+      })
+      return checkResponse<API_QUERY.GET_TOURNAMENTS_USER>(response)
     },
     /**
      * Get the latest quote for a symbol
@@ -333,6 +438,65 @@ export function useAPI() {
         quantity: number
         price_cents: number
         created_at: string
+      }[]
+    }
+    [API_QUERY.POST_TOURNAMENT]: {
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
+      message: string
+      data?: {
+        name: string
+        start_date: string
+        end_date: string
+      }
+    }
+    [API_QUERY.GET_TOURNAMENTS]: {
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
+      message: string
+      data?: {
+        uuid: string
+        owner: string
+        name: string
+        status: STATUS
+        start_date: string
+        end_date: string
+        created_at: string
+        updated_at: string
+      }[]
+    }
+    [API_QUERY.GET_TOURNAMENT]: {
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
+      message: string
+      data?: {
+        uuid: string
+        owner: string
+        name: string
+        status: STATUS
+        start_date: string
+        end_date: string
+        created_at: string
+        updated_at: string
+      }
+    }
+    [API_QUERY.PATCH_TOURNAMENT]: {
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
+      message: string
+    }
+    [API_QUERY.DELETE_TOURNAMENT]: {
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
+      message: string
+    }
+    [API_QUERY.GET_TOURNAMENTS_USER]: {
+      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
+      message: string
+      data?: {
+        uuid: string
+        owner: string
+        name: string
+        status: STATUS
+        start_date: string
+        end_date: string
+        created_at: string
+        updated_at: string
       }[]
     }
     [API_QUERY.GET_QUOTE]: {
