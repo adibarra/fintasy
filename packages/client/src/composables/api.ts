@@ -1,7 +1,7 @@
 import type { UseFetchReturn } from '@vueuse/core'
 
 export function useAPI() {
-  const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:3332/api/v1'
+  const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:4010'
   const sessionToken = useSessionStorage('session-token', '')
 
   enum API_QUERY {
@@ -31,11 +31,11 @@ export function useAPI() {
      * @param password the user's password
      */
     login: async (email: string, password: string): Promise<API_RESPONSE[API_QUERY.POST_SESSION]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.POST_SESSION]>(`${API_BASE}/sessions`, {
+      const response = await useFetch(`${API_BASE}/sessions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
-      })
+      }).json<API_RESPONSE[API_QUERY.POST_SESSION]>()
       const data = checkResponse<API_QUERY.POST_SESSION>(response)
       if (data.code === 200)
         sessionToken.value = data.data?.token ?? ''
@@ -45,10 +45,10 @@ export function useAPI() {
      * Logout of the API and remove the session token
      */
     logout: async (): Promise<API_RESPONSE[API_QUERY.DELETE_SESSION]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.DELETE_SESSION]>(`${API_BASE}/sessions`, {
+      const response = await useFetch(`${API_BASE}/sessions`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.DELETE_SESSION]>()
       const data = checkResponse<API_QUERY.DELETE_SESSION>(response)
       if (data.code === 200)
         sessionToken.value = ''
@@ -61,40 +61,43 @@ export function useAPI() {
      * @param password the user's password
      */
     createUser: async (email: string, username: string, password: string): Promise<API_RESPONSE[API_QUERY.POST_USER]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.POST_USER]>(`${API_BASE}/users`, {
+      const response = await useFetch(`${API_BASE}/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, username, password }),
-      })
-      return checkResponse<API_QUERY.POST_USER>(response)
+      }).json<API_RESPONSE[API_QUERY.POST_USER]>()
+      const data = checkResponse<API_QUERY.POST_USER>(response)
+      if (data.code === 200)
+        sessionToken.value = data.data?.token ?? ''
+      return data
     },
     /**
      * Get user information
      * @param uuid the user's UUID
      */
     getUser: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_USER]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_USER]>(`${API_BASE}/users/${uuid}`, {
+      const response = await useFetch(`${API_BASE}/users/${uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.GET_USER]>()
       return checkResponse<API_QUERY.GET_USER>(response)
     },
     /**
      * Update user information
      * @param uuid the user's UUID
-     * @param email the user's email
-     * @param username the user's username
-     * @param password the user's password
+     * @param email (optional) the user's new email
+     * @param username (optional) the user's new username
+     * @param password (optional) the user's new password
      */
     updateUser: async (uuid: string, email?: string, username?: string, password?: string): Promise<API_RESPONSE[API_QUERY.PATCH_USER]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.PATCH_USER]>(`${API_BASE}/users/${uuid}`, {
+      const response = await useFetch(`${API_BASE}/users/${uuid}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify({ email, username, password }),
-      })
+      }).json<API_RESPONSE[API_QUERY.PATCH_USER]>()
       return checkResponse<API_QUERY.PATCH_USER>(response)
     },
     /**
@@ -102,10 +105,10 @@ export function useAPI() {
      * @param uuid the user's UUID
      */
     deleteUser: async (uuid: string): Promise<API_RESPONSE[API_QUERY.DELETE_USER]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.DELETE_USER]>(`${API_BASE}/users/${uuid}`, {
+      const response = await useFetch(`${API_BASE}/users/${uuid}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.DELETE_USER]>()
       return checkResponse<API_QUERY.DELETE_USER>(response)
     },
     /**
@@ -114,14 +117,14 @@ export function useAPI() {
      * @param tournament the tournament UUID (optional)
      */
     createPortfolio: async (name: string, tournament?: string): Promise<API_RESPONSE[API_QUERY.POST_PORTFOLIO]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.POST_PORTFOLIO]>(`${API_BASE}/portfolios`, {
+      const response = await useFetch(`${API_BASE}/portfolios`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify(tournament ? { name, tournament } : { name }),
-      })
+      }).json<API_RESPONSE[API_QUERY.POST_PORTFOLIO]>()
       return checkResponse<API_QUERY.POST_PORTFOLIO>(response)
     },
     /**
@@ -129,10 +132,10 @@ export function useAPI() {
      * @param uuid the portfolio UUID
      */
     getPortfolio: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_PORTFOLIO]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_PORTFOLIO]>(`${API_BASE}/portfolios/${uuid}`, {
+      const response = await useFetch(`${API_BASE}/portfolios/${uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.GET_PORTFOLIO]>()
       return checkResponse<API_QUERY.GET_PORTFOLIO>(response)
     },
     /**
@@ -141,14 +144,14 @@ export function useAPI() {
      * @param name the portfolio name
      */
     updatePortfolio: async (uuid: string, name?: string): Promise<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]>(`${API_BASE}/portfolios/${uuid}`, {
+      const response = await useFetch(`${API_BASE}/portfolios/${uuid}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify({ name }),
-      })
+      }).json<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]>()
       return checkResponse<API_QUERY.PATCH_PORTFOLIO>(response)
     },
     /**
@@ -156,10 +159,10 @@ export function useAPI() {
      * @param uuid the portfolio UUID
      */
     deletePortfolio: async (uuid: string): Promise<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]>(`${API_BASE}/portfolios/${uuid}`, {
+      const response = await useFetch(`${API_BASE}/portfolios/${uuid}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]>()
       return checkResponse<API_QUERY.DELETE_PORTFOLIO>(response)
     },
     /**
@@ -173,10 +176,10 @@ export function useAPI() {
         ...(offset && { offset: offset.toString() }),
         ...(limit && { limit: limit.toString() }),
       })
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]>(`${API_BASE}/portfolios/user/${owner}&${params}`, {
+      const response = await useFetch(`${API_BASE}/portfolios/user/${owner}&${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]>()
       return checkResponse<API_QUERY.GET_PORTFOLIOS_USER>(response)
     },
     /**
@@ -187,14 +190,14 @@ export function useAPI() {
      * @param quantity the number of shares
      */
     createTransaction: async (portfolio: string, symbol: string, action: ACTION, quantity: number): Promise<API_RESPONSE[API_QUERY.POST_TRANSACTION]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.POST_TRANSACTION]>(`${API_BASE}/transactions`, {
+      const response = await useFetch(`${API_BASE}/transactions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify({ portfolio, symbol, action, quantity }),
-      })
+      }).json<API_RESPONSE[API_QUERY.POST_TRANSACTION]>()
       return checkResponse<API_QUERY.POST_TRANSACTION>(response)
     },
     /**
@@ -202,10 +205,10 @@ export function useAPI() {
      * @param uuid the transaction UUID
      */
     getTransaction: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_TRANSACTION]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_TRANSACTION]>(`${API_BASE}/transactions/${uuid}`, {
+      const response = await useFetch(`${API_BASE}/transactions/${uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.GET_TRANSACTION]>()
       return checkResponse<API_QUERY.GET_TRANSACTION>(response)
     },
     /**
@@ -219,10 +222,10 @@ export function useAPI() {
         ...(offset && { offset: offset.toString() }),
         ...(limit && { limit: limit.toString() }),
       })
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]>(`${API_BASE}/transactions/portfolio/${portfolio}&${params}`, {
+      const response = await useFetch(`${API_BASE}/transactions/portfolio/${portfolio}&${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]>()
       return checkResponse<API_QUERY.GET_TRANSACTIONS_PORTFOLIO>(response)
     },
     /**
@@ -232,14 +235,14 @@ export function useAPI() {
      * @param end_date the tournament end date
      */
     createTournament: async (name: string, start_date: string, end_date: string): Promise<API_RESPONSE[API_QUERY.POST_TOURNAMENT]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.POST_TOURNAMENT]>(`${API_BASE}/tournaments`, {
+      const response = await useFetch(`${API_BASE}/tournaments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify({ name, start_date, end_date }),
-      })
+      }).json<API_RESPONSE[API_QUERY.POST_TOURNAMENT]>()
       return checkResponse<API_QUERY.POST_TOURNAMENT>(response)
     },
     /**
@@ -252,10 +255,10 @@ export function useAPI() {
         ...(offset && { offset: offset.toString() }),
         ...(limit && { limit: limit.toString() }),
       })
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_TOURNAMENTS]>(`${API_BASE}/tournaments&${params}`, {
+      const response = await useFetch(`${API_BASE}/tournaments&${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENTS]>()
       return checkResponse<API_QUERY.GET_TOURNAMENTS>(response)
     },
     /**
@@ -263,10 +266,10 @@ export function useAPI() {
      * @param uuid the tournament UUID
      */
     getTournament: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_TOURNAMENT]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_TOURNAMENT]>(`${API_BASE}/tournaments/${uuid}`, {
+      const response = await useFetch(`${API_BASE}/tournaments/${uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENT]>()
       return checkResponse<API_QUERY.GET_TOURNAMENT>(response)
     },
     /**
@@ -277,14 +280,14 @@ export function useAPI() {
      * @param end_date the tournament end date
      */
     updateTournament: async (uuid: string, name?: string, start_date?: string, end_date?: string): Promise<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]>(`${API_BASE}/tournaments/${uuid}`, {
+      const response = await useFetch(`${API_BASE}/tournaments/${uuid}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify({ name, start_date, end_date }),
-      })
+      }).json<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]>()
       return checkResponse<API_QUERY.PATCH_TOURNAMENT>(response)
     },
     /**
@@ -292,10 +295,10 @@ export function useAPI() {
      * @param uuid the tournament UUID
      */
     deleteTournament: async (uuid: string): Promise<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]>(`${API_BASE}/tournaments/${uuid}`, {
+      const response = await useFetch(`${API_BASE}/tournaments/${uuid}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]>()
       return checkResponse<API_QUERY.DELETE_TOURNAMENT>(response)
     },
     /**
@@ -309,10 +312,10 @@ export function useAPI() {
         ...(offset && { offset: offset.toString() }),
         ...(limit && { limit: limit.toString() }),
       })
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_TOURNAMENTS_USER]>(`${API_BASE}/tournaments/user/${owner}&${params}`, {
+      const response = await useFetch(`${API_BASE}/tournaments/user/${owner}&${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENTS_USER]>()
       return checkResponse<API_QUERY.GET_TOURNAMENTS_USER>(response)
     },
     /**
@@ -320,10 +323,10 @@ export function useAPI() {
      * @param symbol the stock symbol
      */
     getQuote: async (symbol: string): Promise<API_RESPONSE[API_QUERY.GET_QUOTE]> => {
-      const response = await useFetch<API_RESPONSE[API_QUERY.GET_QUOTE]>(`${API_BASE}/quotes/${symbol}`, {
+      const response = await useFetch(`${API_BASE}/quotes/${symbol}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
-      })
+      }).json<API_RESPONSE[API_QUERY.GET_QUOTE]>()
       return checkResponse<API_QUERY.GET_QUOTE>(response)
     },
   }
@@ -342,6 +345,7 @@ export function useAPI() {
       message: string
       data?: {
         token: string
+        uuid: string
       }
     }
     [API_QUERY.DELETE_SESSION]: {
@@ -351,6 +355,10 @@ export function useAPI() {
     [API_QUERY.POST_USER]: {
       code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
+      data?: {
+        token: string
+        uuid: string
+      }
     }
     [API_QUERY.GET_USER]: {
       code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
