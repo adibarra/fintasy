@@ -90,8 +90,21 @@ paths:
             schema:
               $ref: '#/components/schemas/UserPostRequest'
       responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/SessionPostResponse'
         default:
-          $ref: '#/components/responses/APIResponseAll'
+          $ref: '#/components/responses/APIResponseError'
 
   /users/{uuid}:
     get:
@@ -758,6 +771,10 @@ components:
         token:
           type: string
           example: xxxxxxxxxxxx
+        uuid:
+          type: string
+          format: uuid
+          example: d383865a-df45-4c4c-bc47-b06253b126a6
 
     # Schema for POST /users
     UserPostRequest:
