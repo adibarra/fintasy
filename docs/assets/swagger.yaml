@@ -204,8 +204,21 @@ paths:
             schema:
               $ref: '#/components/schemas/PortfolioPostRequest'
       responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/PortfolioGetResponse'
         default:
-          $ref: '#/components/responses/APIResponseAll'
+          $ref: '#/components/responses/APIResponseError'
 
   /portfolios/{uuid}:
     get:
@@ -356,8 +369,21 @@ paths:
             schema:
               $ref: '#/components/schemas/TransactionPostRequest'
       responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/TransactionGetResponse'
         default:
-          $ref: '#/components/responses/APIResponseAll'
+          $ref: '#/components/responses/APIResponseError'
 
   /transactions/{uuid}:
     get:
@@ -460,8 +486,21 @@ paths:
             schema:
               $ref: '#/components/schemas/TournamentPostRequest'
       responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/TournamentGetResponse'
         default:
-          $ref: '#/components/responses/APIResponseAll'
+          $ref: '#/components/responses/APIResponseError'
 
     get:
       security:
@@ -865,7 +904,6 @@ components:
       required:
         - uuid
         - owner
-        - tournament
         - name
         - balance_cents
         - created_at

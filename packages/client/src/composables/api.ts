@@ -411,6 +411,15 @@ export function useAPI() {
     [API_QUERY.POST_PORTFOLIO]: {
       code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
+      data?: {
+        uuid: string
+        owner: string
+        tournament: string
+        name: string
+        balance_cents: number
+        created_at: string
+        updated_at: string
+      }
     }
     [API_QUERY.GET_PORTFOLIO]: {
       code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
@@ -449,6 +458,15 @@ export function useAPI() {
     [API_QUERY.POST_TRANSACTION]: {
       code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
+      data?: {
+        uuid: string
+        portfolio: string
+        symbol: string
+        action: ACTION
+        quantity: number
+        price_cents: number
+        created_at: string
+      }
     }
     [API_QUERY.GET_TRANSACTION]: {
       code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
@@ -480,9 +498,14 @@ export function useAPI() {
       code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
       data?: {
+        uuid: string
+        owner: string
         name: string
+        status: STATUS
         start_date: string
         end_date: string
+        created_at: string
+        updated_at: string
       }
     }
     [API_QUERY.GET_TOURNAMENTS]: {
