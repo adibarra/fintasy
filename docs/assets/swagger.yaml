@@ -243,7 +243,7 @@ paths:
           schema:
             type: string
             format: uuid
-            example: d383865a-df45-4c4c-bc47-b06253b126a6
+            example: b980b95e-1d91-4528-9872-5b3ee66098c7
         - name: name
           in: query
           description: The name of the portfolio to fetch
@@ -893,7 +893,7 @@ components:
         tournament:
           type: string
           format: uuid
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
+          example: b980b95e-1d91-4528-9872-5b3ee66098c7
 
     # Schema for GET /portfolios/{uuid}
     PortfolioGetResponse:
@@ -917,7 +917,7 @@ components:
         tournament:
           type: string
           format: uuid
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
+          example: b980b95e-1d91-4528-9872-5b3ee66098c7
         name:
           type: string
           example: Default
