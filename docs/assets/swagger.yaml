@@ -102,7 +102,7 @@ paths:
                       - data
                     properties:
                       data:
-                        $ref: '#/components/schemas/SessionPostResponse'
+                        $ref: '#/components/schemas/UserGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 

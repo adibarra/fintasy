@@ -26,10 +26,6 @@ export function useAPI() {
 
   return {
     /**
-     * The session token used to authenticate requests
-     */
-    token: sessionToken,
-    /**
      * Login to the API and store the session token
      * @param data
      * @param data.email the user's email
@@ -72,10 +68,7 @@ export function useAPI() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       }).json<API_RESPONSE[API_QUERY.POST_USER]>()
-      const result = checkResponse<API_QUERY.POST_USER>(response)
-      if (result.code === 200)
-        sessionToken.value = result.data?.token ?? ''
-      return result
+      return checkResponse<API_QUERY.POST_USER>(response)
     },
     /**
      * Get user information
@@ -384,8 +377,12 @@ export function useAPI() {
       code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
       message: string
       data?: {
-        token: string
         uuid: string
+        email: string
+        username: string
+        coins: number
+        created_at: string
+        updated_at: string
       }
     }
     [API_QUERY.GET_USER]: {
