@@ -40,7 +40,7 @@ export function useAPI() {
       const result = checkResponse<API_QUERY.POST_SESSION>(response)
       if (result.code === 200)
         sessionToken.value = result.data?.token ?? ''
-      return data
+      return result
     },
     /**
      * Logout of the API and remove the session token
