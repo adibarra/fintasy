@@ -1,7 +1,7 @@
 import type { UseFetchReturn } from '@vueuse/core'
 
 export function useAPI() {
-  const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:4010'
+  const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:3332/api/v1'
   const sessionToken = useSessionStorage('session-token', '')
 
   enum API_QUERY {
@@ -26,19 +26,24 @@ export function useAPI() {
 
   return {
     /**
-     * Login to the API and store the session token
-     * @param email the user's email
-     * @param password the user's password
+     * The session token used to authenticate requests
      */
-    login: async (email: string, password: string): Promise<API_RESPONSE[API_QUERY.POST_SESSION]> => {
+    token: sessionToken,
+    /**
+     * Login to the API and store the session token
+     * @param data
+     * @param data.email the user's email
+     * @param data.password the user's password
+     */
+    login: async (data: { email: string, password: string }) => {
       const response = await useFetch(`${API_BASE}/sessions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(data),
       }).json<API_RESPONSE[API_QUERY.POST_SESSION]>()
-      const data = checkResponse<API_QUERY.POST_SESSION>(response)
-      if (data.code === 200)
-        sessionToken.value = data.data?.token ?? ''
+      const result = checkResponse<API_QUERY.POST_SESSION>(response)
+      if (result.code === 200)
+        sessionToken.value = result.data?.token ?? ''
       return data
     },
     /**
@@ -49,34 +54,36 @@ export function useAPI() {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.DELETE_SESSION]>()
-      const data = checkResponse<API_QUERY.DELETE_SESSION>(response)
-      if (data.code === 200)
+      const result = checkResponse<API_QUERY.DELETE_SESSION>(response)
+      if (result.code === 200)
         sessionToken.value = ''
-      return data
+      return result
     },
     /**
      * Create a new user
-     * @param email the user's email
-     * @param username the user's username
-     * @param password the user's password
+     * @param data
+     * @param data.email The user's email
+     * @param data.username The user's username
+     * @param data.password The user's password
      */
-    createUser: async (email: string, username: string, password: string): Promise<API_RESPONSE[API_QUERY.POST_USER]> => {
+    createUser: async (data: { email: string, username: string, password: string }): Promise<API_RESPONSE[API_QUERY.POST_USER]> => {
       const response = await useFetch(`${API_BASE}/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, username, password }),
+        body: JSON.stringify(data),
       }).json<API_RESPONSE[API_QUERY.POST_USER]>()
-      const data = checkResponse<API_QUERY.POST_USER>(response)
-      if (data.code === 200)
-        sessionToken.value = data.data?.token ?? ''
-      return data
+      const result = checkResponse<API_QUERY.POST_USER>(response)
+      if (result.code === 200)
+        sessionToken.value = result.data?.token ?? ''
+      return result
     },
     /**
      * Get user information
-     * @param uuid the user's UUID
+     * @param data
+     * @param data.uuid the user's UUID
      */
-    getUser: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_USER]> => {
-      const response = await useFetch(`${API_BASE}/users/${uuid}`, {
+    getUser: async (data: { uuid: string }): Promise<API_RESPONSE[API_QUERY.GET_USER]> => {
+      const response = await useFetch(`${API_BASE}/users/${data.uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_USER]>()
@@ -84,28 +91,30 @@ export function useAPI() {
     },
     /**
      * Update user information
-     * @param uuid the user's UUID
-     * @param email (optional) the user's new email
-     * @param username (optional) the user's new username
-     * @param password (optional) the user's new password
+     * @param data
+     * @param data.uuid the user's UUID
+     * @param data.email (optional) the user's new email
+     * @param data.username (optional) the user's new username
+     * @param data.password (optional) the user's new password
      */
-    updateUser: async (uuid: string, email?: string, username?: string, password?: string): Promise<API_RESPONSE[API_QUERY.PATCH_USER]> => {
-      const response = await useFetch(`${API_BASE}/users/${uuid}`, {
+    updateUser: async (data: { uuid: string, email?: string, username?: string, password?: string }): Promise<API_RESPONSE[API_QUERY.PATCH_USER]> => {
+      const response = await useFetch(`${API_BASE}/users/${data.uuid}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
-        body: JSON.stringify({ email, username, password }),
+        body: JSON.stringify({ email: data.email, username: data.username, password: data.password }),
       }).json<API_RESPONSE[API_QUERY.PATCH_USER]>()
       return checkResponse<API_QUERY.PATCH_USER>(response)
     },
     /**
      * Delete a user
-     * @param uuid the user's UUID
+     * @param data
+     * @param data.uuid the user's UUID
      */
-    deleteUser: async (uuid: string): Promise<API_RESPONSE[API_QUERY.DELETE_USER]> => {
-      const response = await useFetch(`${API_BASE}/users/${uuid}`, {
+    deleteUser: async (data: { uuid: string }): Promise<API_RESPONSE[API_QUERY.DELETE_USER]> => {
+      const response = await useFetch(`${API_BASE}/users/${data.uuid}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.DELETE_USER]>()
@@ -113,26 +122,28 @@ export function useAPI() {
     },
     /**
      * Create a new portfolio
-     * @param name the portfolio name
-     * @param tournament the tournament UUID (optional)
+     * @param data
+     * @param data.name the portfolio name
+     * @param data.tournament (optional) the tournament UUID
      */
-    createPortfolio: async (name: string, tournament?: string): Promise<API_RESPONSE[API_QUERY.POST_PORTFOLIO]> => {
+    createPortfolio: async (data: { name: string, tournament?: string }): Promise<API_RESPONSE[API_QUERY.POST_PORTFOLIO]> => {
       const response = await useFetch(`${API_BASE}/portfolios`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
-        body: JSON.stringify(tournament ? { name, tournament } : { name }),
+        body: JSON.stringify(removeEmpty(data)),
       }).json<API_RESPONSE[API_QUERY.POST_PORTFOLIO]>()
       return checkResponse<API_QUERY.POST_PORTFOLIO>(response)
     },
     /**
      * Get portfolio information
-     * @param uuid the portfolio UUID
+     * @param data
+     * @param data.uuid the portfolio UUID
      */
-    getPortfolio: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_PORTFOLIO]> => {
-      const response = await useFetch(`${API_BASE}/portfolios/${uuid}`, {
+    getPortfolio: async (data: { uuid: string }): Promise<API_RESPONSE[API_QUERY.GET_PORTFOLIO]> => {
+      const response = await useFetch(`${API_BASE}/portfolios/${data.uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_PORTFOLIO]>()
@@ -140,26 +151,28 @@ export function useAPI() {
     },
     /**
      * Update portfolio information
-     * @param uuid the portfolio UUID
-     * @param name the portfolio name
+     * @param data
+     * @param data.uuid the portfolio UUID
+     * @param data.name (optional) the portfolio name
      */
-    updatePortfolio: async (uuid: string, name?: string): Promise<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]> => {
-      const response = await useFetch(`${API_BASE}/portfolios/${uuid}`, {
+    updatePortfolio: async (data: { uuid: string, name?: string }): Promise<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]> => {
+      const response = await useFetch(`${API_BASE}/portfolios/${data.uuid}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
-        body: JSON.stringify({ name }),
+        body: JSON.stringify({ name: data.name }),
       }).json<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]>()
       return checkResponse<API_QUERY.PATCH_PORTFOLIO>(response)
     },
     /**
      * Delete a portfolio
-     * @param uuid the portfolio UUID
+     * @param data
+     * @param data.uuid the portfolio UUID
      */
-    deletePortfolio: async (uuid: string): Promise<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]> => {
-      const response = await useFetch(`${API_BASE}/portfolios/${uuid}`, {
+    deletePortfolio: async (data: { uuid: string }): Promise<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]> => {
+      const response = await useFetch(`${API_BASE}/portfolios/${data.uuid}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]>()
@@ -167,16 +180,17 @@ export function useAPI() {
     },
     /**
      * Get all portfolios owned by a user
-     * @param owner the user's UUID
-     * @param offset (optional) the offset to start returning portfolios from
-     * @param limit (optional) the maximum number of portfolios to return
+     * @param data
+     * @param data.owner the user's UUID
+     * @param data.offset (optional) the offset to start returning portfolios from
+     * @param data.limit (optional) the maximum number of portfolios to return
      */
-    getPortfolios: async (owner: string, offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]> => {
-      const params = new URLSearchParams({
-        ...(offset && { offset: offset.toString() }),
-        ...(limit && { limit: limit.toString() }),
-      })
-      const response = await useFetch(`${API_BASE}/portfolios/user/${owner}&${params}`, {
+    getPortfolios: async (data: { owner: string, offset?: number, limit?: number }): Promise<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]> => {
+      const params = new URLSearchParams(removeEmpty({
+        offset: data.offset,
+        limit: data.limit,
+      }))
+      const response = await useFetch(`${API_BASE}/portfolios/user/${data.owner}&${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_PORTFOLIOS_USER]>()
@@ -184,28 +198,30 @@ export function useAPI() {
     },
     /**
      * Create a new transaction
-     * @param portfolio the portfolio UUID
-     * @param symbol the stock symbol
-     * @param action the transaction action (BUY or SELL)
-     * @param quantity the number of shares
+     * @param data
+     * @param data.portfolio the portfolio UUID
+     * @param data.symbol the stock symbol
+     * @param data.action the transaction action (BUY or SELL)
+     * @param data.quantity the number of shares
      */
-    createTransaction: async (portfolio: string, symbol: string, action: ACTION, quantity: number): Promise<API_RESPONSE[API_QUERY.POST_TRANSACTION]> => {
+    createTransaction: async (data: { portfolio: string, symbol: string, action: ACTION, quantity: number }): Promise<API_RESPONSE[API_QUERY.POST_TRANSACTION]> => {
       const response = await useFetch(`${API_BASE}/transactions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
-        body: JSON.stringify({ portfolio, symbol, action, quantity }),
+        body: JSON.stringify(data),
       }).json<API_RESPONSE[API_QUERY.POST_TRANSACTION]>()
       return checkResponse<API_QUERY.POST_TRANSACTION>(response)
     },
     /**
      * Get transaction information
-     * @param uuid the transaction UUID
+     * @param data
+     * @param data.uuid the transaction UUID
      */
-    getTransaction: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_TRANSACTION]> => {
-      const response = await useFetch(`${API_BASE}/transactions/${uuid}`, {
+    getTransaction: async (data: { uuid: string }): Promise<API_RESPONSE[API_QUERY.GET_TRANSACTION]> => {
+      const response = await useFetch(`${API_BASE}/transactions/${data.uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_TRANSACTION]>()
@@ -213,16 +229,17 @@ export function useAPI() {
     },
     /**
      * Get all transactions for a portfolio
-     * @param portfolio the portfolio UUID
-     * @param offset (optional) the offset to start returning transactions from
-     * @param limit (optional) the maximum number of transactions to return
+     * @param data
+     * @param data.portfolio the portfolio UUID
+     * @param data.offset (optional) the offset to start returning transactions from
+     * @param data.limit (optional) the maximum number of transactions to return
      */
-    getTransactions: async (portfolio: string, offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]> => {
-      const params = new URLSearchParams({
-        ...(offset && { offset: offset.toString() }),
-        ...(limit && { limit: limit.toString() }),
-      })
-      const response = await useFetch(`${API_BASE}/transactions/portfolio/${portfolio}&${params}`, {
+    getTransactions: async (data: { portfolio: string, offset?: number, limit?: number }): Promise<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]> => {
+      const params = new URLSearchParams(removeEmpty({
+        offset: data.offset,
+        limit: data.limit,
+      }))
+      const response = await useFetch(`${API_BASE}/transactions/portfolio/${data.portfolio}&${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_TRANSACTIONS_PORTFOLIO]>()
@@ -230,31 +247,33 @@ export function useAPI() {
     },
     /**
      * Create a new tournament
-     * @param name the tournament name
-     * @param start_date the tournament start date
-     * @param end_date the tournament end date
+     * @param data
+     * @param data.name the tournament name
+     * @param data.start_date the tournament start date
+     * @param data.end_date the tournament end date
      */
-    createTournament: async (name: string, start_date: string, end_date: string): Promise<API_RESPONSE[API_QUERY.POST_TOURNAMENT]> => {
+    createTournament: async (data: { name: string, start_date: string, end_date: string }): Promise<API_RESPONSE[API_QUERY.POST_TOURNAMENT]> => {
       const response = await useFetch(`${API_BASE}/tournaments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
-        body: JSON.stringify({ name, start_date, end_date }),
+        body: JSON.stringify(data),
       }).json<API_RESPONSE[API_QUERY.POST_TOURNAMENT]>()
       return checkResponse<API_QUERY.POST_TOURNAMENT>(response)
     },
     /**
      * Get all tournaments
-     * @param offset (optional) the offset to start returning tournaments from
-     * @param limit (optional) the maximum number of tournaments to return
+     * @param data
+     * @param data.offset (optional) the offset to start returning tournaments from
+     * @param data.limit (optional) the maximum number of tournaments to return
      */
-    getTournaments: async (offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_TOURNAMENTS]> => {
-      const params = new URLSearchParams({
-        ...(offset && { offset: offset.toString() }),
-        ...(limit && { limit: limit.toString() }),
-      })
+    getTournaments: async (data: { offset?: number, limit?: number }): Promise<API_RESPONSE[API_QUERY.GET_TOURNAMENTS]> => {
+      const params = new URLSearchParams(removeEmpty({
+        offset: data.offset,
+        limit: data.limit,
+      }))
       const response = await useFetch(`${API_BASE}/tournaments&${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
@@ -263,10 +282,11 @@ export function useAPI() {
     },
     /**
      * Get tournament information
-     * @param uuid the tournament UUID
+     * @param data
+     * @param data.uuid the tournament UUID
      */
-    getTournament: async (uuid: string): Promise<API_RESPONSE[API_QUERY.GET_TOURNAMENT]> => {
-      const response = await useFetch(`${API_BASE}/tournaments/${uuid}`, {
+    getTournament: async (data: { uuid: string }): Promise<API_RESPONSE[API_QUERY.GET_TOURNAMENT]> => {
+      const response = await useFetch(`${API_BASE}/tournaments/${data.uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENT]>()
@@ -274,28 +294,30 @@ export function useAPI() {
     },
     /**
      * Update tournament information
-     * @param uuid the tournament UUID
-     * @param name the tournament name
-     * @param start_date the tournament start date
-     * @param end_date the tournament end date
+     * @param data
+     * @param data.uuid the tournament UUID
+     * @param data.name the tournament name
+     * @param data.start_date the tournament start date
+     * @param data.end_date the tournament end date
      */
-    updateTournament: async (uuid: string, name?: string, start_date?: string, end_date?: string): Promise<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]> => {
-      const response = await useFetch(`${API_BASE}/tournaments/${uuid}`, {
+    updateTournament: async (data: { uuid: string, name?: string, start_date?: string, end_date?: string }): Promise<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]> => {
+      const response = await useFetch(`${API_BASE}/tournaments/${data.uuid}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken.value}`,
         },
-        body: JSON.stringify({ name, start_date, end_date }),
+        body: JSON.stringify({ name: data.name, start_date: data.start_date, end_date: data.end_date }),
       }).json<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]>()
       return checkResponse<API_QUERY.PATCH_TOURNAMENT>(response)
     },
     /**
      * Delete a tournament
-     * @param uuid the tournament UUID
+     * @param data
+     * @param data.uuid the tournament UUID
      */
-    deleteTournament: async (uuid: string): Promise<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]> => {
-      const response = await useFetch(`${API_BASE}/tournaments/${uuid}`, {
+    deleteTournament: async (data: { uuid: string }): Promise<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]> => {
+      const response = await useFetch(`${API_BASE}/tournaments/${data.uuid}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]>()
@@ -303,16 +325,17 @@ export function useAPI() {
     },
     /**
      * Get all tournaments owned by a user
-     * @param owner the user's UUID
-     * @param offset (optional) the offset to start returning tournaments from
-     * @param limit (optional) the maximum number of tournaments to return
+     * @param data
+     * @param data.owner the user's UUID
+     * @param data.offset (optional) the offset to start returning tournaments from
+     * @param data.limit (optional) the maximum number of tournaments to return
      */
-    getTournamentsUser: async (owner: string, offset?: number, limit?: number): Promise<API_RESPONSE[API_QUERY.GET_TOURNAMENTS_USER]> => {
-      const params = new URLSearchParams({
-        ...(offset && { offset: offset.toString() }),
-        ...(limit && { limit: limit.toString() }),
-      })
-      const response = await useFetch(`${API_BASE}/tournaments/user/${owner}&${params}`, {
+    getTournamentsUser: async (data: { owner: string, offset?: number, limit?: number }): Promise<API_RESPONSE[API_QUERY.GET_TOURNAMENTS_USER]> => {
+      const params = new URLSearchParams(removeEmpty({
+        offset: data.offset,
+        limit: data.limit,
+      }))
+      const response = await useFetch(`${API_BASE}/tournaments/user/${data.owner}&${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENTS_USER]>()
@@ -320,10 +343,11 @@ export function useAPI() {
     },
     /**
      * Get the latest quote for a symbol
-     * @param symbol the stock symbol
+     * @param data
+     * @param data.symbol the stock symbol
      */
-    getQuote: async (symbol: string): Promise<API_RESPONSE[API_QUERY.GET_QUOTE]> => {
-      const response = await useFetch(`${API_BASE}/quotes/${symbol}`, {
+    getQuote: async (data: { symbol: string }): Promise<API_RESPONSE[API_QUERY.GET_QUOTE]> => {
+      const response = await useFetch(`${API_BASE}/quotes/${data.symbol}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_QUOTE]>()
@@ -337,6 +361,10 @@ export function useAPI() {
     if (response.data.value === null)
       return { code: null, message: 'Request Failed' }
     return response.data.value
+  }
+
+  function removeEmpty(obj: Record<string, any>): Record<string, any> {
+    return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
   }
 
   interface API_RESPONSE {
