@@ -16,5 +16,4 @@ if IS_PRODUCTION:
 API_HOST: str = os.environ.get("SERVER_API_HOST") if IS_PRODUCTION else "localhost"
 API_PORT: int = os.environ.get("SERVER_API_PORT") if IS_PRODUCTION else 3332
 API_CORS_ORIGINS: List[str] = os.environ.get("SERVER_API_CORS_ORIGINS").split(",") if IS_PRODUCTION else ["*"]
-API_STATIC_DIRS: List[str] = [os.path.join("..", "client", "dist")] if IS_PRODUCTION else []
 API_ROUTES_DIR: str = os.path.join("src", "routes")
