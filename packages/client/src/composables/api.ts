@@ -28,11 +28,13 @@ export function useAPI() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
+      }, {
+        afterFetch: (ctx) => {
+          sessionToken.value = ctx.data.data.token
+          return ctx
+        },
       }).json<API_RESPONSE[API_QUERY.POST_SESSION]>()
-      const result = postProcess<API_QUERY.POST_SESSION>(response)
-      if (result.code === 200)
-        sessionToken.value = result.data?.token ?? ''
-      return result
+      return postProcess<API_QUERY.POST_SESSION>(response)
     },
     /**
      * Logout of the API and remove the session token
@@ -41,11 +43,13 @@ export function useAPI() {
       const response = await useFetch(`${API_BASE}/sessions`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        afterFetch: (ctx) => {
+          sessionToken.value = ''
+          return ctx
+        },
       }).json<API_RESPONSE[API_QUERY.DELETE_SESSION]>()
-      const result = postProcess<API_QUERY.DELETE_SESSION>(response)
-      if (result.code === 200)
-        sessionToken.value = ''
-      return result
+      return postProcess<API_QUERY.DELETE_SESSION>(response)
     },
     /**
      * Create a new user
