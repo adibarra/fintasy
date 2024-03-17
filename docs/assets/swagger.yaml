@@ -219,6 +219,71 @@ paths:
                         $ref: '#/components/schemas/PortfolioGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - portfolios
+      summary: Get portfolios
+      description: Gets all portfolios which match filters.
+      operationId: getPortfolios
+      parameters:
+        - name: owner
+          in: query
+          description: The uuid of the owner to fetch portfolios for
+          required: false
+          schema:
+            type: string
+            format: uuid
+            example: d383865a-df45-4c4c-bc47-b06253b126a6
+        - name: tournament
+          in: query
+          description: The uuid of the tournament to fetch portfolios for
+          required: false
+          schema:
+            type: string
+            format: uuid
+            example: d383865a-df45-4c4c-bc47-b06253b126a6
+        - name: name
+          in: query
+          description: The name of the portfolio to fetch
+          required: false
+          schema:
+            type: string
+            example: Default
+        - name: offset
+          in: query
+          description: The number of portfolios to skip
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          description: The maximum number of portfolios to return
+          required: false
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PortfolioGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
 
   /portfolios/{uuid}:
     get:
@@ -302,57 +367,6 @@ paths:
         default:
           $ref: '#/components/responses/APIResponseAll'
 
-  /portfolios/user/{uuid}:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - portfolios
-      summary: Get user's portfolios
-      description: Gets all portfolios by owner.
-      operationId: getPortfoliosByUserUUID
-      parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the owner to fetch portfolios for
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
-          required: true
-          schema:
-            type: string
-        - name: offset
-          in: query
-          description: The number of portfolios to skip
-          required: false
-          schema:
-            type: integer
-            default: 0
-        - name: limit
-          in: query
-          description: The maximum number of portfolios to return
-          required: false
-          schema:
-            type: integer
-            default: 10
-            maximum: 50
-      responses:
-        200:
-          description: Ok
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/APIResponse'
-                  - type: object
-                    required:
-                      - data
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/PortfolioGetResponse'
-        default:
-          $ref: '#/components/responses/APIResponseError'
-
   /transactions:
     post:
       security:
@@ -384,53 +398,17 @@ paths:
                         $ref: '#/components/schemas/TransactionGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
-
-  /transactions/{uuid}:
     get:
       security:
         - bearerAuth: []
       tags:
         - transactions
-      summary: Get transaction
-      description: Gets a transaction by uuid.
-      operationId: getTransactionByUUID
+      summary: Get transactions
+      description: Gets all transactions which match filters.
+      operationId: getTransactions
       parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the transaction to be fetched
-          example: 177d58d6-c33e-465b-a71f-b738a052d13f
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: Ok
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/APIResponse'
-                  - type: object
-                    required:
-                      - data
-                    properties:
-                      data:
-                        $ref: '#/components/schemas/TransactionGetResponse'
-        default:
-          $ref: '#/components/responses/APIResponseError'
-
-  /transactions/portfolio/{uuid}:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - transactions
-      summary: Get portfolio's transactions
-      description: Gets all transactions by portfolio.
-      operationId: getTransactionByUserUUID
-      parameters:
-        - name: uuid
-          in: path
+        - name: portfolio
+          in: query
           description: The uuid of the portfolio to fetch transactions for
           example: 7b4a6ee5-73fe-4de5-9944-c49009057911
           required: true
@@ -467,6 +445,40 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/TransactionGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
+  /transactions/{uuid}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - transactions
+      summary: Get transaction
+      description: Gets a transaction by uuid.
+      operationId: getTransactionByUUID
+      parameters:
+        - name: uuid
+          in: path
+          description: The uuid of the transaction to be fetched
+          example: 177d58d6-c33e-465b-a71f-b738a052d13f
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/TransactionGetResponse'
         default:
           $ref: '#/components/responses/APIResponseError'
 
@@ -508,9 +520,46 @@ paths:
       tags:
         - tournaments
       summary: Get tournaments
-      description: Gets all tournaments.
+      description: Gets all tournaments which match filters.
       operationId: getTournaments
       parameters:
+        - name: owner
+          in: query
+          description: The uuid of the owner to fetch tournaments for
+          required: false
+          schema:
+            type: string
+            format: uuid
+            example: d383865a-df45-4c4c-bc47-b06253b126a6
+        - name: name
+          in: query
+          description: The name of the tournament to fetch
+          required: false
+          schema:
+            type: string
+            example: Default
+        - name: status
+          in: query
+          description: The status of the tournament to fetch
+          required: false
+          schema:
+            $ref: '#/components/schemas/TournamentStatus'
+        - name: start_date
+          in: query
+          description: The start date of the tournament to fetch
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: 1970-01-01T00:00:00Z
+        - name: end_date
+          in: query
+          description: The end date of the tournament to fetch
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: 1970-01-01T00:00:00Z
         - name: offset
           in: query
           description: The number of tournaments to skip
@@ -626,57 +675,6 @@ paths:
       responses:
         default:
           $ref: '#/components/responses/APIResponseAll'
-
-  /tournaments/user/{uuid}:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - tournaments
-      summary: Get user's tournaments
-      description: Gets all tournaments by owner.
-      operationId: getTournamentsByUserUUID
-      parameters:
-        - name: uuid
-          in: path
-          description: The uuid of the owner to fetch tournaments for
-          example: d383865a-df45-4c4c-bc47-b06253b126a6
-          required: true
-          schema:
-            type: string
-        - name: offset
-          in: query
-          description: The number of tournaments to skip
-          required: false
-          schema:
-            type: integer
-            default: 0
-        - name: limit
-          in: query
-          description: The maximum number of tournaments to return
-          required: false
-          schema:
-            type: integer
-            default: 10
-            maximum: 50
-      responses:
-        200:
-          description: Ok
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/APIResponse'
-                  - type: object
-                    required:
-                      - data
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/TournamentGetResponse'
-        default:
-          $ref: '#/components/responses/APIResponseError'
 
   /quotes/{symbol}:
     get:
@@ -891,7 +889,6 @@ components:
       properties:
         name:
           type: string
-          format: uuid
           example: Default
         tournament:
           type: string
@@ -926,7 +923,7 @@ components:
           example: Default
         balance_cents:
           type: number
-          example: 100_000_00
+          example: 10000000
         created_at:
           type: string
           format: date-time
@@ -996,7 +993,7 @@ components:
           example: 10
         price_cents:
           type: number
-          example: 10_000_00
+          example: 1000000
         created_at:
           type: string
           format: date-time
@@ -1096,7 +1093,7 @@ components:
           example: AAPL
         price_cents:
           type: number
-          example: 1_000_00
+          example: 100000
         timestamp:
           type: string
           format: date-time
