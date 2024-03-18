@@ -10,16 +10,16 @@ interface Transaction {
   portfolio: string
   symbol: string
   action: string
-  quantity: number
-  price_cents: number
+  quantity: string
+  price_cents: string
   created_at: string
 }
 
 interface Asset {
   symbol: string
-  quantity: number | string
-  pl_day: number | string
-  pl_total: number | string
+  quantity: string
+  pl_day: string
+  pl_total: string
 }
 
 const chartData = generateData(1987)
@@ -50,10 +50,10 @@ function generateAssets(count: number): Asset[] {
 
   for (let i = 0; i < count; ++i) {
     assets.push({
-      symbol: Math.random().toString(36).substring(2),
-      quantity: Math.floor(Math.random() * 100),
-      pl_day: (Math.random() * 1).toFixed(2),
-      pl_total: (Math.random() * 50 - 20).toFixed(2),
+      symbol: Math.random().toString(36).substring(2, 6).toUpperCase(),
+      quantity: `x${Math.floor(Math.random() * 100).toString()}`,
+      pl_day: `${(Math.random() * 1).toFixed(2)}%`,
+      pl_total: `${(Math.random() * 50 - 20).toFixed(2)}%`,
     })
   }
   return assets
@@ -62,7 +62,6 @@ function generateAssets(count: number): Asset[] {
 // Generate random transactions
 function generateTransactions(count: number): Transaction[] {
   const transactions = []
-  const symbols = ['APPL', 'MSFT', 'AMZN']
   const actions = ['BUY', 'SELL']
   const date = new Date()
 
@@ -71,11 +70,11 @@ function generateTransactions(count: number): Transaction[] {
     transactions.push({
       uuid: Math.random().toString(36).substring(2),
       portfolio: Math.random().toString(36).substring(2),
-      symbol: symbols[Math.floor(Math.random() * symbols.length)],
+      symbol: Math.random().toString(36).substring(2, 6).toUpperCase(),
       action: actions[Math.floor(Math.random() * actions.length)],
-      quantity: Math.floor(Math.random() * 100),
-      price_cents: Math.floor(Math.random() * 100000),
-      created_at: date.toISOString(),
+      quantity: `x${Math.floor(Math.random() * 100)}`,
+      price_cents: `$${(Math.floor(Math.random() * 100000) / 100).toString()}`,
+      created_at: date.toLocaleDateString(),
     })
   }
   return transactions

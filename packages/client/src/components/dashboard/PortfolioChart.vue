@@ -58,9 +58,7 @@ onMounted(() => {
   }))
 
   const yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-    renderer: am5xy.AxisRendererY.new(root, {
-      pan: 'zoom',
-    }),
+    renderer: am5xy.AxisRendererY.new(root, { }),
   }))
 
   // Add series
@@ -82,7 +80,7 @@ onMounted(() => {
 
   // Make stuff animate on load
   // https://www.amcharts.com/docs/v5/concepts/animations/
-  series.appear(2500)
+  series.appear(2500, 100)
   chart.appear(2500, 100)
 
   onBeforeUnmount(() => {

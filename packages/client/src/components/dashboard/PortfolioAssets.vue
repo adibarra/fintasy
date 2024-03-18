@@ -1,9 +1,9 @@
 <script setup lang="ts">
 interface Asset {
   symbol: string
-  quantity: number | string
-  pl_day: number | string
-  pl_total: number | string
+  quantity: string
+  pl_day: string
+  pl_total: string
 }
 
 const props = defineProps({
@@ -50,14 +50,7 @@ function handlePageChange(page: number) {
   }
 }
 
-onMounted(() => {
-  props.assets.forEach((asset: Asset) => {
-    asset.quantity = `x${asset.quantity}`
-    asset.pl_day = `${asset.pl_day}%`
-    asset.pl_total = `${asset.pl_total}%`
-  })
-  handlePageChange(1)
-})
+onMounted(() => handlePageChange(1))
 </script>
 
 <template>

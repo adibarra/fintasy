@@ -4,8 +4,8 @@ interface Transaction {
   portfolio: string
   symbol: string
   action: string
-  quantity: number | string
-  price_cents: number | string
+  quantity: string
+  price_cents: string
   created_at: string
 }
 
@@ -57,14 +57,7 @@ function handlePageChange(page: number) {
   }
 }
 
-onMounted(() => {
-  props.transactions.forEach((transaction: Transaction) => {
-    transaction.quantity = `x${transaction.quantity}`
-    transaction.price_cents = `$${(Number.parseInt(transaction.price_cents.toString()) / 100).toFixed(2)}`
-    transaction.created_at = new Date(transaction.created_at).toLocaleDateString()
-  })
-  handlePageChange(1)
-})
+onMounted(() => handlePageChange(1))
 </script>
 
 <template>
