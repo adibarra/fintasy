@@ -35,8 +35,8 @@ const columns = [
 const data = ref()
 const pagination = ref({
   page: 1,
-  pageCount: Math.ceil(props.assets.length / 10),
-  itemsPerPage: 10,
+  pageCount: Math.ceil(props.assets.length / 8),
+  itemsPerPage: 8,
 })
 const loading = ref<boolean>(false)
 function handlePageChange(page: number) {
