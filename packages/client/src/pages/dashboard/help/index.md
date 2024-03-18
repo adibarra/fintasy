@@ -10,10 +10,25 @@ We can also add some sections on the basics of the stock market.
 This is an example of a page that uses the dashboard layout and is also markdown based.
 
 - We are able to use full markdown syntax here.
-- We can also use custom components like the `router-link` component to add inter-app links to this page.
-  <router-link to="/dashboard">Go to dashboard</router-link> or <router-link to="/dashboard/help/example">Go to another example</router-link>
+- We can also use custom vue components like the `router-link` component to add inter-app links to this page.
+  - <router-link to="/dashboard">Go to dashboard</router-link>.
 
-Click [here](https://www.google.com) to go to Google.
+1. External links are also supported.
+2. Click [here](https://www.google.com) to go to Google.
+
+## Images
+
+Images are also supported and they can even have captions and css if you do it like this:
+
+<figure>
+  <img src="/favicon.svg" alt="Site favicon" rounded-lg h-40 bg--c-bg-tertiary p-2>
+  <figcaption text-right mt-2 op-75>
+    This is the website's current favicon.
+  </figcaption>
+</figure>
+
+You can also have it change depending on the theme.
+If you switch between light and dark mode, the image's background will change to match the theme.
 
 ## Code blocks
 
@@ -24,18 +39,6 @@ Here is a code block with syntax highlighting:
 console.log('Hello World')
 ```
 
-You can also add plain HTML to the markdown file.
-This is a simple HTML button:
-
-<button fn-outline fn-outline-hover py-1 px-2 @click="(e) => {
-const demo_button = e.target as HTMLButtonElement
-let times = Number.parseInt(demo_button.getAttribute('data-clicks') || '0') + 1
-demo_button.innerText = Number.isNaN(times) ? 'Clicked!' : `Clicked x${times}`;
-demo_button.setAttribute('data-clicks', times.toString());
-}">
-Click me
-</button>
-
 However, is recommended to write any necessary html in a vue component in the `/components` folder and import it here instead of writing it directly in the markdown file.
 
 <!-- Some spacers and a temporary footer -->
@@ -45,13 +48,7 @@ However, is recommended to write any necessary html in a vue component in the `/
   <div h-10 />
 </span>
 
-<script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
-useHead({
-  title: `${t('pages.dashboard.help.title')} • Fintasy`,
-})
-</script>
+<I18nTitle title="pages.dashboard.help.title" />
 
 <route lang="yaml">
   meta:

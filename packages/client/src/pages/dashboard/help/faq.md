@@ -12,13 +12,7 @@ There is nothing else to see here
   <div h-10 />
 </span>
 
-<script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
-useHead({
-  title: `${t('pages.dashboard.help.faq.title')} • Fintasy`,
-})
-</script>
+<I18nTitle title="pages.dashboard.help.faq.title" />
 
 <route lang="yaml">
   meta:
