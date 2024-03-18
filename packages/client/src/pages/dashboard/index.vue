@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { M } from 'vite/dist/node/types.d-FdqQ54oU'
-
 const { t } = useI18n()
 
 useHead({
@@ -86,14 +84,14 @@ function generateTransactions(count: number): Transaction[] {
 <template>
   <div h-full w-full flex flex-col gap-2 lg:flex-row>
     <div flex grow flex-col gap-2>
-      <div flex grow-1 flex-col fn-outline bg--c-bg-secondary p-2>
+      <div flex grow-1 flex-col fn-outline bg--c-fg p-2>
         <PortfolioChart :data="chartData" />
       </div>
-      <div flex grow-3 flex-col fn-outline bg--c-bg-secondary p-2>
+      <div flex grow-3 flex-col fn-outline bg--c-fg p-2>
         <PortfolioAssets :assets="assets" />
       </div>
     </div>
-    <div flex grow flex-col fn-outline bg--c-bg-secondary p-2 lg:w-120 lg:grow-0>
+    <div flex grow flex-col fn-outline bg--c-fg p-2 lg:w-120 lg:grow-0>
       <TransactionHistory :transactions="transactions" />
     </div>
   </div>

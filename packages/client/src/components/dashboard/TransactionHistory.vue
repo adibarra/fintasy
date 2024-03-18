@@ -62,7 +62,7 @@ onMounted(() => handlePageChange(1))
 
 <template>
   <div flex>
-    <span ml-1 text-xl>History</span>
+    <span ml-1 text-xl font-600>History</span>
     <div grow />
     <span mx-2 text-xl>
       <n-number-animation

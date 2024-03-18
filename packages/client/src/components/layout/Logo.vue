@@ -1,5 +1,5 @@
 <template>
-  <div h-full w-full flex rd-1 bg--c-bg-secondary>
+  <div h-full w-full flex rd-1 bg--c-fg>
     <span m-auto text-xl>
       Logo Here
     </span>

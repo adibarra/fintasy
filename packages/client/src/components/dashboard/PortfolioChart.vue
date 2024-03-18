@@ -92,11 +92,11 @@ onMounted(() => {
 
 <template>
   <div flex>
-    <span ml-1 text-xl>Portfolio Value</span>
+    <span ml-1 text-xl font-600>Portfolio Value</span>
     <div grow />
     <span
-      :class="data[data.length - 1].value >= 0 ? 'color-green' : 'color-red'"
-      mx-2 text-xl
+      :class="data[data.length - 1].value <= 0 ? 'color-lime-600 dark:color-lime-500' : 'color-red-500'"
+      mx-2 text-xl font-600
     >
       $
       <n-number-animation
