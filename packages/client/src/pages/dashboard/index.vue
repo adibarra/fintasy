@@ -5,50 +5,95 @@ useHead({
   title: `${t('pages.dashboard.title')} • Fintasy`,
 })
 
-const assets = [
-  { id: '1', name: 'Apple Inc.' },
-  { id: '2', name: 'Microsoft Corporation' },
-  { id: '3', name: 'Amazon.com, Inc.' },
-]
+interface Transaction {
+  uuid: string
+  portfolio: string
+  symbol: string
+  action: string
+  quantity: number
+  price_cents: number
+  created_at: string
+}
 
-const transactions = [
-  { id: '1', date: '2022-10-01', description: 'Bought 10 shares of Apple Inc.' },
-  { id: '2', date: '2022-10-02', description: 'Sold 5 shares of Microsoft Corporation' },
-  { id: '3', date: '2022-10-03', description: 'Bought 20 shares of Amazon.com, Inc.' },
-]
+interface Asset {
+  symbol: string
+  quantity: number | string
+  pl_day: number | string
+  pl_total: number | string
+}
+
+const chartData = generateData(1987)
+const assets = generateAssets(123)
+const transactions = generateTransactions(123)
+
+// Generate random data
+function generateData(count: number) {
+  const data = []
+  const date = new Date()
+  let value = 1000
+
+  date.setHours(0, 0, 0, 0)
+  for (let i = 0; i < count; ++i) {
+    value = Math.round((Math.random() * 1 - 0.495) * 100 + value)
+    date.setTime(date.getTime() + 86400000)
+    data.push({
+      date: date.getTime(),
+      value,
+    })
+  }
+  return data
+}
+
+// Generate random assets
+function generateAssets(count: number): Asset[] {
+  const assets = []
+
+  for (let i = 0; i < count; ++i) {
+    assets.push({
+      symbol: Math.random().toString(36).substring(2),
+      quantity: Math.floor(Math.random() * 100),
+      pl_day: (Math.random() * 1).toFixed(2),
+      pl_total: (Math.random() * 50 - 20).toFixed(2),
+    })
+  }
+  return assets
+}
+
+// Generate random transactions
+function generateTransactions(count: number): Transaction[] {
+  const transactions = []
+  const symbols = ['APPL', 'MSFT', 'AMZN']
+  const actions = ['BUY', 'SELL']
+  const date = new Date()
+
+  for (let i = 0; i < count; ++i) {
+    date.setTime(date.getTime() + Math.random() * 86400000)
+    transactions.push({
+      uuid: Math.random().toString(36).substring(2),
+      portfolio: Math.random().toString(36).substring(2),
+      symbol: symbols[Math.floor(Math.random() * symbols.length)],
+      action: actions[Math.floor(Math.random() * actions.length)],
+      quantity: Math.floor(Math.random() * 100),
+      price_cents: Math.floor(Math.random() * 100000),
+      created_at: date.toISOString(),
+    })
+  }
+  return transactions
+}
 </script>
 
 <template>
   <div id="widget area" h-full w-full flex flex-col gap-1 lg:flex-row>
-    <div id="left area" flex grow flex-col gap-1 lg:w-50vw xl:w-60vw>
+    <div id="left area" flex grow flex-col gap-1>
       <div flex flex-col fn-outline bg--c-bg-secondary p-2>
-        <span text-xl>Portfolio Value</span>
-        <div h-85>
-          <AMChart />
-        </div>
+        <PortfolioChart :data="chartData" />
       </div>
       <div flex grow flex-col fn-outline bg--c-bg-secondary p-2>
-        <span text-xl>My Assets</span>
-        <div grow>
-          <ul>
-            <li v-for="asset in assets" :key="asset.id">
-              {{ asset.name }}
-            </li>
-          </ul>
-        </div>
+        <PortfolioAssets :assets="assets" />
       </div>
     </div>
-    <div id="right area" h-full flex grow flex-row gap-1>
-      <div flex grow flex-col fn-outline bg--c-bg-secondary p-2>
-        <span text-xl>History</span>
-        <div grow>
-          <ul>
-            <li v-for="transaction in transactions" :key="transaction.id">
-              {{ transaction.date }} - {{ transaction.description }}
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div flex grow flex-col fn-outline bg--c-bg-secondary p-2 lg:w-120 lg:grow-0>
+      <TransactionHistory :transactions="transactions" />
     </div>
   </div>
 </template>

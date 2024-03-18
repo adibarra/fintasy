@@ -4,6 +4,18 @@ import * as am5xy from '@amcharts/amcharts5/xy'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import am5themes_Dark from '@amcharts/amcharts5/themes/Dark'
 
+const props = defineProps({
+  data: {
+    type: Array as PropType<
+      {
+        date: number
+        value: number
+      }[]
+    >,
+    required: true,
+  },
+})
+
 const chartdiv = ref<HTMLElement>()
 
 onMounted(() => {
@@ -35,25 +47,6 @@ onMounted(() => {
     behavior: 'none',
   }))
   cursor.lineY.set('visible', false)
-
-  // Generate random data
-  function generateData(count: number) {
-    const data = []
-    const date = new Date()
-    let value = 100
-
-    date.setHours(0, 0, 0, 0)
-    for (let i = 0; i < count; ++i) {
-      value = Math.round((Math.random() * 10 - 5) + value)
-      am5.time.add(date, 'day', 1)
-      data.push({
-        date: date.getTime(),
-        value,
-      })
-    }
-
-    return data
-  }
 
   // Create axes
   // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
@@ -90,7 +83,7 @@ onMounted(() => {
   }))
 
   // Set data
-  series.data.setAll(generateData(1200))
+  series.data.setAll(props.data)
 
   // Make stuff animate on load
   // https://www.amcharts.com/docs/v5/concepts/animations/
@@ -105,8 +98,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    ref="chartdiv"
-    h-full w-full color--c-text
-  />
+  <span text-xl>Portfolio Chart</span>
+  <div h-85>
+    <div ref="chartdiv" h-full w-full color--c-text />
+  </div>
 </template>
