@@ -82,8 +82,8 @@ onMounted(() => {
 
   // Make stuff animate on load
   // https://www.amcharts.com/docs/v5/concepts/animations/
-  series.appear(1000)
-  chart.appear(1000, 100)
+  series.appear(2500)
+  chart.appear(2500, 100)
 
   onBeforeUnmount(() => {
     if (root)
@@ -104,7 +104,7 @@ onMounted(() => {
       <n-number-animation
         :from="0"
         :to="data[data.length - 1].value"
-        :duration="2000"
+        :duration="4000"
         :active="true"
         show-separator
       />
