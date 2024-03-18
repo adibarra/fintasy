@@ -54,7 +54,7 @@ const user = ref({
     <n-tooltip>
       <template #trigger>
         <n-button text mr-5 @click="$router.go(0)">
-          <n-icon size="20" :depth="2">
+          <n-icon size="20">
             <RefreshIcon />
           </n-icon>
         </n-button>
@@ -80,46 +80,52 @@ const user = ref({
     <!-- need to work on look and feel as well as the actual logic for them -->
 
     <!-- coins -->
-    <div ml-5 w-fit flex items-center justify-center bg--c-bg-tertiary px-2 op-85>
+    <div ml-5 w-fit flex items-center justify-center fn-outline px-2 op-85>
       Coins: 🪙 {{ user.coins }}
     </div>
 
     <!-- balance -->
-    <div ml-5 w-fit flex items-center justify-center bg--c-bg-tertiary px-2 op-85>
+    <div ml-5 w-fit flex items-center justify-center fn-outline px-2 op-85>
       Balance: ${{ user.balance }}
     </div>
 
     <!-- switch user portfolio trading account -->
-    <n-dropdown
-      :options="user.accounts"
-      trigger="hover"
-      @select="(key, option) => {
-        user.account = user.accounts[key].label
-        message.info(`Selected ${option.label}`)
-      }"
-    >
-      <div ml-5 w-fit flex items-center justify-center gap-1 bg--c-bg-tertiary px-2 op-85>
-        {{ user.account }}
-        <n-icon :depth="2" size="10">
-          <DropdownIcon />
-        </n-icon>
-      </div>
-    </n-dropdown>
+    <div ml-5 w-fit flex cursor-pointer items-center justify-center fn-outline px-2 op-85 fn-hover>
+      <n-dropdown
+        :options="user.accounts"
+        trigger="hover"
+        @select="(key, option) => {
+          user.account = user.accounts[key].label
+          message.info(`Selected ${option.label}`)
+        }"
+      >
+        <div gap-1>
+          {{ user.account }}
+          <n-icon size="10">
+            <DropdownIcon />
+          </n-icon>
+        </div>
+      </n-dropdown>
+    </div>
 
     <!-- theme switch -->
-    <div ml-5 w-fit flex items-center justify-center bg--c-bg-tertiary op-85>
+    <div ml-5 w-fit flex items-center justify-center op-85>
       <ThemeSwitch />
     </div>
 
     <!-- notifications with badge -->
-    <n-badge dot processing>
-      <n-icon
-        :depth="2" size="22" ml-5
-        @click="() => message.info(`Clicked notifications`)"
-      >
-        <BellIcon />
-      </n-icon>
-    </n-badge>
+    <n-tooltip>
+      <template #trigger>
+        <n-button text @click="() => message.info(`Clicked notifications`)">
+          <n-badge dot processing>
+            <n-icon size="22" ml-5>
+              <BellIcon />
+            </n-icon>
+          </n-badge>
+        </n-button>
+      </template>
+      Notifications
+    </n-tooltip>
 
     <!-- user dropdown -->
     <n-dropdown

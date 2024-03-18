@@ -3,13 +3,16 @@ import {
   Moon as DarkIcon,
   Sun as LightIcon,
 } from '@vicons/carbon'
+import { useMessage } from 'naive-ui'
+
+const message = useMessage()
 </script>
 
 <template>
   <n-tooltip>
     <template #trigger>
-      <n-button text @click="toggleTheme()">
-        <n-icon size="20" :depth="2">
+      <n-button text @click="() => { message.info(`Toggled Theme`); toggleTheme() }">
+        <n-icon size="22">
           <DarkIcon v-if="isDark" />
           <LightIcon v-else />
         </n-icon>
