@@ -44,104 +44,95 @@ const user = ref({
 </script>
 
 <template>
-  <n-layout-header bordered h-48px flex items-center py-1>
-    <!-- parent should be w-55 to match sidebar size -->
-    <div mr-5 h-full w-55 flex items-center justify-center px-2>
-      <Logo />
-    </div>
+  <n-layout-header bordered h-48px w-full flex>
+    <div flex grow items-center gap-5 py-1 pr-5>
+      <!-- parent should be w-55 to match sidebar size -->
+      <div h-full w-55 flex items-center justify-center>
+        <Logo />
+      </div>
 
-    <!-- refresh button -->
-    <n-tooltip>
-      <template #trigger>
-        <n-button text mr-5 @click="$router.go(0)">
-          <n-icon size="20">
-            <RefreshIcon />
-          </n-icon>
-        </n-button>
-      </template>
-      Refresh Page
-    </n-tooltip>
+      <!-- refresh button -->
+      <n-tooltip>
+        <template #trigger>
+          <n-button text hidden lg:block @click="$router.go(0)">
+            <n-icon size="20">
+              <RefreshIcon />
+            </n-icon>
+          </n-button>
+        </template>
+        Refresh Page
+      </n-tooltip>
 
-    <!-- breadcrumbs keep track of what page you are on -->
-    <n-breadcrumb mr-5>
-      <template v-for="crumb in breadcrumbs" :key="crumb">
-        <n-breadcrumb-item>
-          <router-link :to="crumb.key">
-            {{ crumb.label }}
-          </router-link>
-        </n-breadcrumb-item>
-      </template>
-    </n-breadcrumb>
+      <!-- breadcrumbs keep track of what page you are on -->
+      <n-breadcrumb hidden lg:block>
+        <template v-for="crumb in breadcrumbs" :key="crumb">
+          <n-breadcrumb-item>
+            <router-link :to="crumb.key">
+              {{ crumb.label }}
+            </router-link>
+          </n-breadcrumb-item>
+        </template>
+      </n-breadcrumb>
 
-    <!-- spacer to push the rest of the items to the right -->
-    <div grow />
+      <!-- spacer to push the rest of the items to the right -->
+      <div grow />
 
-    <!-- just a bunch of placeholders from here on -->
-    <!-- need to work on look and feel as well as the actual logic for them -->
+      <!-- coins -->
+      <div hidden w-fit items-center justify-center fn-outline px-2 op-85 md:flex>
+        Coins: 🪙 {{ user.coins }}
+      </div>
 
-    <!-- coins -->
-    <div ml-5 w-fit flex items-center justify-center fn-outline px-2 op-85>
-      Coins: 🪙 {{ user.coins }}
-    </div>
+      <!-- switch user portfolio trading account -->
+      <div hidden w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 sm:flex fn-hover>
+        <n-dropdown
+          :options="user.accounts"
+          trigger="hover"
+          @select="(key, option) => {
+            user.account = user.accounts[key].label
+            message.info(`Selected ${option.label}`)
+          }"
+        >
+          <div gap-1>
+            {{ user.account }}
+            <n-icon size="10">
+              <DropdownIcon />
+            </n-icon>
+          </div>
+        </n-dropdown>
+      </div>
 
-    <!-- balance -->
-    <div ml-5 w-fit flex items-center justify-center fn-outline px-2 op-85>
-      Balance: ${{ user.balance }}
-    </div>
+      <!-- theme switch -->
+      <ThemeSwitch />
 
-    <!-- switch user portfolio trading account -->
-    <div ml-5 w-fit flex cursor-pointer items-center justify-center fn-outline px-2 op-85 fn-hover>
+      <!-- notifications with badge -->
+      <n-tooltip>
+        <template #trigger>
+          <n-button text @click="() => message.info(`Clicked notifications`)">
+            <n-badge dot processing>
+              <n-icon size="22">
+                <BellIcon />
+              </n-icon>
+            </n-badge>
+          </n-button>
+        </template>
+        Notifications
+      </n-tooltip>
+
+      <!-- user dropdown -->
       <n-dropdown
-        :options="user.accounts"
+        :options="[
+          { label: 'Profile', key: 'profile' },
+          { label: 'Settings', key: 'settings' },
+          { label: 'Logout', key: 'logout' },
+        ]"
         trigger="hover"
-        @select="(key, option) => {
-          user.account = user.accounts[key].label
-          message.info(`Selected ${option.label}`)
-        }"
+        @select="(key) => message.info(`Selected ${key}`)"
       >
-        <div gap-1>
-          {{ user.account }}
-          <n-icon size="10">
-            <DropdownIcon />
-          </n-icon>
-        </div>
+        <n-avatar
+          size="small"
+          :src="user.avatar"
+        />
       </n-dropdown>
     </div>
-
-    <!-- theme switch -->
-    <div ml-5 w-fit flex items-center justify-center op-85>
-      <ThemeSwitch />
-    </div>
-
-    <!-- notifications with badge -->
-    <n-tooltip>
-      <template #trigger>
-        <n-button text @click="() => message.info(`Clicked notifications`)">
-          <n-badge dot processing>
-            <n-icon size="22" ml-5>
-              <BellIcon />
-            </n-icon>
-          </n-badge>
-        </n-button>
-      </template>
-      Notifications
-    </n-tooltip>
-
-    <!-- user dropdown -->
-    <n-dropdown
-      :options="[
-        { label: 'Profile', key: 'profile' },
-        { label: 'Settings', key: 'settings' },
-        { label: 'Logout', key: 'logout' },
-      ]"
-      trigger="hover"
-      @select="(key) => message.info(`Selected ${key}`)"
-    >
-      <n-avatar
-        size="small"
-        :src="user.avatar"
-        mx-5
-      />
-    </n-dropdown>
   </n-layout-header>
 </template>
