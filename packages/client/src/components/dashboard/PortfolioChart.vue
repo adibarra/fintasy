@@ -33,11 +33,6 @@ onMounted(() => {
   }, { immediate: true })
 
   const chart = root.container.children.push(am5xy.XYChart.new(root, {
-    panX: true,
-    panY: true,
-    wheelX: 'panX',
-    wheelY: 'zoomX',
-    pinchZoomX: true,
     paddingLeft: 0,
   }))
 
@@ -98,8 +93,25 @@ onMounted(() => {
 </script>
 
 <template>
-  <span text-xl>Portfolio Chart</span>
-  <div h-85>
-    <div ref="chartdiv" h-full w-full color--c-text />
+  <div flex>
+    <span ml-1 text-xl>Portfolio Value</span>
+    <div grow />
+    <span
+      :class="data[data.length - 1].value >= 0 ? 'color-green' : 'color-red'"
+      mx-2 text-xl
+    >
+      $
+      <n-number-animation
+        :from="0"
+        :to="data[data.length - 1].value"
+        :duration="2000"
+        :active="true"
+        show-separator
+      />
+    </span>
   </div>
+  <div
+    ref="chartdiv"
+    mt-2 h-full min-h-50 w-full color--c-text
+  />
 </template>

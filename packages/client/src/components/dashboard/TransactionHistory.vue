@@ -68,15 +68,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <span text-xl>History</span>
+  <span ml-1 text-xl>History</span>
   <n-data-table
-    remote
     :columns="columns"
     :data="data"
     :loading="loading"
     :pagination="pagination"
-    flex-height
-    mt-2
-    grow @update:page="handlePageChange"
+    remote flex-height
+    mt-2 min-h-65 grow
+    @update:page="handlePageChange"
   />
 </template>

@@ -83,12 +83,12 @@ function generateTransactions(count: number): Transaction[] {
 </script>
 
 <template>
-  <div id="widget area" h-full w-full flex flex-col gap-1 lg:flex-row>
-    <div id="left area" flex grow flex-col gap-1>
-      <div flex flex-col fn-outline bg--c-bg-secondary p-2>
+  <div h-full w-full flex flex-col gap-2 lg:flex-row>
+    <div flex grow flex-col gap-2>
+      <div flex grow-1 flex-col fn-outline bg--c-bg-secondary p-2>
         <PortfolioChart :data="chartData" />
       </div>
-      <div flex grow flex-col fn-outline bg--c-bg-secondary p-2>
+      <div flex grow-3 flex-col fn-outline bg--c-bg-secondary p-2>
         <PortfolioAssets :assets="assets" />
       </div>
     </div>
