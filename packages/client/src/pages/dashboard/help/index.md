@@ -21,7 +21,7 @@ This is an example of a page that uses the dashboard layout and is also markdown
 Images are also supported and they can even have captions and css if you do it like this:
 
 <figure>
-  <img src="/favicon.svg" alt="Site favicon" rounded-lg h-40 bg--c-bg-tertiary p-2>
+  <img src="/favicon.svg" alt="Site favicon" rounded-lg h-40 bg--c-bg p-2>
   <figcaption text-right mt-2 op-75>
     This is the website's current favicon.
   </figcaption>
@@ -43,7 +43,7 @@ However, is recommended to write any necessary html in a vue component in the `/
 
 <!-- Some spacers and a temporary footer -->
 <span op-50>
-  <div h-10 />
+  <div h-20 />
   [ pages/dashboard/help/index.md ]
   <div h-10 />
 </span>
@@ -52,5 +52,5 @@ However, is recommended to write any necessary html in a vue component in the `/
 
 <route lang="yaml">
   meta:
-    layout: dashboard
+    layout: dashboard-md
 </route>

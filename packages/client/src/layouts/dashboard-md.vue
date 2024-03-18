@@ -3,9 +3,9 @@
     <NavBar />
     <n-layout has-sider :style="{ height: 'calc(100% - 48px)' }">
       <SideBar />
-      <n-layout-content h-full w-full flex bg--c-bg>
-        <div h-full w-full flex>
-          <div flex grow flex-col px-6 py-4 text--c-text>
+      <n-layout-content h-full w-full bg--c-bg>
+        <div h-fit w-full flex flex-col px-6 py-4 text--c-text>
+          <div mx-auto w-fit bg--c-fg px-16 py-4>
             <RouterView />
           </div>
         </div>

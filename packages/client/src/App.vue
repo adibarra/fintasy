@@ -26,24 +26,16 @@ useHead({
 <style>
 :root {
   color-scheme: light dark;
-  --c-bg-primary: #ededed;
-  --c-bg-secondary: #e2e2e2;
-  --c-bg-tertiary: #dbdbdb;
-  --c-fg-primary: #d3d3d3;
-  --c-fg-secondary: #cdcdcd;
-  --c-fg-tertiary: #c8c8c8;
+  --c-bg: #ededed;
+  --c-fg: #ffffff;
   --c-text: #151515;
   --c-inverse: #121212;
   --c-accent: #1da54f;
 }
 
 html.dark {
-  --c-bg-primary: #121212;
-  --c-bg-secondary: #1d1d1d;
-  --c-bg-tertiary: #242424;
-  --c-fg-primary: #2c2c2c;
-  --c-fg-secondary: #323232;
-  --c-fg-tertiary: #373737;
+  --c-bg: #121212;
+  --c-fg: #1b1b1b;
   --c-text: #eaeaea;
   --c-inverse: #ededed;
   --c-accent: #4ade80;
@@ -56,7 +48,7 @@ body,
   margin: 0;
   padding: 0;
   background: transparent;
-  background: var(--c-bg-primary);
+  background: var(--c-bg);
 }
 
 html,
@@ -93,6 +85,7 @@ div::-webkit-scrollbar {
   font-family: 'DM Mono', monospace;
   font-size: 1.2em;
   line-height: 1.4;
+  background: var(--c-bg);
 }
 
 .prose img {
@@ -102,12 +95,10 @@ div::-webkit-scrollbar {
 .shiki,
 .shiki span {
   color: var(--shiki-light);
-  background: var(--shiki-light-bg);
 }
 
 html.dark .shiki,
 html.dark .shiki span {
   color: var(--shiki-dark);
-  background: var(--shiki-dark-bg);
 }
 </style>

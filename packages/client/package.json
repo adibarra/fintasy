@@ -12,6 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@amcharts/amcharts5": "^5.8.5",
     "@unhead/vue": "^1.8.20",
     "@unocss/reset": "^0.58.6",
     "@vueuse/core": "^10.9.0",
