@@ -107,6 +107,9 @@ onMounted(() => {
         show-separator
       />
     </span>
+    <span mr-2 mt-auto op-75>
+      USD
+    </span>
   </div>
   <div
     ref="chartdiv"

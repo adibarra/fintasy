@@ -61,7 +61,22 @@ onMounted(() => handlePageChange(1))
 </script>
 
 <template>
-  <span ml-1 text-xl>History</span>
+  <div flex>
+    <span ml-1 text-xl>History</span>
+    <div grow />
+    <span mx-2 text-xl>
+      <n-number-animation
+        :from="0"
+        :to="transactions.length"
+        :duration="4000"
+        :active="true"
+        show-separator
+      />
+    </span>
+    <span mr-2 mt-auto op-75>
+      TRANSACTIONS
+    </span>
+  </div>
   <n-data-table
     :columns="columns"
     :data="data"

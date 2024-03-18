@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { M } from 'vite/dist/node/types.d-FdqQ54oU'
+
 const { t } = useI18n()
 
 useHead({
@@ -22,9 +24,9 @@ interface Asset {
   pl_total: string
 }
 
-const chartData = generateData(1987)
-const assets = generateAssets(123)
-const transactions = generateTransactions(123)
+const chartData = generateData(Math.floor(Math.random() * 1500) + 500)
+const assets = generateAssets(Math.floor(Math.random() * 100) + 100)
+const transactions = generateTransactions(Math.floor(Math.random() * 100) + 200)
 
 // Generate random data
 function generateData(count: number) {
