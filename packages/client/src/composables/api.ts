@@ -398,7 +398,7 @@ export function useAPI() {
   }
 
   interface UnsuccessfulResponse {
-    code: null | 400 | 401 | 403 | 404 | 409 | 500
+    code: 500 | 409 | 404 | 403 | 401 | 400 | null
     message: string
   }
 
