@@ -34,7 +34,7 @@ export function useAPI() {
           return ctx
         },
       }).json<API_RESPONSE[API_QUERY.POST_SESSION]>()
-      return postProcess<API_QUERY.POST_SESSION>(response)
+      return handleErrors<API_QUERY.POST_SESSION>(response)
     },
     /**
      * Logout of the API and remove the session token
@@ -49,7 +49,7 @@ export function useAPI() {
           return ctx
         },
       }).json<API_RESPONSE[API_QUERY.DELETE_SESSION]>()
-      return postProcess<API_QUERY.DELETE_SESSION>(response)
+      return handleErrors<API_QUERY.DELETE_SESSION>(response)
     },
     /**
      * Create a new user
@@ -64,7 +64,7 @@ export function useAPI() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       }).json<API_RESPONSE[API_QUERY.POST_USER]>()
-      return postProcess<API_QUERY.POST_USER>(response)
+      return handleErrors<API_QUERY.POST_USER>(response)
     },
     /**
      * Get user information
@@ -76,7 +76,7 @@ export function useAPI() {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_USER]>()
-      return postProcess<API_QUERY.GET_USER>(response)
+      return handleErrors<API_QUERY.GET_USER>(response)
     },
     /**
      * Update user information
@@ -95,7 +95,7 @@ export function useAPI() {
         },
         body: JSON.stringify({ email: data.email, username: data.username, password: data.password }),
       }).json<API_RESPONSE[API_QUERY.PATCH_USER]>()
-      return postProcess<API_QUERY.PATCH_USER>(response)
+      return handleErrors<API_QUERY.PATCH_USER>(response)
     },
     /**
      * Delete a user
@@ -107,7 +107,7 @@ export function useAPI() {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.DELETE_USER]>()
-      return postProcess<API_QUERY.DELETE_USER>(response)
+      return handleErrors<API_QUERY.DELETE_USER>(response)
     },
     /**
      * Create a new portfolio
@@ -124,7 +124,7 @@ export function useAPI() {
         },
         body: JSON.stringify(removeEmpty(data)),
       }).json<API_RESPONSE[API_QUERY.POST_PORTFOLIO]>()
-      return postProcess<API_QUERY.POST_PORTFOLIO>(response)
+      return handleErrors<API_QUERY.POST_PORTFOLIO>(response)
     },
     /**
      * Get all portfolios which match filers
@@ -141,7 +141,7 @@ export function useAPI() {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_PORTFOLIOS]>()
-      return postProcess<API_QUERY.GET_PORTFOLIOS>(response)
+      return handleErrors<API_QUERY.GET_PORTFOLIOS>(response)
     },
     /**
      * Get portfolio information
@@ -153,7 +153,7 @@ export function useAPI() {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_PORTFOLIO]>()
-      return postProcess<API_QUERY.GET_PORTFOLIO>(response)
+      return handleErrors<API_QUERY.GET_PORTFOLIO>(response)
     },
     /**
      * Update portfolio information
@@ -170,7 +170,7 @@ export function useAPI() {
         },
         body: JSON.stringify({ name: data.name }),
       }).json<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]>()
-      return postProcess<API_QUERY.PATCH_PORTFOLIO>(response)
+      return handleErrors<API_QUERY.PATCH_PORTFOLIO>(response)
     },
     /**
      * Delete a portfolio
@@ -182,7 +182,7 @@ export function useAPI() {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]>()
-      return postProcess<API_QUERY.DELETE_PORTFOLIO>(response)
+      return handleErrors<API_QUERY.DELETE_PORTFOLIO>(response)
     },
     /**
      * Create a new transaction
@@ -201,7 +201,7 @@ export function useAPI() {
         },
         body: JSON.stringify(data),
       }).json<API_RESPONSE[API_QUERY.POST_TRANSACTION]>()
-      return postProcess<API_QUERY.POST_TRANSACTION>(response)
+      return handleErrors<API_QUERY.POST_TRANSACTION>(response)
     },
     /**
      * Get all transactions which match filters
@@ -216,7 +216,7 @@ export function useAPI() {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_TRANSACTIONS]>()
-      return postProcess<API_QUERY.GET_TRANSACTIONS>(response)
+      return handleErrors<API_QUERY.GET_TRANSACTIONS>(response)
     },
     /**
      * Get transaction information
@@ -228,7 +228,7 @@ export function useAPI() {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_TRANSACTION]>()
-      return postProcess<API_QUERY.GET_TRANSACTION>(response)
+      return handleErrors<API_QUERY.GET_TRANSACTION>(response)
     },
     /**
      * Create a new tournament
@@ -246,7 +246,7 @@ export function useAPI() {
         },
         body: JSON.stringify(data),
       }).json<API_RESPONSE[API_QUERY.POST_TOURNAMENT]>()
-      return postProcess<API_QUERY.POST_TOURNAMENT>(response)
+      return handleErrors<API_QUERY.POST_TOURNAMENT>(response)
     },
     /**
      * Get all tournaments which match filters
@@ -265,7 +265,7 @@ export function useAPI() {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENTS]>()
-      return postProcess<API_QUERY.GET_TOURNAMENTS>(response)
+      return handleErrors<API_QUERY.GET_TOURNAMENTS>(response)
     },
     /**
      * Get tournament information
@@ -277,7 +277,7 @@ export function useAPI() {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENT]>()
-      return postProcess<API_QUERY.GET_TOURNAMENT>(response)
+      return handleErrors<API_QUERY.GET_TOURNAMENT>(response)
     },
     /**
      * Update tournament information
@@ -296,7 +296,7 @@ export function useAPI() {
         },
         body: JSON.stringify({ name: data.name, start_date: data.start_date, end_date: data.end_date }),
       }).json<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]>()
-      return postProcess<API_QUERY.PATCH_TOURNAMENT>(response)
+      return handleErrors<API_QUERY.PATCH_TOURNAMENT>(response)
     },
     /**
      * Delete a tournament
@@ -308,7 +308,7 @@ export function useAPI() {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]>()
-      return postProcess<API_QUERY.DELETE_TOURNAMENT>(response)
+      return handleErrors<API_QUERY.DELETE_TOURNAMENT>(response)
     },
     /**
      * Get the latest quote for a symbol
@@ -320,11 +320,11 @@ export function useAPI() {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }).json<API_RESPONSE[API_QUERY.GET_QUOTE]>()
-      return postProcess<API_QUERY.GET_QUOTE>(response)
+      return handleErrors<API_QUERY.GET_QUOTE>(response)
     },
   }
 
-  function postProcess<T extends keyof API_RESPONSE>(response: UseFetchReturn<API_RESPONSE[T]>): API_RESPONSE[T] {
+  function handleErrors<T extends keyof API_RESPONSE>(response: UseFetchReturn<API_RESPONSE[T]>): API_RESPONSE[T] {
     if (response.statusCode.value === null)
       return { code: null, message: 'Request Timed Out' }
     if (response.data.value === null)
