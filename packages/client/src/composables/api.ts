@@ -13,9 +13,6 @@ export function useAPI() {
     GET_QUOTE,
   }
 
-  type ACTION = 'BUY' | 'SELL'
-  type STATUS = 'SCHEDULED' | 'ONGOING' | 'FINISHED'
-
   return {
     /**
      * Login to the API and store the session token
@@ -336,195 +333,101 @@ export function useAPI() {
     return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
   }
 
+  // https://stackoverflow.com/a/69288824
+  // expands the types of nested objects to see actual object makeup via intellisense
+  type ExpandRecursively<T> = T extends (...args: infer A) => infer R
+    ? (...args: ExpandRecursively<A>) => ExpandRecursively<R>
+    : T extends object
+      ? T extends infer O
+        ? { [K in keyof O]: ExpandRecursively<O[K]> }
+        : never
+      : T
+
+  type ACTION = 'BUY' | 'SELL'
+  type STATUS = 'SCHEDULED' | 'ONGOING' | 'FINISHED'
+
+  interface User {
+    uuid: string
+    email: string
+    username: string
+    coins: number
+    created_at: string
+    updated_at: string
+  }
+
+  interface Portfolio {
+    uuid: string
+    owner: string
+    tournament: string
+    name: string
+    balance_cents: number
+    created_at: string
+    updated_at: string
+  }
+
+  interface Transaction {
+    uuid: string
+    portfolio: string
+    symbol: string
+    action: ACTION
+    quantity: number
+    price_cents: number
+    created_at: string
+  }
+
+  interface Tournament {
+    uuid: string
+    owner: string
+    name: string
+    status: STATUS
+    start_date: string
+    end_date: string
+    created_at: string
+    updated_at: string
+  }
+
+  interface Quote {
+    symbol: string
+    price_cents: number
+    timestamp: string
+  }
+
+  interface Session {
+    token: string
+    uuid: string
+  }
+
+  interface UnsuccessfulResponse {
+    code: null | 400 | 401 | 403 | 404 | 409 | 500
+    message: string
+  }
+
+  interface SuccessfulResponse<T> {
+    code: 200
+    message: string
+    data: T
+  }
+
   interface API_RESPONSE {
-    [API_QUERY.POST_SESSION]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        token: string
-        uuid: string
-      }
-    }
-    [API_QUERY.DELETE_SESSION]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-    }
-    [API_QUERY.POST_USER]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        email: string
-        username: string
-        coins: number
-        created_at: string
-        updated_at: string
-      }
-    }
-    [API_QUERY.GET_USER]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        email: string
-        username: string
-        coins: number
-        created_at: string
-        updated_at: string
-      }
-    }
-    [API_QUERY.PATCH_USER]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-    }
-    [API_QUERY.DELETE_USER]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-    }
-    [API_QUERY.POST_PORTFOLIO]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        owner: string
-        tournament: string
-        name: string
-        balance_cents: number
-        created_at: string
-        updated_at: string
-      }
-    }
-    [API_QUERY.GET_PORTFOLIO]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        owner: string
-        tournament: string
-        name: string
-        balance_cents: number
-        created_at: string
-        updated_at: string
-      }
-    }
-    [API_QUERY.GET_PORTFOLIOS]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        owner: string
-        tournament: string
-        name: string
-        balance_cents: number
-        created_at: string
-        updated_at: string
-      }[]
-    }
-    [API_QUERY.PATCH_PORTFOLIO]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-    }
-    [API_QUERY.DELETE_PORTFOLIO]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-    }
-    [API_QUERY.POST_TRANSACTION]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        portfolio: string
-        symbol: string
-        action: ACTION
-        quantity: number
-        price_cents: number
-        created_at: string
-      }
-    }
-    [API_QUERY.GET_TRANSACTION]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        portfolio: string
-        symbol: string
-        action: ACTION
-        quantity: number
-        price_cents: number
-        created_at: string
-      }
-    }
-    [API_QUERY.GET_TRANSACTIONS]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        portfolio: string
-        symbol: string
-        action: ACTION
-        quantity: number
-        price_cents: number
-        created_at: string
-      }[]
-    }
-    [API_QUERY.POST_TOURNAMENT]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        owner: string
-        name: string
-        status: STATUS
-        start_date: string
-        end_date: string
-        created_at: string
-        updated_at: string
-      }
-    }
-    [API_QUERY.GET_TOURNAMENTS]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        owner: string
-        name: string
-        status: STATUS
-        start_date: string
-        end_date: string
-        created_at: string
-        updated_at: string
-      }[]
-    }
-    [API_QUERY.GET_TOURNAMENT]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        uuid: string
-        owner: string
-        name: string
-        status: STATUS
-        start_date: string
-        end_date: string
-        created_at: string
-        updated_at: string
-      }
-    }
-    [API_QUERY.PATCH_TOURNAMENT]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-    }
-    [API_QUERY.DELETE_TOURNAMENT]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-    }
-    [API_QUERY.GET_QUOTE]: {
-      code: null | 200 | 400 | 401 | 403 | 404 | 409 | 500
-      message: string
-      data?: {
-        symbol: string
-        price_cents: number
-        timestamp: string
-      }
-    }
+    [API_QUERY.POST_SESSION]: ExpandRecursively<SuccessfulResponse<Session> | UnsuccessfulResponse>
+    [API_QUERY.DELETE_SESSION]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.POST_USER]: ExpandRecursively<SuccessfulResponse<User> | UnsuccessfulResponse>
+    [API_QUERY.GET_USER]: ExpandRecursively<SuccessfulResponse<User> | UnsuccessfulResponse>
+    [API_QUERY.PATCH_USER]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.DELETE_USER]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.POST_PORTFOLIO]: ExpandRecursively<SuccessfulResponse<Portfolio> | UnsuccessfulResponse>
+    [API_QUERY.GET_PORTFOLIO]: ExpandRecursively<SuccessfulResponse<Portfolio> | UnsuccessfulResponse>
+    [API_QUERY.GET_PORTFOLIOS]: ExpandRecursively<SuccessfulResponse<Portfolio[]> | UnsuccessfulResponse>
+    [API_QUERY.PATCH_PORTFOLIO]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.DELETE_PORTFOLIO]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.POST_TRANSACTION]: ExpandRecursively<SuccessfulResponse<Transaction> | UnsuccessfulResponse>
+    [API_QUERY.GET_TRANSACTION]: ExpandRecursively<SuccessfulResponse<Transaction> | UnsuccessfulResponse>
+    [API_QUERY.GET_TRANSACTIONS]: ExpandRecursively<SuccessfulResponse<Transaction[]> | UnsuccessfulResponse>
+    [API_QUERY.POST_TOURNAMENT]: ExpandRecursively<SuccessfulResponse<Tournament> | UnsuccessfulResponse>
+    [API_QUERY.GET_TOURNAMENTS]: ExpandRecursively<SuccessfulResponse<Tournament[]> | UnsuccessfulResponse>
+    [API_QUERY.GET_TOURNAMENT]: ExpandRecursively<SuccessfulResponse<Tournament> | UnsuccessfulResponse>
+    [API_QUERY.PATCH_TOURNAMENT]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.DELETE_TOURNAMENT]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.GET_QUOTE]: ExpandRecursively<SuccessfulResponse<Quote> | UnsuccessfulResponse>
   }
 }
