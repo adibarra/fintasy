@@ -50,7 +50,7 @@ Insomnia is recommended for testing and debugging the API. It allows you to auto
 
 This is a one-time setup. If you have already done this, you can skip to the next section.
 
-1.  Open Docker Desktop. Make sure it is running before continuing.
+1.  Open Docker Desktop. Make sure it is updated and running before continuing.
 2.  Open VSCode.
 3.  Install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
 4.  Press `Ctrl+Shift+P` and type `Dev Containers: Clone Repository in Container Volume...`.
@@ -58,37 +58,19 @@ This is a one-time setup. If you have already done this, you can skip to the nex
 6.  You should now be prompted to login to your GitHub account. Sign in.
 7.  Type `adibarra/fintasy`. Select it.
 8.  If prompted, select the `main` branch.
-9.  Let the container build. This **will** take a while (only the first time).
+9.  Let the container build. This will take **2-5 minutes** depending on your machine (only the first time).
 10. Once the build is complete, you can begin development.
 
 <details>
 <summary>Manual Environment Setup</summary>
+I hope you know what you're doing.
 You will need to install the following:
 
 1. [nvm](https://github.com/nvm-sh/nvm)
-2. [Node.js](https://nodejs.org/en/download/) (using nvm install the node version in .nvmrc)
-3. [pnpm](https://pnpm.io/installation) (using node installed via nvm)
-4. [Python](https://www.python.org/downloads/)
+2. [Node.js](https://nodejs.org/en/download/)
+3. [pnpm](https://pnpm.io/installation)
+4. [Python3](https://www.python.org/downloads/)
 5. [PostgreSQL](https://www.postgresql.org/download/)
-
-After that, the following VSCode extensions are highly recommended for development:
-
-1.  antfu.goto-alias
-2.  antfu.iconify
-3.  antfu.unocss
-4.  Arjun.swagger-viewer
-5.  charliermarsh.ruff
-6.  christian-kohler.path-intellisense
-7.  csstools.postcss
-8.  dbaeumer.vscode-eslint
-9.  ecmel.vscode-html-css
-10. editorconfig.editorconfig
-11. github.vscode-pull-request-github
-12. lokalise.i18n-ally
-13. mutantdino.resourcemonitor
-14. pomdtr.excalidraw-editor
-15. streetsidesoftware.code-spell-checker
-16. vue.volar
 </details>
 
 ## Reconnect to Environment (devcontainer)
@@ -115,11 +97,10 @@ Make sure you are in the repo's root directory before running these commands.
   # --- OR ---
 
   # # # # # # # # # # # # # # # # # # # # # # # #
-  # Build and run for production                #
+  # Build and run for production (preview mode) #
   # Access the app here: http://localhost:3000  #
   # # # # # # # # # # # # # # # # # # # # # # # #
-  $ pnpm build
-  $ pnpm start
+  $ pnpm preview
 ```
 
 ## Project Scripts
@@ -133,7 +114,8 @@ Make sure you are in the repo's root directory before running these commands.
 | pnpm install   | installs dependencies for entire project |
 | pnpm dev       | runs development environment             |
 | pnpm build     | builds the app for production            |
-| pnpm start     | runs the built app for production        |
+| pnpm start     | runs the app backend for production      |
+| pnpm preview   | runs the full built app in preview mode  |
 
 ## License
 
