@@ -1,5 +1,9 @@
 import type { UseFetchReturn } from '@vueuse/core'
 
+/**
+ * Composable function to use the Fintasy API
+ * @returns an object with functions to interact with the API
+ */
 export function useAPI() {
   const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:3332/api/v1'
   const sessionToken = useSessionStorage('session-token', '')
@@ -333,16 +337,6 @@ export function useAPI() {
     return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
   }
 
-  // https://stackoverflow.com/a/69288824
-  // expands the types of nested objects to see actual object makeup via intellisense
-  type ExpandRecursively<T> = T extends (...args: infer A) => infer R
-    ? (...args: ExpandRecursively<A>) => ExpandRecursively<R>
-    : T extends object
-      ? T extends infer O
-        ? { [K in keyof O]: ExpandRecursively<O[K]> }
-        : never
-      : T
-
   type ACTION = 'BUY' | 'SELL'
   type STATUS = 'SCHEDULED' | 'ONGOING' | 'FINISHED'
 
@@ -397,6 +391,11 @@ export function useAPI() {
     uuid: string
   }
 
+  interface BaseResponse {
+    code: 500 | 409 | 404 | 403 | 401 | 400 | 200 | null
+    message: string
+  }
+
   interface UnsuccessfulResponse {
     code: 500 | 409 | 404 | 403 | 401 | 400 | null
     message: string
@@ -408,26 +407,36 @@ export function useAPI() {
     data: T
   }
 
+  // https://stackoverflow.com/a/69288824
+  // recursively expands the types of objects to see shape instead of type names
+  type ExpandRecursively<T> = T extends (...args: infer A) => infer R
+    ? (...args: ExpandRecursively<A>) => ExpandRecursively<R>
+    : T extends object
+      ? T extends infer O
+        ? { [K in keyof O]: ExpandRecursively<O[K]> }
+        : never
+      : T
+
   interface API_RESPONSE {
     [API_QUERY.POST_SESSION]: ExpandRecursively<SuccessfulResponse<Session> | UnsuccessfulResponse>
-    [API_QUERY.DELETE_SESSION]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.DELETE_SESSION]: ExpandRecursively<BaseResponse>
     [API_QUERY.POST_USER]: ExpandRecursively<SuccessfulResponse<User> | UnsuccessfulResponse>
     [API_QUERY.GET_USER]: ExpandRecursively<SuccessfulResponse<User> | UnsuccessfulResponse>
-    [API_QUERY.PATCH_USER]: ExpandRecursively<UnsuccessfulResponse>
-    [API_QUERY.DELETE_USER]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.PATCH_USER]: ExpandRecursively<BaseResponse>
+    [API_QUERY.DELETE_USER]: ExpandRecursively<BaseResponse>
     [API_QUERY.POST_PORTFOLIO]: ExpandRecursively<SuccessfulResponse<Portfolio> | UnsuccessfulResponse>
     [API_QUERY.GET_PORTFOLIO]: ExpandRecursively<SuccessfulResponse<Portfolio> | UnsuccessfulResponse>
     [API_QUERY.GET_PORTFOLIOS]: ExpandRecursively<SuccessfulResponse<Portfolio[]> | UnsuccessfulResponse>
-    [API_QUERY.PATCH_PORTFOLIO]: ExpandRecursively<UnsuccessfulResponse>
-    [API_QUERY.DELETE_PORTFOLIO]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.PATCH_PORTFOLIO]: ExpandRecursively<BaseResponse>
+    [API_QUERY.DELETE_PORTFOLIO]: ExpandRecursively<BaseResponse>
     [API_QUERY.POST_TRANSACTION]: ExpandRecursively<SuccessfulResponse<Transaction> | UnsuccessfulResponse>
     [API_QUERY.GET_TRANSACTION]: ExpandRecursively<SuccessfulResponse<Transaction> | UnsuccessfulResponse>
     [API_QUERY.GET_TRANSACTIONS]: ExpandRecursively<SuccessfulResponse<Transaction[]> | UnsuccessfulResponse>
     [API_QUERY.POST_TOURNAMENT]: ExpandRecursively<SuccessfulResponse<Tournament> | UnsuccessfulResponse>
     [API_QUERY.GET_TOURNAMENTS]: ExpandRecursively<SuccessfulResponse<Tournament[]> | UnsuccessfulResponse>
     [API_QUERY.GET_TOURNAMENT]: ExpandRecursively<SuccessfulResponse<Tournament> | UnsuccessfulResponse>
-    [API_QUERY.PATCH_TOURNAMENT]: ExpandRecursively<UnsuccessfulResponse>
-    [API_QUERY.DELETE_TOURNAMENT]: ExpandRecursively<UnsuccessfulResponse>
+    [API_QUERY.PATCH_TOURNAMENT]: ExpandRecursively<BaseResponse>
+    [API_QUERY.DELETE_TOURNAMENT]: ExpandRecursively<BaseResponse>
     [API_QUERY.GET_QUOTE]: ExpandRecursively<SuccessfulResponse<Quote> | UnsuccessfulResponse>
   }
 }
