@@ -14,9 +14,10 @@ useHead({
 
 interface Asset {
   symbol: string
-  quantity: string
-  pl_day: string
-  pl_total: string
+  quantity: number
+  price_cents: number
+  pl_day: number
+  pl_total: number
 }
 
 const cash = (Math.random() * 1500) + 500
@@ -47,9 +48,10 @@ function generateAssets(count: number): Asset[] {
   for (let i = 0; i < count; ++i) {
     assets.push({
       symbol: Math.random().toString(36).substring(2, 6).toUpperCase(),
-      quantity: `x${Math.floor(Math.random() * 100).toString()}`,
-      pl_day: `${(Math.random() * 1).toFixed(2)}%`,
-      pl_total: `${(Math.random() * 50 - 20).toFixed(2)}%`,
+      quantity: Math.floor(Math.random() * 100),
+      price_cents: Math.random() * 10000 + 2500,
+      pl_day: Math.random() * 2500 + 1000,
+      pl_total: Math.random() * 5000 + 1000,
     })
   }
   return assets

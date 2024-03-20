@@ -6,9 +6,9 @@
 <script setup lang="ts">
 interface Asset {
   symbol: string
-  quantity: string
-  pl_day: string
-  pl_total: string
+  quantity: number
+  pl_day: number
+  pl_total: number
 }
 
 const props = defineProps({
@@ -25,6 +25,7 @@ const props = defineProps({
 const columns = [
   { key: 'symbol', title: 'Symbol', width: '75px' },
   { key: 'quantity', title: 'Qty', width: '70px' },
+  { key: 'price_cents', title: 'Price', width: '85px' },
   { key: 'pl_day', title: 'P/L Day', width: '85px' },
   { key: 'pl_total', title: 'P/L Total' },
 ]
@@ -43,6 +44,15 @@ function handlePageChange(page: number) {
     loading.value = true
     setTimeout(() => {
       data.value = props.assets.slice((page - 1) * pagination.value.itemsPerPage, page * pagination.value.itemsPerPage)
+      data.value = data.value.map((asset: Asset) => {
+        return {
+          symbol: asset.symbol,
+          quantity: `x${asset.quantity}`,
+          price_cents: `$${(asset.price_cents / 100).toFixed(2)}`,
+          pl_day: `$${(asset.pl_day / 100).toFixed(2)}`,
+          pl_total: `$${(asset.pl_total / 100).toFixed(2)}`,
+        }
+      })
       loading.value = false
     }, 250)
   }
