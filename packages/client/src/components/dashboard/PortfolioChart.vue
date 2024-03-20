@@ -48,8 +48,8 @@ onMounted(() => {
   const xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
     maxDeviation: 0.1,
     baseInterval: {
-      timeUnit: 'day',
-      count: 1,
+      timeUnit: 'minute',
+      count: 15,
     },
     renderer: am5xy.AxisRendererX.new(root, {
       minorGridEnabled: true,
