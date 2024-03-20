@@ -37,14 +37,13 @@ const breadcrumbs = computed(() => {
 const user = ref({
   name: 'adibarra',
   avatar: 'https://avatars.githubusercontent.com/u/93070681?v=4',
-  account: 'Trading Account 1',
+  account: 'Default Portfolio',
   accounts: [
-    { label: 'Trading Account 1', key: 0 },
-    { label: 'Trading Account 2', key: 1 },
-    { label: 'Trading Account 3', key: 2 },
+    { key: 0, label: 'Default Portfolio' },
+    { key: 1, label: 'Test Portfolio' },
+    { key: 2, label: 'Tournament Portfolio' },
   ],
   coins: 50,
-  balance: 200,
 })
 </script>
 
@@ -87,11 +86,11 @@ const user = ref({
         Coins: 🪙 {{ user.coins }}
       </div>
 
-      <!-- switch user portfolio trading account -->
+      <!-- switch user portfolio account -->
       <div hidden w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 sm:flex fn-hover>
         <n-dropdown
           :options="user.accounts"
-          trigger="hover"
+          trigger="click"
           @select="(key, option) => {
             user.account = user.accounts[key].label
             message.info(`Selected ${option.label}`)
@@ -127,15 +126,15 @@ const user = ref({
       <n-dropdown
         :options="[
           { label: 'Profile', key: 'profile' },
-          { label: 'Settings', key: 'settings' },
           { label: 'Logout', key: 'logout' },
         ]"
-        trigger="hover"
+        trigger="click"
         @select="(key) => message.info(`Selected ${key}`)"
       >
         <n-avatar
           size="small"
           :src="user.avatar"
+          cursor-pointer
         />
       </n-dropdown>
     </div>
