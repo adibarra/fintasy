@@ -1,4 +1,5 @@
 import type { UseFetchReturn } from '@vueuse/core'
+import type { ACTION, Portfolio, Quote, STATUS, Session, Tournament, Transaction, User } from '~/types'
 
 /**
  * Composable function to use the Fintasy API
@@ -335,60 +336,6 @@ export function useAPI() {
 
   function removeEmpty(obj: Record<string, any>): Record<string, any> {
     return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
-  }
-
-  type ACTION = 'BUY' | 'SELL'
-  type STATUS = 'SCHEDULED' | 'ONGOING' | 'FINISHED'
-
-  interface User {
-    uuid: string
-    email: string
-    username: string
-    coins: number
-    created_at: string
-    updated_at: string
-  }
-
-  interface Portfolio {
-    uuid: string
-    owner: string
-    tournament: string
-    name: string
-    balance_cents: number
-    created_at: string
-    updated_at: string
-  }
-
-  interface Transaction {
-    uuid: string
-    portfolio: string
-    symbol: string
-    action: ACTION
-    quantity: number
-    price_cents: number
-    created_at: string
-  }
-
-  interface Tournament {
-    uuid: string
-    owner: string
-    name: string
-    status: STATUS
-    start_date: string
-    end_date: string
-    created_at: string
-    updated_at: string
-  }
-
-  interface Quote {
-    symbol: string
-    price_cents: number
-    timestamp: string
-  }
-
-  interface Session {
-    token: string
-    uuid: string
   }
 
   interface BaseResponse {

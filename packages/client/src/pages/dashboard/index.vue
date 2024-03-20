@@ -1,19 +1,11 @@
 <script setup lang="ts">
+import type { Transaction } from '~/types'
+
 const { t } = useI18n()
 
 useHead({
   title: `${t('pages.dashboard.title')} • Fintasy`,
 })
-
-interface Transaction {
-  uuid: string
-  portfolio: string
-  symbol: string
-  action: string
-  quantity: string
-  price_cents: string
-  created_at: string
-}
 
 interface Asset {
   symbol: string

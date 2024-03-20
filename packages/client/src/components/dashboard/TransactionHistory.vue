@@ -1,13 +1,5 @@
 <script setup lang="ts">
-interface Transaction {
-  uuid: string
-  portfolio: string
-  symbol: string
-  action: string
-  quantity: string
-  price_cents: string
-  created_at: string
-}
+import type { Transaction } from '~/types'
 
 const props = defineProps({
   transactions: {
