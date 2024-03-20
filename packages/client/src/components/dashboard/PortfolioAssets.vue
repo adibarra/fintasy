@@ -7,6 +7,7 @@
 interface Asset {
   symbol: string
   quantity: number
+  price_cents: number
   pl_day: number
   pl_total: number
 }
