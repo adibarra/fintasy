@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to display the assets of the user's portfolio.
+-->
+
 <script setup lang="ts">
 interface Asset {
   symbol: string

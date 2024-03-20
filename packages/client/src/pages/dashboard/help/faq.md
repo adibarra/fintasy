@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to display a FAQ page for the application.
+-->
+
 # Another Example
 
 This is another example of a markdown file. This time, it is a FAQ page placeholder.

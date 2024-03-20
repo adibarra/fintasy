@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to display the user's transaction history.
+-->
+
 <script setup lang="ts">
 import { ACTION, type Transaction } from '~/types'
 

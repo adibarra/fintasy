@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to display the sidebar of the application.
+-->
+
 <script setup lang="ts">
 import { NIcon } from 'naive-ui'
 import type { MenuInst, MenuOption } from 'naive-ui'

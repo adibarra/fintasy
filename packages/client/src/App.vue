@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is the root of the application.
+-->
+
 <script setup lang="ts">
 useHead({
   title: 'Fintasy',

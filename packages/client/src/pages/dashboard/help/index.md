@@ -1,3 +1,8 @@
+<!--
+  @author:
+  @description: This component is used to display a help page for the application.
+-->
+
 # Help page
 
 ## Introduction

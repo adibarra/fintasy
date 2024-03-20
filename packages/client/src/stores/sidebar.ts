@@ -1,3 +1,8 @@
+/**
+ * @author: adibarra (Alec Ibarra)
+ * @description: Pinia store for handling sidebar state
+ */
+
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useSidebarStore = defineStore('sidebar', () => {

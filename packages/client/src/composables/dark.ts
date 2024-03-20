@@ -1,3 +1,8 @@
+/**
+ * @author: adibarra (Alec Ibarra)
+ * @description: Composable for handling dark mode state
+ */
+
 export const preferredDark = usePreferredDark()
 export const isDark = useDark({
   initialValue: 'dark',

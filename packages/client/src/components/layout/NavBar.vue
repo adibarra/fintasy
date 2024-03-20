@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to display the navigation bar at the top of the application.
+-->
+
 <script setup lang="ts">
 import {
   NotificationsOutline as BellIcon,

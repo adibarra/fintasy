@@ -1,3 +1,6 @@
+# @author: adibarra (Alec Ibarra)
+# @description: The main entry point for the server.
+
 from config import API_HOST, API_PORT, API_ROUTES_DIR, API_CORS_ORIGINS
 
 print("Server starting up...")

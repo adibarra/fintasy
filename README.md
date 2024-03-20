@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This is the README page for the project.
+-->
+
 # CS.3354 Project: Fintasy
 
 <p align="center">

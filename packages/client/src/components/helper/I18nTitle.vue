@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to set the title of the page using i18n.
+-->
+
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 

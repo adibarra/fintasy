@@ -1,3 +1,8 @@
+/**
+ * @author: adibarra (Alec Ibarra)
+ * @description: UnoCSS configuration file
+ */
+
 import {
   defineConfig,
   presetAttributify,

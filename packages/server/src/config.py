@@ -1,3 +1,6 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Configuration file for the server.
+
 import os
 import sys
 from typing import List

@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to display the dashboard layout of the application.
+-->
+
 <template>
   <n-layout position="absolute" h-full>
     <NavBar />

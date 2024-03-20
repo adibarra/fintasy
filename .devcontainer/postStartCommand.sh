@@ -1,3 +1,6 @@
+# @author: adibarra (Alec Ibarra)
+# @description: This file will run after the devcontainer is started
+
 . ${NVM_DIR}/nvm.sh
 nvm use || nvm install --lts
 corepack enable

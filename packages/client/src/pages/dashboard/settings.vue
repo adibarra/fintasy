@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to display the settings page of the application.
+-->
+
 <script setup lang="ts">
 const { t } = useI18n()
 

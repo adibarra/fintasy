@@ -1,4 +1,9 @@
 /**
+ * @author: adibarra (Alec Ibarra)
+ * @description: Composable for providing utility functions
+ */
+
+/**
  * Clamps a number between a minimum and maximum value.
  * @param num - The number to clamp.
  * @param min - The minimum value to clamp the number to.

@@ -1,3 +1,8 @@
+/**
+ * @author: adibarra (Alec Ibarra)
+ * @description: Typescript shims definitions
+ */
+
 declare interface Window {
   // extend the window
 }

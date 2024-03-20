@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to switch the theme of the application.
+-->
+
 <script setup lang="ts">
 import {
   Moon as DarkIcon,

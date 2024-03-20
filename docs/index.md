@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This is the main documentation page for the project.
+-->
+
 # Overall Project Design
 
 This repository is a mono-repo. This means that _all_ of the code, frontend and backend, for the project will be stored in this repository.

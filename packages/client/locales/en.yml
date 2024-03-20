@@ -1,3 +1,6 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n
+
 example:
   hello-world: Hello World!
 

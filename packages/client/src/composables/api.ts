@@ -1,3 +1,8 @@
+/**
+ * @author: adibarra (Alec Ibarra)
+ * @description: Composable for providing access to the Fintasy API
+ */
+
 import type { UseFetchReturn } from '@vueuse/core'
 import type { ACTION, Portfolio, Quote, STATUS, Session, Tournament, Transaction, User } from '~/types'
 

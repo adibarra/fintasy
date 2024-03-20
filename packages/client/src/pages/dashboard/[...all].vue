@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to display the 404 page of the application in the dashboard.
+-->
+
 <script setup lang="ts">
 const { t } = useI18n()
 

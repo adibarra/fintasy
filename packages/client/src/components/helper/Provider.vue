@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to provide the global theme and configuration for the application.
+-->
+
 <script lang="ts" setup>
 import { darkTheme } from 'naive-ui'
 
