@@ -22,6 +22,7 @@ export default defineConfig({
     ['fn-outline', 'border--c-inverse outline-none rd-1 b-1'],
     ['fn-hover', 'hover:bg--c-fg focus:bg--c-fg focus:border--c-accent focus-within:border--c-accent'],
     ['text-xs', 'text-[0.75rem] line-height-[1rem]'],
+    ['text-xxs', 'text-[0.70rem] line-height-[0.75rem]'],
   ],
   presets: [
     presetUno(),
