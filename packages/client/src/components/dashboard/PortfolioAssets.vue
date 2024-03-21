@@ -86,8 +86,9 @@ onMounted(() => handlePageChange(1))
     :data="data"
     :loading="loading"
     :pagination="pagination"
-
-    remote flex-height mt-2 min-h-65 grow sm:text-xs text-xxs md:text-sm
+    :remote="true"
+    :flex-height="true"
+    mt-2 min-h-65 grow sm:text-xs text-xxs md:text-sm
     @update:page="handlePageChange"
   />
 </template>
