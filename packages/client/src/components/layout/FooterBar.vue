@@ -1,6 +1,6 @@
 <!--
   @author: adibarra (Alec Ibarra)
-  @description: This component is used to display the sidebar at the left of the application.
+  @description: This component is used to display the footer bar at the bottom of the application.
 -->
 
 <script setup lang="ts">
@@ -15,24 +15,21 @@ import {
 import {
   Tournament as TournamentIcon,
 } from '@vicons/tabler'
-import { useSidebarStore } from '~/stores/sidebar'
 
 const { t } = useI18n()
 const route = useRoute()
-const store = useSidebarStore()
 const menuOptions1: MenuOption[] = [
-  { label: `${t('pages.dashboard.title')}`, key: '/dashboard', icon: renderIcon(DashboardIcon) },
-  { label: `${t('pages.dashboard.trade.title')}`, key: '/dashboard/trade', icon: renderIcon(TradeIcon) },
-  { label: `${t('pages.dashboard.tournaments.title')}`, key: '/dashboard/tournaments', icon: renderIcon(TournamentIcon) },
+  { key: '/dashboard', icon: renderIcon(DashboardIcon) },
+  { key: '/dashboard/trade', icon: renderIcon(TradeIcon) },
+  { key: '/dashboard/tournaments', icon: renderIcon(TournamentIcon) },
 ]
 
 const menuOptions2: MenuOption[] = [
-  { key: 'divider-1', type: 'divider' },
-  { label: `${t('pages.dashboard.help.title')}`, key: '/dashboard/help', icon: renderIcon(HelpIcon), children: [
+  { key: '/dashboard/help', icon: renderIcon(HelpIcon), children: [
     { label: `${t('pages.dashboard.help.index.title')}`, key: '/dashboard/help' },
     { label: `${t('pages.dashboard.help.faq.title')}`, key: '/dashboard/help/faq' },
   ] },
-  { label: `${t('pages.dashboard.settings.title')}`, key: '/dashboard/settings', icon: renderIcon(SettingsIcon) },
+  { key: '/dashboard/settings', icon: renderIcon(SettingsIcon) },
 ]
 
 function renderIcon(icon: Component) {
@@ -56,35 +53,32 @@ watch(() => route.path, () => {
 </script>
 
 <template>
-  <n-layout-sider
-    :width="220"
-    :collapsed="store.collapsed"
-    collapse-mode="width"
-    show-trigger="bar"
-    bordered
-    @update:collapsed="store.toggle"
-  >
-    <div h-full flex flex-col>
+  <n-layout-footer bordered h-42px>
+    <div flex>
       <n-scrollbar>
         <n-menu
           ref="menu1"
           v-model:value="menu1SelectedKey"
           :options="menuOptions1"
+          mode="horizontal"
+          collapsed responsive
           @update:value="(key: string) => {
             $router.push(key)
           }"
         />
       </n-scrollbar>
-      <div h-fit>
+      <div w-fit>
         <n-menu
           ref="menu2"
           v-model:value="menu2SelectedKey"
           :options="menuOptions2"
+          mode="horizontal"
+          collapsed responsive
           @update:value="(key: string) => {
             $router.push(key)
           }"
         />
       </div>
     </div>
-  </n-layout-sider>
+  </n-layout-footer>
 </template>
