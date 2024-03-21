@@ -13,9 +13,9 @@ const isMobile = computed(() => width.value <= 640)
     <NavBar />
     <n-layout has-sider :style="{ height: isMobile ? 'calc(100% - 90px)' : 'calc(100% - 48px)' }">
       <SideBar v-if="!isMobile" />
-      <n-layout-content>
-        <div min-h-full w-full flex bg--c-bg>
-          <div w-full flex grow flex-col px-6 py-4 text--c-text>
+      <n-layout-content bg--c-bg text--c-text>
+        <div min-h-full w-full flex>
+          <div w-full flex grow flex-col px-6 py-4>
             <RouterView />
           </div>
         </div>
