@@ -24,10 +24,10 @@ const props = defineProps({
 })
 
 const columns = [
-  { key: 'symbol', title: 'Symbol', width: '75px' },
-  { key: 'quantity', title: 'Qty', width: '70px' },
-  { key: 'price_cents', title: 'Price', width: '85px' },
-  { key: 'pl_day', title: 'P/L Day', width: '85px' },
+  { key: 'symbol', title: 'Symbol', width: '20%' },
+  { key: 'quantity', title: 'Qty', width: '15%' },
+  { key: 'price_cents', title: 'Price', width: '20%' },
+  { key: 'pl_day', title: 'P/L Day' },
   { key: 'pl_total', title: 'P/L Total' },
 ]
 
@@ -35,8 +35,9 @@ const data = ref()
 const loading = ref(false)
 const pagination = ref({
   page: 1,
-  pageCount: Math.ceil(props.assets.length / 7),
+  pageSlot: 6,
   itemsPerPage: 7,
+  itemCount: props.assets.length,
 })
 
 function handlePageChange(page: number) {
@@ -85,8 +86,8 @@ onMounted(() => handlePageChange(1))
     :data="data"
     :loading="loading"
     :pagination="pagination"
-    remote flex-height
-    mt-2 min-h-65 grow
+
+    remote flex-height mt-2 min-h-65 grow sm:text-xs text-xxs md:text-sm
     @update:page="handlePageChange"
   />
 </template>

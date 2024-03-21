@@ -49,7 +49,7 @@ const user = ref({
 
 <template>
   <n-layout-header bordered h-48px w-full flex>
-    <div flex grow items-center gap-5 py-1 pr-5>
+    <div flex grow items-center gap-5 py-1>
       <!-- parent should be w-55 to match sidebar size -->
       <div h-full w-55 flex items-center justify-center>
         <Logo />
@@ -134,7 +134,7 @@ const user = ref({
         <n-avatar
           size="small"
           :src="user.avatar"
-          cursor-pointer
+          mr-5 cursor-pointer
         />
       </n-dropdown>
     </div>
