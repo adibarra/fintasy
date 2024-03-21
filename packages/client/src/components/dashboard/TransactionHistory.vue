@@ -70,6 +70,7 @@ onMounted(() => handlePageChange(1))
       TRANSACTIONS
     </span>
   </div>
+  <!-- eslint-disable unocss/order-attributify -->
   <n-data-table
     :columns="columns"
     :data="data"
@@ -77,7 +78,8 @@ onMounted(() => handlePageChange(1))
     :pagination="pagination"
     :remote="true"
     :flex-height="true"
-    mt-2 min-h-65 grow sm:text-xs text-xxs xl:w-110 md:text-sm
+    mt-2 min-h-65 grow text-xxs sm:text-xs md:text-sm xl:w-110
     @update:page="handlePageChange"
   />
+  <!-- eslint-disable unocss/order-attributify -->
 </template>

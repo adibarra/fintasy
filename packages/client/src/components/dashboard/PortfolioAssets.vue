@@ -81,6 +81,7 @@ onMounted(() => handlePageChange(1))
       CASH
     </span>
   </div>
+  <!-- eslint-disable unocss/order-attributify -->
   <n-data-table
     :columns="columns"
     :data="data"
@@ -88,7 +89,8 @@ onMounted(() => handlePageChange(1))
     :pagination="pagination"
     :remote="true"
     :flex-height="true"
-    mt-2 min-h-65 grow sm:text-xs text-xxs md:text-sm
+    mt-2 min-h-65 grow text-xxs sm:text-xs md:text-sm
     @update:page="handlePageChange"
   />
+  <!-- eslint-enable unocss/order-attributify -->
 </template>
