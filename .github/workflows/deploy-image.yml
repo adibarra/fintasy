@@ -31,4 +31,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ GITHUB.repository_owner }}/${{ GITHUB.repository }}:latest
+          tags: ghcr.io/${{ GITHUB.repository }}:latest
