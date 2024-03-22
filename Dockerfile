@@ -7,7 +7,7 @@ RUN npm run build
 
 FROM python:alpine as python_builder
 WORKDIR /app
-COPY requirements.txt ./
+COPY packages/server/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
