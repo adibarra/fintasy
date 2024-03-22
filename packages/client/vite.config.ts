@@ -110,7 +110,8 @@ export default defineConfig({
       manifest: {
         name: 'Fintasy',
         short_name: 'Fintasy',
-        theme_color: '#ffffff',
+        background_color: '#121212',
+        theme_color: '#121212',
         icons: [
           {
             src: '/pwa-192x192.png',
