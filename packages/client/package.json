@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm run clean:auto && vite build",
+    "build:ci": "vite build",
     "clean": "rm -rf dist/",
     "clean:auto": "rm -rf src/auto-imports.d.ts src/components.d.ts",
     "clean:all": "rm -rf dist/ .vite-ssg-temp/ node_modules/",
