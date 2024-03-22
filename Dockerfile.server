@@ -1,0 +1,8 @@
+FROM python:alpine as server
+
+WORKDIR /app
+COPY /packages/server/ .
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 3001
+CMD ["python", "/app/src/main.py", "--production"]

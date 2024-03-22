@@ -1,5 +1,5 @@
 ---
-name: Build and Deploy Image
+name: Build and Deploy Images
 
 on:
   push:
@@ -9,8 +9,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
-    name: 🚀 Build and Deploy Image
+  build-and-deploy-images:
+    name: 🚀 Build and Deploy Images
     runs-on: ubuntu-latest
     steps:
       - name: Check out code from GitHub
@@ -23,9 +23,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker images
+      - name: Build and push client image
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: Dockerfile.client
           push: true
-          tags: ghcr.io/${{ GITHUB.repository }}:latest
+          tags: ghcr.io/${{ GITHUB.repository }}-client:latest
+
+      - name: Build and push server image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.server
+          push: true
+          tags: ghcr.io/${{ GITHUB.repository }}-server:latest
