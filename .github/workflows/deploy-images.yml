@@ -12,6 +12,9 @@ jobs:
   build-and-deploy-images:
     name: 🚀 Build and Deploy Images
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Check out code from GitHub
         uses: actions/checkout@v4
@@ -37,4 +40,4 @@ jobs:
           context: .
           file: Dockerfile.server
           push: true
-          tags: ghcr.io/${{ GITHUB.repository }}/:server-latest
+          tags: ghcr.io/${{ GITHUB.repository }}:server-latest
