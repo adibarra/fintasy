@@ -34,7 +34,7 @@ FROM alpine as client
 
 ARG DEP_RUN="pcre openssl gd tzdata"
 
-COPY --from=builder /usr/local/nginx /usr/local/nginx
+COPY --from=build_nginx /usr/local/nginx /usr/local/nginx
 RUN apk add --no-cache ${DEP_RUN} \
 	&& ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
 	&& ln -sf /dev/stderr /usr/local/nginx/logs/error.log
