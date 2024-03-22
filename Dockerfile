@@ -6,8 +6,8 @@ RUN corepack enable
 WORKDIR /app
 COPY . .
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm run build
+RUN pnpm install --frozen-lockfile
+RUN pnpm run build:ci
 
 
 FROM python:alpine as backend
