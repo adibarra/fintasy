@@ -1,9 +1,10 @@
 FROM node:alpine as node_builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --no-cache
+RUN npm install -g pnpm
+RUN pnpm install --frozen-lockfile
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 FROM python:alpine as python_builder
 WORKDIR /app
