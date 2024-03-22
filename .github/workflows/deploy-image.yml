@@ -12,9 +12,6 @@ jobs:
   deploy:
     name: 🚀 Build and Deploy Image
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - name: Check out code from GitHub
         uses: actions/checkout@v4
