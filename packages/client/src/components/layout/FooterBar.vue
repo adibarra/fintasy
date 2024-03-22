@@ -53,7 +53,7 @@ watch(() => route.path, () => {
 </script>
 
 <template>
-  <n-layout-footer bordered h-42px>
+  <n-layout-footer bordered h-60px>
     <div flex>
       <n-scrollbar>
         <n-menu

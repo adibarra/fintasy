@@ -11,7 +11,7 @@ const isMobile = computed(() => width.value <= 640)
 <template>
   <n-layout position="absolute" h-full>
     <NavBar />
-    <n-layout has-sider :style="{ height: isMobile ? 'calc(100% - 90px)' : 'calc(100% - 48px)' }">
+    <n-layout has-sider :style="{ height: isMobile ? 'calc(100% - 108px)' : 'calc(100% - 48px)' }">
       <SideBar v-if="!isMobile" />
       <n-layout-content class="dots" bg--c-bg text--c-text>
         <div min-h-full w-full px-6 py-4>
