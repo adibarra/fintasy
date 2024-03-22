@@ -29,7 +29,7 @@ jobs:
           context: .
           file: Dockerfile.client
           push: true
-          tags: ghcr.io/${{ GITHUB.repository }}/client:latest
+          tags: ghcr.io/${{ GITHUB.repository }}:client-latest
 
       - name: Build and push server image
         uses: docker/build-push-action@v5
@@ -37,4 +37,4 @@ jobs:
           context: .
           file: Dockerfile.server
           push: true
-          tags: ghcr.io/${{ GITHUB.repository }}/server:latest
+          tags: ghcr.io/${{ GITHUB.repository }}/:server-latest
