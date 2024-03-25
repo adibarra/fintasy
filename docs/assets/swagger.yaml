@@ -713,6 +713,79 @@ paths:
         default:
           $ref: '#/components/responses/APIResponseError'
 
+  /quotes/historical/{symbol}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - quotes
+      summary: Get historical quotes
+      description: Gets historical quotes for a symbol.
+      operationId: getHistoricalQuotesBySymbol
+      parameters:
+        - name: symbol
+          in: path
+          description: The symbol of the quote to be fetched
+          example: AAPL
+          required: true
+          schema:
+            type: string
+        - name: start_date
+          in: query
+          description: The start date of the quotes to fetch
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: 1970-01-01T00:00:00Z
+        - name: end_date
+          in: query
+          description: The end date of the quotes to fetch
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: 1970-01-01T00:00:00Z
+        - name: interval
+          in: query
+          description: The interval to aggregate the quotes by
+          required: true
+          schema:
+            $ref: '#/components/schemas/HistoricalInterval'
+        - name: limit
+          in: query
+          description: The maximum number of quotes to return
+          required: false
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+        - name: offset
+          in: query
+          description: The number of quotes to skip
+          required: false
+          schema:
+            type: integer
+            default: 0
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/APIResponse'
+                  - type: object
+                    required:
+                      - data
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/QuoteGetResponse'
+        default:
+          $ref: '#/components/responses/APIResponseError'
+
 components:
   responses:
     APIResponseAll:
@@ -772,6 +845,16 @@ components:
         - SCHEDULED
         - ONGOING
         - FINISHED
+
+    # Enum for historical interval
+    HistoricalInterval:
+      type: string
+      enum:
+        - 5m
+        - 15m
+        - 30m
+        - 1h
+        - 1d
 
     # Schema for base API response
     APIResponse:

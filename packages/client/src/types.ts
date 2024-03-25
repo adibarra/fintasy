@@ -7,8 +7,22 @@ import type { ViteSSGContext } from 'vite-ssg'
 
 export type UserModule = (ctx: ViteSSGContext) => void
 
-export enum ACTION { BUY, SELL }
-export enum STATUS { SCHEDULED, ONGOING, FINISHED }
+export enum ACTION {
+  BUY = 'BUY',
+  SELL = 'SELL',
+}
+export enum STATUS {
+  SCHEDULED = 'SCHEDULED',
+  ONGOING = 'ONGOING',
+  FINISHED = 'FINISHED',
+}
+export enum INTERVAL {
+  FIVE_MIN = '5m',
+  FIFTEEN_MIN = '15m',
+  THIRTY_MIN = '30m',
+  ONE_HOUR = '1h',
+  ONE_DAY = '1d',
+}
 
 export interface User {
   uuid: string

@@ -4,7 +4,7 @@
  */
 
 import type { UseFetchReturn } from '@vueuse/core'
-import type { ACTION, Portfolio, Quote, STATUS, Session, Tournament, Transaction, User } from '~/types'
+import type { ACTION, INTERVAL, Portfolio, Quote, STATUS, Session, Tournament, Transaction, User } from '~/types'
 
 /**
  * Composable function to use the Fintasy API
@@ -28,7 +28,7 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
     POST_PORTFOLIO, GET_PORTFOLIOS, GET_PORTFOLIO, PATCH_PORTFOLIO, DELETE_PORTFOLIO,
     POST_TRANSACTION, GET_TRANSACTIONS, GET_TRANSACTION,
     POST_TOURNAMENT, GET_TOURNAMENTS, GET_TOURNAMENT, PATCH_TOURNAMENT, DELETE_TOURNAMENT,
-    GET_QUOTE,
+    GET_QUOTE, GET_QUOTE_HISTORICAL,
   }
 
   return {
@@ -337,6 +337,24 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       }).json<API_RESPONSE[API_QUERY.GET_QUOTE]>()
       return handleErrors<API_QUERY.GET_QUOTE>(response)
     },
+    /**
+     * Get historical quotes for a symbol
+     * @param data
+     * @param data.symbol the stock symbol
+     * @param data.start_date the start date
+     * @param data.end_date the end date
+     * @param data.interval the interval to aggregate the quotes by
+     * @param data.offset (optional) the offset to start returning quotes from
+     * @param data.limit (optional) the maximum number of quotes to return
+     */
+    getQuoteHistorical: async (data: { symbol: string, start_date: string, end_date: string, interval: INTERVAL, offset?: number, limit?: number }): Promise<API_RESPONSE[API_QUERY.GET_QUOTE_HISTORICAL]> => {
+      const params = new URLSearchParams(removeEmpty(data))
+      const response = await useFetch(`${API_BASE}/quotes/${data.symbol}/historical?${params}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }).json<API_RESPONSE[API_QUERY.GET_QUOTE_HISTORICAL]>()
+      return handleErrors<API_QUERY.GET_QUOTE_HISTORICAL>(response)
+    },
   }
 
   function handleErrors<T extends keyof API_RESPONSE>(response: UseFetchReturn<API_RESPONSE[T]>): API_RESPONSE[T] {
@@ -398,5 +416,6 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
     [API_QUERY.PATCH_TOURNAMENT]: ExpandRecursively<BaseResponse>
     [API_QUERY.DELETE_TOURNAMENT]: ExpandRecursively<BaseResponse>
     [API_QUERY.GET_QUOTE]: ExpandRecursively<SuccessfulResponse<Quote> | UnsuccessfulResponse>
+    [API_QUERY.GET_QUOTE_HISTORICAL]: ExpandRecursively<SuccessfulResponse<Quote[]> | UnsuccessfulResponse>
   }
 }
