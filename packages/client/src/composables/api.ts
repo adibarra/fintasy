@@ -8,11 +8,19 @@ import type { ACTION, Portfolio, Quote, STATUS, Session, Tournament, Transaction
 
 /**
  * Composable function to use the Fintasy API
+ * @param options (optional) options for the API
+ * @param options.base (optional) the base URL of the API (default: import.meta.env.VITE_API_BASE or 'http://localhost:3332/api/v1')
+ * @param options.store (optional) whether to store the session token in session storage (default: true)
  * @returns an object with functions to interact with the API
  */
-export function useAPI() {
-  const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:3332/api/v1'
-  const sessionToken = useSessionStorage('session-token', '')
+export function useAPI(options?: { base?: string, store?: boolean }) {
+  const defaults = {
+    base: import.meta.env.VITE_API_BASE ?? 'http://localhost:3332/api/v1',
+    store: true,
+    ...options,
+  }
+  const API_BASE = options?.base ?? defaults.base
+  const sessionToken = options?.store ? useSessionStorage('session-token', '') : ref('')
 
   enum API_QUERY {
     POST_SESSION, DELETE_SESSION,
