@@ -9,22 +9,21 @@
     "adibarra <github@adibarra.com> (https://adibarra.com)"
   ],
   "scripts": {
-    "build": "pnpm -r run clean:all && pnpm i && pnpm -r run build",
-    "build:ci": "pnpm -r run build:ci",
+    "build": "pnpm -r run clean:all && pnpm i && pnpm -r --parallel run build",
+    "build:ci": "pnpm -r --parallel run build",
     "clean": "pnpm -r run clean",
     "clean:all": "pnpm -r run clean:all && rm -rf node_modules/ .pnpm-store/",
-    "dev": "pnpm i && pnpm -r --parallel run dev",
+    "dev": "pnpm -r run clean && pnpm i && pnpm -r --parallel run dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "npx simple-git-hooks",
-    "preview": "pnpm -r --parallel run preview",
+    "preview": "pnpm -r run clean && pnpm -r --parallel run preview",
     "start": "pnpm i && pnpm -r run start",
     "taze": "taze major -r -I",
     "test": "pnpm -r --parallel run test"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.9.0",
-    "@unocss/eslint-plugin": "^0.58.6",
     "eslint": "^8.57.0",
     "eslint-plugin-format": "^0.1.0",
     "lint-staged": "^15.2.2",
