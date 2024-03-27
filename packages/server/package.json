@@ -7,7 +7,7 @@
     "clean:all": "pnpm run clean && rm -rf .venv/",
     "dev": "nodemon -e py -x 'python3 src/main.py'",
     "lint": "python3 -m ruff format --check || $(exit 0)",
-    "lint:fix": "ruff check --select I --fix && python3 -m ruff format",
+    "lint:fix": "ruff check --select I --fix && python3 -m ruff format || $(exit 0)",
     "prepare": "python3 -m pip install -r requirements.txt",
     "preview": "python3 src/main.py --production",
     "start": "python3 src/main.py --production",

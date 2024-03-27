@@ -44,32 +44,7 @@ class User:
         ERROR_TYPES.PASSWORD_SHORT: "Password must be at least 6 characters long",
     }
 
-    def createUser(username: str, email: str, password: str) -> str:
-        """
-        Create a new user with the given username, email, and password and store it in the database.
-
-        Args:
-            username (str): The username of the user.
-            email (str): The email address of the user.
-            password (str): The password of the user.
-
-        Returns:
-            str: The UUID of the newly created user.
-        """
-
-        User.validateUsername(username)
-        User.validateEmail(email)
-        User.validatePassword(password)
-        passwordHash = User.hashPassword(password)  # noqa: F841
-
-        # database query to create user with username, email, passwordHash
-        # database should automatically populate uuid, coins, createdAt, updatedAt
-
-        uuid = "123"  # from database after creation
-
-        return uuid
-
-    def validateUsername(username: str) -> bool:
+    def validate_username(username: str) -> bool:
         """
         Validates the given username.
 
@@ -97,7 +72,7 @@ class User:
 
         return True
 
-    def validateEmail(email: str) -> bool:
+    def validate_email(email: str) -> bool:
         """
         Validates if the given email address is in a valid format.
 
@@ -116,7 +91,7 @@ class User:
 
         return True
 
-    def validatePassword(password: str) -> bool:
+    def validate_password(password: str) -> bool:
         """
         Validates the given password.
 
@@ -135,7 +110,7 @@ class User:
 
         return True
 
-    def hashPassword(password: str) -> str:
+    def hash_password(password: str) -> str:
         """
         Hashes the given password.
 
@@ -148,20 +123,20 @@ class User:
 
         return ph.hash(password)
 
-    def verifyPassword(password: str, passwordHash: str) -> bool:
+    def verify_password(password: str, password_hash: str) -> bool:
         """
         Verifies if the given password matches the password hash.
 
         Args:
             password (str): The password to be verified.
-            passwordHash (str): The password hash to compare against.
+            password_hash (str): The password hash to compare against.
 
         Returns:
             bool: True if the password matches the password hash, False otherwise.
         """
 
         try:
-            ph.verify(passwordHash, password)
+            ph.verify(password_hash, password)
             return True
         except:  # noqa: E722
             return False

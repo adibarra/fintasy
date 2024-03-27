@@ -3,7 +3,7 @@
 
 import unittest
 
-from src.classes.user import User
+from src.helpers.user import User
 
 
 class TestUserMethods(unittest.TestCase):
@@ -11,21 +11,21 @@ class TestUserMethods(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.USERNAME_SHORT],
-            User.validateUsername,
+            User.validate_username,
             "",
         )
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.USERNAME_SHORT],
-            User.validateUsername,
+            User.validate_username,
             "12",
         )
-        self.assertTrue(User.validateUsername("123"))
-        self.assertTrue(User.validateUsername("12345678901234567890"))
+        self.assertTrue(User.validate_username("123"))
+        self.assertTrue(User.validate_username("12345678901234567890"))
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.USERNAME_LONG],
-            User.validateUsername,
+            User.validate_username,
             "123456789012345678901",
         )
 
@@ -33,62 +33,62 @@ class TestUserMethods(unittest.TestCase):
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.PASSWORD_SHORT],
-            User.validatePassword,
+            User.validate_password,
             "",
         )
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.PASSWORD_SHORT],
-            User.validatePassword,
+            User.validate_password,
             "12345",
         )
-        self.assertTrue(User.validatePassword("123456"))
-        self.assertTrue(User.validatePassword("12345678901234567890"))
+        self.assertTrue(User.validate_password("123456"))
+        self.assertTrue(User.validate_password("12345678901234567890"))
 
     def test_email_validation(self):
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.EMAIL_INVALID],
-            User.validateEmail,
+            User.validate_email,
             "",
         )
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.EMAIL_INVALID],
-            User.validateEmail,
+            User.validate_email,
             "test",
         )
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.EMAIL_INVALID],
-            User.validateEmail,
+            User.validate_email,
             "test@",
         )
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.EMAIL_INVALID],
-            User.validateEmail,
+            User.validate_email,
             "test@example",
         )
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.EMAIL_INVALID],
-            User.validateEmail,
+            User.validate_email,
             "test@example.",
         )
         self.assertRaisesRegex(
             ValueError,
             User.ERROR_MESSAGES[User.ERROR_TYPES.EMAIL_INVALID],
-            User.validateEmail,
+            User.validate_email,
             "@example.com",
         )
-        self.assertTrue(User.validateEmail("test@example.com"))
+        self.assertTrue(User.validate_email("test@example.com"))
 
     def test_password_verification(self):
         test_password = "password"
-        passwordHash = User.hashPassword(test_password)
-        self.assertTrue(User.verifyPassword(test_password, passwordHash))
-        self.assertFalse(User.verifyPassword(test_password + "123", passwordHash))
+        password_hash = User.hash_password(test_password)
+        self.assertTrue(User.verify_password(test_password, password_hash))
+        self.assertFalse(User.verify_password(test_password + "123", password_hash))
 
 
 if __name__ == "__main__":
