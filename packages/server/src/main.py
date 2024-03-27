@@ -1,7 +1,7 @@
 # @author: adibarra (Alec Ibarra)
 # @description: The main entry point for the server.
 
-from config import API_HOST, API_PORT, API_ROUTES_DIR, API_CORS_ORIGINS
+from config import API_CORS_ORIGINS, API_HOST, API_PORT, API_ROUTES_DIR
 
 print("Server starting up...")
 print("Server should be listening on: http://" + API_HOST + ":" + str(API_PORT))

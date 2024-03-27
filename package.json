@@ -14,8 +14,8 @@
     "clean": "pnpm -r run clean",
     "clean:all": "pnpm -r run clean:all && rm -rf node_modules/ .pnpm-store/",
     "dev": "pnpm -r run clean && pnpm i && pnpm -r --parallel run dev",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "pnpm -r run lint && eslint .",
+    "lint:fix": "pnpm -r run lint:fix && eslint . --fix",
     "postinstall": "npx simple-git-hooks",
     "preview": "pnpm -r run clean && pnpm -r --parallel run preview",
     "start": "pnpm i && pnpm -r run start",
@@ -34,6 +34,6 @@
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --fix"
+    "*": "pnpm run lint:fix"
   }
 }
