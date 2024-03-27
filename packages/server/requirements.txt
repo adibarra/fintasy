@@ -1,1 +1,3 @@
+argon2-cffi
 python-dotenv
+ruff
