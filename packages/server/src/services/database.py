@@ -1,4 +1,4 @@
-# @author: Alec Ibarra
+# @author: adibarra (Alec Ibarra)
 # @description: Database class for handling database interactions
 
 

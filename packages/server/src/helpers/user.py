@@ -1,4 +1,4 @@
-# @author: Alec Ibarra (adibarra)
+# @author: adibarra (Alec Ibarra)
 # @description: User class for handling users
 
 import re
