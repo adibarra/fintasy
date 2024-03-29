@@ -19,7 +19,6 @@ class Portfolio:
     PORTFOLIO_LENGTH_MAX = 20
 
     ERROR_TYPES = Enum(
-        """
         "ERROR_TYPES",
         [
             "PORTFOLIO_SHORT",
@@ -27,7 +26,6 @@ class Portfolio:
             "PORTFOLIO_INVALID_CHARACTERS",
             "PORTFOLIO_NAME_EXISTS",
         ],
-   """
     )
 
     ERROR_MESSAGES = {
@@ -35,6 +33,7 @@ class Portfolio:
         ERROR_TYPES.PORTFOLIO_LONG: "Portfolio name must be less than or equal to 20 characters long",
         ERROR_TYPES.PORTFOLIO_INVALID_CHARACTERS: "Portfolio name must contain only valid characters",
         ERROR_TYPES.PORTFOLIO_NAME_EXISTS: "Portfolio name must be unique",
+        # TODO: move error messages from the code to here
     }
 
     def __init__(self):
@@ -45,25 +44,17 @@ class Portfolio:
 
     def default_name(self):
         """
-        Args:
-            user_input: Must be empty but not null in order for a default portfolio name to be created.
-
         Returns:
             Default portfolio name that's unique & it's stored inside of the self dictionary.
         """
-        user_input = input(
-            "Enter a name for your portfolio.\n(If you would like a default name then please press Enter.)"
-        )
-        if user_input == "":
-            i = 0
-            while True:
-                portfolio_name = f"Portfolio #{i}"
-                if portfolio_name in self.portfolios:
-                    i = i + 1
-                else:
-                    self.portfolios[portfolio_name] = portfolio_name
-                    break
-        return self.portfolios[portfolio_name]
+        i = 0
+        while True:
+            portfolio_name = f"Portfolio #{i}"
+            if portfolio_name in self.portfolios:
+                i = i + 1
+            else:
+                self.portfolios[portfolio_name] = portfolio_name
+                return self.portfolios[portfolio_name]
 
     def validate_portfolio_name(self, portfolio_name: str):
         """
