@@ -1,5 +1,5 @@
 # @author: Caleb Kim (caleb-j-kim)
-# @description: Portfolio class for handling user created portfolios
+# @description: Portfolio class for handling portfolios
 
 from enum import Enum
 
