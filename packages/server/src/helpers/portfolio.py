@@ -185,6 +185,47 @@ class Portfolio:
         }
         return True
 
+    def rename_portfolio_name(self, portfolio_name: str):
+        """
+        Args:
+            portfolio_name (str): The portfolio name must exist inside of the dictionary.
+            new_name (str): New portfolio name must contain only valid characters & must be unique.
+
+        Raises:
+            KeyError: If the portfolio name doesn't exist inside of the dictionary or if the updated portfolio name contains invalid characters.
+
+        Returns:
+            Updated portfolio name that's contained inside of the dictionary.
+        """
+        if portfolio_name not in self.portfolios:
+            raise KeyError(
+                "Portfolio does not exist.\nPlease try again and input a portfolio name that exists inside of the Fintasy Databases."
+            )
+
+        new_name = input(f"Please enter the new name for {portfolio_name}")
+        if len(new_name) < Portfolio.PORTFOLIO_LENGTH_MIN:
+            raise ValueError(
+                Portfolio.ERROR_MESSAGES[Portfolio.ERROR_TYPES.PORTFOLIO_SHORT]
+            )
+
+        if len(new_name) > Portfolio.PORTFOLIO_LENGTH_MAX:
+            raise ValueError(
+                Portfolio.ERROR_MESSAGES[Portfolio.ERROR_TYPES.PORTFOLIO_LONG]
+            )
+
+        for char in new_name:
+            if char not in Portfolio.PORTFOLIO_VALID_CHARACTERS:
+                raise ValueError(
+                    Portfolio.ERROR_MESSAGES[
+                        Portfolio.ERROR_TYPES.PORTFOLIO_INVALID_CHARACTERS
+                    ]
+                )
+
+        if new_name in self.portfolios:
+            raise ValueError("Portfolio name must be unique.")
+        self.portfolios[portfolio_name] = new_name
+        return True
+
     def initialize_balance(self, portfolio_name: str):
         """
         Args:
