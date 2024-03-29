@@ -32,6 +32,8 @@
 This is our group project for CS.3354 Software Engineering.
 Our goal is to be able to create a platform for paper trading which can also host competitions. The project's documentation can be found here: [Fintasy Documentation](https://adibarra.github.io/fintasy/).
 
+There is a live demo of the project which deploys the latest changes from the `main` branch. You can access the demo [here](https://fintasy.adibarra.com).
+
 ## Tooling
 
 #### VSCode
@@ -51,15 +53,14 @@ Insomnia is recommended for testing and debugging the API. It allows you to auto
 This is a one-time setup. If you have already done this, you can skip to the next section.
 
 1.  Open Docker Desktop. Make sure it is updated and running before continuing.
-2.  Open VSCode.
-3.  Install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
-4.  Press `Ctrl+Shift+P` and type `Dev Containers: Clone Repository in Container Volume...`.
-5.  Click `Clone a repository from GitHub in a Container Volume`.
-6.  You should now be prompted to login to your GitHub account. Sign in.
-7.  Type `adibarra/fintasy`. Select it.
-8.  If prompted, select the `main` branch.
-9.  Let the container build. This will take **2-5 minutes** depending on your machine (only the first time).
-10. Once the build is complete, you can begin development.
+2.  Open VSCode and install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
+3.  In VSCode, press `Ctrl+Shift+P` and type `Git: Clone`.
+4.  You may be prompted to login to your GitHub account. Sign in.
+5.  Type `adibarra/fintasy`. Select it.
+6.  If prompted, select the `main` branch.
+7.  Once cloned, you should see a popup in the bottom right corner of the screen. Click `Reopen in Container`.
+8.  Let the container build. This will take **2-5 minutes** depending on your machine (only the first time).
+9.  Once the build is complete, you can begin development.
 
 <details>
 <summary>Manual Environment Setup</summary>
