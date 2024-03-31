@@ -1,4 +1,6 @@
-
+# @author: Mason Clark (maclark)
+# @description: Transactions class for handling buy and sell transactions in a portfolio
+#The class is responsible for executing transactions and updating the portfolio accordingly
 
 def __init__(self, portfolio, company_name, qty, unit_price, transaction_type):
         """
