@@ -47,7 +47,7 @@ useHead({
     </div>
 
     <img
-      src="/card.png" alt="Fintasy Logo" class="mr-5 h-96 lg:mr-55 md:mr-15 sm:mr-10 xl:mr-55"
+      src="/images/card.png" alt="Fintasy Logo" class="mr-5 h-96 lg:mr-55 md:mr-15 sm:mr-10 xl:mr-55"
       style="filter: drop-shadow(8px 24px 24px rgba(5, 150, 105, .8));"
     >
   </div>
