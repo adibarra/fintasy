@@ -4,7 +4,8 @@
 -->
 
 <script setup lang="ts">
-import type { ACTION, Transaction } from '~/types'
+import type { Transaction } from '~/types'
+import { ACTION } from '~/types'
 
 const { t } = useI18n()
 
@@ -68,7 +69,7 @@ function generateTransactions(count: number): Transaction[] {
       uuid: Math.random().toString(36).substring(2),
       portfolio: Math.random().toString(36).substring(2),
       symbol: Math.random().toString(36).substring(2, 6).toUpperCase(),
-      action: Math.floor(Math.random() * 2) as unknown as unknown as ACTION,
+      action: Math.random() > 0.5 ? ACTION.BUY : ACTION.SELL,
       quantity: Math.floor(Math.random() * 100),
       price_cents: Math.floor(Math.random() * 100000),
       created_at: date.toLocaleDateString(),
