@@ -10,7 +10,7 @@ useHead({
 </script>
 
 <template>
-  <div class="mx-10 my-4 flex justify-between lg:flex-row md:flex-row xl:flex-row sm:flex-col">
+  <nav class="mx-10 my-4 flex justify-between lg:flex-row md:flex-row xl:flex-row sm:flex-col">
     <router-link to="/" class="flex items-center justify-center">
       <img
         src="/pwa-192x192.png" alt="Fintasy Logo"
@@ -22,22 +22,25 @@ useHead({
       </div>
     </router-link>
     <div class="flex items-center">
-      <router-link to="/dashboard" class="ml-10 text-lg hover:text-emerald-3">
+      <button
+        class="ml-10 rd-10 px-4 py-2 text-lg hover:text--c-accent"
+        @click="$router.push('/dashboard')"
+      >
         {{ t('pages.dashboard.title') }}
-      </router-link>
+      </button>
 
       <button
-        class="ml-10 rd-10 bg-white px-4 py-2 text-lg text-black hover:bg-emerald-5 hover:text-white"
+        class="ml-10 rd-10 bg--c-inverse hover:bg--c-accent px-4 py-2 text-lg text--c-bg"
         @click="$router.push('/login')"
       >
         {{ t('pages.login.title') }}
       </button>
     </div>
-  </div>
+  </nav>
 
   <div class="my-25 flex flex-col-reverse items-center justify-center lg:flex-row md:flex-row sm:flex-row xl:flex-row">
     <div class="mx-5 my-15 lg:mx-55 md:mx-15 sm:mx-10 xl:mx-55">
-      <div class="text-8xl text-emerald-5 -mr-50 lg:text-6xl md:text-5xl sm:text-4xl xl:text-8xl">
+      <div class="text-8xl text--c-accent -mr-50 lg:text-6xl md:text-5xl sm:text-4xl xl:text-8xl">
         Take Your Stocks To The Next Level
       </div>
       <div class="py-10 text-lg lg:text-lg md:text-lg sm:text-base xl:text-lg">
