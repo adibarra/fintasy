@@ -11,7 +11,7 @@ useHead({
 
 <template>
   <div class="mx-10 my-4 flex justify-between lg:flex-row md:flex-row xl:flex-row sm:flex-col">
-    <a href="/" class="flex items-center justify-center">
+    <router-link to="/" class="flex items-center justify-center">
       <img
         src="/pwa-192x192.png" alt="Fintasy Logo"
         class="mr-2 h-14 lg:mb-2 lg:mr-0 md:mb-2 md:mr-0 sm:mb-4 xl:mb-2 xl:mr-0"
@@ -20,15 +20,15 @@ useHead({
       <div class="pl-2 text-4xl lg:text-4xl md:text-3xl sm:text-2xl xl:text-4xl">
         Fintasy
       </div>
-    </a>
+    </router-link>
     <div class="flex items-center">
-      <a href="/dashboard" class="ml-10 text-lg hover:text-emerald-3">
+      <router-link to="/dashboard" class="ml-10 text-lg hover:text-emerald-3">
         {{ t('pages.dashboard.title') }}
-      </a>
+      </router-link>
 
       <button
-        href="/login"
         class="ml-10 rd-10 bg-white px-4 py-2 text-lg text-black hover:bg-emerald-5 hover:text-white"
+        @click="$router.push('/login')"
       >
         {{ t('pages.login.title') }}
       </button>
