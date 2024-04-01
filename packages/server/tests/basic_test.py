@@ -1,4 +1,4 @@
-# @author: Alec Ibarra (adibarra)
+# @author: adibarra (Alec Ibarra)
 # @description: Example test
 
 import unittest
