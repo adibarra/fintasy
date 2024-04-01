@@ -1,4 +1,4 @@
-# @author: Alec Ibarra (adibarra)
+# @author: adibarra (Alec Ibarra)
 # @description: Test for the User class
 
 import unittest
