@@ -1,5 +1,7 @@
 import unittest
+
 from src.helpers.quote import Quote
+
 
 class TestQuoteMethods(unittest.TestCase):
     def setUp(self):
@@ -28,21 +30,28 @@ class TestQuoteMethods(unittest.TestCase):
         # Test getting historical quotes with a valid symbol and interval
         valid_symbol = "AAPL"
         valid_interval = "1d"
-        self.assertIsNotNone(self.quote_obj.get_historical_quotes(valid_symbol, valid_interval))
+        self.assertIsNotNone(
+            self.quote_obj.get_historical_quotes(valid_symbol, valid_interval)
+        )
 
         # Test getting historical quotes with an invalid symbol
         invalid_symbol = "invalid_symbol"
         valid_interval = "1d"
-        self.assertIsNone(self.quote_obj.get_historical_quotes(invalid_symbol, valid_interval))
+        self.assertIsNone(
+            self.quote_obj.get_historical_quotes(invalid_symbol, valid_interval)
+        )
 
         # Test getting historical quotes with an invalid interval
         valid_symbol = "AAPL"
         invalid_interval = "invalid_interval"
-        self.assertIsNone(self.quote_obj.get_historical_quotes(valid_symbol, invalid_interval))
+        self.assertIsNone(
+            self.quote_obj.get_historical_quotes(valid_symbol, invalid_interval)
+        )
 
     def tearDown(self):
         # Clean up any resources used for testing
         pass
+
 
 if __name__ == "__main__":
     unittest.main()
