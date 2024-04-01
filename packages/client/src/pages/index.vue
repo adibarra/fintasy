@@ -22,7 +22,7 @@ useHead({
         Fintasy
       </div>
     </router-link>
-    <div grow />
+    <div class="grow" />
     <div class="flex items-center gap-5">
       <button
         class="rd-10 bg--c-inverse hover:bg--c-accent px-6 py-2 text-lg text--c-bg"
@@ -33,8 +33,9 @@ useHead({
     </div>
   </nav>
 
-  <div class="h-full w-full flex items-center justify-center">
-    <div class="max-w-350 flex flex-col items-center justify-center xl:flex-row xl:flex-row-reverse">
+  <div class="h-10svh" />
+  <div class="flex items-center justify-center">
+    <div class="max-w-350 flex flex-col items-center justify-center xl:flex-row-reverse">
       <img
         src="/images/card.png" alt="Fintasy Logo" class="m-15 h-48 lg:h-96 md:h-72"
         style="filter: drop-shadow(8px 24px 24px rgba(5, 150, 105, .8));"
