@@ -4,9 +4,10 @@
 -->
 
 <template>
-  <div h-full w-full flex rd-1 bg--c-fg>
-    <span m-auto text-xl>
-      Logo Here
-    </span>
-  </div>
+  <router-link to="/" mx-2 h-full w-full flex items-center justify-center rd-1 bg--c-fg>
+    <img src="/pwa-512x512.png" alt="Fintasy Logo" mr-2 h-10>
+    <div text-xl>
+      Fintasy
+    </div>
+  </router-link>
 </template>
