@@ -1,3 +1,8 @@
+<!--
+  @author: Mariptime (Akshay)
+  @description: This component is used to display the login/register page of the application.
+-->
+
 <script setup lang="ts">
 const { t } = useI18n()
 
