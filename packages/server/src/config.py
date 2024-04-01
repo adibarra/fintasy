@@ -23,3 +23,4 @@ API_CORS_ORIGINS: List[str] = (
     os.environ.get("SERVER_API_CORS_ORIGINS").split(",") if IS_PRODUCTION else ["*"]
 )
 API_ROUTES_DIR: str = os.path.join("src", "routes")
+POSTGRESQL_URI: str = os.environ.get("SERVER_POSTGRESQL_URI")
