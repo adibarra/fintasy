@@ -68,7 +68,7 @@ function generateTransactions(count: number): Transaction[] {
       uuid: Math.random().toString(36).substring(2),
       portfolio: Math.random().toString(36).substring(2),
       symbol: Math.random().toString(36).substring(2, 6).toUpperCase(),
-      action: Math.floor(Math.random() * 2) as ACTION,
+      action: Math.floor(Math.random() * 2) as unknown as unknown as ACTION,
       quantity: Math.floor(Math.random() * 100),
       price_cents: Math.floor(Math.random() * 100000),
       created_at: date.toLocaleDateString(),
