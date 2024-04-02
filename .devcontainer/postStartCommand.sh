@@ -6,6 +6,7 @@ nvm use || nvm install --lts
 corepack enable
 corepack prepare pnpm@latest --activate
 pnpm config set store-dir $HOME/.pnpm-store
-cp --no-clobber .env.production.example .env.production
+cp --no-clobber .env.example .env.production
+cp --no-clobber .env.example .env.development
 clear
 $( exit 0 )
