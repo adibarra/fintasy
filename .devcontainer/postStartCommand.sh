@@ -4,7 +4,7 @@
 . ${NVM_DIR}/nvm.sh
 nvm use || nvm install --lts
 corepack enable
-corepack prepare pnpm@latest --activate
+corepack install
 pnpm config set store-dir $HOME/.pnpm-store
 cp --no-clobber .env.example .env.production
 cp --no-clobber .env.example .env.development
