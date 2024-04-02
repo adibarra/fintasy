@@ -12,7 +12,7 @@ useHead({
 </script>
 
 <template>
-  <nav class="mx-6 my-4 flex">
+  <nav class="flex md:mx-6 md:my-4">
     <router-link to="/" class="flex items-center justify-center gap-2">
       <img
         src="/pwa-192x192.png" alt="Fintasy Logo"
@@ -25,7 +25,7 @@ useHead({
     <div class="grow" />
     <div class="flex items-center gap-5">
       <button
-        class="rd-10 bg--c-inverse hover:bg--c-accent px-6 py-2 text-lg text--c-bg"
+        class="rd-10 bg--c-inverse hover:bg--c-accent px-6 py-2 text--c-bg md:text-lg"
         @click="$router.push('/login')"
       >
         {{ t('pages.login.title') }}
@@ -37,7 +37,7 @@ useHead({
   <div class="flex items-center justify-center">
     <div class="max-w-350 flex flex-col items-center justify-center xl:flex-row-reverse">
       <img
-        src="/images/card.png" alt="Fintasy Logo" class="m-15 h-48 lg:h-96 md:h-72"
+        src="/images/card.png" alt="Fintasy Logo" class="m-15 h-36 md:h-72 sm:h-48"
         style="filter: drop-shadow(8px 24px 24px rgba(5, 150, 105, .8));"
       >
       <div class="m-15">
