@@ -8,3 +8,4 @@ node_modules/
 *:Zone.Identifier
 .env.*
 !.env.*.example
+!.env.example
