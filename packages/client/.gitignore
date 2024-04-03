@@ -1,7 +1,5 @@
 dist/
 
-.vite-ssg-dist
-.vite-ssg-temp
 vite.config.ts.timestamp*
 components.d.ts
 auto-imports.d.ts

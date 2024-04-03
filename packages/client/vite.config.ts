@@ -7,7 +7,6 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Shiki from '@shikijs/markdown-it'
-import generateSitemap from 'vite-ssg-sitemap'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -143,18 +142,6 @@ export default defineConfig({
     // https://github.com/feat-agency/vite-plugin-webfont-dl
     WebfontDownload(),
   ],
-
-  // https://github.com/antfu/vite-ssg
-  ssgOptions: {
-    script: 'async',
-    formatting: 'minify',
-    crittersOptions: {
-      reduceInlineStyles: false,
-    },
-    onFinished() {
-      generateSitemap()
-    },
-  },
 
   // https://github.com/vitest-dev/vitest
   test: {
