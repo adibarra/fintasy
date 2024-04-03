@@ -16,7 +16,7 @@ class UsersMixin:
 
     connectionPool: "SimpleConnectionPool"
 
-    def create_user(self, username: str, email: str, password_hash: str) -> bool:
+    def create_user(self, username: str, email: str, password_hash: str) -> str:
         """
         Creates a new user in the database.
 
@@ -26,7 +26,7 @@ class UsersMixin:
             password_hash (str): The hashed password of the user.
 
         Returns:
-            bool: True if the user was successfully created, False otherwise.
+            uuid (str): The UUID of the newly created user if successful, None otherwise.
         """
 
         conn = None
@@ -34,30 +34,32 @@ class UsersMixin:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO users (username, email, password_hash) VALUES (%s, %s, %s)",
+                    "INSERT INTO users (username, email, password_hash) VALUES (%s, %s, %s) RETURNING uuid",
                     (username, email, password_hash),
                 )
+                uuid = cursor.fetchone()[0]
                 conn.commit()
-                return True
+                return uuid
         except psycopg2.IntegrityError as e:
             # Check if it's a duplicate key error
             if "duplicate key value violates unique constraint" in str(e):
-                return False
+                return None
             else:
                 raise e
         except Exception as e:
             print("Failed to create user:", e)
-            return False
+            return None
         finally:
             if conn:
                 self.connectionPool.putconn(conn)
 
-    def get_user_by_email(self, email: str) -> dict:
+    def get_user(self, email: str = None, uuid: str = None) -> dict:
         """
-        Retrieves a user from the database by email.
+        Retrieves a user from the database by email or UUID.
 
         Args:
             email (str): The email address of the user.
+            uuid (str): The UUID of the user.
 
         Returns:
             dict: A dictionary representing the user if found, None otherwise.
@@ -67,7 +69,17 @@ class UsersMixin:
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM users WHERE email = %s LIMIT 1", (email,))
+                if email is not None:
+                    cursor.execute(
+                        "SELECT * FROM users WHERE email = %s LIMIT 1", (email,)
+                    )
+                elif uuid is not None:
+                    cursor.execute(
+                        "SELECT * FROM users WHERE uuid = %s LIMIT 1", (uuid,)
+                    )
+                else:
+                    print("Email or UUID must be provided.")
+                    return None
                 if cursor.description:
                     column_names = [desc[0] for desc in cursor.description]
                     user = cursor.fetchone()
