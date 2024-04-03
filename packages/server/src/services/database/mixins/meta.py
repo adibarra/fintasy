@@ -1,13 +1,18 @@
 # @author: adibarra (Alec Ibarra)
 # @description: Database class mixin for handling meta database operations
 
-from typing import Any, Dict, List
+from typing import TYPE_CHECKING, Any, Dict, List
+
+if TYPE_CHECKING:
+    from psycopg2.pool import SimpleConnectionPool
 
 
 class MetaMixin:
     """
     A collection of methods for handling meta database operations.
     """
+
+    connectionPool: "SimpleConnectionPool"
 
     def query(self, query: str, params: tuple = ()) -> List[Dict[str, Any]]:
         """

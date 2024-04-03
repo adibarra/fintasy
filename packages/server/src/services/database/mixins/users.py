@@ -1,13 +1,20 @@
 # @author: adibarra (Alec Ibarra)
 # @description: Database class for handling user database operations
 
+from typing import TYPE_CHECKING
+
 import psycopg2
+
+if TYPE_CHECKING:
+    from psycopg2.pool import SimpleConnectionPool
 
 
 class UsersMixin:
     """
     A collection of methods for handling user database operations.
     """
+
+    connectionPool: "SimpleConnectionPool"
 
     def create_user(self, username: str, email: str, password_hash: str) -> bool:
         """
