@@ -1,2 +1,4 @@
-All classes in this directory will be accessible though the Database class.
-Note: you need to manually import and add it as a parent class for the Database class.
+This directory contains mixins for the Database class, enabling modular extension of its capabilities.
+Each mixin should introduce a specific type of functionality.
+
+Any mixin in this directory will be automatically loaded into the Database class on init.

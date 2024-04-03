@@ -5,10 +5,14 @@ from typing import Any, Dict, List
 
 
 class MetaMixin:
+    """
+    A collection of methods for handling meta database operations.
+    """
+
     def query(self, query: str, params: tuple = ()) -> List[Dict[str, Any]]:
         """
+        !!! DO NOT USE THIS IN PRODUCTION CODE !!!\n
         Executes a query on the database.
-        DO NOT USE THIS IN PRODUCTION CODE.
 
         Args:
             query (str): The query to execute.
@@ -41,6 +45,7 @@ class MetaMixin:
 
     def show_tables(self) -> List[str]:
         """
+        !!! DO NOT USE THIS IN PRODUCTION CODE !!!\n
         Retrieves a list of table names from the database.
 
         Returns:

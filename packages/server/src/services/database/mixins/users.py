@@ -5,6 +5,10 @@ import psycopg2
 
 
 class UsersMixin:
+    """
+    A collection of methods for handling user database operations.
+    """
+
     def create_user(self, username: str, email: str, password_hash: str) -> bool:
         """
         Creates a new user in the database.
