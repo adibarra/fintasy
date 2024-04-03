@@ -40,6 +40,8 @@ class Database(*get_mixin_classes(), object):
         Creates a new instance of the Database class if it doesn't already exist.
         If an instance already exists, returns the existing instance.
 
+        To see the available methods, refer to the mixin classes in the `services.database.mixins` package.
+
         Returns:
             Database: The Database instance.
         """
