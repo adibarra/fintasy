@@ -53,12 +53,11 @@ class UsersMixin:
             if conn:
                 self.connectionPool.putconn(conn)
 
-    def get_user(self, email: str = None, uuid: str = None) -> dict:
+    def get_user(self, uuid: str) -> dict:
         """
         Retrieves a user from the database by email or UUID.
 
         Args:
-            email (str): The email address of the user.
             uuid (str): The UUID of the user.
 
         Returns:
@@ -69,28 +68,47 @@ class UsersMixin:
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
-                if email is not None:
-                    cursor.execute(
-                        "SELECT * FROM users WHERE email = %s LIMIT 1", (email,)
-                    )
-                elif uuid is not None:
-                    cursor.execute(
-                        "SELECT * FROM users WHERE uuid = %s LIMIT 1", (uuid,)
-                    )
-                else:
-                    print("Email or UUID must be provided.")
-                    return None
+                cursor.execute("SELECT * FROM users WHERE uuid = %s LIMIT 1", (uuid,))
                 if cursor.description:
                     column_names = [desc[0] for desc in cursor.description]
                     user = cursor.fetchone()
                     if user is not None:
                         return dict(zip(column_names, [str(value) for value in user]))
                     else:
-                        print("User with email '%s' not found.", email)
+                        print(f"User with uuid '{uuid}' not found.")
                         return None
         except Exception as e:
-            print("Failed to get user by email:", e)
+            print("Failed to get user by uuid:", e)
             return None
+        finally:
+            if conn:
+                self.connectionPool.putconn(conn)
+
+    def update_user(self, uuid: str, **kwargs) -> bool:
+        """
+        Updates a user in the database.
+
+        Args:
+            uuid (str): The UUID of the user.
+            **kwargs: The fields to update.
+
+        Returns:
+            bool: True if successful, False otherwise.
+        """
+
+        conn = None
+        try:
+            conn = self.connectionPool.getconn()
+            with conn.cursor() as cursor:
+                set_clause = ", ".join([f"{key} = %s" for key in kwargs.keys()])
+                query = f"UPDATE users SET {set_clause} WHERE uuid = %s"
+                values = list(kwargs.values()) + [uuid]
+                cursor.execute(query, values)
+                conn.commit()
+                return True
+        except Exception as e:
+            print("Failed to update user:", e)
+            return False
         finally:
             if conn:
                 self.connectionPool.putconn(conn)
