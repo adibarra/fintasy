@@ -1,4 +1,4 @@
 This directory contains mixins for the Database class, enabling modular extension of its capabilities.
-Each mixin should introduce a specific type of functionality.
+Each mixin should introduce only one type of functionality.
 
-Any mixin in this directory will be automatically loaded into the Database class on init.
+Note: Mixins must be manually added as a superclass of the Database class.

@@ -1,34 +1,16 @@
 # @author: adibarra (Alec Ibarra)
 # @description: Database class for handling database interactions
 
-import importlib
-import os
-
 from config import POSTGRESQL_URI
 from psycopg2 import pool
 
-# Dynamic mixin loading
-MIXINS_DIRECTORY = os.path.join(os.path.dirname(__file__), "mixins")
-MIXINS_PACKAGE = "services.database.mixins"
+# import all mixins here
+from services.database.mixins.meta import MetaMixin
+from services.database.mixins.users import UsersMixin
 
 
-def get_mixin_classes():
-    """
-    Retrieves all mixin classes from the mixins directory.
-    """
-    mixin_classes = []
-    for filename in os.listdir(MIXINS_DIRECTORY):
-        if filename.endswith(".py") and not filename.startswith("__"):
-            module_name = f"{MIXINS_PACKAGE}.{filename[:-3]}"
-            module = importlib.import_module(module_name)
-            class_name = filename[:-3].capitalize() + "Mixin"
-            mixin_class = getattr(module, class_name, None)
-            if mixin_class:
-                mixin_classes.append(mixin_class)
-    return mixin_classes
-
-
-class Database(*get_mixin_classes(), object):
+# add all imported mixins here
+class Database(MetaMixin, UsersMixin, object):
     """
     A class representing the database.
     """
