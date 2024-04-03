@@ -112,3 +112,28 @@ class UsersMixin:
         finally:
             if conn:
                 self.connectionPool.putconn(conn)
+
+    def delete_user(self, uuid: str) -> bool:
+        """
+        Deletes a user from the database.
+
+        Args:
+            uuid (str): The UUID of the user.
+
+        Returns:
+            bool: True if successful, False otherwise.
+        """
+
+        conn = None
+        try:
+            conn = self.connectionPool.getconn()
+            with conn.cursor() as cursor:
+                cursor.execute("DELETE FROM users WHERE uuid = %s", (uuid,))
+                conn.commit()
+                return True
+        except Exception as e:
+            print("Failed to delete user:", e)
+            return False
+        finally:
+            if conn:
+                self.connectionPool.putconn(conn)
