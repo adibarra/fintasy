@@ -122,18 +122,18 @@ class Portfolio:
         portfolio_name: str,
         company_name: str,
         qty: int,
-        unit_price: float,
-        daily_PL: float,
-        total_PL: float,
+        unit_price: int,
+        daily_PL: int,
+        total_PL: int,
     ):  # unit_price, dailyPL, and totalPL will be received through API later
         """
         Args:
             portfolio_name (str): The portfolio name must exist inside of the dictionary.
             company_name (str): The company name must contain only valid characters and is greater than one character.
             qty (int): The stock quantity must contain only valid integers.
-            unit_price (float): The unit price must contain only valid float values.
-            daily_PL (float): The daily PL must contain only valid float values.
-            total_PL (float): The total PL must contain only valid float values.
+            unit_price (int): The unit price must contain only valid int values that are converted into dollars and cents.
+            daily_PL (int): The daily PL must contain only valid int values that are converted into dollars and cents.
+            total_PL (int): The total PL must contain only valid int values that are converted into dollars and cents.
 
         Raises:
             KeyError: If the portfolio name or company name doesn't exist inside of the dictionary.
@@ -245,11 +245,11 @@ class Portfolio:
         self.portfolios[portfolio_name] = {"balance": 500}
         return True
 
-    def change_balance(self, portfolio_name: str, balance: float, transaction: float):
+    def change_balance(self, portfolio_name: str, balance: int, transaction: int):
         """
         Args:
             portfolio_name (str): The portfolio must exist inside of the dictionary
-            transaction (float): The new must contain only valid float values or if it's greater than the portfolio's current balance.
+            transaction (int): The new must contain only valid int values or if it's greater than the portfolio's current balance.
 
         Raises:
             KeyError: If the portfolio name doesn't exist inside of the dictionary.
