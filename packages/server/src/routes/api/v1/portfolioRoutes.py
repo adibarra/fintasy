@@ -1,10 +1,5 @@
-import sys
-
 from fastapi import FastAPI, HTTPException
 from helpers.portfolio import Portfolio
-
-sys.path.append("/packages/server/src/helpers/portfolio.py")
-
 
 app = FastAPI()
 portfolio_manager = Portfolio()
