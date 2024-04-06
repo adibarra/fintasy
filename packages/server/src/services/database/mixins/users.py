@@ -57,12 +57,12 @@ class UsersMixin:
             if conn:
                 self.connectionPool.putconn(conn)
 
-    def get_user(self, uuid: str) -> dict:
+    def get_user(self, uuid_user: str) -> dict:
         """
         Retrieves a user from the database by email or UUID.
 
         Args:
-            uuid (str): The UUID of the user.
+            uuid_user (str): The UUID of the user.
 
         Returns:
             dict: A dictionary representing the user if found, None otherwise.
@@ -72,14 +72,16 @@ class UsersMixin:
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM users WHERE uuid = %s LIMIT 1", (uuid,))
+                cursor.execute(
+                    "SELECT * FROM users WHERE uuid = %s LIMIT 1", (uuid_user,)
+                )
                 if cursor.description:
                     column_names = [desc[0] for desc in cursor.description]
                     user = cursor.fetchone()
                     if user is not None:
                         return dict(zip(column_names, [str(value) for value in user]))
                     else:
-                        print(f"User with uuid '{uuid}' not found.")
+                        print(f"User with uuid '{uuid_user}' not found.")
                         return None
         except Exception as e:
             print("Failed to get user by uuid:", e)
@@ -90,7 +92,7 @@ class UsersMixin:
 
     def update_user(
         self,
-        uuid: str,
+        uuid_user: str,
         email: str = None,
         username: str = None,
         password_hash: str = None,
@@ -99,7 +101,7 @@ class UsersMixin:
         Updates a user in the database.
 
         Args:
-            uuid (str): The UUID of the user.
+            uuid_user (str): The UUID of the user.
             email (str, optional): The new email of the user.
             username (str, optional): The new username of the user.
             password_hash (str, optional): The new password hash of the user.
@@ -129,7 +131,7 @@ class UsersMixin:
                 set_clause = set_clause.rstrip(",")
 
                 query = f"UPDATE users SET {set_clause} WHERE uuid = %s"
-                params.append(uuid)
+                params.append(uuid_user)
 
                 cursor.execute(query, params)
                 conn.commit()
@@ -141,12 +143,12 @@ class UsersMixin:
             if conn:
                 self.connectionPool.putconn(conn)
 
-    def delete_user(self, uuid: str) -> bool:
+    def delete_user(self, uuid_user: str) -> bool:
         """
         Deletes a user from the database.
 
         Args:
-            uuid (str): The UUID of the user.
+            uuid_user (str): The UUID of the user.
 
         Returns:
             bool: True if successful, False otherwise.
@@ -156,7 +158,7 @@ class UsersMixin:
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
-                cursor.execute("DELETE FROM users WHERE uuid = %s", (uuid,))
+                cursor.execute("DELETE FROM users WHERE uuid = %s", (uuid_user,))
                 conn.commit()
                 return True
         except Exception as e:
