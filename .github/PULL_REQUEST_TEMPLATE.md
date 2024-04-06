@@ -6,11 +6,9 @@
 - Removed that...
 - Changed those...
 
-### Checklist
-
-<!-- Fill in the checkboxes like this [x] -->
-
+<!-- Checklist:
 Before submitting the PR, make sure you have done the following:
 
-- [ ] Updated `README.md` and/or `/docs`, if applicable
-- [ ] Added tests for the changes, if applicable
+- Updated `README.md` and/or `/docs`, if applicable
+- Added tests for the changes, if applicable
+-->
