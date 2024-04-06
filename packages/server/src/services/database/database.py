@@ -6,11 +6,23 @@ from psycopg2 import pool
 
 # import all mixins here
 from services.database.mixins.meta import MetaMixin
+from services.database.mixins.portfolios import PortfolioMixin
+from services.database.mixins.sessions import SessionsMixin
+from services.database.mixins.tournaments import TournamentsMixin
+from services.database.mixins.transactions import TransactionsMixin
 from services.database.mixins.users import UsersMixin
 
 
 # add all imported mixins here
-class Database(MetaMixin, UsersMixin, object):
+class Database(
+    MetaMixin,
+    PortfolioMixin,
+    SessionsMixin,
+    TournamentsMixin,
+    TransactionsMixin,
+    UsersMixin,
+    object,
+):
     """
     A class representing the database.
     """
