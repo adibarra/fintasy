@@ -174,8 +174,8 @@ class TournamentsMixin:
         end_date: str = None,
         end_date_before: str = None,
         end_date_after: str = None,
-        offset: int = None,
-        limit: int = None,
+        offset: int = 0,
+        limit: int = 10,
     ) -> List[dict]:
         """
         Retrieve tournaments from the database based on the provided filters.
@@ -190,8 +190,8 @@ class TournamentsMixin:
             end_date (str, optional): The end date of the tournament. Defaults to None.
             end_date_before (str, optional): The upper bound for the end date of the tournament. Defaults to None.
             end_date_after (str, optional): The lower bound for the end date of the tournament. Defaults to None.
-            offset (int, optional): The number of records to skip. Defaults to None.
-            limit (int, optional): The maximum number of records to retrieve. Defaults to None.
+            offset (int, optional): The number of records to skip. Defaults to 0.
+            limit (int, optional): The maximum number of records to retrieve. Defaults to 10.
 
         Returns:
             List[dict]: A list of dictionaries representing the retrieved tournaments.
@@ -232,12 +232,9 @@ class TournamentsMixin:
                     query += " AND end_date > %s"
                     params.append(end_date_after)
 
-                if offset is not None and limit is not None:
+                if offset and limit:
                     query += " OFFSET %s LIMIT %s"
                     params.extend([offset, limit])
-                elif limit is not None:
-                    query += " LIMIT %s"
-                    params.append(limit)
 
                 cursor.execute(query, params)
                 column_names = [desc[0] for desc in cursor.description]
