@@ -36,6 +36,7 @@ class SessionsMixin:
                     (uuid_user,),
                 )
                 session_data = cursor.fetchone()
+                conn.commit()
                 if session_data is not None:
                     column_names = [desc[0] for desc in cursor.description]
                     return dict(zip(column_names, session_data))

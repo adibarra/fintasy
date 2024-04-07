@@ -38,6 +38,7 @@ class UsersMixin:
                     (username, email, password_hash),
                 )
                 user_data = cursor.fetchone()
+                conn.commit()
                 if user_data is not None:
                     column_names = [desc[0] for desc in cursor.description]
                     return dict(zip(column_names, user_data))
@@ -76,9 +77,9 @@ class UsersMixin:
                     "SELECT * FROM users WHERE uuid = %s LIMIT 1", (uuid_user,)
                 )
                 if cursor.description:
-                    column_names = [desc[0] for desc in cursor.description]
                     user = cursor.fetchone()
                     if user is not None:
+                        column_names = [desc[0] for desc in cursor.description]
                         return dict(zip(column_names, [str(value) for value in user]))
                     else:
                         print(f"User with uuid '{uuid_user}' not found.")
