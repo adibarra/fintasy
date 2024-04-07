@@ -81,6 +81,13 @@ class Database(
                     + ");",
                 )
 
+                cursor.execute(
+                    "CREATE TABLE IF NOT EXISTS friends ("
+                    + "  owner uuid DEFAULT gen_random_uuid(),"
+                    + "  owner uuid NOT NULL"
+                    + ");",
+                )
+
                 conn.commit()
                 print("Database ready.")
         except Exception as e:
