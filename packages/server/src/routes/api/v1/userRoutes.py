@@ -1,4 +1,4 @@
-# @author: Alec Ibarra (adibarra)
+# @author: Alec Ibarra (adibarra) & Caleb Kim (caleb-j-kim)
 # @description: User routes for the API
 
 # placeholder pseudocode until the route loading is actually setup

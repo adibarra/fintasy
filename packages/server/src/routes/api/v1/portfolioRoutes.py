@@ -1,18 +1,73 @@
-from fastapi import FastAPI, HTTPException
-from helpers.portfolio import Portfolio
+# @author: Caleb Kim (caleb-j-kim)
+# @description: Portfolio routes for the API
+
+from datetime import datetime
+from typing import Optional
+
+from fastapi import FastAPI, HTTPException, Path, Query
+from pydantic import UUID4, BaseModel
+from src.helpers.portfolio import Portfolio
+
+
+class PortfolioInput(BaseModel):
+    name: str
+    tournament: UUID4
+
+
+class PortfolioData(BaseModel):
+    uuid: UUID4
+    owner: UUID4
+    tournament: UUID4
+    name: str
+    balance_cents: int
+    created_at: datetime
+    updated_at: datetime
+
+
+class PortfolioResponse(BaseModel):
+    code: int
+    message: str
+    data: PortfolioData
+
+
+class ErrorResponse(BaseModel):
+    code: int
+    message: str
+
 
 app = FastAPI()
 portfolio_manager = Portfolio()
 
 
-@app.post("/portfolios/")
-def add_portfolio(portfolio_name: str):
+@app.post("/portfolios/{tournament}", response_model=PortfolioResponse)
+def add_portfolio(
+    tournament: UUID4 = Path(...),
+    portfolio: PortfolioInput = None,
+    expand: Optional[bool] = Query(False, descriptionn=""),
+):
     try:
-        is_valid = portfolio_manager.validate_portfolio_name(portfolio_name)
-        if is_valid:
-            return {"message": f"Portfolio {portfolio_name} added successfully."}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        from uuid import uuid4
+
+        portfolio_uuid = uuid4()
+        owner_uuid = uuid4()
+        current_time = datetime.now()
+
+        # Assuming the operation is successful and returns necessary data
+        portfolio_data = PortfolioData(
+            uuid=portfolio_uuid,
+            owner=owner_uuid,
+            tournament=portfolio_manager.tournament,
+            name=portfolio_manager.name,
+            balance_cents=50000,
+            created_at=current_time,
+            updated_at=current_time,
+        )
+
+        return PortfolioResponse(code=200, message="Ok", data=portfolio_data)
+    except ValueError:
+        raise HTTPException(
+            status_code=400, detail={"code": 400, "message": "Bad Request"}
+        )
 
 
 @app.get("/portfolios/")
