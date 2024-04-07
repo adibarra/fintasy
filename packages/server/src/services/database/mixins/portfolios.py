@@ -37,10 +37,10 @@ class PortfolioMixin:
                     "INSERT INTO portfolios (owner, name, tournament) VALUES (%s, %s, %s) RETURNING *",
                     (uuid_user, name, tournament_uuid),
                 )
-                conn.commit()  # Commit the insertion
-                column_names = [desc[0] for desc in cursor.description]
                 portfolio = cursor.fetchone()
+                conn.commit()
                 if portfolio is not None:
+                    column_names = [desc[0] for desc in cursor.description]
                     return dict(zip(column_names, portfolio))
                 else:
                     print("Failed to retrieve the created portfolio.")
@@ -72,9 +72,9 @@ class PortfolioMixin:
                     (uuid_portfolio,),
                 )
                 if cursor.description:
-                    column_names = [desc[0] for desc in cursor.description]
                     portfolio = cursor.fetchone()
                     if portfolio is not None:
+                        column_names = [desc[0] for desc in cursor.description]
                         return dict(zip(column_names, portfolio))
                     else:
                         print(f"Portfolio with UUID '{uuid_portfolio}' not found.")
@@ -106,7 +106,7 @@ class PortfolioMixin:
                     "UPDATE portfolios SET name = %s WHERE uuid = %s",
                     (name, uuid_portfolio),
                 )
-                conn.commit()  # Commit the update
+                conn.commit()
                 return True
         except Exception as e:
             print("Failed to update portfolio by UUID:", e)
@@ -133,7 +133,7 @@ class PortfolioMixin:
                 cursor.execute(
                     "DELETE FROM portfolios WHERE uuid = %s", (uuid_portfolio,)
                 )
-                conn.commit()  # Commit the deletion
+                conn.commit()
                 return True
         except Exception as e:
             print("Failed to delete portfolio by UUID:", e)

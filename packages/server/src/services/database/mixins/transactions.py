@@ -38,8 +38,8 @@ class TransactionsMixin:
                     "INSERT INTO transactions (uuid_portfolio, symbol, action, quantity) VALUES (%s, %s, %s, %s) RETURNING uuid",
                     (uuid_portfolio, symbol, action, quantity),
                 )
+                conn.commit()
                 transaction_uuid = cursor.fetchone()[0]
-                conn.commit()  # Commit the insertion
                 return transaction_uuid
         except Exception as e:
             print("Failed to create transaction:", e)

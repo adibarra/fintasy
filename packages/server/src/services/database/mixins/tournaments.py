@@ -34,10 +34,10 @@ class TournamentsMixin:
                     "INSERT INTO tournaments (name, start_date, end_date) VALUES (%s, %s, %s) RETURNING *",
                     (name, start_date, end_date),
                 )
-                conn.commit()  # Commit the insertion
-                column_names = [desc[0] for desc in cursor.description]
                 tournament = cursor.fetchone()
+                conn.commit()
                 if tournament is not None:
+                    column_names = [desc[0] for desc in cursor.description]
                     return dict(zip(column_names, tournament))
                 else:
                     print("Failed to retrieve the created tournament.")
@@ -93,7 +93,7 @@ class TournamentsMixin:
                 params.append(uuid_tournament)
 
                 cursor.execute(query, params)
-                conn.commit()  # Commit the update
+                conn.commit()
                 return True
         except Exception as e:
             print("Failed to update tournament by UUID:", e)
@@ -120,7 +120,7 @@ class TournamentsMixin:
                 cursor.execute(
                     "DELETE FROM tournaments WHERE uuid = %s", (uuid_tournament,)
                 )
-                conn.commit()  # Commit the deletion
+                conn.commit()
                 return True
         except Exception as e:
             print("Failed to delete tournament by UUID:", e)
@@ -149,9 +149,9 @@ class TournamentsMixin:
                     (uuid_tournament,),
                 )
                 if cursor.description:
-                    column_names = [desc[0] for desc in cursor.description]
                     tournament = cursor.fetchone()
                     if tournament is not None:
+                        column_names = [desc[0] for desc in cursor.description]
                         return dict(zip(column_names, tournament))
                     else:
                         print(f"Tournament with UUID '{uuid_tournament}' not found.")
