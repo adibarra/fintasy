@@ -47,7 +47,7 @@ class Database(
                 cls.instance.connectionPool = pool.SimpleConnectionPool(
                     1, 20, POSTGRESQL_URI
                 )
-                print("Connected to PostgreSQL database, connection pool created.")
+                print("Connected to PostgreSQL, connection pool created.")
             except Exception as e:
                 print("Failed to connect to PostgreSQL database", e)
 
@@ -80,6 +80,26 @@ class Database(
                     + "  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
                     + ");",
                 )
+
+                # Create a function to update the updated_at columns
+                cursor.execute(
+                    "CREATE OR REPLACE FUNCTION update_updated_at()"
+                    + "  RETURNS TRIGGER AS $$"
+                    + "  BEGIN"
+                    + "      NEW.updated_at = CURRENT_TIMESTAMP;"
+                    + "      RETURN NEW;"
+                    + "  END;"
+                    + "  $$ LANGUAGE plpgsql;",
+                )
+
+                # Create a trigger to update the updated_at columns
+                for table in ["users"]:
+                    cursor.execute(
+                        "CREATE OR REPLACE TRIGGER update_{table}_updated_at"
+                        + "  BEFORE UPDATE ON {table}"
+                        + "  FOR EACH ROW"
+                        + "  EXECUTE FUNCTION update_updated_at();"
+                    )
 
                 conn.commit()
                 print("Database ready.")
