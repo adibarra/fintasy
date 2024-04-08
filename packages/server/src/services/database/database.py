@@ -83,9 +83,83 @@ class Database(
 
                 cursor.execute(
                     "CREATE TABLE IF NOT EXISTS friends ("
-                    + "  owner uuid DEFAULT gen_random_uuid(),"
-                    + "  owner uuid NOT NULL"
+                    + "  owner uuid NOT NULL,"
+                    + "  friends uuid NOT NULL"
                     + ");",
+                )
+
+                cursor.execute(
+                    "CREATE TABLE IF NOT EXISTS users ("
+                    + "  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),"
+                    + "  email TEXT UNIQUE NOT NULL,"
+                    + "  name TEXT NOT NULL,"
+                    + "  pass_hass TEXT NOT NULL,"
+                    + "  coins bigint NOT NULL,"
+                    + "  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
+                    + "  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
+                    + ");",
+                )
+
+                cursor.execute(
+                    "CREATE TABLE IF NOT EXISTS accounts ("
+                    + "  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),"
+                    + "  owner uuid NOT NULL,"
+                    + "  tournament uuid NOT NULL,"
+                    + "  name TEXT NOT NULL,"
+                    + "  balance_cents bigint NOT NULL,"
+                    + "  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
+                    + "  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
+                    + ");",
+                )
+
+                cursor.execute(
+                    "CREATE TABLE IF NOT EXISTS tournaments ("
+                    + "  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),"
+                    + "  owner uuid NOT NULL,"
+                    + "  name TEXT NOT NULL,"
+                    + "  status TEXT NOT NULL,"
+                    + "  start TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
+                    + "  end TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
+                    + "  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
+                    + "  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
+                    + ");",
+                )
+
+                cursor.execute(
+                    "CREATE TABLE IF NOT EXISTS attributes ("
+                    + "  owner uuid NOT NULL,"
+                    + "  key TEXT NOT NULL,"
+                    + "  value TEXT NOT NULL"
+                    + ");",
+                )
+
+                cursor.execute(
+                    "CREATE TABLE IF NOT EXISTS transactions ("
+                    + "  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),"
+                    + "  account uuid NOT NULL,"
+                    + "  symbol TEXT NOT NULL,"
+                    + "  action ENUM NOT NULL,"
+                    + "  quantity bigint NOT NULL,"
+                    + "  price_cents bigint,"
+                    + "  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
+                    + ");",
+                )
+
+                cursor.execute(
+                    "CREATE TABLE IF NOT EXISTS settings ("
+                    + "  key TEXT NOT NULL,"
+                    + "  value TEXT NOT NULL"
+                    + ");",
+                )
+
+                cursor.execute(
+                    "CREATE TABLE IF NOT EXISTS history ("
+                    + "  symbol TEXT NOT NULL,"
+                    + "  price_cents bigint NOT NULL,"
+                    + "  tournament uuid NOT NULL,"
+                    + "  name TEXT NOT NULL,"
+                    + "  timestamp TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
+                    + ");"
                 )
 
                 conn.commit()
