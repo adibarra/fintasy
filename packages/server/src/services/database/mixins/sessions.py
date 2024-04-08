@@ -32,7 +32,7 @@ class SessionsMixin:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO sessions (uuid) VALUES (%s) ON CONFLICT (uuid) DO UPDATE SET token = DEFAULT RETURNING *",
+                    "INSERT INTO sessions (owner) VALUES (%s) ON CONFLICT (owner) DO UPDATE SET token = DEFAULT RETURNING *",
                     (uuid_user,),
                 )
                 session_data = cursor.fetchone()
@@ -71,7 +71,7 @@ class SessionsMixin:
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
-                cursor.execute("DELETE FROM sessions WHERE uuid = %s", (uuid_user,))
+                cursor.execute("DELETE FROM sessions WHERE owner = %s", (uuid_user,))
                 conn.commit()
                 return True
         except Exception as e:
