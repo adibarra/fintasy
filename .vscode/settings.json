@@ -47,6 +47,7 @@
     "Pausable",
     "pgcrypto",
     "pinia",
+    "plpgsql",
     "pomdtr",
     "pseudocode",
     "psycopg",
