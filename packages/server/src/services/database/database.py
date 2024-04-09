@@ -47,7 +47,7 @@ class Database(
                 cls.instance.connectionPool = pool.SimpleConnectionPool(
                     1, 20, POSTGRESQL_URI
                 )
-                print("Connected to PostgreSQL database, connection pool created.")
+                print("Connected to PostgreSQL, connection pool created.")
             except Exception as e:
                 print("Failed to connect to PostgreSQL database", e)
 
@@ -68,99 +68,114 @@ class Database(
                 # Create pgcrypto extension if it doesn't exist
                 cursor.execute("CREATE EXTENSION IF NOT EXISTS pgcrypto;")
 
+                # Create enums if they don't exist
+                cursor.execute(
+                    "CREATE TYPE IF NOT EXISTS ACTION AS ENUM ('BUY', 'SELL');"
+                )
+                cursor.execute(
+                    "CREATE TYPE IF NOT EXISTS STATUS AS ENUM ('SCHEDULED', 'ONGOING', 'FINISHED');"
+                )
+
                 # Initialize necessary tables if they don't exist
-                cursor.execute(
-                    "CREATE TABLE IF NOT EXISTS users ("
-                    + "  uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),"
-                    + "  username TEXT NOT NULL,"
-                    + "  email TEXT UNIQUE NOT NULL,"
-                    + "  password_hash TEXT NOT NULL,"
-                    + "  coins INT DEFAULT 10,"
-                    + "  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
-                    + "  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
-                    + ");",
-                )
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS users (
+                        uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                        email TEXT UNIQUE NOT NULL,
+                        username TEXT NOT NULL,
+                        password_hash TEXT NOT NULL,
+                        coins INT DEFAULT 10,
+                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                    );
+                """)
 
-                cursor.execute(
-                    "CREATE TABLE IF NOT EXISTS friends ("
-                    + "  owner uuid NOT NULL,"
-                    + "  friends uuid NOT NULL"
-                    + ");",
-                )
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS tournaments (
+                        uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                        owner UUID NOT NULL REFERENCES users(uuid),
+                        name TEXT NOT NULL,
+                        status STATUS NOT NULL,
+                        start_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+                        end_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                    );
+                """)
 
-                cursor.execute(
-                    "CREATE TABLE IF NOT EXISTS users ("
-                    + "  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),"
-                    + "  email TEXT UNIQUE NOT NULL,"
-                    + "  name TEXT NOT NULL,"
-                    + "  pass_hass TEXT NOT NULL,"
-                    + "  coins bigint NOT NULL,"
-                    + "  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
-                    + "  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
-                    + ");",
-                )
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS portfolios (
+                        uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                        owner UUID NOT NULL REFERENCES users(uuid),
+                        tournament UUID NOT NULL REFERENCES tournaments(uuid),
+                        name TEXT NOT NULL,
+                        balance_cents BIGINT NOT NULL DEFAULT 1000000,
+                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                    );
+                """)
 
-                cursor.execute(
-                    "CREATE TABLE IF NOT EXISTS accounts ("
-                    + "  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),"
-                    + "  owner uuid NOT NULL,"
-                    + "  tournament uuid NOT NULL,"
-                    + "  name TEXT NOT NULL,"
-                    + "  balance_cents bigint NOT NULL,"
-                    + "  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
-                    + "  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
-                    + ");",
-                )
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS transactions (
+                        uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                        portfolio UUID NOT NULL REFERENCES portfolios(uuid),
+                        symbol TEXT NOT NULL,
+                        action ACTION NOT NULL,
+                        quantity INT NOT NULL,
+                        price_cents BIGINT NOT NULL,
+                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                    );
+                """)
 
-                cursor.execute(
-                    "CREATE TABLE IF NOT EXISTS tournaments ("
-                    + "  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),"
-                    + "  owner uuid NOT NULL,"
-                    + "  name TEXT NOT NULL,"
-                    + "  status TEXT NOT NULL,"
-                    + "  start TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
-                    + "  end TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
-                    + "  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,"
-                    + "  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
-                    + ");",
-                )
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS sessions (
+                        owner UUID NOT NULL REFERENCES users(uuid),
+                        token TEXT NOT NULL,
+                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                    );
+                """)
 
-                cursor.execute(
-                    "CREATE TABLE IF NOT EXISTS attributes ("
-                    + "  owner uuid NOT NULL,"
-                    + "  key TEXT NOT NULL,"
-                    + "  value TEXT NOT NULL"
-                    + ");",
-                )
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS attributes (
+                        owner UUID NOT NULL REFERENCES users(uuid),
+                        key TEXT NOT NULL,
+                        value TEXT NOT NULL,
+                    );
+                """)
 
-                cursor.execute(
-                    "CREATE TABLE IF NOT EXISTS transactions ("
-                    + "  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),"
-                    + "  account uuid NOT NULL,"
-                    + "  symbol TEXT NOT NULL,"
-                    + "  action ENUM NOT NULL,"
-                    + "  quantity bigint NOT NULL,"
-                    + "  price_cents bigint,"
-                    + "  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
-                    + ");",
-                )
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS settings (
+                        key TEXT NOT NULL,
+                        value TEXT NOT NULL
+                    );
+                """)
 
-                cursor.execute(
-                    "CREATE TABLE IF NOT EXISTS settings ("
-                    + "  key TEXT NOT NULL,"
-                    + "  value TEXT NOT NULL"
-                    + ");",
-                )
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS friends (
+                        owner UUID NOT NULL REFERENCES users(uuid),
+                        friend UUID NOT NULL REFERENCES users(uuid)
+                    );
+                """)
 
-                cursor.execute(
-                    "CREATE TABLE IF NOT EXISTS history ("
-                    + "  symbol TEXT NOT NULL,"
-                    + "  price_cents bigint NOT NULL,"
-                    + "  tournament uuid NOT NULL,"
-                    + "  name TEXT NOT NULL,"
-                    + "  timestamp TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
-                    + ");"
-                )
+                # Create a function to update the updated_at column
+                cursor.execute("""
+                    CREATE OR REPLACE FUNCTION update_updated_at()
+                        RETURNS TRIGGER AS $$
+                        BEGIN
+                            NEW.updated_at = CURRENT_TIMESTAMP;
+                            RETURN NEW;
+                        END;
+                        $$ LANGUAGE plpgsql;
+                """)
+
+                # Create a trigger to update the updated_at columns
+                for table in ["users", "tournaments", "portfolios", "sessions"]:
+                    cursor.execute(f"""
+                        CREATE OR REPLACE TRIGGER update_{table}_updated_at
+                            BEFORE UPDATE ON {table}
+                            FOR EACH ROW
+                            EXECUTE FUNCTION update_updated_at();
+                    """)
 
                 conn.commit()
                 print("Database ready.")
