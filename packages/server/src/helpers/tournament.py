@@ -1,4 +1,4 @@
-# @author: Brenden Zacek (tenorsine), Solomon Bedane
+# @author: soltadd (Solomon Bedane)
 # @description: Tournaments class for handling paper trading tournaments betwen users.
 
 from datetime import datetime
