@@ -49,8 +49,8 @@ class Database(
                     1, 20, POSTGRESQL_URI
                 )
                 print("Connected to PostgreSQL, connection pool created.")
-            except Exception as e:
-                print("Failed to connect to PostgreSQL database", e)
+            except psycopg2.Error as e:
+                print("Failed to connect to PostgreSQL database:\n", e)
 
         return cls.instance
 
@@ -202,8 +202,6 @@ class Database(
                 print("Database ready.")
         except psycopg2.Error as e:
             print("Failed to initialize database:\n", e)
-        except Exception as e:
-            print("Failed to connect to PostgreSQL database:\n", e)
         finally:
             if conn:
                 self.connectionPool.putconn(conn)
