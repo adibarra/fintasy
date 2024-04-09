@@ -77,7 +77,7 @@ class Database(
                     EXCEPTION
                         WHEN duplicate_object THEN NULL; -- Do nothing if the type already exists
                     END $$;
-                    """)
+                """)
 
                 # Attempt to create the STATUS enum type safely
                 cursor.execute("""
