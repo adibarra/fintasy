@@ -1,6 +1,7 @@
 # @author: adibarra (Alec Ibarra)
 # @description: Database class for handling database interactions
 
+import psycopg2
 from config import POSTGRESQL_URI
 from psycopg2 import pool
 
@@ -69,12 +70,24 @@ class Database(
                 cursor.execute("CREATE EXTENSION IF NOT EXISTS pgcrypto;")
 
                 # Create enums if they don't exist
-                cursor.execute(
-                    "CREATE TYPE IF NOT EXISTS ACTION AS ENUM ('BUY', 'SELL');"
-                )
-                cursor.execute(
-                    "CREATE TYPE IF NOT EXISTS STATUS AS ENUM ('SCHEDULED', 'ONGOING', 'FINISHED');"
-                )
+                cursor.execute("""
+                    DO $$
+                    BEGIN
+                        CREATE TYPE action AS ENUM ('BUY', 'SELL');
+                    EXCEPTION
+                        WHEN duplicate_object THEN NULL; -- Do nothing if the type already exists
+                    END $$;
+                    """)
+
+                # Attempt to create the STATUS enum type safely
+                cursor.execute("""
+                    DO $$
+                    BEGIN
+                        CREATE TYPE status AS ENUM ('SCHEDULED', 'ONGOING', 'FINISHED');
+                    EXCEPTION
+                        WHEN duplicate_object THEN NULL; -- Do nothing if the type already exists
+                    END $$;
+                """)
 
                 # Initialize necessary tables if they don't exist
                 cursor.execute("""
@@ -139,7 +152,7 @@ class Database(
                     CREATE TABLE IF NOT EXISTS attributes (
                         owner UUID NOT NULL REFERENCES users(uuid),
                         key TEXT NOT NULL,
-                        value TEXT NOT NULL,
+                        value TEXT NOT NULL
                     );
                 """)
 
@@ -179,8 +192,10 @@ class Database(
 
                 conn.commit()
                 print("Database ready.")
+        except psycopg2.Error as e:
+            print("Failed to initialize database:\n", e)
         except Exception as e:
-            print("Failed to connect to PostgreSQL database", e)
+            print("Failed to connect to PostgreSQL database:\n", e)
         finally:
             if conn:
                 self.connectionPool.putconn(conn)
