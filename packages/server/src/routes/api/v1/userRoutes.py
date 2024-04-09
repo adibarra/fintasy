@@ -6,7 +6,7 @@
 from datetime import datetime
 from typing import Optional
 
-from fastapi import Body, FastAPI, HTTPException, Path
+from fastapi import APIRouter, Body, HTTPException, Path
 from pydantic import UUID4, BaseModel
 
 from src.helpers.user import User
@@ -46,12 +46,13 @@ class ErrorResponse(BaseModel):
     message: str
 
 
-app = FastAPI()
-user_manager = User()
+router = APIRouter(
+    prefix="/users",
+)
 db = Database()
 
 
-@app.post("/user", response_model=UserResponse)
+@router.post("/", response_model=UserResponse)
 def create_user(user: UserInput = Body(...)):
     if not (
         User.validate_username(user.username)
@@ -90,7 +91,7 @@ def create_user(user: UserInput = Body(...)):
     )
 
 
-@app.get("/users/{uuid}", response_model=UserResponse)
+@router.get("/{uuid}", response_model=UserResponse)
 def get_user(uuid: UUID4 = Path(...)):
     try:
         user_data = db.get_user(uuid)
@@ -110,7 +111,7 @@ def get_user(uuid: UUID4 = Path(...)):
         )
 
 
-@app.patch("/users/{uuid}", response_model=UserResponse)
+@router.patch("/{uuid}", response_model=UserResponse)
 def patch_user(
     uuid: UUID4 = Path(..., description="The UUID of the user to be updated"),
     update_data: UserInput = Body(...),
@@ -153,7 +154,7 @@ def patch_user(
     return {"code": 200, "message": "Ok"}
 
 
-@app.delete("/users/{uuid}", response_model=ErrorResponse)
+@router.delete("/{uuid}", response_model=ErrorResponse)
 def delete_user(
     uuid: UUID4 = Path(..., description="The UUID of the user to be deleted"),
 ):
