@@ -97,8 +97,8 @@ class Database(
                         username TEXT NOT NULL,
                         password_hash TEXT NOT NULL,
                         coins INT DEFAULT 10,
-                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-                        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
                 """)
 
@@ -108,10 +108,10 @@ class Database(
                         owner UUID NOT NULL REFERENCES users(uuid),
                         name TEXT NOT NULL,
                         status STATUS NOT NULL,
-                        start_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-                        end_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-                        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                        start_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        end_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
                 """)
 
@@ -122,8 +122,8 @@ class Database(
                         tournament UUID NOT NULL REFERENCES tournaments(uuid),
                         name TEXT NOT NULL,
                         balance_cents BIGINT NOT NULL DEFAULT 1000000,
-                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-                        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
                 """)
 
@@ -135,7 +135,7 @@ class Database(
                         action ACTION NOT NULL,
                         quantity INT NOT NULL,
                         price_cents BIGINT NOT NULL,
-                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
                 """)
 
@@ -143,8 +143,8 @@ class Database(
                     CREATE TABLE IF NOT EXISTS sessions (
                         owner UUID NOT NULL REFERENCES users(uuid),
                         token TEXT NOT NULL,
-                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-                        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
                 """)
 
@@ -153,8 +153,8 @@ class Database(
                         owner UUID NOT NULL REFERENCES users(uuid),
                         key TEXT NOT NULL,
                         value TEXT NOT NULL,
-                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-                        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+                        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
                 """)
 
