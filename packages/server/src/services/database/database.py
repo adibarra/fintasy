@@ -152,7 +152,9 @@ class Database(
                     CREATE TABLE IF NOT EXISTS attributes (
                         owner UUID NOT NULL REFERENCES users(uuid),
                         key TEXT NOT NULL,
-                        value TEXT NOT NULL
+                        value TEXT NOT NULL,
+                        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
                     );
                 """)
 
@@ -182,7 +184,13 @@ class Database(
                 """)
 
                 # Create a trigger to update the updated_at columns
-                for table in ["users", "tournaments", "portfolios", "sessions"]:
+                for table in [
+                    "users",
+                    "tournaments",
+                    "portfolios",
+                    "sessions",
+                    "attributes",
+                ]:
                     cursor.execute(f"""
                         CREATE OR REPLACE TRIGGER update_{table}_updated_at
                             BEFORE UPDATE ON {table}
