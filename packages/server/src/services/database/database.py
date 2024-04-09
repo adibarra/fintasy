@@ -69,21 +69,21 @@ class Database(
                 # Create pgcrypto extension if it doesn't exist
                 cursor.execute("CREATE EXTENSION IF NOT EXISTS pgcrypto;")
 
-                # Create enums if they don't exist
+                # Create ACTION enum if it doesn't exist
                 cursor.execute("""
                     DO $$
                     BEGIN
-                        CREATE TYPE action AS ENUM ('BUY', 'SELL');
+                        CREATE TYPE ACTION AS ENUM ('BUY', 'SELL');
                     EXCEPTION
                         WHEN duplicate_object THEN NULL; -- Do nothing if the type already exists
                     END $$;
                 """)
 
-                # Attempt to create the STATUS enum type safely
+                # Create STATUS enum if it doesn't exist
                 cursor.execute("""
                     DO $$
                     BEGIN
-                        CREATE TYPE status AS ENUM ('SCHEDULED', 'ONGOING', 'FINISHED');
+                        CREATE TYPE STATUS AS ENUM ('SCHEDULED', 'ONGOING', 'FINISHED');
                     EXCEPTION
                         WHEN duplicate_object THEN NULL; -- Do nothing if the type already exists
                     END $$;
@@ -96,7 +96,7 @@ class Database(
                         email TEXT UNIQUE NOT NULL,
                         username TEXT NOT NULL,
                         password_hash TEXT NOT NULL,
-                        coins INT DEFAULT 10,
+                        coins INT NOT NULL DEFAULT 10,
                         created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
                         updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
