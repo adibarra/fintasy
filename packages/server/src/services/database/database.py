@@ -1,4 +1,4 @@
-# @author: adibarra (Alec Ibarra)
+# @author: adibarra (Alec Ibarra), soltadd (Solomon Bedane)
 # @description: Database class for handling database interactions
 
 import psycopg2
