@@ -25,5 +25,4 @@ else:
 API_HOST: str = os.environ.get("SERVER_API_HOST")
 API_PORT: int = int(os.environ.get("SERVER_API_PORT"))
 API_CORS_ORIGINS: List[str] = os.environ.get("SERVER_API_CORS_ORIGINS").split(",")
-API_ROUTES_DIR: str = os.path.join("src", "routes")
 POSTGRESQL_URI: str = os.environ.get("SERVER_POSTGRESQL_URI")
