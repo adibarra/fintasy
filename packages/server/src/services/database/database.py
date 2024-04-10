@@ -198,6 +198,26 @@ class Database(
                             EXECUTE FUNCTION update_updated_at();
                     """)
 
+                # Create a function to update the updated_at columns
+                cursor.execute(
+                    "CREATE OR REPLACE FUNCTION update_updated_at()"
+                    + "  RETURNS TRIGGER AS $$"
+                    + "  BEGIN"
+                    + "      NEW.updated_at = CURRENT_TIMESTAMP;"
+                    + "      RETURN NEW;"
+                    + "  END;"
+                    + "  $$ LANGUAGE plpgsql;",
+                )
+
+                # Create a trigger to update the updated_at columns
+                for table in ["users"]:
+                    cursor.execute(
+                        "CREATE OR REPLACE TRIGGER update_{table}_updated_at"
+                        + "  BEFORE UPDATE ON {table}"
+                        + "  FOR EACH ROW"
+                        + "  EXECUTE FUNCTION update_updated_at();"
+                    )
+
                 conn.commit()
                 print("Database ready.")
         except psycopg2.Error as e:

@@ -1,6 +1,5 @@
-# @author: Caleb Kim (caleb-j-kim)
+# @author: caleb-j-kim (Caleb Kim)
 # @description: Portfolio class for handling portfolios
-# Hello World! This is a test for the Fintasy project.
 
 from enum import Enum
 

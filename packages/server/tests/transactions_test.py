@@ -1,4 +1,4 @@
-# @author: Mason Clark (maclark)
+# @author: maclark (Mason Clark)
 # @description: Test for the Transactions class
 
 import unittest

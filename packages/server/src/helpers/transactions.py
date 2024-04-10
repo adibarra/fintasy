@@ -1,4 +1,4 @@
-# @author: Mason Clark (maclark)
+# @author: maclark (Mason Clark)
 # @description: Transactions class for handling buy and sell transactions in a portfolio
 # The class is responsible for executing transactions and updating the portfolio accordingly
 
