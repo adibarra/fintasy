@@ -360,9 +360,7 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
   function handleErrors<T extends keyof API_RESPONSE>(response: UseFetchReturn<API_RESPONSE[T]>): API_RESPONSE[T] {
     if (response.statusCode.value === null)
       return { code: null, message: 'Request Timed Out' }
-    if (response.data.value === null)
-      return { code: null, message: 'Request Failed' }
-    return response.data.value
+    return response.data.value ?? { code: response.statusCode.value, message: response.error.value } as API_RESPONSE[T]
   }
 
   function removeEmpty(obj: Record<string, any>): Record<string, any> {
