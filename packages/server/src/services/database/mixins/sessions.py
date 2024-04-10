@@ -34,6 +34,7 @@ class SessionsMixin:
                 cursor.execute(
                     "INSERT INTO sessions (owner) VALUES (%s) ON CONFLICT (owner) DO UPDATE SET token = DEFAULT RETURNING *",
                     (owner,),
+                )
                 session_data = cursor.fetchone()
                 conn.commit()
                 if session_data is not None:
