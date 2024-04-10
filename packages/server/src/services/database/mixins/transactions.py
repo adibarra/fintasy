@@ -16,7 +16,7 @@ class TransactionsMixin:
 
     def create_transaction(
         self, uuid_portfolio: str, symbol: str, action: str, quantity: int
-    ) -> str:
+    ) -> dict:
         """
         Creates a new transaction in the database.
 
@@ -27,7 +27,7 @@ class TransactionsMixin:
             quantity (int): The quantity of stocks involved in the transaction.
 
         Returns:
-            str: The UUID of the created transaction if successful, None otherwise.
+            dict: The created transaction if successful, None otherwise.
         """
 
         conn = None
@@ -35,12 +35,13 @@ class TransactionsMixin:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO transactions (uuid_portfolio, symbol, action, quantity) VALUES (%s, %s, %s, %s) RETURNING uuid",
+                    "INSERT INTO transactions (uuid_portfolio, symbol, action, quantity) VALUES (%s, %s, %s, %s) RETURNING *",
                     (uuid_portfolio, symbol, action, quantity),
                 )
+                column_names = [desc[0] for desc in cursor.description]
+                transaction = dict(zip(column_names, cursor.fetchone()))
                 conn.commit()
-                transaction_uuid = cursor.fetchone()[0]
-                return transaction_uuid
+                return transaction
         except Exception as e:
             print("Failed to create transaction:", e, flush=True)
             return None
@@ -48,9 +49,9 @@ class TransactionsMixin:
             if conn:
                 self.connectionPool.putconn(conn)
 
-    def get_transaction(
+    def get_transactions(
         self, uuid_portfolio: str, offset: int = 0, limit: int = 10
-    ) -> dict:
+    ) -> list[dict]:
         """
         Retrieves a list of transactions for a given portfolio.
 
@@ -60,14 +61,14 @@ class TransactionsMixin:
             limit (int): The maximum number of transactions to retrieve.
 
         Returns:
-            dict: A dictionary containing the list of transactions if successful, None otherwise.
+            list[dict]: A list of transactions if successful, an empty list otherwise.
         """
         conn = None
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "SELECT * FROM transactions WHERE uuid_portfolio = %s ORDER BY created_at DESC OFFSET %s LIMIT %s",
+                    "SELECT * FROM transactions WHERE uuid_portfolio = %s OFFSET %s LIMIT %s",
                     (uuid_portfolio, offset, limit),
                 )
                 column_names = [desc[0] for desc in cursor.description]
@@ -76,8 +77,8 @@ class TransactionsMixin:
                 ]
                 return transactions
         except Exception as e:
-            print("Failed to retrieve transactions:", e, flush=True)
-            return None
+            print("Failed to get transactions:", e, flush=True)
+            return []
         finally:
             if conn:
                 self.connectionPool.putconn(conn)
