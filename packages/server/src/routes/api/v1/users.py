@@ -5,26 +5,25 @@ from datetime import datetime
 from typing import Optional
 
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
-from pydantic import UUID4, BaseModel, EmailStr
-
-from src.helpers.user import User
-from src.services.database import Database
+from helpers.user import User
+from pydantic import UUID4, BaseModel
+from services.database import Database
 
 db = Database()
 router = APIRouter(
-    prefix="/users",
+    prefix="/api/v1",
 )
 
 
 class CreateUserRequest(BaseModel):
-    email: EmailStr
+    email: str
     username: str
     password: str
 
 
 class UserData(BaseModel):
     uuid: UUID4
-    email: EmailStr
+    email: str
     username: str
     coins: int
     created_at: datetime
@@ -35,7 +34,7 @@ class UserData(BaseModel):
 
 
 class UpdateUserRequest(BaseModel):
-    email: Optional[EmailStr] = None
+    email: Optional[str] = None
     username: Optional[str] = None
     password: Optional[str] = None
 
@@ -71,7 +70,7 @@ async def authenticate(token: str = Header(...), uuid: UUID4 = Path(...)) -> boo
     return True
 
 
-@router.post("/", response_model=UserResponse, status_code=status.HTTP_200_OK)
+@router.post("/users", response_model=UserResponse, status_code=status.HTTP_200_OK)
 def create_user(
     data: CreateUserRequest = Body(...),
 ):
@@ -102,7 +101,9 @@ def create_user(
     )
 
 
-@router.get("/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK)
+@router.get(
+    "/users/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK
+)
 def get_user(
     uuid: UUID4 = Path(...),
     authenticated: bool = Depends(authenticate),
@@ -123,7 +124,9 @@ def get_user(
     )
 
 
-@router.patch("/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK)
+@router.patch(
+    "/users/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK
+)
 def patch_user(
     uuid: UUID4 = Path(...),
     data: UpdateUserRequest = Body(...),
@@ -183,7 +186,9 @@ def patch_user(
     )
 
 
-@router.delete("/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK)
+@router.delete(
+    "/users/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK
+)
 def delete_user(
     uuid: UUID4 = Path(...),
     authenticated: bool = Depends(authenticate),
