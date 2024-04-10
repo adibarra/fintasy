@@ -43,7 +43,7 @@ class UsersMixin:
                     column_names = [desc[0] for desc in cursor.description]
                     return dict(zip(column_names, user_data))
                 else:
-                    print("Failed to retrieve user data after insertion.")
+                    print("Failed to retrieve user data after insertion.", flush=True)
                     return None
         except psycopg2.IntegrityError as e:
             # Check if it's a duplicate key error
@@ -52,7 +52,7 @@ class UsersMixin:
             else:
                 raise e
         except Exception as e:
-            print("Failed to create user:", e)
+            print("Failed to create user:", e, flush=True)
             return None
         finally:
             if conn:
@@ -82,10 +82,10 @@ class UsersMixin:
                         column_names = [desc[0] for desc in cursor.description]
                         return dict(zip(column_names, [str(value) for value in user]))
                     else:
-                        print(f"User with uuid '{uuid_user}' not found.")
+                        print(f"User with uuid '{uuid_user}' not found.", flush=True)
                         return None
         except Exception as e:
-            print("Failed to get user by uuid:", e)
+            print("Failed to get user by uuid:", e, flush=True)
             return None
         finally:
             if conn:
@@ -138,7 +138,7 @@ class UsersMixin:
                 conn.commit()
                 return True
         except Exception as e:
-            print("Failed to update user:", e)
+            print("Failed to update user:", e, flush=True)
             return False
         finally:
             if conn:
@@ -163,7 +163,7 @@ class UsersMixin:
                 conn.commit()
                 return True
         except Exception as e:
-            print("Failed to delete user:", e)
+            print("Failed to delete user:", e, flush=True)
             return False
         finally:
             if conn:

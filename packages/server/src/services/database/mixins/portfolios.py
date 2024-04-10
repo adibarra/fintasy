@@ -43,10 +43,10 @@ class PortfolioMixin:
                     column_names = [desc[0] for desc in cursor.description]
                     return dict(zip(column_names, portfolio))
                 else:
-                    print("Failed to retrieve the created portfolio.")
+                    print("Failed to retrieve the created portfolio.", flush=True)
                     return None
         except Exception as e:
-            print("Failed to create portfolio:", e)
+            print("Failed to create portfolio:", e, flush=True)
             return None
         finally:
             if conn:
@@ -77,10 +77,13 @@ class PortfolioMixin:
                         column_names = [desc[0] for desc in cursor.description]
                         return dict(zip(column_names, portfolio))
                     else:
-                        print(f"Portfolio with UUID '{uuid_portfolio}' not found.")
+                        print(
+                            f"Portfolio with UUID '{uuid_portfolio}' not found.",
+                            flush=True,
+                        )
                         return None
         except Exception as e:
-            print("Failed to get portfolio by UUID:", e)
+            print("Failed to get portfolio by UUID:", e, flush=True)
             return None
         finally:
             if conn:
@@ -109,7 +112,7 @@ class PortfolioMixin:
                 conn.commit()
                 return True
         except Exception as e:
-            print("Failed to update portfolio by UUID:", e)
+            print("Failed to update portfolio by UUID:", e, flush=True)
             return False
         finally:
             if conn:
@@ -136,7 +139,7 @@ class PortfolioMixin:
                 conn.commit()
                 return True
         except Exception as e:
-            print("Failed to delete portfolio by UUID:", e)
+            print("Failed to delete portfolio by UUID:", e, flush=True)
             return False
         finally:
             if conn:

@@ -41,7 +41,9 @@ class SessionsMixin:
                     column_names = [desc[0] for desc in cursor.description]
                     return dict(zip(column_names, session_data))
                 else:
-                    print("Failed to retrieve session data after insertion.")
+                    print(
+                        "Failed to retrieve session data after insertion.", flush=True
+                    )
                     return None
         except psycopg2.IntegrityError as e:
             # Check if it's a duplicate key error
@@ -50,7 +52,7 @@ class SessionsMixin:
             else:
                 raise e
         except Exception as e:
-            print("Failed to create session:", e)
+            print("Failed to create session:", e, flush=True)
             return None
         finally:
             if conn:
@@ -75,7 +77,7 @@ class SessionsMixin:
                 conn.commit()
                 return True
         except Exception as e:
-            print("Failed to delete session:", e)
+            print("Failed to delete session:", e, flush=True)
             return False
         finally:
             if conn:
@@ -104,7 +106,7 @@ class SessionsMixin:
                 else:
                     return None
         except Exception as e:
-            print("Failed to get session:", e)
+            print("Failed to get session:", e, flush=True)
             return None
         finally:
             if conn:

@@ -13,11 +13,17 @@ IS_PRODUCTION: bool = bool(set(["--prod", "--production"]) & set(sys.argv))
 # load environment variables
 if IS_PRODUCTION:
     if not load_dotenv(dotenv_path=os.path.join("..", "..", ".env.production")):
-        print("Failed to load environment vars... Does '.env.production' exist?")
+        print(
+            "Failed to load environment vars... Does '.env.production' exist?",
+            flush=True,
+        )
         sys.exit(1)
 else:
     if not load_dotenv(dotenv_path=os.path.join("..", "..", ".env.development")):
-        print("Failed to load environment vars... Does '.env.development' exist?")
+        print(
+            "Failed to load environment vars... Does '.env.development' exist?",
+            flush=True,
+        )
         sys.exit(1)
 
 
