@@ -16,12 +16,12 @@ class SessionsMixin:
 
     connectionPool: "SimpleConnectionPool"
 
-    def create_session(self, uuid_user: str) -> dict:
+    def create_session(self, owner: str) -> dict:
         """
         Creates a new session in the database.
 
         Args:
-            uuid_user (str): The uuid of the user.
+            owner (str): The uuid of the user.
 
         Returns:
             dict: A dictionary containing information about the newly created session if successful, None otherwise.
@@ -32,8 +32,8 @@ class SessionsMixin:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO sessions (uuid) VALUES (%s) ON CONFLICT (uuid) DO UPDATE SET token = DEFAULT RETURNING *",
-                    (uuid_user,),
+                    "INSERT INTO sessions (owner) VALUES (%s) ON CONFLICT (owner) DO UPDATE SET token = DEFAULT RETURNING *",
+                    (owner,),
                 )
                 session_data = cursor.fetchone()
                 conn.commit()
@@ -56,12 +56,12 @@ class SessionsMixin:
             if conn:
                 self.connectionPool.putconn(conn)
 
-    def delete_session(self, uuid_user: str) -> bool:
+    def delete_session(self, owner: str) -> bool:
         """
         Deletes a session from the database.
 
         Args:
-            uuid_user (str): The uuid of user which owns the session.
+            owner (str): The uuid of user which owns the session.
 
         Returns:
             bool: True if successful, False otherwise.
@@ -71,12 +71,41 @@ class SessionsMixin:
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
-                cursor.execute("DELETE FROM sessions WHERE uuid = %s", (uuid_user,))
+                cursor.execute("DELETE FROM sessions WHERE owner = %s", (owner,))
                 conn.commit()
                 return True
         except Exception as e:
             print("Failed to delete session:", e)
             return False
+        finally:
+            if conn:
+                self.connectionPool.putconn(conn)
+
+    def get_session(self, token: str) -> str:
+        """
+        Retrieves the uuid of the session owner.
+
+        Args:
+            token (str): The token of the session.
+
+        Returns:
+            str: The uuid of the session owner if successful, None otherwise.
+        """
+
+        conn = None
+        try:
+            conn = self.connectionPool.getconn()
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT owner FROM sessions WHERE token = %s", (token,))
+                uuid_user = cursor.fetchone()
+                conn.commit()
+                if uuid_user is not None:
+                    return uuid_user[0]
+                else:
+                    return None
+        except Exception as e:
+            print("Failed to get session:", e)
+            return None
         finally:
             if conn:
                 self.connectionPool.putconn(conn)
