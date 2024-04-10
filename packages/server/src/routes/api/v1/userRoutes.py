@@ -52,18 +52,23 @@ class UserResponse(BaseModel):
         exclude_none = True
 
 
-async def verify_token(token: str = Header(...)) -> UUID4:
-    # Implement verification logic here
+async def authenticate(token: str = Header(...), uuid: UUID4 = Path(...)) -> bool:
+    token_owner = db.get_session(token)
 
-    if token != "valid_token":
+    # Validate the token exists
+    if token_owner is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail={"code": 401, "message": "Unauthorized"},
         )
 
-    # uuid that owns the token
-    token_owner = "00000000-0000-0000-0000-000000000000"
-    return token_owner
+    # Validate the token has permission for this resource
+    if token_owner != uuid:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"code": 403, "message": "Forbidden"},
+        )
+    return True
 
 
 @router.post("/", response_model=UserResponse, status_code=status.HTTP_200_OK)
@@ -98,14 +103,10 @@ def create_user(
 
 
 @router.get("/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK)
-def get_user(uuid: UUID4 = Path(...), token_owner: UUID4 = Depends(verify_token)):
-    # Validate the token has permission for this resource
-    if uuid != token_owner:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail={"code": 403, "message": "Forbidden"},
-        )
-
+def get_user(
+    uuid: UUID4 = Path(...),
+    authenticated: bool = Depends(authenticate),
+):
     # Attempt fetching user
     user_data = db.get_user(uuid)
     if not user_data:
@@ -126,15 +127,8 @@ def get_user(uuid: UUID4 = Path(...), token_owner: UUID4 = Depends(verify_token)
 def patch_user(
     uuid: UUID4 = Path(...),
     data: UpdateUserRequest = Body(...),
-    token_owner: UUID4 = Depends(verify_token),
+    authenticated: bool = Depends(authenticate),
 ):
-    # Validate the token has permission for this resource
-    if uuid != token_owner:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail={"code": 403, "message": "Forbidden"},
-        )
-
     # Attempt fetching user
     user = db.get_user(uuid)
     if not user:
@@ -192,15 +186,8 @@ def patch_user(
 @router.delete("/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK)
 def delete_user(
     uuid: UUID4 = Path(...),
-    token_owner: UUID4 = Depends(verify_token),
+    authenticated: bool = Depends(authenticate),
 ):
-    # Validate the token has permission for this resource
-    if uuid != token_owner:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail={"code": 403, "message": "Forbidden"},
-        )
-
     # Check if the user exists
     user = db.get_user(uuid)
     if not user:
