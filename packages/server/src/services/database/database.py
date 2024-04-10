@@ -44,13 +44,13 @@ class Database(
         if not hasattr(cls, "instance"):
             cls.instance = super(Database, cls).__new__(cls)
             try:
-                print("Connecting to PostgreSQL database...")
+                print("Connecting to PostgreSQL database...", flush=True)
                 cls.instance.connectionPool = pool.SimpleConnectionPool(
                     1, 20, POSTGRESQL_URI
                 )
-                print("Connected to PostgreSQL, connection pool created.")
+                print("Connected to PostgreSQL, connection pool created.", flush=True)
             except psycopg2.Error as e:
-                print("Failed to connect to PostgreSQL database:\n", e)
+                print("Failed to connect to PostgreSQL database:\n", e, flush=True)
 
         return cls.instance
 
@@ -199,9 +199,9 @@ class Database(
                     """)
 
                 conn.commit()
-                print("Database ready.")
+                print("Database ready.", flush=True)
         except psycopg2.Error as e:
-            print("Failed to initialize database:\n", e)
+            print("Failed to initialize database:\n", e, flush=True)
         finally:
             if conn:
                 self.connectionPool.putconn(conn)

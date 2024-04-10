@@ -41,7 +41,7 @@ async def validation_exception_handler(request, exc):
 app.include_router(users_router)
 
 if __name__ == "__main__":
-    print("Server starting up...")
+    print("Server starting up...", flush=True)
 
     uvicorn.run(
         "main:app",
@@ -49,4 +49,4 @@ if __name__ == "__main__":
         port=API_PORT,
     )
 
-    print("Server shutting down...\n")
+    print("Server shutting down...\n", flush=True)

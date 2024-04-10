@@ -42,7 +42,7 @@ class TransactionsMixin:
                 transaction_uuid = cursor.fetchone()[0]
                 return transaction_uuid
         except Exception as e:
-            print("Failed to create transaction:", e)
+            print("Failed to create transaction:", e, flush=True)
             return None
         finally:
             if conn:
@@ -76,7 +76,7 @@ class TransactionsMixin:
                 ]
                 return transactions
         except Exception as e:
-            print("Failed to retrieve transactions:", e)
+            print("Failed to retrieve transactions:", e, flush=True)
             return None
         finally:
             if conn:
@@ -105,7 +105,7 @@ class TransactionsMixin:
                 transaction = dict(zip(column_names, cursor.fetchone()))
                 return transaction
         except Exception as e:
-            print("Failed to get transaction by UUID:", e)
+            print("Failed to get transaction by UUID:", e, flush=True)
             return None
         finally:
             if conn:
