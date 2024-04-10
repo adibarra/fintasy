@@ -6,11 +6,23 @@ from psycopg2 import pool
 
 # import all mixins here
 from services.database.mixins.meta import MetaMixin
+from services.database.mixins.portfolios import PortfolioMixin
+from services.database.mixins.sessions import SessionsMixin
+from services.database.mixins.tournaments import TournamentsMixin
+from services.database.mixins.transactions import TransactionsMixin
 from services.database.mixins.users import UsersMixin
 
 
 # add all imported mixins here
-class Database(MetaMixin, UsersMixin, object):
+class Database(
+    MetaMixin,
+    PortfolioMixin,
+    SessionsMixin,
+    TournamentsMixin,
+    TransactionsMixin,
+    UsersMixin,
+    object,
+):
     """
     A class representing the database.
     """
@@ -35,7 +47,7 @@ class Database(MetaMixin, UsersMixin, object):
                 cls.instance.connectionPool = pool.SimpleConnectionPool(
                     1, 20, POSTGRESQL_URI
                 )
-                print("Connected to PostgreSQL database, connection pool created.")
+                print("Connected to PostgreSQL, connection pool created.")
             except Exception as e:
                 print("Failed to connect to PostgreSQL database", e)
 
@@ -68,6 +80,26 @@ class Database(MetaMixin, UsersMixin, object):
                     + "  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP"
                     + ");",
                 )
+
+                # Create a function to update the updated_at columns
+                cursor.execute(
+                    "CREATE OR REPLACE FUNCTION update_updated_at()"
+                    + "  RETURNS TRIGGER AS $$"
+                    + "  BEGIN"
+                    + "      NEW.updated_at = CURRENT_TIMESTAMP;"
+                    + "      RETURN NEW;"
+                    + "  END;"
+                    + "  $$ LANGUAGE plpgsql;",
+                )
+
+                # Create a trigger to update the updated_at columns
+                for table in ["users"]:
+                    cursor.execute(
+                        "CREATE OR REPLACE TRIGGER update_{table}_updated_at"
+                        + "  BEFORE UPDATE ON {table}"
+                        + "  FOR EACH ROW"
+                        + "  EXECUTE FUNCTION update_updated_at();"
+                    )
 
                 conn.commit()
                 print("Database ready.")
