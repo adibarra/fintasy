@@ -13,7 +13,7 @@
     "build:ci": "pnpm -r --parallel run build",
     "clean": "pnpm -r run clean",
     "clean:all": "pnpm -r run clean:all && rm -rf node_modules/ .pnpm-store/",
-    "dev": "pnpm -r run clean && pnpm i && pnpm -r --parallel run dev",
+    "dev": "pnpm -r run clean && pnpm -r --parallel run dev",
     "lint": "pnpm -r run lint && eslint .",
     "lint:fix": "pnpm -r run lint:fix && eslint . --fix",
     "postinstall": "npx simple-git-hooks",
