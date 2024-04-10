@@ -1,191 +1,219 @@
-# @author: Alec Ibarra (adibarra) & Caleb Kim (caleb-j-kim)
+# @author: adibarra (Alec Ibarra), caleb-j-kim (Caleb Kim)
 # @description: User routes for the API
-
-# placeholder pseudocode until the route loading is actually setup
 
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, Body, HTTPException, Path
-from pydantic import UUID4, BaseModel
+from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
+from pydantic import UUID4, BaseModel, EmailStr
 
 from src.helpers.user import User
 from src.services.database import Database
 
+db = Database()
+router = APIRouter(
+    prefix="/users",
+)
 
-class UserInput(BaseModel):
+
+class CreateUserRequest(BaseModel):
+    email: EmailStr
     username: str
     password: str
-    email: str
 
 
 class UserData(BaseModel):
     uuid: UUID4
-    owner: UUID4
+    email: EmailStr
     username: str
-    email: str
-    coins: 1
+    coins: int
     created_at: datetime
     updated_at: datetime
 
+    class Config:
+        extra = "ignore"
 
-class UserPatch(BaseModel):
+
+class UpdateUserRequest(BaseModel):
+    email: Optional[EmailStr] = None
     username: Optional[str] = None
     password: Optional[str] = None
-    email: Optional[str] = None
+
+    class Config:
+        exclude_none = True
 
 
 class UserResponse(BaseModel):
     code: int
     message: str
-    data: UserData
+    data: Optional[UserData] = None
+
+    class Config:
+        exclude_none = True
 
 
-class ErrorResponse(BaseModel):
-    code: int
-    message: str
+async def verify_token(token: str = Header(...)) -> UUID4:
+    # Implement verification logic here
+
+    if token != "valid_token":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={"code": 401, "message": "Unauthorized"},
+        )
+
+    # uuid that owns the token
+    token_owner = "00000000-0000-0000-0000-000000000000"
+    return token_owner
 
 
-router = APIRouter(
-    prefix="/users",
-)
-db = Database()
-
-
-@router.post("/", response_model=UserResponse)
-def create_user(user: UserInput = Body(...)):
-    if not (
-        User.validate_username(user.username)
-        and User.validate_password(user.password)
-        and User.validate_email(user.email)
+@router.post("/", response_model=UserResponse, status_code=status.HTTP_200_OK)
+def create_user(
+    data: CreateUserRequest = Body(...),
+):
+    if not all(
+        [
+            User.validate_email(data.email),
+            User.validate_username(data.username),
+            User.validate_password(data.password),
+        ]
     ):
         raise HTTPException(
-            status_code=400, detail="Invalid username, password, or email"
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={"code": 400, "message": "Bad Request"},
         )
 
     # Attempt creating user
-    if not db.create_user(user.username, user.email, User.hash_password(user.password)):
+    user = db.create_user(data.username, data.email, User.hash_password(data.password))
+    if not user:
         raise HTTPException(
-            status_code=409,
-            detail="User already exists or Email address is already in use.",
-        )
-
-    # Retrieve new user
-    user_data = db.get_user_by_email(user.email)
-    if user_data is None:
-        raise HTTPException(
-            status_code=500, detail="User could not be retrieved after creation"
+            status_code=status.HTTP_409_CONFLICT,
+            detail={"code": 409, "message": "Conflict"},
         )
 
     return UserResponse(
         code=200,
         message="Ok",
-        data=UserData(
-            uuid=user_data["uuid"],
-            email=user_data["email"],
-            username=user_data["username"],
-            coins=user_data["coins"],
-            created_at=user_data["created_at"],
-            updated_at=user_data["updated_at"],
-        ),
+        data=user,
     )
 
 
-@router.get("/{uuid}", response_model=UserResponse)
-def get_user(uuid: UUID4 = Path(...)):
-    try:
-        user_data = db.get_user(uuid)
-        if not user_data:
-            raise HTTPException(
-                status_code=404, detail={"code": 404, "message": "Not Found"}
-            )
-
-        return UserResponse(
-            code=200,
-            message="Ok",
-            data=user_data,  # Assuming this directly maps to the UserData model
-        )
-    except Exception:
+@router.get("/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK)
+def get_user(uuid: UUID4 = Path(...), token_owner: UUID4 = Depends(verify_token)):
+    # Validate the token has permission for this resource
+    if uuid != token_owner:
         raise HTTPException(
-            status_code=500, detail={"code": 500, "message": "Internal Server Error"}
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"code": 403, "message": "Forbidden"},
         )
 
+    # Attempt fetching user
+    user_data = db.get_user(uuid)
+    if not user_data:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail={"code": 409, "message": "Conflict"},
+        )
 
-@router.patch("/{uuid}", response_model=UserResponse)
+    # Return user data
+    return UserResponse(
+        code=200,
+        message="Ok",
+        data=user_data,
+    )
+
+
+@router.patch("/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK)
 def patch_user(
-    uuid: UUID4 = Path(..., description="The UUID of the user to be updated"),
-    update_data: UserInput = Body(...),
+    uuid: UUID4 = Path(...),
+    data: UpdateUserRequest = Body(...),
+    token_owner: UUID4 = Depends(verify_token),
 ):
+    # Validate the token has permission for this resource
+    if uuid != token_owner:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"code": 403, "message": "Forbidden"},
+        )
+
     # Attempt fetching user
     user = db.get_user(uuid)
     if not user:
         raise HTTPException(
-            status_code=404, detail={"code": 404, "message": "Not Found"}
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"code": 404, "message": "Not Found"},
         )
 
     # Validate and update fields if present
-    if update_data.username:
-        if not User.validate_username(update_data.username):
+    if data.email:
+        if not User.validate_email(data.email):
             raise HTTPException(
-                status_code=400, detail={"code": 400, "message": "Invalid username"}
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={"code": 400, "message": "Invalid email"},
             )
-        user.username = update_data.username
+        user.email = data.email
 
-    if update_data.password:
-        if not User.validate_password(update_data.password):
+    if data.username:
+        if not User.validate_username(data.username):
             raise HTTPException(
-                status_code=400, detail={"code": 400, "message": "Invalid password"}
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={"code": 400, "message": "Invalid username"},
             )
-        user.password_hash = User.hash_password(update_data.password)
+        user.username = data.username
 
-    if update_data.email:
-        if not User.validate_email(update_data.email):
+    if data.password:
+        if not User.validate_password(data.password):
             raise HTTPException(
-                status_code=400, detail={"code": 400, "message": "Invalid email"}
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail={"code": 400, "message": "Invalid password"},
             )
-        user.email = update_data.email
+        user.password_hash = User.hash_password(data.password)
 
     # Attempt updating user
-    if not db.update_user(user):
+    if not db.update_user(
+        uuid,
+        {
+            "email": user.email,
+            "username": user.username,
+            "password_hash": user.password_hash,
+        },
+    ):
         raise HTTPException(
-            status_code=409, detail={"code": 409, "message": "Conflict during update"}
+            status_code=status.HTTP_409_CONFLICT,
+            detail={"code": 409, "message": "Conflict"},
         )
 
-    return {"code": 200, "message": "Ok"}
+    return UserResponse(
+        code=200,
+        message="Ok",
+        data=user,
+    )
 
 
-@router.delete("/{uuid}", response_model=ErrorResponse)
+@router.delete("/{uuid}", response_model=UserResponse, status_code=status.HTTP_200_OK)
 def delete_user(
-    uuid: UUID4 = Path(..., description="The UUID of the user to be deleted"),
+    uuid: UUID4 = Path(...),
+    token_owner: UUID4 = Depends(verify_token),
 ):
-    try:
-        # Attempt fetching the user to ensure they exist before attempting deletion
-        user = db.get_user(uuid)
-        if not user:
-            raise HTTPException(
-                status_code=404, detail={"code": 404, "message": "User not found"}
-            )
-
-        # Attempt deleting the user
-        deletion_success = db.delete_user(uuid)
-        if not deletion_success:
-            raise HTTPException(
-                status_code=500,
-                detail={
-                    "code": 500,
-                    "message": "Internal Server Error during deletion",
-                },
-            )
-
-        return {"code": 200, "message": "User successfully deleted"}
-    except KeyError:
-        # If the user doesn't exist, return a 404
+    # Validate the token has permission for this resource
+    if uuid != token_owner:
         raise HTTPException(
-            status_code=404, detail={"code": 404, "message": "User not found"}
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"code": 403, "message": "Forbidden"},
         )
-    except Exception as e:
-        # For any other exceptions, return a 500
+
+    # Check if the user exists
+    user = db.get_user(uuid)
+    if not user:
         raise HTTPException(
-            status_code=500,
-            detail={"code": 500, "message": f"Internal Server Error: {str(e)}"},
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"code": 404, "message": "Not Found"},
         )
+
+    # Attempt deleting user
+    if not db.delete_user(uuid):
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail={"code": 500, "message": "Internal Server Error"},
+        )
+
+    return UserResponse(code=200, message="Ok")
