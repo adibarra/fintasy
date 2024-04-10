@@ -15,8 +15,8 @@ router = APIRouter(
 
 
 class SessionData(BaseModel):
-    uuid: UUID4
     owner: UUID4
+    token: UUID4
 
 
 class SessionRequest(BaseModel):
@@ -33,7 +33,8 @@ class SessionResponse(BaseModel):
         exclude_none = True
 
 
-async def authenticate(token: str = Header(...)) -> str:
+async def authenticate(authorization: str = Header(...)) -> tuple[UUID4, str]:
+    token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
     # Validate the token exists
@@ -53,7 +54,7 @@ def create_session(
 ):
     # Check if user exists
     user = db.get_user_by_email(data.email)
-    if not user:
+    if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Not Found",
@@ -62,27 +63,28 @@ def create_session(
     # Verify password
     if not User.verify_password(data.password, user["password_hash"]):
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unauthorized",
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Forbidden",
         )
 
-    session = db.create_session(user["uuid"])
+    # User has been authenticated, create a session
+    session = db.create_session(str(user["uuid"]))
     if session is None:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",
         )
+
     return SessionResponse(code=200, message="Ok", data=session)
 
 
 @router.delete(
     "/sessions", response_model=SessionResponse, status_code=status.HTTP_200_OK
 )
-def get_session(
+def delete_session(
     auth: tuple[UUID4, str] = Depends(authenticate),
 ):
-    session_data = db.get_session(auth[1])
-    if not session_data:
+    if not db.delete_session(auth[1]):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Not Found",

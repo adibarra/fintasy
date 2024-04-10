@@ -58,12 +58,12 @@ class SessionsMixin:
             if conn:
                 self.connectionPool.putconn(conn)
 
-    def delete_session(self, owner: str) -> bool:
+    def delete_session(self, token: str) -> bool:
         """
         Deletes a session from the database.
 
         Args:
-            owner (str): The uuid of user which owns the session.
+            token (str): The token of the session.
 
         Returns:
             bool: True if successful, False otherwise.
@@ -73,7 +73,7 @@ class SessionsMixin:
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
-                cursor.execute("DELETE FROM sessions WHERE owner = %s", (owner,))
+                cursor.execute("DELETE FROM sessions WHERE token = %s", (token,))
                 conn.commit()
                 return True
         except Exception as e:

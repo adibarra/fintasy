@@ -49,7 +49,10 @@ class UserResponse(BaseModel):
         exclude_none = True
 
 
-async def authenticate(token: str = Header(...), uuid: UUID4 = Path(...)) -> bool:
+async def authenticate(
+    authorization: str = Header(...), uuid: UUID4 = Path(...)
+) -> tuple[UUID4, str]:
+    token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
     # Validate the token exists
@@ -60,12 +63,13 @@ async def authenticate(token: str = Header(...), uuid: UUID4 = Path(...)) -> boo
         )
 
     # Validate the token has permission for this resource
-    if token_owner != uuid:
+    if token_owner != str(uuid):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Forbidden",
         )
-    return True
+
+    return token_owner, token
 
 
 @router.post("/users", response_model=UserResponse, status_code=status.HTTP_200_OK)
@@ -104,14 +108,14 @@ def create_user(
 )
 def get_user(
     uuid: UUID4 = Path(...),
-    authenticated: bool = Depends(authenticate),
+    auth: tuple[UUID4, str] = Depends(authenticate),
 ):
     # Attempt fetching user
-    user_data = db.get_user(uuid)
-    if not user_data:
+    user_data = db.get_user(str(uuid))
+    if user_data is None:
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Conflict",
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Not Found",
         )
 
     # Return user data
@@ -128,10 +132,10 @@ def get_user(
 def patch_user(
     uuid: UUID4 = Path(...),
     data: UpdateUserRequest = Body(...),
-    authenticated: bool = Depends(authenticate),
+    auth: tuple[UUID4, str] = Depends(authenticate),
 ):
     # Attempt fetching user
-    user = db.get_user(uuid)
+    user = db.get_user(str(uuid))
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -165,7 +169,7 @@ def patch_user(
 
     # Attempt updating user
     if not db.update_user(
-        uuid,
+        str(uuid),
         {
             "email": user.email,
             "username": user.username,
@@ -189,10 +193,10 @@ def patch_user(
 )
 def delete_user(
     uuid: UUID4 = Path(...),
-    authenticated: bool = Depends(authenticate),
+    auth: tuple[UUID4, str] = Depends(authenticate),
 ):
     # Check if the user exists
-    user = db.get_user(uuid)
+    user = db.get_user(str(uuid))
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -200,7 +204,7 @@ def delete_user(
         )
 
     # Attempt deleting user
-    if not db.delete_user(uuid):
+    if not db.delete_user(str(uuid)):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",
