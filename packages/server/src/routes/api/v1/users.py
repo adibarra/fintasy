@@ -10,9 +10,7 @@ from pydantic import UUID4, BaseModel
 from services.database import Database
 
 db = Database()
-router = APIRouter(
-    prefix="/api/v1",
-)
+router = APIRouter(prefix="/api/v1")
 
 
 class CreateUserRequest(BaseModel):
@@ -58,14 +56,14 @@ async def authenticate(token: str = Header(...), uuid: UUID4 = Path(...)) -> boo
     if token_owner is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail={"code": 401, "message": "Unauthorized"},
+            detail="Unauthorized",
         )
 
     # Validate the token has permission for this resource
     if token_owner != uuid:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail={"code": 403, "message": "Forbidden"},
+            detail="Forbidden",
         )
     return True
 
@@ -83,7 +81,7 @@ def create_user(
     ):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail={"code": 400, "message": "Bad Request"},
+            detail="Bad Request",
         )
 
     # Attempt creating user
@@ -91,7 +89,7 @@ def create_user(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail={"code": 409, "message": "Conflict"},
+            detail="Conflict",
         )
 
     return UserResponse(
@@ -113,7 +111,7 @@ def get_user(
     if not user_data:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail={"code": 409, "message": "Conflict"},
+            detail="Conflict",
         )
 
     # Return user data
@@ -137,7 +135,7 @@ def patch_user(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail={"code": 404, "message": "Not Found"},
+            detail="Not Found",
         )
 
     # Validate and update fields if present
@@ -153,7 +151,7 @@ def patch_user(
         if not User.validate_username(data.username):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail={"code": 400, "message": "Invalid username"},
+                detail="Invalid username",
             )
         user.username = data.username
 
@@ -161,7 +159,7 @@ def patch_user(
         if not User.validate_password(data.password):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail={"code": 400, "message": "Invalid password"},
+                detail="Invalid password",
             )
         user.password_hash = User.hash_password(data.password)
 
@@ -176,7 +174,7 @@ def patch_user(
     ):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail={"code": 409, "message": "Conflict"},
+            detail="Conflict",
         )
 
     return UserResponse(
@@ -198,14 +196,14 @@ def delete_user(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail={"code": 404, "message": "Not Found"},
+            detail="Not Found",
         )
 
     # Attempt deleting user
     if not db.delete_user(uuid):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail={"code": 500, "message": "Internal Server Error"},
+            detail="Internal Server Error",
         )
 
     return UserResponse(code=200, message="Ok")
