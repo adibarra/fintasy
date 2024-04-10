@@ -20,6 +20,7 @@ import VueRouter from 'unplugin-vue-router/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import WebfontDownload from 'vite-plugin-webfont-dl'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
+import { unheadVueComposablesImports } from '@unhead/vue'
 
 export default defineConfig({
   resolve: {
@@ -51,9 +52,9 @@ export default defineConfig({
       imports: [
         'vue',
         'vue-i18n',
-        '@vueuse/head',
         '@vueuse/core',
         VueRouterAutoImports,
+        unheadVueComposablesImports,
         {
           'vue-router/auto': ['useLink'],
         },
