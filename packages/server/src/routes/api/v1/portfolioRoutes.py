@@ -1,48 +1,44 @@
-# @author: Caleb Kim (caleb-j-kim)
+# @author: adibarra (Alec Ibarra), caleb-j-kim (Caleb Kim)
 # @description: Portfolio routes for the API
 
 from datetime import datetime
 from typing import Optional
 
-from fastapi import Body, Depends, FastAPI, Header, HTTPException, Path, status
+from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, Query, status
+from helpers.portfolio import Portfolio
 from pydantic import UUID4, BaseModel
+from services.database import Database
 
-from src.helpers.portfolio import Portfolio
-from src.services.database import Database
-
-router = FastAPI()
-portfolio_manager = Portfolio(prefix="/portfolio")
 db = Database()
+router = APIRouter(prefix="/api/v1")
 
 
 class PortfolioData(BaseModel):
-    name: str
-    tournament: UUID4
-
-    class Config:
-        extra = "ignore"
-
-
-class PortfolioRequest(BaseModel):
     uuid: UUID4
     owner: UUID4
-    tournament: UUID4
+    tournament: Optional[UUID4] = None
     name: str
     balance_cents: int
     created_at: datetime
     updated_at: datetime
 
+    class Config:
+        exclude_none = False
+
+
+class CreatePortfolioRequest(BaseModel):
+    tournament: Optional[UUID4] = None
+    name: str
+
+    class Config:
+        exclude_none = True
+
 
 class UpdatePortfolioRequest(BaseModel):
     name: Optional[str] = None
-    company_name: Optional[str] = None
-    qty: Optional[int] = None
-    unit_price: Optional[int] = None
-    daily_PL: Optional[int] = None
-    total_PL: Optional[int] = None
 
     class Config:
-        extra_none = True
+        exclude_none = True
 
 
 class PortfolioResponse(BaseModel):
@@ -54,25 +50,38 @@ class PortfolioResponse(BaseModel):
         extra = True
 
 
-async def verify_token(token: str = Header(...)) -> UUID4:
-    # Implement verification logic here
+async def authenticate(
+    authorization: str = Header(...), portfolio_uuid: UUID4 = Path(...)
+) -> tuple[UUID4, str]:
+    token = authorization.split(" ")[1]
+    token_owner = db.get_session(token)
+    portfolio = db.get_portfolio(str(portfolio_uuid))
 
-    if token != "valid_token":
+    # Validate the token exists
+    if token_owner is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token",
+            detail="Unauthorized",
         )
 
-    token_owner = "00000000-0000-0000-0000-000000000000"
-    return token_owner
+    # Validate the token has permission for this portfolio
+    if token_owner != str(portfolio["owner"]):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Forbidden",
+        )
+
+    return token_owner, token
 
 
 @router.post(
-    "/{tournament}", response_model=PortfolioResponse, status_code=status.HTTP_200_OK
+    "/portfolios", response_model=PortfolioResponse, status_code=status.HTTP_200_OK
 )
 def create_portfolio(
-    data: PortfolioRequest = Body(...),
+    data: CreatePortfolioRequest = Body(...),
+    auth: tuple[UUID4, str] = Depends(authenticate),
 ):
+    # TODO: clean up
     if not all(
         [
             Portfolio.validate_uuid(data.uuid),
@@ -112,11 +121,17 @@ def create_portfolio(
 
 
 @router.get(
-    "/{tournament}", response_model=PortfolioResponse, status_code=status.HTTP_200_OK
+    "/portfolios", response_model=PortfolioResponse, status_code=status.HTTP_200_OK
 )
-def list_portfolios(
-    uuid: UUID4 = Path(...), token_owner: UUID4 = Depends(verify_token)
+def get_portfolios(
+    owner: Optional[UUID4] = Query(None),
+    tournament: Optional[UUID4] = Query(None),
+    name: Optional[str] = Query(None),
+    offset: Optional[int] = Query(0),
+    limit: Optional[int] = Query(10),
+    auth: tuple[UUID4, str] = Depends(authenticate),
 ):
+    # TODO: clean up
     if uuid != token_owner:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -137,8 +152,16 @@ def list_portfolios(
     )
 
 
-@router.get("/{uuid}", response_model=PortfolioResponse, status_code=status.HTTP_200_OK)
-def get_portfolio(uuid: UUID4 = Path(...), token_owner: UUID4 = Depends(verify_token)):
+@router.get(
+    "/portfolios/{portfolio_uuid}",
+    response_model=PortfolioResponse,
+    status_code=status.HTTP_200_OK,
+)
+def get_portfolio_by_uuid(
+    portfolio_uuid: UUID4 = Path(...),
+    auth: tuple[UUID4, str] = Depends(authenticate),
+):
+    # TODO: clean up
     if uuid != token_owner:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -160,13 +183,16 @@ def get_portfolio(uuid: UUID4 = Path(...), token_owner: UUID4 = Depends(verify_t
 
 
 @router.patch(
-    "/{uuid}", response_model=PortfolioResponse, status_code=status.HTTP_200_OK
+    "/portfolios/{portfolio_uuid}",
+    response_model=PortfolioResponse,
+    status_code=status.HTTP_200_OK,
 )
 def update_portfolio(
-    uuid: UUID4 = Path(...),
+    portfolio_uuid: UUID4 = Path(...),
     data: UpdatePortfolioRequest = Body(...),
-    token_owner: UUID4 = Depends(verify_token),
+    auth: tuple[UUID4, str] = Depends(authenticate),
 ):
+    # TODO: clean up
     if uuid != token_owner:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -245,10 +271,16 @@ def update_portfolio(
         )
 
 
-@router.delete("/", response_model=PortfolioResponse, status_code=status.HTTP_200_OK)
+@router.delete(
+    "portfolios/{portfolio_uuid}",
+    response_model=PortfolioResponse,
+    status_code=status.HTTP_200_OK,
+)
 def remove_portfolio(
-    uuid: UUID4 = Path(...), token_owner: UUID4 = Depends(verify_token)
+    portfolio_uuid: UUID4 = Path(...),
+    auth: tuple[UUID4, str] = Depends(authenticate),
 ):
+    # TODO: clean up
     if uuid != token_owner:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -271,6 +303,3 @@ def remove_portfolio(
         code=200,
         message="Portfolio: {name} Successfully Deleted",
     )
-
-
-# Additional endpoints for other operations can be added here
