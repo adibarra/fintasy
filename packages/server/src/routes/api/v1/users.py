@@ -51,7 +51,7 @@ class UserResponse(BaseModel):
 
 async def authenticate(
     authorization: str = Header(...),
-    uuid: UUID4 = Path(...),
+    uuid: Optional[UUID4] = Path(None),
 ) -> tuple[UUID4, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
@@ -62,6 +62,9 @@ async def authenticate(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Unauthorized",
         )
+
+    if uuid is None:
+        return token_owner, token
 
     # Validate the token has permission for this resource
     if token_owner != str(uuid):
