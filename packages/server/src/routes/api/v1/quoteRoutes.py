@@ -6,8 +6,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, status
 from pydantic import UUID4, BaseModel
-
-from src.services.database import Database
+from services.database import Database
 
 db = Database()
 router = APIRouter(
