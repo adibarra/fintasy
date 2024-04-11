@@ -56,7 +56,7 @@ async def authenticate(
 ) -> tuple[UUID4, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
-    transaction = db.get_transaction(str(transaction_uuid))
+    transaction = db.get_transaction_by_uuid(str(transaction_uuid))
     portfolio = db.get_portfolio(str(transaction["portfolio"]))
 
     # Validate the token exists
@@ -125,16 +125,16 @@ def get_transactions(
 
 
 @router.get(
-    "/transactions/{transaction_id}",
+    "/transactions/{transaction_uuid}",
     response_model=TransactionResponse,
     status_code=status.HTTP_200_OK,
 )
 def get_transaction_by_id(
-    transaction_id: UUID4 = Path(...),
+    transaction_uuid: UUID4 = Path(...),
     auth: tuple[UUID4, str] = Depends(authenticate),
 ):
     # Attempt getting transaction
-    transaction = db.get_transaction(str(transaction_id))
+    transaction = db.get_transaction_by_uuid(str(transaction_uuid))
     if transaction is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
