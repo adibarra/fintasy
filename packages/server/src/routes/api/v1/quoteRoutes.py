@@ -1,42 +1,24 @@
-# @author: Caleb Kim (caleb-j-kim)
+# @author: adibarra (Alec Ibarra), caleb-j-kim (Caleb Kim)
 # @description: Quote routes for the API
 
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, Depends, Header, HTTPException, Path, status
+from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, status
 from pydantic import UUID4, BaseModel
 
 from src.services.database import Database
 
 db = Database()
 router = APIRouter(
-    prefix="/quotes",
+    prefix="api/v1",
 )
-
-
-class CreateQuoteRequest(BaseModel):
-    symbol: str
-    price: int
-    timestamp: datetime
 
 
 class QuoteData(BaseModel):
     symbol: str
     price: int
     timestamp: datetime
-
-    class Config:
-        extra = "ignore"
-
-
-class UpdateQuoteRequest(BaseModel):
-    symbol: Optional[str] = None
-    price: Optional[int] = None
-    timestamp: Optional[datetime] = None
-
-    class Config:
-        extra_none = True
 
 
 class QuoteResponse(BaseModel):
@@ -45,30 +27,48 @@ class QuoteResponse(BaseModel):
     data: Optional[QuoteData] = None
 
     class Config:
-        extra = True
+        exclude_none = True
 
 
-async def verify_token(token: str = Header(...)) -> UUID4:
-    # Implement verification logic here
+class QuoteHistoricalResponse(BaseModel):
+    code: int
+    message: str
+    data: Optional[list[QuoteData]] = None
 
-    if token != "valid_token":
+    class Config:
+        exclude_none = True
+
+
+async def authenticate(
+    authorization: str = Header(...), uuid: UUID4 = Path(...)
+) -> tuple[UUID4, str]:
+    token = authorization.split(" ")[1]
+    token_owner = db.get_session(token)
+
+    # Validate the token exists
+    if token_owner is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail={"code": 401, "message": "Unauthorized"},
+            detail="Unauthorized",
         )
 
-    # uuid that owns the token
-    token_owner = "00000000-0000-0000-0000-000000000000"
-    return token_owner
+    return token_owner, token
 
 
-@router.get("/{symbol}", response_model=QuoteResponse, status_code=status.HTTP_200_OK)
-def get_quote(symbol: str = Path(...), token_owner: UUID4 = Depends(verify_token)):
-    quote_data = db.get_quote(symbol)
-    if not quote_data:
+@router.get(
+    "/quote/{symbol}", response_model=QuoteResponse, status_code=status.HTTP_200_OK
+)
+def get_quote(
+    symbol: str = Path(...),
+    auth: tuple[UUID4, str] = Depends(authenticate),
+):
+    # TODO: implement get_quote in quotes helper class
+    # it should access the external api to get the quote
+    quote_data = {}
+    if quote_data is None:
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail={"code": 404, "message": "Conflict"},
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Not Found",
         )
 
     return QuoteResponse(
@@ -79,16 +79,26 @@ def get_quote(symbol: str = Path(...), token_owner: UUID4 = Depends(verify_token
 
 
 @router.get(
-    "/historical/{symbol}", response_model=QuoteResponse, status_code=status.HTTP_200_OK
+    "/quote/historical/{symbol}",
+    response_model=QuoteHistoricalResponse,
+    status_code=status.HTTP_200_OK,
 )
 def get_historical_quote(
-    symbol: str = Path(...), token_owner: UUID4 = Depends(verify_token)
+    symbol: str = Path(...),
+    start_date: datetime = Query(...),
+    end_date: datetime = Query(...),
+    interval: str = Query(...),
+    limit: int = Query(...),
+    offset: int = Query(...),
+    auth: tuple[UUID4, str] = Depends(authenticate),
 ):
-    quote_data = db.get_historical_quote(symbol)
-    if not quote_data:
+    # TODO: implement get_quote_historical in quotes helper class
+    # it should access the external api to get the quote historical data
+    quote_data = {}
+    if quote_data is None:
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail={"code": 404, "message": "Conflict"},
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Not Found",
         )
 
     return QuoteResponse(
