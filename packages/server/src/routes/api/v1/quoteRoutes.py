@@ -39,7 +39,7 @@ class QuoteHistoricalResponse(BaseModel):
 
 
 async def authenticate(
-    authorization: str = Header(...), uuid: UUID4 = Path(...)
+    authorization: str = Header(...),
 ) -> tuple[UUID4, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)

@@ -50,9 +50,9 @@ class TransactionResponse(BaseModel):
         exclude_none = True
 
 
-# Reusing the authenticate dependency from your user routes for consistency
 async def authenticate(
-    authorization: str = Header(...), transaction_uuid: UUID4 = Path(...)
+    authorization: str = Header(...),
+    transaction_uuid: UUID4 = Path(...),
 ) -> tuple[UUID4, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
