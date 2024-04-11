@@ -33,7 +33,9 @@ class SessionResponse(BaseModel):
         exclude_none = True
 
 
-async def authenticate(authorization: str = Header(...)) -> tuple[UUID4, str]:
+async def authenticate(
+    authorization: str = Header(...),
+) -> tuple[UUID4, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
