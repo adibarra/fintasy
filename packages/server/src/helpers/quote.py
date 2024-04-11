@@ -9,7 +9,7 @@ class Quote:
 
     INTERVALS = Enum("INTERVALS", ["MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"])
 
-    def __init__(self, symbol: str, price: float, timestamp: datetime):
+    def __init__(self, symbol: str, price: int, timestamp: datetime):
         """
         Initializes a Quote object.
 
