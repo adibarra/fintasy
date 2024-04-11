@@ -51,11 +51,11 @@ class PortfolioResponse(BaseModel):
 
 
 async def authenticate(
-    authorization: str = Header(...), portfolio_uuid: UUID4 = Path(...)
+    authorization: str = Header(...),
+    portfolio_uuid: Optional[UUID4] = Path(None),
 ) -> tuple[UUID4, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
-    portfolio = db.get_portfolio(str(portfolio_uuid))
 
     # Validate the token exists
     if token_owner is None:
@@ -64,7 +64,11 @@ async def authenticate(
             detail="Unauthorized",
         )
 
+    if portfolio_uuid is None:
+        return token_owner, token
+
     # Validate the token has permission for this portfolio
+    portfolio = db.get_portfolio(str(portfolio_uuid))
     if token_owner != str(portfolio["owner"]):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
