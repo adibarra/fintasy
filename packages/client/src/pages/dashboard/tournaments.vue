@@ -12,12 +12,6 @@ useHead({
 </script>
 
 <template>
-  {{ $t('example.hello-world') }}
-
-  <span>
-    Should be a nice tournaments page. It should look like the wireframe.
-  </span>
-
   <!-- Some spacers and a temporary footer -->
   <span op-50>
     <div h-10 />

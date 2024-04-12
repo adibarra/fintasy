@@ -1,32 +1,32 @@
-<!--
-  @author: adibarra (Alec Ibarra)
-  @description: This component is used to display the trading center page of the application.
--->
+<script setup>
+// import {onMounted} from "vue";
+import DataTable from '~/components/dashboard/DataTable.vue'
 
-<script setup lang="ts">
-const { t } = useI18n()
+// const items = ref([]);
+// onMounted(async () => {
+//   const response = await fetch()
 
-useHead({
-  title: `${t('pages.dashboard.trade.title')} • Fintasy`,
-})
+// })
+
+const items = [
+  {
+    id: 2,
+    price: 250,
+
+  },
+  {
+    id: 3,
+    price: 500,
+  },
+  {
+    id: 4,
+    price: 750,
+  },
+]
 </script>
 
 <template>
-  {{ $t('example.hello-world') }}
-
-  <span>
-    Should be a nice trading center page. It should look like the wireframe.
-  </span>
-
-  <!-- Some spacers and a temporary footer -->
-  <span op-50>
-    <div h-10 />
-    [ pages/dashboard/trade.vue ]
-    <div h-10 />
-  </span>
+  <div class="p-8">
+    <DataTable :items="items" />
+  </div>
 </template>
-
-<route lang="yaml">
-  meta:
-    layout: dashboard
-</route>
