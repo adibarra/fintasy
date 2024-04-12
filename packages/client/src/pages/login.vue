@@ -4,11 +4,24 @@
 -->
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
 const { t } = useI18n()
 
-useHead({
-  title: `${t('pages.login.title')} • Fintasy`,
-})
+const username = ref('')
+const password = ref('')
+
+function submitForm() {
+  // Implement your form submission logic here
+}
+
+function authenticateWithGoogle() {
+  // Implement Google authentication logic
+}
+
+function authenticateWithFacebook() {
+  // Implement Facebook authentication logic
+}
 </script>
 
 <template>
@@ -85,4 +98,4 @@ useHead({
 <route lang="yaml">
   meta:
     layout: default
-  </route>
+</route>

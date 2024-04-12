@@ -4,11 +4,27 @@
 -->
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import { ref } from 'vue'
+
 const { t } = useI18n()
 
-useHead({
-  title: `${t('pages.register.title')} • Fintasy`,
-})
+const first = ref('')
+const middle = ref('')
+const last = ref('')
+const password = ref('')
+
+function submitForm() {
+  // Implement your form submission logic here
+}
+
+function authenticateWithGoogle() {
+  // Implement Google authentication logic
+}
+
+function authenticateWithFacebook() {
+  // Implement Facebook authentication logic
+}
 </script>
 
 <template>
@@ -70,16 +86,16 @@ useHead({
 
         <div>
           <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-            <label for="Enter your Password" class="block">{{ t('Enter your Password') }}</label>
+            <label for="password" class="block">{{ t('Enter your Password') }}</label>
             <input
               id="password" v-model="password" type="password" required
               class="mt-1 w-full border bg-white p-2 text-black"
             >
           </div>
           <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-            <label for="Enter your Password" class="block">{{ t('Confirm your Password') }}</label>
+            <label for="confirm-password" class="block">{{ t('Confirm your Password') }}</label>
             <input
-              id="password" v-model="password" type="password" required
+              id="confirm-password" v-model="password" type="password" required
               class="mt-1 w-full border bg-white p-2 text-black"
             >
           </div>
@@ -111,4 +127,4 @@ useHead({
 <route lang="yaml">
   meta:
     layout: default
-  </route>
+</route>
