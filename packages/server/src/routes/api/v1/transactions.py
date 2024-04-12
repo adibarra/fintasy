@@ -50,9 +50,8 @@ class TransactionResponse(BaseModel):
         exclude_none = True
 
 
-async def authenticate(
+async def authenticateToken(
     authorization: str = Header(...),
-    transaction_uuid: Optional[UUID4] = Path(None),
 ) -> tuple[UUID4, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
@@ -64,8 +63,14 @@ async def authenticate(
             detail="Unauthorized",
         )
 
-    if transaction_uuid is None:
-        return token_owner, token
+    return token_owner, token
+
+
+async def authenticate(
+    authorization: str = Header(...),
+    transaction_uuid: UUID4 = Path(...),
+) -> tuple[UUID4, str]:
+    token_owner, token = authenticateToken(authorization)
 
     # Validate the token has permission for this user's transactions
     transaction = db.get_transaction_by_uuid(str(transaction_uuid))
@@ -84,7 +89,7 @@ async def authenticate(
 )
 def create_transaction(
     data: CreateTransactionRequest = Body(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[UUID4, str] = Depends(authenticateToken),
 ):
     # Attempt creating transaction
     transaction = db.create_transaction(
@@ -110,8 +115,19 @@ def create_transaction(
 )
 def get_transactions(
     data: GetTransactionRequest = Body(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[UUID4, str] = Depends(authenticateToken),
 ):
+    token_owner = auth[0]
+
+    # Keep the user from accessing another user's transactions
+    # Fix by adding a more granular permission system later
+    portfolio = db.get_portfolio(str(data.portfolio))
+    if token_owner != str(portfolio["owner"]):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Forbidden",
+        )
+
     # Attempt getting transactions
     transactions = db.get_transactions(str(data.portfolio), data.offset, data.limit)
     if transactions is None:
