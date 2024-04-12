@@ -7,7 +7,7 @@
 const { t } = useI18n()
 
 useHead({
-  title: `${t('pages.login.title')} • Fintasy`,
+  title: `${t('pages.register.title')} • Fintasy`,
 })
 </script>
 
@@ -26,6 +26,7 @@ useHead({
       </button>
     </div>
   </nav>
+
   <div style="filter: drop-shadow(0px 0px 12px rgba(5, 150, 105, 2));" class="bg-white px-10 py-8 md:mx-96 md:my-24">
     <div class="mb-4 flex justify-center gap-2">
       <router-link to="/login" class="flex items-center justify-center gap-2">
@@ -41,22 +42,47 @@ useHead({
     </div>
 
     <div>
-      <!-- Login form -->
+      <!-- Register form -->
       <form class="space-y-4" @submit.prevent="submitForm">
-        <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-          <label for="username" class="block">{{ t('Enter your Username') }}</label>
-          <input
-            id="username" v-model="username" type="text" required
-            class="mt-1 w-full border bg-white p-2 text-black"
-          >
+        <div class="align-center flex items-center">
+          <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
+            <label for="first" class="block">{{ t('First') }}</label>
+            <input
+              id="first" v-model="first" type="text" required
+              class="mt-1 w-full border bg-white p-2 text-black"
+            >
+          </div>
+          <div class="px-4 text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
+            <label for="middle" class="block">{{ t('Middle') }}</label>
+            <input
+              id="middle" v-model="middle" type="text" optional
+              class="mt-1 w-full border bg-white p-2 text-black"
+            >
+          </div>
+          <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
+            <label for="last" class="block">{{ t('Last') }}</label>
+            <input
+              id="last" v-model="last" type="text" required
+              class="mt-1 w-full border bg-white p-2 text-black"
+            >
+          </div>
         </div>
 
-        <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-          <label for="Enter your Password" class="block">{{ t('Enter your Password') }}</label>
-          <input
-            id="password" v-model="password" type="password" required
-            class="mt-1 w-full border bg-white p-2 text-black"
-          >
+        <div>
+          <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
+            <label for="Enter your Password" class="block">{{ t('Enter your Password') }}</label>
+            <input
+              id="password" v-model="password" type="password" required
+              class="mt-1 w-full border bg-white p-2 text-black"
+            >
+          </div>
+          <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
+            <label for="Enter your Password" class="block">{{ t('Confirm your Password') }}</label>
+            <input
+              id="password" v-model="password" type="password" required
+              class="mt-1 w-full border bg-white p-2 text-black"
+            >
+          </div>
         </div>
 
         <button type="submit" class="w-full bg-emerald-600 p-2 text-white" @click="$router.push('/dashboard')">
@@ -65,7 +91,7 @@ useHead({
 
         <div class="mt-10">
           <p class="mb-2 text-black">
-            {{ t('Or Login with Socials') }}:
+            {{ t('Or Sign up with Socials') }}:
           </p>
           <div class="flex">
             <button class="mb-2 mr-4 w-full bg-red-500 p-2 text-white" @click="authenticateWithGoogle">
