@@ -14,6 +14,17 @@ router = APIRouter(
 )
 
 
+class GetHistoricalQuoteRequest(BaseModel):
+    start_date: Optional[datetime]
+    end_date: Optional[datetime]
+    interval: Optional[str]
+    limit: Optional[int] = 10
+    offset: Optional[int] = 0
+
+    class Config:
+        exclude_none = True
+
+
 class QuoteData(BaseModel):
     symbol: str
     price: int
@@ -84,11 +95,7 @@ def get_quote(
 )
 def get_historical_quote(
     symbol: str = Path(...),
-    start_date: datetime = Query(...),
-    end_date: datetime = Query(...),
-    interval: str = Query(...),
-    limit: int = Query(...),
-    offset: int = Query(...),
+    data: GetHistoricalQuoteRequest = Query(...),
     auth: tuple[UUID4, str] = Depends(authenticate),
 ):
     # TODO: implement get_quote_historical in quotes helper class
