@@ -70,7 +70,7 @@ async def authenticate(
     authorization: str = Header(...),
     portfolio_uuid: UUID4 = Path(...),
 ) -> tuple[UUID4, str]:
-    token, token_owner = authenticateToken(authorization)
+    token_owner, token = authenticateToken(authorization)
 
     # Validate the token has permission for this portfolio
     portfolio = db.get_portfolio(str(portfolio_uuid))
