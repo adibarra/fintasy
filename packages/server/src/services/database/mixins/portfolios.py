@@ -89,6 +89,61 @@ class PortfolioMixin:
             if conn:
                 self.connectionPool.putconn(conn)
 
+    def get_portfolios(
+        self,
+        owner: str = None,
+        tournament: str = None,
+        name: str = None,
+        offset: int = 0,
+        limit: int = 10,
+    ):
+        """
+        Retrieves a list of portfolios from the database.
+
+        Args:
+            owner (str, optional): The UUID of the user associated with the portfolios.
+            tournament (str, optional): The UUID of the tournament associated with the portfolios.
+            name (str, optional): The name of the portfolios.
+            offset (int, optional): The number of portfolios to skip.
+            limit (int, optional): The maximum number of portfolios to retrieve.
+
+        Returns:
+            list: A list of dictionaries representing the portfolios if found, an empty list otherwise.
+        """
+
+        conn = None
+        try:
+            conn = self.connectionPool.getconn()
+            with conn.cursor() as cursor:
+                params = []
+                query = "SELECT * FROM portfolios WHERE TRUE"
+                if owner:
+                    query += " AND owner = %s"
+                    params.append(owner)
+                if tournament:
+                    query += " AND tournament = %s"
+                    params.append(tournament)
+                if name:
+                    query += " AND name = %s"
+                    params.append(name)
+                query += f" OFFSET {offset} LIMIT {limit}"
+                cursor.execute(query, params)
+                if cursor.description:
+                    portfolios = cursor.fetchall()
+                    column_names = [desc[0] for desc in cursor.description]
+                    return [
+                        dict(zip(column_names, portfolio)) for portfolio in portfolios
+                    ]
+                else:
+                    print("No portfolios found.", flush=True)
+                    return []
+        except Exception as e:
+            print("Failed to get portfolios:", e, flush=True)
+            return []
+        finally:
+            if conn:
+                self.connectionPool.putconn(conn)
+
     def update_portfolio(self, uuid_portfolio: str, name: str) -> bool:
         """
         Updates the name of a portfolio in the database by UUID.
