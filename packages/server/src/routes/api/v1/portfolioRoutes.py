@@ -50,9 +50,8 @@ class PortfolioResponse(BaseModel):
         extra = True
 
 
-async def authenticate(
+async def authenticateToken(
     authorization: str = Header(...),
-    portfolio_uuid: Optional[UUID4] = Path(None),
 ) -> tuple[UUID4, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
@@ -64,8 +63,14 @@ async def authenticate(
             detail="Unauthorized",
         )
 
-    if portfolio_uuid is None:
-        return token_owner, token
+    return token_owner, token
+
+
+async def authenticate(
+    authorization: str = Header(...),
+    portfolio_uuid: UUID4 = Path(...),
+) -> tuple[UUID4, str]:
+    token, token_owner = authenticateToken(authorization)
 
     # Validate the token has permission for this portfolio
     portfolio = db.get_portfolio(str(portfolio_uuid))
@@ -83,9 +88,12 @@ async def authenticate(
 )
 def create_portfolio(
     data: CreatePortfolioRequest = Body(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[UUID4, str] = Depends(authenticateToken),
 ):
-    # TODO: clean up
+    token_owner = auth[0]
+
+    # TODO: only need to validate portfolio name
+    # but none of these functions are implemented
     if not all(
         [
             Portfolio.validate_uuid(data.uuid),
@@ -99,9 +107,11 @@ def create_portfolio(
     ):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail={"code": 400, "message": "Bad Request"},
+            detail="Bad Request",
         )
 
+    # TODO: check the parameters for create_portfolio
+    # the ones that are being passed in don't match the function signature
     portfolio = db.create_portfolio(
         data.uuid,
         data.owner,
@@ -111,42 +121,46 @@ def create_portfolio(
         data.created_at,
         data.updated_at,
     )
-    if not portfolio:
+    if portfolio is None:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail={"code": 409, "message": "Conflict"},
+            detail="Conflict",
         )
 
     return PortfolioResponse(
         code=200,
-        message="Portfolio: {name} Successfully Created",
+        message="Ok",
         data=portfolio,
     )
 
 
+# TODO: extract the query parameters into a separate class like GetPortfoliosRequest or something (tournament offset, limit are all optional)
 @router.get(
     "/portfolios", response_model=PortfolioResponse, status_code=status.HTTP_200_OK
 )
 def get_portfolios(
-    owner: Optional[UUID4] = Query(None),
-    tournament: Optional[UUID4] = Query(None),
-    name: Optional[str] = Query(None),
-    offset: Optional[int] = Query(0),
-    limit: Optional[int] = Query(10),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    owner: UUID4 = Query(...),
+    tournament: UUID4 = Query(...),
+    name: str = Query(...),
+    offset: int = Query(...),
+    limit: int = Query(...),
+    auth: tuple[UUID4, str] = Depends(authenticateToken),
 ):
-    # TODO: clean up
-    if uuid != token_owner:
+    token_owner = auth[0]
+
+    # Keep this check for now, might remove later with a more complex permission system
+    if owner != token_owner:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail={"code": 403, "message": "Forbidden"},
+            detail="Forbidden",
         )
 
+    # TODO: use db.get_portfolios() instead, and pass in the query parameters
     portfolios = db.list_portfolios(uuid)
-    if not portfolios:
+    if portfolios is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail={"code": 404, "message": "Not Found"},
+            detail="Not Found",
         )
 
     return PortfolioResponse(
@@ -165,18 +179,11 @@ def get_portfolio_by_uuid(
     portfolio_uuid: UUID4 = Path(...),
     auth: tuple[UUID4, str] = Depends(authenticate),
 ):
-    # TODO: clean up
-    if uuid != token_owner:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail={"code": 403, "message": "Forbidden"},
-        )
-
-    portfolio = db.get_portfolio(uuid)
-    if not portfolio:
+    portfolio = db.get_portfolio(portfolio_uuid)
+    if portfolio is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail={"code": 404, "message": "Not Found"},
+            detail="Not Found",
         )
 
     return PortfolioResponse(
@@ -196,82 +203,25 @@ def update_portfolio(
     data: UpdatePortfolioRequest = Body(...),
     auth: tuple[UUID4, str] = Depends(authenticate),
 ):
-    # TODO: clean up
-    if uuid != token_owner:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail={"code": 403, "message": "Forbidden"},
-        )
-
-    portfolio = db.get_portfolio(uuid)
-    if not portfolio:
+    portfolio = db.get_portfolio(portfolio_uuid)
+    if portfolio is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail={"code": 404, "message": "Not Found"},
+            detail="Not Found",
         )
 
+    # TODO: Portfolio.validate name doesn't exist
     if data.name:
         if not Portfolio.validate_name(data.name):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail={"code": 400, "message": "Invalid Name"},
+                detail="Bad Request",
             )
-        portfolio.name = data.name
 
-    if data.company_name:
-        if not Portfolio.validate_company_name(data.company_name):
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail={"code": 400, "message": "Invalid Company Name"},
-            )
-        portfolio.company_name = data.company_name
-
-    if data.qty:
-        if not Portfolio.validate_qty(data.qty):
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail={"code": 400, "message": "Invalid Quantity"},
-            )
-        portfolio.qty = data.qty
-
-    if data.unit_price:
-        if not Portfolio.validate_unit_price(data.unit_price):
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail={"code": 400, "message": "Invalid Unit Price"},
-            )
-        portfolio.unit_price = data.unit_price
-
-    if data.daily_PL:
-        if not Portfolio.validate_daily_PL(data.daily_PL):
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail={"code": 400, "message": "Invalid Daily P&L"},
-            )
-        portfolio.daily_PL = data.daily_PL
-
-    if data.total_PL:
-        if not Portfolio.validate_total_PL(data.total_PL):
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail={"code": 400, "message": "Invalid Total P&L"},
-            )
-        portfolio.total_PL = data.total_PL
-
-    if not db.update_portfolio(
-        uuid,
-        {
-            "name": portfolio.name,
-            "company_name": portfolio.company_name,
-            "qty": portfolio.qty,
-            "unit_price": portfolio.unit_price,
-            "daily_PL": portfolio.daily_PL,
-            "total_PL": portfolio.total_PL,
-        },
-    ):
+    if not db.update_portfolio(portfolio_uuid, data.name):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail={"code": 409, "message": "Conflict"},
+            detail="Conflict",
         )
 
 
@@ -284,26 +234,21 @@ def remove_portfolio(
     portfolio_uuid: UUID4 = Path(...),
     auth: tuple[UUID4, str] = Depends(authenticate),
 ):
-    # TODO: clean up
-    if uuid != token_owner:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail={"code": 403, "message": "Forbidden"},
-        )
-
-    portfolio = db.get_portfolio(uuid)
-    if not portfolio:
+    portfolio = db.get_portfolio(portfolio_uuid)
+    if portfolio is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail={"code": 404, "message": "Not Found"},
+            detail="Not Found",
         )
 
+    # TODO: db.delete_portfolio is probably what you want to use here
     if not db.remove_portfolio(uuid):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail={"code": 500, "message": "Internal Server Error"},
+            detail="Internal Server Error",
         )
+
     return PortfolioResponse(
         code=200,
-        message="Portfolio: {name} Successfully Deleted",
+        message="Ok",
     )
