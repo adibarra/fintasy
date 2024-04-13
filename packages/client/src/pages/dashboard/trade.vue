@@ -4,6 +4,7 @@
 //   const response = await fetch()
 
 // })
+const trend = generateData(Math.floor(Math.random() * 1500) + 500)
 
 const items = [
   {
@@ -20,6 +21,21 @@ const items = [
     price: 750,
   },
 ]
+
+function generateData(count) {
+  const data = []
+  const startDate = new Date().getTime() - 1000 * 60 * 15 * count
+  let value = 1000
+
+  for (let i = 0; i < count; ++i) {
+    value = Math.round((Math.random() * 1 - 0.495) * 100 + value)
+    data.push({
+      date: startDate + 1000 * 60 * 15 * i,
+      value,
+    })
+  }
+  return data
+}
 </script>
 
 <template>
@@ -32,8 +48,10 @@ const items = [
       </div>
     </div>
 
-    <div grow bg--c-fg>
-      right div
+    <div grow p-10>
+      <div h-80>
+        <PortfolioChart :data="trend" />
+      </div>
     </div>
   </div>
 </template>

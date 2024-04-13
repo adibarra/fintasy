@@ -44,6 +44,9 @@ function handleSearch(search) {
           <th class="px-4 py-3">
             Price
           </th>
+          <th class="px-4 py-3">
+            <span class="sr-only">Actions</span>Buy/Sell
+          </th>
         </tr>
       </thead>
 
@@ -54,6 +57,14 @@ function handleSearch(search) {
           </td>
           <td class="px-4 py-3 text-white font-medium">
             {{ item.price }}
+          </td>
+          <td class="px-4 py-3">
+            <button class="mr-2 border bg-green-500 px-2 py-1 text-white hover:bg-green-600">
+              ✔️
+            </button>
+            <button class="border bg-red-500 px-2 py-1 text-white hover:bg-red-600">
+              ❌
+            </button>
           </td>
         </tr>
       </tbody>
