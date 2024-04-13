@@ -60,10 +60,10 @@ function handleSearch(search) {
           </td>
           <td class="px-4 py-3">
             <button class="mr-2 border bg-green-500 px-2 py-1 text-white hover:bg-green-600">
-              ✔️
+              ✓
             </button>
             <button class="border bg-red-500 px-2 py-1 text-white hover:bg-red-600">
-              ❌
+              ✕
             </button>
           </td>
         </tr>
