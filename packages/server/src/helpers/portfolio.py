@@ -33,7 +33,6 @@ class Portfolio:
         ERROR_TYPES.PORTFOLIO_LONG: "Portfolio name must be less than or equal to 20 characters long",
         ERROR_TYPES.PORTFOLIO_INVALID_CHARACTERS: "Portfolio name must contain only valid characters",
         ERROR_TYPES.PORTFOLIO_NAME_EXISTS: "Portfolio name must be unique",
-        # TODO: move error messages from the code to here
     }
 
     def __init__(self):
