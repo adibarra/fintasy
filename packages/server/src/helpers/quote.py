@@ -1,5 +1,4 @@
-from datetime import datetime
-from enum import Enum
+from datetime import datetime, timedelta
 
 
 class Quote:
@@ -7,7 +6,7 @@ class Quote:
     Represents a quote for a symbol at a specific timestamp.
     """
 
-    INTERVALS = Enum("INTERVALS", ["MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"])
+    INTERVALS = ["MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"]
 
     def __init__(self, symbol: str, price: int, timestamp: datetime):
         """
@@ -20,7 +19,7 @@ class Quote:
         """
         self.symbol = symbol
         self.price = price
-        self.timestamp = timestamp
+        self.timestamp = timestamp if timestamp else datetime.now()
 
     def get_quote(self):
         """
@@ -36,9 +35,7 @@ class Quote:
         }
 
     @staticmethod
-    def get_historical_quotes(
-        symbol: str, start_time: datetime, end_time: datetime, interval: str
-    ):
+    def get_historical_quotes(symbol, start_time, end_time, interval):
         """
         Gets historical quotes for a symbol within a specified time range and interval.
 
@@ -51,7 +48,7 @@ class Quote:
         Returns:
             list: A list of historical quotes grouped by the specified interval.
         """
-        if interval not in Quote.INTERVALS.__members__:
+        if interval not in Quote.INTERVALS:
             raise ValueError("Invalid interval specified.")
 
         interval_seconds = {
@@ -67,10 +64,35 @@ class Quote:
 
         # Simulate getting historical data (replace with actual data retrieval logic)
         historical_data = [
-            {"timestamp": start_time + i * interval_seconds, "price": i * 10.0}
+            {
+                "timestamp": start_time + timedelta(seconds=i * interval_seconds),
+                "price": i * 10.0,
+            }
             for i in range(
                 int((end_time - start_time).total_seconds() // interval_seconds)
             )
         ]
 
         return historical_data
+
+    def review_historical_prices(self, start_date, end_date):
+        """
+        Review historical prices based on start and end dates.
+
+        Args:
+            start_date (str): Start date in the format MM/DD/YY.
+            end_date (str): End date in the format MM/DD/YY.
+
+        Returns:
+            str: Outcome message based on the review.
+        """
+        start_date_obj = datetime.strptime(start_date, "%m/%d/%y")
+        end_date_obj = datetime.strptime(end_date, "%m/%d/%y")
+        current_date_obj = datetime.now()
+
+        if start_date_obj <= end_date_obj and end_date_obj <= current_date_obj:
+            return "Historical Graph and data shown"
+        elif end_date_obj > current_date_obj:
+            return "End date must be before today's date"
+        else:
+            return "Start date must be before End Date"

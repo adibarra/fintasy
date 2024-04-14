@@ -1,4 +1,8 @@
+# @author: mariptime (Akshay)
+# @description: Test for the Quote class
+
 import unittest
+from datetime import datetime
 
 from src.helpers.quote import Quote
 
@@ -8,45 +12,48 @@ class TestQuoteMethods(unittest.TestCase):
         # Initialize any required objects or variables for testing
         self.quote_obj = Quote()
 
-    def test_validate_quote_symbol(self):
-        # Test valid symbol
-        valid_symbol = "AAPL"
-        self.assertTrue(self.quote_obj.validate_quote_symbol(valid_symbol))
+    def test_historical_graph_data_shown(self):
+        """Test review_historical_prices with valid start and end dates"""
+        start_date = "03/03/24"
+        end_date = "03/05/24"
+        expected_outcome = "Historical Graph and data shown"
+        outcome = self.quote_obj.review_historical_prices(start_date, end_date)
+        self.assertEqual(outcome, expected_outcome)
 
-        # Test invalid symbol
-        invalid_symbol = "invalid_symbol"
-        self.assertFalse(self.quote_obj.validate_quote_symbol(invalid_symbol))
+    def test_end_date_before_today(self):
+        """Test review_historical_prices with end date after today's date"""
+        start_date = "03/03/24"
+        end_date = "03/26/24"
+        expected_outcome = "End date must be before today's date"
+        outcome = self.quote_obj.review_historical_prices(start_date, end_date)
+        self.assertEqual(outcome, expected_outcome)
 
-    def test_get_quote(self):
-        # Test getting a quote for a valid symbol
-        valid_symbol = "AAPL"
-        self.assertIsNotNone(self.quote_obj.get_quote(valid_symbol))
+    def test_historical_graph_data_shown_2(self):
+        """Test review_historical_prices with valid start and end dates"""
+        start_date = "03/25/24"
+        end_date = "03/25/24"
+        expected_outcome = "Historical Graph and data shown"
+        outcome = self.quote_obj.review_historical_prices(start_date, end_date)
+        self.assertEqual(outcome, expected_outcome)
 
-        # Test getting a quote for an invalid symbol
-        invalid_symbol = "invalid_symbol"
-        self.assertIsNone(self.quote_obj.get_quote(invalid_symbol))
+    def test_start_date_before_end_date(self):
+        """Test review_historical_prices with start date after end date"""
+        start_date = "03/10/24"
+        end_date = "03/05/24"
+        expected_outcome = "Start date must be before End Date"
+        outcome = self.quote_obj.review_historical_prices(start_date, end_date)
+        self.assertEqual(outcome, expected_outcome)
 
-    def test_get_historical_quotes(self):
-        # Test getting historical quotes with a valid symbol and interval
-        valid_symbol = "AAPL"
-        valid_interval = "1d"
-        self.assertIsNotNone(
-            self.quote_obj.get_historical_quotes(valid_symbol, valid_interval)
-        )
-
-        # Test getting historical quotes with an invalid symbol
-        invalid_symbol = "invalid_symbol"
-        valid_interval = "1d"
-        self.assertIsNone(
-            self.quote_obj.get_historical_quotes(invalid_symbol, valid_interval)
-        )
-
-        # Test getting historical quotes with an invalid interval
-        valid_symbol = "AAPL"
-        invalid_interval = "invalid_interval"
-        self.assertIsNone(
-            self.quote_obj.get_historical_quotes(valid_symbol, invalid_interval)
-        )
+    def test_invalid_interval_get_historical_quotes(self):
+        """Test get_historical_quotes with an invalid interval"""
+        symbol = "AAPL"
+        start_time = datetime(2024, 3, 3)
+        end_time = datetime(2024, 3, 5)
+        invalid_interval = "INVALID"
+        with self.assertRaises(ValueError):
+            self.quote_obj.get_historical_quotes(
+                symbol, start_time, end_time, invalid_interval
+            )
 
     def tearDown(self):
         # Clean up any resources used for testing
