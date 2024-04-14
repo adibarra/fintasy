@@ -1,5 +1,5 @@
 # @author: mariptime (Akshay)
-# @description: Test for the Quote class
+# @description: Testcases for the Quote class
 
 import unittest
 from datetime import datetime
