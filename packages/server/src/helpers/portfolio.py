@@ -13,7 +13,7 @@ class Portfolio:
     """
 
     PORTFOLIO_VALID_CHARACTERS = (
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_#"
     )
     PORTFOLIO_LENGTH_MIN = 1
     PORTFOLIO_LENGTH_MAX = 20
@@ -155,6 +155,70 @@ class Portfolio:
         for char in company_name:
             if char not in Portfolio.PORTFOLIO_VALID_CHARACTERS:
                 raise ValueError("Company name must contain only valid characters.")
+
+        if qty < 0:
+            raise ValueError(
+                f"The quantity of {company_name}'s stock(s) must be greater than zero inside of this portfolio."
+            )
+
+        if unit_price < 0:
+            raise ValueError(
+                f"The unit price of {company_name}'s stock(s) must be greater than zero inside of this portfolio."
+            )
+
+        if daily_PL < 0:
+            raise ValueError(
+                f"The daily PL of {company_name}'s stock(s) must be greater than zero inside of this portfolio."
+            )
+
+        if total_PL < 0:
+            raise ValueError(
+                f"The daily PL of {company_name}'s stock(s) must be greater than zero inside of this portfolio."
+            )
+
+        self.portfolios[portfolio_name][company_name] = {
+            "qty": qty,
+            "unit_price": unit_price,
+            "daily_PL": daily_PL,
+            "total_PL": total_PL,
+        }
+        return True
+
+    def update_data(
+        self,
+        portfolio_name: str,
+        company_name: str,
+        qty: int,
+        unit_price: int,
+        daily_PL: int,
+        total_PL: int,
+    ):
+        """
+        Args:
+            portfolio_name (str): The portfolio name must exist inside of the dictionary.
+            company_name (str): The company name must contain only valid characters and is greater than one character.
+            qty (int): The stock quantity must contain only valid integers.
+            unit_price (int): The unit price must contain only valid int values that are converted into dollars and cents.
+            daily_PL (int): The daily PL must contain only valid int values that are converted into dollars and cents.
+            total_PL (int): The total PL must contain only valid int values that are converted into dollars and cents.
+
+        Raises:
+            KeyError: If the portfolio name or company name doesn't exist inside of the dictionary.
+            ValueError: If the company name contains invalid characters.
+            ValueError: If the qty, unit price, dailyPL, or totalPL contains invalid values.
+
+        Returns:
+            Updated self.portfolios[portfolio_name] dictionary with updated values for key data.
+        """
+        if portfolio_name not in self.portfolios:
+            raise KeyError(
+                "Portfolio does not exist.\nPlease try again and input a portfolio name that exists inside of the Fintasy Databases."
+            )
+
+        if company_name not in self.portfolios[company_name]:
+            raise KeyError(
+                "Company does not exist.\nPlease try again and input a company name that exists inside of the Fintasy Databases."
+            )
 
         if qty < 0:
             raise ValueError(

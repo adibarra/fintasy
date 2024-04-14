@@ -1,4 +1,4 @@
-# @authors: caleb-j-kim (Caleb Kim), OsiddiquiProjects (Tinatsei Chingaya)
+# @authors: caleb-j-kim (Caleb Kim), Zedfousa (Tinatsei Chingaya)
 # @description: Test class for portfolio class
 
 import unittest
@@ -11,7 +11,7 @@ class TestPortfolioMethods(unittest.TestCase):
         # Initialize any required objects or variables for testing
         self.portfolio = Portfolio()
         self.portfolio_name = self.portfolio.default_name()
-        self.initial_balance = 1000
+        self.initial_balance = 500
 
     def test_default_name(self):
         # Test that the default name is returned
@@ -61,8 +61,11 @@ class TestPortfolioMethods(unittest.TestCase):
         self.portfolio.change_balance(self.portfolio_name, 5, 0)
         self.assertEqual(
             self.portfolio.portfolios[self.portfolio_name]["balance"],
-            self.initial_balance + 500,
+            self.initial_balance,
         )
+
+        self.portfolio.change_balance(self.portfolio_name, -1, 0)
+        self.assertFalse(ValueError, "Amount must be greater than 0.")
 
     def test_add_data(self):
         # Test that data is added correctly
@@ -75,26 +78,35 @@ class TestPortfolioMethods(unittest.TestCase):
             ValueError,
             "Company name must contain one or more characters inside of its name.",
         )
-        self.portfolio.add_data(self.portfolio_name, "Tech-Co", -10, 50, 0, 0)
+        self.portfolio.add_data(self.portfolio_name, "Tech-Co", 10, 50, 0, 0)
         self.assertFalse(ValueError, "Company name must contain only valid characters")
-        self.portfolio.add_data(self.portfolio_name, "Tech Co", 0, 50, 0, 0)
+        self.portfolio.add_data(self.portfolio_name, "Tech_Co", 0, 50, 0, 0)
         self.assertFalse(ValueError, "Quantity must be greater than 0.")
         self.portfolio.add_data(self.portfolio_name, "Tech Co", 10, 0, 0, 0)
         self.assertFalse(ValueError, "Price must be greater than 0.")
 
     def test_update_data(self):
         # Test that data is updated correctly
-        self.portfolio.add_data(self.portfolio_name, "Tech Co", 10, 50, 0, 0)
-        self.portfolio.update_data(self.portfolio_name, "Tech Co", 5, 60, 0, 0)
+        self.portfolio.add_data(self.portfolio_name, "Tech_Co", 10, 50, 0, 0)
+        self.portfolio.update_data(self.portfolio_name, "Tech_Co", 5, 60, 0, 0)
         self.assertEqual(
-            self.portfolio.portfolios[self.portfolio_name]["Tech Co"]["qty"], 5
+            self.portfolio.portfolios[self.portfolio_name]["Tech_Co"]["qty"], 5
         )
+        self.portfolio.update_data(self.portfolio_name, "APPL", 5, 60, 0, 0)
+        self.assertFalse(KeyError, "Company does not exist.")
+        self.portfolio.add_data(self.portfolio_name, "Tech_Co", 0, 50, 0, 0)
+        self.assertFalse(ValueError, "Quantity must be greater than 0.")
+        self.portfolio.add_data(self.portfolio_name, "Tech Co", 10, 0, 0, 0)
+        self.assertFalse(ValueError, "Price must be greater than 0.")
 
     def test_get_portfolio(self):
         # Test that the portfolio is returned correctly
-        self.portfolio.add_data(self.portfolio_name, "Tech Co", 10, 50, 0, 0)
-        self.assertIsNotNone(self.portfolio.get_portfolio(self.portfolio_name))
+        self.portfolio.get_portfolio(self.portfolio_name)
+        self.assertTrue(self.portfolio.get_portfolio(self.portfolio_name))
+        self.portfolio.get_portfolio("DNE")
+        self.assertFalse(KeyError, "Portfolio does not exist.")
 
-    def test_get_portfolio_data(self):
-        # Test that the portfolio data is returned correctly
-        self.portfolio.add_data
+    def test_get_portfolios(self):
+        # Test that the portfolios are returned correctly
+        self.portfolio.list_portfolios()
+        self.assertTrue(self.portfolio.list_portfolios())
