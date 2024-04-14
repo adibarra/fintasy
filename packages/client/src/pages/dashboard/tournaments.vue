@@ -1,18 +1,13 @@
 <!--
-  @author: adibarra (Alec Ibarra)
+  @author: zedfoura (Tina Chingaya)
   @description: This component is used to display the tournaments page of the application.
 -->
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import TournamentFilters from './components/TournamentFilters.vue'
-import TournamentsList from './components/TournamentsList.vue'
 
 export default defineComponent({
-  components: {
-    TournamentFilters,
-    TournamentsList,
-  },
+
   setup() {
     const currentFilters = ref({})
 
