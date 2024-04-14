@@ -12,7 +12,7 @@ useHead({
   title: `${t('pages.login.title')} • Fintasy`,
 })
 
-const username = ref('')
+const email = ref('')
 const password = ref('')
 
 function submitForm() {
@@ -61,9 +61,9 @@ function authenticateWithFacebook() {
       <!-- Login form -->
       <form class="space-y-4" @submit.prevent="submitForm">
         <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-          <label for="username" class="block">{{ t('Enter your Username') }}</label>
+          <label for="email" class="block">{{ t('Enter your Email') }}</label>
           <input
-            id="username" v-model="username" type="text" required
+            id="email" v-model="email" type="text" required
             class="mt-1 w-full border bg-white p-2 text-black"
           >
         </div>
