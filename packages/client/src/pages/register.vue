@@ -9,10 +9,10 @@ import { ref } from 'vue'
 
 const { t } = useI18n()
 
-const first = ref('')
-const middle = ref('')
-const last = ref('')
+const username = ref('')
+const email = ref('')
 const password = ref('')
+const confirmPassword = ref('')
 
 function submitForm() {
   // Implement your form submission logic here
@@ -20,10 +20,12 @@ function submitForm() {
 
 function authenticateWithGoogle() {
   // Implement Google authentication logic
+
 }
 
 function authenticateWithFacebook() {
   // Implement Facebook authentication logic
+
 }
 </script>
 
@@ -60,26 +62,19 @@ function authenticateWithFacebook() {
     <div>
       <!-- Register form -->
       <form class="space-y-4" @submit.prevent="submitForm">
-        <div class="align-center flex items-center">
+        <div class="align-center flex justify-center gap-4">
           <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-            <label for="first" class="block">{{ t('First') }}</label>
+            <label for="username" class="block">{{ t('Username') }}</label>
             <input
-              id="first" v-model="first" type="text" required
-              class="mt-1 w-full border bg-white p-2 text-black"
-            >
-          </div>
-          <div class="px-4 text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-            <label for="middle" class="block">{{ t('Middle') }}</label>
-            <input
-              id="middle" v-model="middle" type="text" optional
-              class="mt-1 w-full border bg-white p-2 text-black"
+              id="username" v-model="username" type="text" required
+              class="mr-54 mt-1 w-full border bg-white p-2 text-black"
             >
           </div>
           <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-            <label for="last" class="block">{{ t('Last') }}</label>
+            <label for="email" class="block">{{ t('Email') }}</label>
             <input
-              id="last" v-model="last" type="text" required
-              class="mt-1 w-full border bg-white p-2 text-black"
+              id="email" v-model="email" type="text" required
+              class="mr-54 mt-1 w-full border bg-white p-2 text-black"
             >
           </div>
         </div>
@@ -95,12 +90,13 @@ function authenticateWithFacebook() {
           <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
             <label for="confirm-password" class="block">{{ t('Confirm your Password') }}</label>
             <input
-              id="confirm-password" v-model="password" type="password" required
+              id="confirm-password" v-model="confirmPassword" type="password" required
               class="mt-1 w-full border bg-white p-2 text-black"
             >
           </div>
         </div>
 
+        <!-- Take from here to do verification logic -->
         <button type="submit" class="w-full bg-emerald-600 p-2 text-white" @click="$router.push('/dashboard')">
           {{ t('Login') }}
         </button>
