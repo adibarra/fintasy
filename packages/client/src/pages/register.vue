@@ -9,6 +9,10 @@ import { ref } from 'vue'
 
 const { t } = useI18n()
 
+useHead({
+  title: `${t('pages.register.title')} • Fintasy`,
+})
+
 const username = ref('')
 const email = ref('')
 const password = ref('')
