@@ -3,22 +3,53 @@
   @description: This component is used to display the tournaments page of the application.
 -->
 
-<script setup lang="ts">
-const { t } = useI18n()
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import TournamentFilters from './components/TournamentFilters.vue'
+import TournamentsList from './components/TournamentsList.vue'
 
-useHead({
-  title: `${t('pages.dashboard.tournaments.title')} • Fintasy`,
+export default defineComponent({
+  components: {
+    TournamentFilters,
+    TournamentsList,
+  },
+  setup() {
+    const currentFilters = ref({})
+
+    const applyFilters = (filters: any) => {
+      currentFilters.value = filters
+    }
+
+    return {
+      currentFilters,
+      applyFilters,
+    }
+  },
 })
 </script>
 
 <template>
-  <!-- Some spacers and a temporary footer -->
-  <span op-50>
-    <div h-10 />
-    [ pages/dashboard/tournaments.vue ]
-    <div h-10 />
-  </span>
+  <div class="app">
+    <div class="filter-section">
+      <TournamentFilters @filter="applyFilters" />
+    </div>
+    <div class="tournaments-section">
+      <TournamentsList :filters="currentFilters" />
+    </div>
+  </div>
 </template>
+
+<style>
+.app {
+  display: flex;
+}
+.filter-section {
+  flex: 1;
+}
+.tournaments-section {
+  flex: 3;
+}
+</style>
 
 <route lang="yaml">
   meta:
