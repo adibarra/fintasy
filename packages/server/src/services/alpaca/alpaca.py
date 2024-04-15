@@ -40,7 +40,7 @@ def get_alpaca_quote(symbol):
 
         # Get adjusted price(ap)
         price = response_data["quotes"][symbol]["ap"]
-        # if ap is 0 use bid price(bp) <- Note: Need to confirm if this is what we want to do
+        # if ap is 0, use bid price(bp) <- Note: Need to confirm if this is what we want to do
         if (not price):
             price = response_data["quotes"][symbol]["bp"]
         #print(f"price: {price}") # Check for price
