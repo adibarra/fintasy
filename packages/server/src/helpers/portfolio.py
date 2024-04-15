@@ -55,7 +55,7 @@ class Portfolio:
                 self.portfolios[portfolio_name] = portfolio_name
                 return self.portfolios[portfolio_name]
 
-    def validate_portfolio_name(self, portfolio_name: str):
+    def validate_portfolio_name(portfolio_name: str):
         """
         Validates the given portfolio name.
 
@@ -91,9 +91,6 @@ class Portfolio:
                     ]
                 )
 
-        if portfolio_name in self.portfolios:
-            raise ValueError("Portfolio name must be unique.")
-        self.portfolios[portfolio_name] = portfolio_name
         return True
 
     def remove_portfolio(self, portfolio_name: str):
