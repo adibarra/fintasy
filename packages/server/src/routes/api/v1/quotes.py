@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Optional
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, status
-from pydantic import UUID4, BaseModel
+from pydantic import BaseModel
 from services.database import Database
 
 db = Database()
