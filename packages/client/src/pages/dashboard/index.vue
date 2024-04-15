@@ -100,8 +100,8 @@ onMounted(async () => {
   if (portfoliosRequest.code !== 200)
     return
 
-  state.portfolio.available = portfoliosRequest.data
   state.portfolio.active = 0
+  state.portfolio.available = portfoliosRequest.data
 
   if (portfoliosRequest.data.length !== 0)
     return
@@ -111,7 +111,6 @@ onMounted(async () => {
     return
 
   state.portfolio.available = [createPortfolioRequest.data]
-  state.portfolio.active = 0
 })
 </script>
 
