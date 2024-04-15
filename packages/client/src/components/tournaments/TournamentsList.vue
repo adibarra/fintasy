@@ -7,18 +7,30 @@ export default defineComponent({
     filters: Object,
   },
   setup(props) {
-    const tournaments = ref([])
+    const tournaments = ref<Tournament[]>([])
     const currentPage = ref(1)
     const totalPages = ref(1)
 
     const fetchTournaments = async (page: number) => {
-      // Placeholder for fetching logic
-      // Here you would typically fetch from an API
-      // For now, let's assume some static data
+      const params = {
+        uuid_owner: props.filters.uuidOwner,
+        name: props.filters.name,
+        status: props.filters.status,
+        start_date: props.filters.startDate,
+        start_date_before: props.filters.startDateBefore,
+        start_date_after: props.filters.startDateAfter,
+        end_date: props.filters.endDate,
+        end_date_before: props.filters.endDateBefore,
+        end_date_after: props.filters.endDateAfter,
+        offset: (page - 1) * 10,
+        limit: 10,
+      }
+
       tournaments.value = [
         { id: 1, name: 'Tournament A', cost: '100 Coins' },
         { id: 2, name: 'Tournament B', cost: '200 Coins' },
       ]
+
       totalPages.value = 5 // Example total pages
     }
 
