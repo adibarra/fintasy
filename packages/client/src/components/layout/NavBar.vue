@@ -14,6 +14,7 @@ import { useMessage } from 'naive-ui'
 const { t } = useI18n()
 const route = useRoute()
 const message = useMessage()
+const state = useStateStore()
 
 interface Crumb { label: string, key: string }
 const breadcrumbs = computed(() => {
@@ -32,18 +33,6 @@ const breadcrumbs = computed(() => {
     crumbs.push({ label: t('misc.home'), key: crumbs[0].key })
 
   return crumbs
-})
-
-const user = ref({
-  name: 'adibarra',
-  avatar: 'https://avatars.githubusercontent.com/u/93070681?v=4',
-  account: 'Default Portfolio',
-  accounts: [
-    { key: 0, label: 'Default Portfolio' },
-    { key: 1, label: 'Test Portfolio' },
-    { key: 2, label: 'Tournament Portfolio' },
-  ],
-  coins: 50,
 })
 </script>
 
@@ -83,21 +72,21 @@ const user = ref({
 
       <!-- coins -->
       <div hidden w-fit items-center justify-center fn-outline px-2 op-85 md:flex>
-        Coins: 🪙 {{ user.coins }}
+        Coins: 🪙 {{ state.user.coins }}
       </div>
 
       <!-- switch user portfolio account -->
       <div hidden w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 sm:flex fn-hover>
         <n-dropdown
-          :options="user.accounts"
+          :options="state.portfolio.available"
           trigger="click"
           @select="(key, option) => {
-            user.account = user.accounts[key].label
+            state.portfolio.active = state.portfolio.available[key].label
             message.info(`Selected ${option.label}`)
           }"
         >
           <div gap-1>
-            {{ user.account }}
+            {{ state.portfolio.active }}
             <n-icon size="10">
               <DropdownIcon />
             </n-icon>
@@ -133,7 +122,7 @@ const user = ref({
       >
         <n-avatar
           size="small"
-          :src="user.avatar"
+          :src="state.user.avatar"
           mr-5 cursor-pointer
         />
       </n-dropdown>
