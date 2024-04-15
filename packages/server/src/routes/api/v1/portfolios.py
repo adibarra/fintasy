@@ -57,9 +57,6 @@ class PortfolioResponse(BaseModel):
     message: str
     data: PortfolioData
 
-    class Config:
-        extra = True
-
 
 async def authenticateToken(
     authorization: str = Header(...),
