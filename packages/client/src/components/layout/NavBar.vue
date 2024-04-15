@@ -34,6 +34,10 @@ const breadcrumbs = computed(() => {
 
   return crumbs
 })
+
+const portfolios = computed(() => {
+  return state.portfolio.available.map((p, i) => ({ key: i, label: p.name }))
+})
 </script>
 
 <template>
@@ -78,15 +82,15 @@ const breadcrumbs = computed(() => {
       <!-- switch user portfolio account -->
       <div hidden w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 sm:flex fn-hover>
         <n-dropdown
-          :options="state.portfolio.available"
+          :options="portfolios"
           trigger="click"
           @select="(key, option) => {
-            state.portfolio.active = state.portfolio.available[key].label
+            state.portfolio.active = key
             message.info(`Selected ${option.label}`)
           }"
         >
           <div gap-1>
-            {{ state.portfolio.active }}
+            {{ portfolios.length > 0 ? portfolios[state.portfolio.active].label : 'None' }}
             <n-icon size="10">
               <DropdownIcon />
             </n-icon>
