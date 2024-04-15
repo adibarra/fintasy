@@ -67,16 +67,19 @@ function toggleForm(form: 'login' | 'register') {
 </script>
 
 <template>
-  <nav class="mb-8 flex md:mx-6 md:my-4">
-    <router-link to="/" class="flex items-center justify-center gap-2">
-      <img src="/pwa-192x192.png" alt="Fintasy Logo" class="h-14">
-      <div class="text-2xl lg:text-4xl md:text-3xl">
+  <nav mb-8 flex md:mx-6 md:my-4>
+    <router-link to="/" flex items-center justify-center gap-2>
+      <img src="/pwa-192x192.png" alt="Fintasy Logo" h-14>
+      <div text-2xl lg:text-4xl md:text-3xl>
         Fintasy
       </div>
     </router-link>
-    <div class="grow" />
-    <div class="flex items-center gap-5">
-      <button class="rd-10 bg--c-accent hover:bg--c-inverse px-6 py-2 text--c-bg md:text-lg" @click="$router.push('/')">
+    <div grow />
+    <div flex items-center gap-5>
+      <button
+        rd-10 bg--c-accent hover:bg--c-inverse px-6 py-2 text--c-bg md:text-lg
+        @click="$router.push('/')"
+      >
         {{ t('misc.home') }}
       </button>
     </div>
@@ -85,7 +88,10 @@ function toggleForm(form: 'login' | 'register') {
   <div h-15svh />
 
   <!-- Login and Registration Forms -->
-  <div v-show="activeForm === 'login' || activeForm === 'register'" flex flex-col justify-center>
+  <div
+    v-show="activeForm === 'login' || activeForm === 'register'"
+    flex flex-col justify-center
+  >
     <!-- Form Title -->
     <div mb-5 text-center text-3xl>
       {{ activeForm === 'login' ? t('pages.login.title') : t('pages.login.register') }}
@@ -144,10 +150,7 @@ function toggleForm(form: 'login' | 'register') {
         <n-checkbox v-model:checked="rememberMe">
           {{ t('pages.login.remember-me') }}
         </n-checkbox>
-        <div grow />
-
-        <!-- Commented out for now -->
-        <!--
+        <!-- forgot password link commented out for now
         <router-link to="/forgot-password" fn-link>
           {{ t('pages.login.forgot-password') }}
         </router-link>
@@ -167,7 +170,7 @@ function toggleForm(form: 'login' | 'register') {
 
     <!-- Redirect Link -->
     <div
-      flex cursor-pointer items-center justify-center fn-link
+      flex cursor-pointer items-center justify-center text-lg fn-link
       @click="toggleForm(activeForm === 'login' ? 'register' : 'login')"
     >
       {{ activeForm === 'login' ? t('pages.login.no-account-create-one') : t('pages.login.already-have-account') }}
