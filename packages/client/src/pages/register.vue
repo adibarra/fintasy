@@ -5,15 +5,18 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { ref } from 'vue'
 
 const { t } = useI18n()
 
 useHead({
-  title: `${t('pages.login.title')} • Fintasy`,
+  title: `${t('pages.register.title')} • Fintasy`,
 })
 
+const username = ref('')
 const email = ref('')
 const password = ref('')
+const confirmPassword = ref('')
 
 function submitForm() {
   // Implement your form submission logic here
@@ -21,10 +24,12 @@ function submitForm() {
 
 function authenticateWithGoogle() {
   // Implement Google authentication logic
+
 }
 
 function authenticateWithFacebook() {
   // Implement Facebook authentication logic
+
 }
 </script>
 
@@ -43,6 +48,7 @@ function authenticateWithFacebook() {
       </button>
     </div>
   </nav>
+
   <div style="filter: drop-shadow(0px 0px 12px rgba(5, 150, 105, 2));" class="bg-white px-10 py-8 md:mx-96 md:my-24">
     <div class="mb-4 flex justify-center gap-2">
       <router-link to="/login" class="flex items-center justify-center gap-2">
@@ -58,31 +64,50 @@ function authenticateWithFacebook() {
     </div>
 
     <div>
-      <!-- Login form -->
+      <!-- Register form -->
       <form class="space-y-4" @submit.prevent="submitForm">
-        <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-          <label for="email" class="block">{{ t('Enter your Email') }}</label>
-          <input
-            id="email" v-model="email" type="text" required
-            class="mt-1 w-full border bg-white p-2 text-black"
-          >
+        <div class="align-center flex justify-center gap-4">
+          <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
+            <label for="username" class="block">{{ t('Username') }}</label>
+            <input
+              id="username" v-model="username" type="text" required
+              class="mr-54 mt-1 w-full border bg-white p-2 text-black"
+            >
+          </div>
+          <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
+            <label for="email" class="block">{{ t('Email') }}</label>
+            <input
+              id="email" v-model="email" type="text" required
+              class="mr-54 mt-1 w-full border bg-white p-2 text-black"
+            >
+          </div>
         </div>
 
-        <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-          <label for="Enter your Password" class="block">{{ t('Enter your Password') }}</label>
-          <input
-            id="password" v-model="password" type="password" required
-            class="mt-1 w-full border bg-white p-2 text-black"
-          >
+        <div>
+          <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
+            <label for="password" class="block">{{ t('Enter your Password') }}</label>
+            <input
+              id="password" v-model="password" type="password" required
+              class="mt-1 w-full border bg-white p-2 text-black"
+            >
+          </div>
+          <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
+            <label for="confirm-password" class="block">{{ t('Confirm your Password') }}</label>
+            <input
+              id="confirm-password" v-model="confirmPassword" type="password" required
+              class="mt-1 w-full border bg-white p-2 text-black"
+            >
+          </div>
         </div>
 
+        <!-- Take from here to do verification logic -->
         <button type="submit" class="w-full bg-emerald-600 p-2 text-white" @click="$router.push('/dashboard')">
           {{ t('Login') }}
         </button>
 
         <div class="mt-10">
           <p class="mb-2 text-black">
-            {{ t('Or Login with Socials') }}:
+            {{ t('Or Sign up with Socials') }}:
           </p>
           <div class="flex">
             <button class="mb-2 mr-4 w-full bg-red-500 p-2 text-white" @click="authenticateWithGoogle">
