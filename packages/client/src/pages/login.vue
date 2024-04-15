@@ -8,9 +8,9 @@ const router = useRouter()
 const state = useStateStore()
 const fintasy = useAPI()
 
-const activeForm = ref<'login' | 'register'>('register')
+const activeForm = useStorage<'login' | 'register'>('login-last-form', 'register')
 const rememberMe = useStorage('remember-me', false)
-const email = rememberMe.value ? useStorage('email', '') : ref('')
+const email = useStorage('email', '')
 const password = ref('')
 const username = ref('')
 const confirmPassword = ref('')
@@ -33,15 +33,17 @@ async function login() {
     return
   }
 
-  const status = await fintasy.login({ email: email.value, password: password.value })
-
-  if (status.code === 200) {
-    state.auth.authenticated = true
-    router.push('/dashboard')
-  }
-  else {
+  const login = await fintasy.login({ email: email.value, password: password.value })
+  if (login.code !== 200) {
     error.value = t('pages.login.invalid-credentials')
+    return
   }
+
+  state.auth.authenticated = true
+  state.auth.uuid = login.data.owner
+  if (!rememberMe.value)
+    email.value = ''
+  router.push('/dashboard')
 }
 
 async function createAccount() {
@@ -50,15 +52,23 @@ async function createAccount() {
     return
   }
 
-  const status = await fintasy.createUser({ email: email.value, username: username.value, password: password.value })
-
-  if (status.code === 200) {
-    state.auth.authenticated = true
-    router.push('/dashboard')
-  }
-  else {
+  const createUser = await fintasy.createUser({ email: email.value, username: username.value, password: password.value })
+  if (createUser.code !== 200) {
     error.value = t('pages.login.invalid-registration')
+    return
   }
+
+  const login = await fintasy.login({ email: email.value, password: password.value })
+  if (login.code !== 200) {
+    error.value = t('pages.login.invalid-registration')
+    return
+  }
+
+  state.auth.authenticated = true
+  state.auth.uuid = login.data.owner
+  if (!rememberMe.value)
+    email.value = ''
+  router.push('/dashboard')
 }
 
 function toggleForm(form: 'login' | 'register') {
@@ -98,11 +108,13 @@ function toggleForm(form: 'login' | 'register') {
     </div>
 
     <!-- Form Container -->
-    <div mx-auto mb-5 max-w-150 min-w-80 w-90vw flex flex-col gap-5 fn-outline px-8 py-8>
+    <div mx-auto mb-5 max-w-150 min-w-80 w-90vw flex flex-col gap-5 fn-outline bg--c-fg px-8 py-8>
       <!-- Email Input -->
       <div fn-outline fn-hover>
         <n-input-group>
-          <n-input-group-label>Email</n-input-group-label>
+          <n-input-group-label w-25>
+            Email
+          </n-input-group-label>
           <n-input
             v-model:value="email" :placeholder="t('pages.login.email')"
             type="text"
@@ -113,7 +125,9 @@ function toggleForm(form: 'login' | 'register') {
       <!-- Username Input (Only for Registration) -->
       <div v-if="activeForm === 'register'" mb-5 fn-outline fn-hover>
         <n-input-group>
-          <n-input-group-label>Username</n-input-group-label>
+          <n-input-group-label w-25>
+            Username
+          </n-input-group-label>
           <n-input
             v-model:value="username" :placeholder="t('pages.login.username')"
             type="text"
@@ -124,7 +138,9 @@ function toggleForm(form: 'login' | 'register') {
       <!-- Password Input -->
       <div fn-outline fn-hover>
         <n-input-group>
-          <n-input-group-label>Password</n-input-group-label>
+          <n-input-group-label w-25>
+            Password
+          </n-input-group-label>
           <n-input
             v-model:value="password" :placeholder="t('pages.login.password')"
             type="password" show-password-on="click"
@@ -136,7 +152,9 @@ function toggleForm(form: 'login' | 'register') {
       <!-- Confirm Password Input (Only for Registration) -->
       <div v-if="activeForm === 'register'" fn-outline fn-hover>
         <n-input-group>
-          <n-input-group-label>Confirm</n-input-group-label>
+          <n-input-group-label w-25>
+            Confirm
+          </n-input-group-label>
           <n-input
             v-model:value="confirmPassword" :placeholder="t('pages.login.confirm-password')"
             type="password" show-password-on="click"
@@ -163,7 +181,7 @@ function toggleForm(form: 'login' | 'register') {
       </div>
 
       <!-- Submit Button -->
-      <n-button mt-5 text-lg @click="handleSubmit">
+      <n-button mt-5 bg--c-inverse text-lg text--c-bg @click="handleSubmit">
         {{ activeForm === 'login' ? t('pages.login.sign-in') : t('pages.login.sign-up') }}
       </n-button>
     </div>

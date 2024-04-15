@@ -8,6 +8,9 @@ import type { Transaction } from '~/types'
 import { ACTION } from '~/types'
 
 const { t } = useI18n()
+const router = useRouter()
+const state = useStateStore()
+const fintasy = useAPI()
 
 useHead({
   title: `${t('pages.dashboard.title')} • Fintasy`,
@@ -77,6 +80,36 @@ function generateTransactions(count: number): Transaction[] {
   }
   return transactions
 }
+
+onMounted(async () => {
+  if (!state.auth.authenticated || !state.auth.uuid) {
+    state.auth.authenticated = false
+    state.auth.uuid = ''
+    router.push('/login')
+    return
+  }
+
+  const userRequest = await fintasy.getUser({ uuid: state.auth.uuid })
+  if (userRequest.code === 200) {
+    state.user.username = userRequest.data.username
+    state.user.coins = userRequest.data.coins
+  }
+
+  const portfoliosRequest = await fintasy.getPortfolios({ owner: state.auth.uuid, limit: 10 })
+  if (portfoliosRequest.code === 200) {
+    if (portfoliosRequest.data.length === 0) {
+      const createPortfolioRequest = await fintasy.createPortfolio({ name: 'Default Portfolio' })
+      if (createPortfolioRequest.code === 200) {
+        state.portfolio.available = [createPortfolioRequest.data]
+        state.portfolio.active = 0
+      }
+    }
+    else {
+      state.portfolio.available = portfoliosRequest.data
+      state.portfolio.active = 0
+    }
+  }
+})
 </script>
 
 <template>

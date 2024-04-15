@@ -4,23 +4,21 @@
  */
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import type { Portfolio } from '~/types'
 
 export const useStateStore = defineStore('state', () => {
   const auth = ref({
     authenticated: false,
+    uuid: '',
   })
   const user = ref({
-    username: 'adibarra',
+    username: '',
     avatar: 'https://avatars.githubusercontent.com/u/93070681?v=4',
-    coins: 15,
+    coins: 0,
   })
   const portfolio = ref({
-    active: 'Default Portfolio',
-    available: [
-      { key: 0, label: 'Default Portfolio' },
-      { key: 1, label: 'Test Portfolio' },
-      { key: 2, label: 'Tournament Portfolio' },
-    ],
+    active: 0,
+    available: [] as Portfolio[],
   })
 
   return { auth, user, portfolio }
