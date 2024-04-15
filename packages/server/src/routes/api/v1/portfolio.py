@@ -103,15 +103,18 @@ def create_portfolio(
 ):
     token_owner = auth[0]
 
-    if not all([Portfolio.validate_portfolio_name(data.name)]):
+    try:
+        Portfolio.validate_portfolio_name(data.name)
+    except ValueError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Bad Request",
         )
 
     portfolio = db.create_portfolio(
-        data.tournament,
+        token_owner,
         data.name,
+        data.tournament,
     )
     if portfolio is None:
         raise HTTPException(
@@ -136,21 +139,15 @@ def get_portfolios(
     token_owner = auth[0]
 
     # Keep this check for now, might remove later with a more complex permission system
-    # if owner != token_owner:
-    # raise HTTPException(
-    # status_code=status.HTTP_403_FORBIDDEN,
-    # detail="Forbidden",
-    # )
-
-    # TODO: use db.get_portfolios() instead, and pass in the query parameters (resolved?)
-    portfolios = db.get_portfolios(
-        data.owner, data.tournament, data.name, data.offset, data.limit, auth
-    )
-    if portfolios is None:
+    if data.owner != token_owner:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Not Found",
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Forbidden",
         )
+
+    portfolios = db.get_portfolios(
+        data.owner, data.tournament, data.name, data.offset, data.limit
+    )
 
     return PortfolioResponse(
         code=200,
@@ -200,7 +197,9 @@ def update_portfolio(
         )
 
     if data.name:
-        if not Portfolio.validate_portfolio_name(data.name):
+        try:
+            Portfolio.validate_portfolio_name(data.name)
+        except ValueError:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Bad Request",
@@ -208,9 +207,14 @@ def update_portfolio(
 
     if not db.update_portfolio(portfolio_uuid, data.name):
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Conflict",
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal Server Error",
         )
+
+    return PortfolioResponse(
+        code=200,
+        message="Ok",
+    )
 
 
 @router.delete(
