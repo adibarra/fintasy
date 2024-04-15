@@ -8,7 +8,11 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
+from routes.api.v1.portfolios import router as portfolios_router
+from routes.api.v1.quotes import router as quotes_router
 from routes.api.v1.sessions import router as sessions_router
+from routes.api.v1.tournaments import router as tournaments_router
+from routes.api.v1.transactions import router as transactions_router
 from routes.api.v1.users import router as users_router
 
 app = FastAPI()
@@ -49,6 +53,10 @@ async def http_exception_handler(request, exc):
 
 app.include_router(sessions_router)
 app.include_router(users_router)
+app.include_router(quotes_router)
+app.include_router(portfolios_router)
+app.include_router(transactions_router)
+app.include_router(tournaments_router)
 
 if __name__ == "__main__":
     print("Server starting up...", flush=True)
