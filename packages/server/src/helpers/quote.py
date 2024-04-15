@@ -10,7 +10,7 @@ class Quote:
 
     INTERVALS = ["MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"]
 
-    def __init__(self, symbol="", price=0.0, timestamp=None):
+    def __init__(self, symbol: str, price: int, timestamp: datetime):
         """
         Initializes a Quote object.
 

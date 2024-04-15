@@ -40,10 +40,10 @@ class TournamentsMixin:
                     column_names = [desc[0] for desc in cursor.description]
                     return dict(zip(column_names, tournament))
                 else:
-                    print("Failed to retrieve the created tournament.")
+                    print("Failed to retrieve the created tournament.", flush=True)
                     return None
         except Exception as e:
-            print("Failed to create tournament:", e)
+            print("Failed to create tournament:", e, flush=True)
             return None
         finally:
             if conn:
@@ -96,7 +96,7 @@ class TournamentsMixin:
                 conn.commit()
                 return True
         except Exception as e:
-            print("Failed to update tournament by UUID:", e)
+            print("Failed to update tournament by UUID:", e, flush=True)
             return False
         finally:
             if conn:
@@ -123,7 +123,7 @@ class TournamentsMixin:
                 conn.commit()
                 return True
         except Exception as e:
-            print("Failed to delete tournament by UUID:", e)
+            print("Failed to delete tournament by UUID:", e, flush=True)
             return False
         finally:
             if conn:
@@ -154,10 +154,13 @@ class TournamentsMixin:
                         column_names = [desc[0] for desc in cursor.description]
                         return dict(zip(column_names, tournament))
                     else:
-                        print(f"Tournament with UUID '{uuid_tournament}' not found.")
+                        print(
+                            f"Tournament with UUID '{uuid_tournament}' not found.",
+                            flush=True,
+                        )
                         return None
         except Exception as e:
-            print("Failed to get tournament by UUID:", e)
+            print("Failed to get tournament by UUID:", e, flush=True)
             return None
         finally:
             if conn:
@@ -243,7 +246,7 @@ class TournamentsMixin:
                 ]
                 return tournaments
         except Exception as e:
-            print("Failed to get tournaments:", e)
+            print("Failed to get tournaments:", e, flush=True)
             return []
         finally:
             if conn:
