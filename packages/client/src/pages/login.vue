@@ -1,35 +1,69 @@
 <!--
-  @author: Mariptime (Akshay)
+  @author: adibarra (Alec Ibarra), Mariptime (Akshay)
   @description: This component is used to display the login/register page of the application.
 -->
-
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-
 const { t } = useI18n()
+const router = useRouter()
+const state = useStateStore()
+const fintasy = useAPI()
+
+const activeForm = ref<'login' | 'register'>('login')
+const rememberMe = useStorage('remember-me', false)
+const email = rememberMe.value ? useStorage('email', '') : ref('')
+const password = ref('')
+const username = ref('')
+const confirmPassword = ref('')
+const error = ref(false)
 
 useHead({
   title: `${t('pages.login.title')} • Fintasy`,
 })
 
-const email = ref('')
-const password = ref('')
-
-function submitForm() {
-  // Implement your form submission logic here
+async function handleSubmit() {
+  if (activeForm.value === 'login')
+    await login()
+  else
+    await createAccount()
 }
 
-function authenticateWithGoogle() {
-  // Implement Google authentication logic
+async function login() {
+  if (!email.value || !password.value)
+    return
+
+  const status = await fintasy.login({ email: email.value, password: password.value })
+
+  if (status.code === 200) {
+    state.auth.authenticated = true
+    router.push('/dashboard')
+  }
+  else {
+    error.value = true
+  }
 }
 
-function authenticateWithFacebook() {
-  // Implement Facebook authentication logic
+async function createAccount() {
+  if (!email.value || !username.value || !password.value || password.value !== confirmPassword.value)
+    return
+
+  const status = await fintasy.createUser({ email: email.value, username: username.value, password: password.value })
+
+  if (status.code === 200) {
+    state.auth.authenticated = true
+    router.push('/dashboard')
+  }
+  else {
+    error.value = true
+  }
+}
+
+function toggleForm(form: 'login' | 'register') {
+  activeForm.value = form
 }
 </script>
 
 <template>
-  <nav class="flex md:mx-6 md:my-4">
+  <nav class="mb-8 flex md:mx-6 md:my-4">
     <router-link to="/" class="flex items-center justify-center gap-2">
       <img src="/pwa-192x192.png" alt="Fintasy Logo" class="h-14">
       <div class="text-2xl lg:text-4xl md:text-3xl">
@@ -39,62 +73,100 @@ function authenticateWithFacebook() {
     <div class="grow" />
     <div class="flex items-center gap-5">
       <button class="rd-10 bg--c-accent hover:bg--c-inverse px-6 py-2 text--c-bg md:text-lg" @click="$router.push('/')">
-        {{ t('Home') }}
+        {{ t('misc.home') }}
       </button>
     </div>
   </nav>
-  <div style="filter: drop-shadow(0px 0px 12px rgba(5, 150, 105, 2));" class="bg-white px-10 py-8 md:mx-96 md:my-24">
-    <div class="mb-4 flex justify-center gap-2">
-      <router-link to="/login" class="flex items-center justify-center gap-2">
-        <button class="bg-emerald-600 px-4 py-2 text-white">
-          {{ t('Login') }}
-        </button>
-      </router-link>
-      <router-link to="/register" class="flex items-center justify-center gap-2">
-        <button class="bg-emerald-600 px-4 py-2 text-white">
-          {{ t('Register') }}
-        </button>
-      </router-link>
+
+  <div h-15svh />
+
+  <!-- Login and Registration Forms -->
+  <div v-show="activeForm === 'login' || activeForm === 'register'" flex flex-col justify-center>
+    <!-- Form Title -->
+    <div mb-5 text-center text-3xl>
+      {{ activeForm === 'login' ? t('pages.login.title') : t('pages.login.register') }}
     </div>
 
-    <div>
-      <!-- Login form -->
-      <form class="space-y-4" @submit.prevent="submitForm">
-        <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-          <label for="email" class="block">{{ t('Enter your Email') }}</label>
-          <input
-            id="email" v-model="email" type="text" required
-            class="mt-1 w-full border bg-white p-2 text-black"
-          >
-        </div>
+    <!-- Form Container -->
+    <div mx-auto mb-5 max-w-150 min-w-80 w-90vw flex flex-col gap-5 fn-outline px-8 py-8>
+      <!-- Email Input -->
+      <div fn-outline fn-hover>
+        <n-input-group>
+          <n-input-group-label>Email</n-input-group-label>
+          <n-input
+            v-model:value="email" :placeholder="t('pages.login.email')"
+            type="text"
+          />
+        </n-input-group>
+      </div>
 
-        <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-          <label for="Enter your Password" class="block">{{ t('Enter your Password') }}</label>
-          <input
-            id="password" v-model="password" type="password" required
-            class="mt-1 w-full border bg-white p-2 text-black"
-          >
-        </div>
+      <!-- Username Input (Only for Registration) -->
+      <div v-if="activeForm === 'register'" mb-5 fn-outline fn-hover>
+        <n-input-group>
+          <n-input-group-label>Username</n-input-group-label>
+          <n-input
+            v-model:value="username" :placeholder="t('pages.login.username')"
+            type="text"
+          />
+        </n-input-group>
+      </div>
 
-        <button type="submit" class="w-full bg-emerald-600 p-2 text-white" @click="$router.push('/dashboard')">
-          {{ t('Login') }}
-        </button>
+      <!-- Password Input -->
+      <div fn-outline fn-hover>
+        <n-input-group>
+          <n-input-group-label>Password</n-input-group-label>
+          <n-input
+            v-model:value="password" :placeholder="t('pages.login.password')"
+            type="password" show-password-on="click"
+            @keypress.enter="handleSubmit"
+          />
+        </n-input-group>
+      </div>
 
-        <div class="mt-10">
-          <p class="mb-2 text-black">
-            {{ t('Or Login with Socials') }}:
-          </p>
-          <div class="flex">
-            <button class="mb-2 mr-4 w-full bg-red-500 p-2 text-white" @click="authenticateWithGoogle">
-              {{ t('Google') }}
-            </button>
-            <button class="mb-2 ml-4 w-full bg-blue-500 p-2 text-white" @click="authenticateWithFacebook">
-              {{ t('Facebook') }}
-            </button>
-          </div>
-          <!-- Add more buttons for other third-party authentication options as needed -->
-        </div>
-      </form>
+      <!-- Confirm Password Input (Only for Registration) -->
+      <div v-if="activeForm === 'register'" fn-outline fn-hover>
+        <n-input-group>
+          <n-input-group-label>Confirm</n-input-group-label>
+          <n-input
+            v-model:value="confirmPassword" :placeholder="t('pages.login.confirm-password')"
+            type="password" show-password-on="click"
+            @keypress.enter="handleSubmit"
+          />
+        </n-input-group>
+      </div>
+
+      <!-- Remember and Forgot password (Only for Login) -->
+      <div v-if="activeForm === 'login'" flex items-center justify-between>
+        <n-checkbox v-model:checked="rememberMe">
+          {{ t('pages.login.remember-me') }}
+        </n-checkbox>
+        <div grow />
+
+        <!-- Commented out for now -->
+        <!--
+        <router-link to="/forgot-password" fn-link>
+          {{ t('pages.login.forgot-password') }}
+        </router-link>
+        -->
+      </div>
+
+      <!-- Error Message -->
+      <div v-if="error" text-red>
+        {{ activeForm === 'login' ? t('pages.login.invalid-credentials') : t('pages.login.invalid-registration') }}
+      </div>
+
+      <!-- Submit Button -->
+      <n-button mt-5 text-lg @click="handleSubmit">
+        {{ activeForm === 'login' ? t('pages.login.sign-in') : t('pages.login.sign-up') }}
+      </n-button>
+    </div>
+
+    <!-- Redirect Link -->
+    <div
+      flex cursor-pointer items-center justify-center fn-link
+      @click="toggleForm(activeForm === 'login' ? 'register' : 'login')"
+    >
+      {{ activeForm === 'login' ? t('pages.login.no-account-create-one') : t('pages.login.already-have-account') }}
     </div>
   </div>
 </template>

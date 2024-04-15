@@ -6,7 +6,9 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useStateStore = defineStore('state', () => {
-  const authenticated = ref(false)
+  const auth = ref({
+    authenticated: false,
+  })
   const user = ref({
     username: 'adibarra',
     avatar: 'https://avatars.githubusercontent.com/u/93070681?v=4',
@@ -21,7 +23,7 @@ export const useStateStore = defineStore('state', () => {
     ],
   })
 
-  return { authenticated, user, portfolio }
+  return { auth, user, portfolio }
 })
 
 if (import.meta.hot)
