@@ -4,11 +4,10 @@
 from datetime import datetime
 from typing import List, Optional
 
-from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, Query, status
+from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
+from helpers.tournament import Tournament
 from pydantic import UUID4, BaseModel
-
-from src.helpers.tournament import Tournament
-from src.services.database import Database
+from services.database import Database
 
 db = Database()
 router = APIRouter(prefix="/api/v1")
@@ -141,17 +140,23 @@ def create_tournament(
     status_code=status.HTTP_200_OK,
 )
 def get_tournaments(
-    data: GetTournamentsRequest = Query(...),
+    name: str = None,
+    owner: UUID4 = None,
+    status: str = None,
+    start_date: datetime = None,
+    end_date: datetime = None,
+    offset: int = 0,
+    limit: int = 10,
     auth: tuple[str, str] = Depends(authenticateToken),
 ):
     tournaments = db.get_tournaments(
-        uuid_owner=data.owner,
-        name=data.name,
-        status=data.status,
-        start_date=data.start_date,
-        end_date=data.end_date,
-        offset=data.offset,
-        limit=data.limit,
+        uuid_owner=owner,
+        name=name,
+        status=status,
+        start_date=start_date,
+        end_date=end_date,
+        offset=offset,
+        limit=limit,
     )
     return TournamentsResponse(
         code=200,

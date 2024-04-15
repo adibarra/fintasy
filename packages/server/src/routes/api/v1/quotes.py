@@ -4,25 +4,14 @@
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, Depends, Header, HTTPException, Path, Query, status
+from fastapi import APIRouter, Depends, Header, HTTPException, Path, status
 from pydantic import BaseModel
 from services.database import Database
 
 db = Database()
 router = APIRouter(
-    prefix="api/v1",
+    prefix="/api/v1",
 )
-
-
-class GetHistoricalQuoteRequest(BaseModel):
-    start_date: Optional[datetime]
-    end_date: Optional[datetime]
-    interval: Optional[str]
-    limit: Optional[int] = 10
-    offset: Optional[int] = 0
-
-    class Config:
-        exclude_none = True
 
 
 class QuoteData(BaseModel):
@@ -95,7 +84,11 @@ def get_quote(
 )
 def get_historical_quote(
     symbol: str = Path(...),
-    data: GetHistoricalQuoteRequest = Query(...),
+    start_date: datetime = None,
+    end_date: datetime = None,
+    interval: str = None,
+    limit: int = 10,
+    offset: int = 0,
     auth: tuple[str, str] = Depends(authenticate),
 ):
     # TODO: implement get_quote_historical in quotes helper class

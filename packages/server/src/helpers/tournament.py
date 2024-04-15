@@ -4,7 +4,7 @@
 from datetime import datetime
 from enum import Enum
 
-from portfolio import Portfolio
+from helpers.portfolio import Portfolio
 
 
 class Tournament:
