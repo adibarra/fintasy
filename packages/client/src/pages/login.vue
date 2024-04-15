@@ -8,7 +8,7 @@ const router = useRouter()
 const state = useStateStore()
 const fintasy = useAPI()
 
-const activeForm = ref<'login' | 'register'>('login')
+const activeForm = ref<'login' | 'register'>('register')
 const rememberMe = useStorage('remember-me', false)
 const email = rememberMe.value ? useStorage('email', '') : ref('')
 const password = ref('')
