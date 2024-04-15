@@ -8,7 +8,9 @@ pages:
   main:
     title: Main
   login:
-    title: Login/Register
+    title: Login
+  register:
+    title: Register
   dashboard:
     title: Dashboard
     trade:
