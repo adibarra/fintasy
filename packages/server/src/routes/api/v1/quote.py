@@ -51,7 +51,7 @@ class QuoteHistoricalResponse(BaseModel):
 
 async def authenticate(
     authorization: str = Header(...),
-) -> tuple[UUID4, str]:
+) -> tuple[str, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
@@ -70,7 +70,7 @@ async def authenticate(
 )
 def get_quote(
     symbol: str = Path(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     # TODO: implement get_quote in quotes helper class
     # it should access the external api to get the quote
@@ -96,7 +96,7 @@ def get_quote(
 def get_historical_quote(
     symbol: str = Path(...),
     data: GetHistoricalQuoteRequest = Query(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     # TODO: implement get_quote_historical in quotes helper class
     # it should access the external api to get the quote historical data

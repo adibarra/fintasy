@@ -35,7 +35,7 @@ class SessionResponse(BaseModel):
 
 async def authenticate(
     authorization: str = Header(...),
-) -> tuple[UUID4, str]:
+) -> tuple[str, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
@@ -84,7 +84,7 @@ def create_session(
     "/sessions", response_model=SessionResponse, status_code=status.HTTP_200_OK
 )
 def delete_session(
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     if not db.delete_session(auth[1]):
         raise HTTPException(
