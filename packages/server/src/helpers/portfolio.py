@@ -13,7 +13,7 @@ class Portfolio:
     """
 
     PORTFOLIO_VALID_CHARACTERS = (
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ "
     )
     PORTFOLIO_LENGTH_MIN = 1
     PORTFOLIO_LENGTH_MAX = 20
