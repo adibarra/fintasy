@@ -14,7 +14,7 @@ const email = rememberMe.value ? useStorage('email', '') : ref('')
 const password = ref('')
 const username = ref('')
 const confirmPassword = ref('')
-const error = ref(false)
+const error = ref('')
 
 useHead({
   title: `${t('pages.login.title')} • Fintasy`,
@@ -28,8 +28,10 @@ async function handleSubmit() {
 }
 
 async function login() {
-  if (!email.value || !password.value)
+  if (!email.value || !password.value) {
+    error.value = t('pages.login.missing-credentials')
     return
+  }
 
   const status = await fintasy.login({ email: email.value, password: password.value })
 
@@ -38,13 +40,15 @@ async function login() {
     router.push('/dashboard')
   }
   else {
-    error.value = true
+    error.value = t('pages.login.invalid-credentials')
   }
 }
 
 async function createAccount() {
-  if (!email.value || !username.value || !password.value || password.value !== confirmPassword.value)
+  if (!email.value || !username.value || !password.value || password.value !== confirmPassword.value) {
+    error.value = t('pages.login.missing-credentials')
     return
+  }
 
   const status = await fintasy.createUser({ email: email.value, username: username.value, password: password.value })
 
@@ -53,7 +57,7 @@ async function createAccount() {
     router.push('/dashboard')
   }
   else {
-    error.value = true
+    error.value = t('pages.login.invalid-registration')
   }
 }
 
@@ -152,7 +156,7 @@ function toggleForm(form: 'login' | 'register') {
 
       <!-- Error Message -->
       <div v-if="error" text-red>
-        {{ activeForm === 'login' ? t('pages.login.invalid-credentials') : t('pages.login.invalid-registration') }}
+        {{ error }}
       </div>
 
       <!-- Submit Button -->

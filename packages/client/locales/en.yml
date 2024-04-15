@@ -22,6 +22,7 @@ pages:
     already-have-account: Already have an account? Sign in!
     invalid-credentials: Your credentials are incorrect or you do not have an account.
     invalid-registration: Your account information is incorrect or you already have an account.
+    missing-credentials: Please fill out all fields.
   dashboard:
     title: Dashboard
     trade:
