@@ -52,7 +52,7 @@ class TransactionResponse(BaseModel):
 
 async def authenticateToken(
     authorization: str = Header(...),
-) -> tuple[UUID4, str]:
+) -> tuple[str, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
@@ -69,7 +69,7 @@ async def authenticateToken(
 async def authenticate(
     authorization: str = Header(...),
     transaction_uuid: UUID4 = Path(...),
-) -> tuple[UUID4, str]:
+) -> tuple[str, str]:
     token_owner, token = authenticateToken(authorization)
 
     # Validate the token has permission for this user's transactions
@@ -89,7 +89,7 @@ async def authenticate(
 )
 def create_transaction(
     data: CreateTransactionRequest = Body(...),
-    auth: tuple[UUID4, str] = Depends(authenticateToken),
+    auth: tuple[str, str] = Depends(authenticateToken),
 ):
     # Attempt creating transaction
     transaction = db.create_transaction(
@@ -115,7 +115,7 @@ def create_transaction(
 )
 def get_transactions(
     data: GetTransactionRequest = Body(...),
-    auth: tuple[UUID4, str] = Depends(authenticateToken),
+    auth: tuple[str, str] = Depends(authenticateToken),
 ):
     token_owner = auth[0]
 
@@ -150,7 +150,7 @@ def get_transactions(
 )
 def get_transaction_by_id(
     transaction_uuid: UUID4 = Path(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     # Attempt getting transaction
     transaction = db.get_transaction_by_uuid(str(transaction_uuid))

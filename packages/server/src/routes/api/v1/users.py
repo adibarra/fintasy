@@ -51,7 +51,7 @@ class UserResponse(BaseModel):
 
 async def authenticateToken(
     authorization: str = Header(...),
-) -> tuple[UUID4, str]:
+) -> tuple[str, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
@@ -67,12 +67,12 @@ async def authenticateToken(
 
 async def authenticate(
     authorization: str = Header(...),
-    uuid: UUID4 = Path(...),
-) -> tuple[UUID4, str]:
+    uuid: str = Path(...),
+) -> tuple[str, str]:
     token_owner, token = authenticateToken(authorization)
 
     # Validate the token has permission for this resource
-    if token_owner != str(uuid):
+    if str(token_owner) != str(uuid):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Forbidden",
@@ -117,7 +117,7 @@ def create_user(
 )
 def get_user(
     uuid: UUID4 = Path(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     # Attempt fetching user
     user_data = db.get_user(str(uuid))
@@ -141,7 +141,7 @@ def get_user(
 def patch_user(
     uuid: UUID4 = Path(...),
     data: UpdateUserRequest = Body(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     # Attempt fetching user
     user = db.get_user(str(uuid))
@@ -202,7 +202,7 @@ def patch_user(
 )
 def delete_user(
     uuid: UUID4 = Path(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     # Check if the user exists
     user = db.get_user(str(uuid))

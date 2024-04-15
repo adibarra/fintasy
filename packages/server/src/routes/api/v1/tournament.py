@@ -70,7 +70,7 @@ class TournamentsResponse(BaseModel):
 
 async def authenticateToken(
     authorization: str = Header(...),
-) -> tuple[UUID4, str]:
+) -> tuple[str, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
@@ -87,11 +87,17 @@ async def authenticateToken(
 async def authenticate(
     authorization: str = Header(...),
     tournament_uuid: UUID4 = Path(...),
-) -> tuple[UUID4, str]:
+) -> tuple[str, str]:
     token_owner, token = authenticateToken(authorization)
 
-    # Validate the token has permission for this resource
     tournament = db.get_tournament(tournament_uuid)
+    if tournament is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Not Found",
+        )
+
+    # Validate the token has permission for this resource
     if str(token_owner) != str(tournament.owner):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -136,7 +142,7 @@ def create_tournament(
 )
 def get_tournaments(
     data: GetTournamentsRequest = Query(...),
-    auth: tuple[UUID4, str] = Depends(authenticateToken),
+    auth: tuple[str, str] = Depends(authenticateToken),
 ):
     tournaments = db.get_tournaments(
         uuid_owner=data.owner,
@@ -161,7 +167,7 @@ def get_tournaments(
 )
 def get_tournament(
     tournament_uuid: UUID4 = Path(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     tournament = db.get_tournament(tournament_uuid)
     if tournament is None:
@@ -184,7 +190,7 @@ def get_tournament(
 def update_tournament(
     tournament_uuid: UUID4 = Path(...),
     data: UpdateTournamentRequest = Body(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     if not all(
         [
@@ -226,7 +232,7 @@ def update_tournament(
 )
 def delete_tournament(
     tournament_uuid: UUID4 = Path(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     tournaments = db.get_tournament(tournament_uuid)
     if tournaments is None:

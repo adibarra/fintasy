@@ -63,7 +63,7 @@ class PortfolioResponse(BaseModel):
 
 async def authenticateToken(
     authorization: str = Header(...),
-) -> tuple[UUID4, str]:
+) -> tuple[str, str]:
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
@@ -80,7 +80,7 @@ async def authenticateToken(
 async def authenticate(
     authorization: str = Header(...),
     portfolio_uuid: UUID4 = Path(...),
-) -> tuple[UUID4, str]:
+) -> tuple[str, str]:
     token_owner, token = authenticateToken(authorization)
 
     # Validate the token has permission for this portfolio
@@ -99,7 +99,7 @@ async def authenticate(
 )
 def create_portfolio(
     data: CreatePortfolioRequest = Body(...),
-    auth: tuple[UUID4, str] = Depends(authenticateToken),
+    auth: tuple[str, str] = Depends(authenticateToken),
 ):
     token_owner = auth[0]
 
@@ -134,19 +134,19 @@ def create_portfolio(
 )
 def get_portfolios(
     data: GetPortfoliosRequest = Body(...),
-    auth: tuple[UUID4, str] = Depends(authenticateToken),
+    auth: tuple[str, str] = Depends(authenticateToken),
 ):
     token_owner = auth[0]
 
     # Keep this check for now, might remove later with a more complex permission system
-    if data.owner != token_owner:
+    if str(data.owner) != token_owner:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Forbidden",
         )
 
     portfolios = db.get_portfolios(
-        data.owner, data.tournament, data.name, data.offset, data.limit
+        str(data.owner), data.tournament, data.name, data.offset, data.limit
     )
 
     return PortfolioResponse(
@@ -163,7 +163,7 @@ def get_portfolios(
 )
 def get_portfolio_by_uuid(
     portfolio_uuid: UUID4 = Path(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     portfolio = db.get_portfolio(portfolio_uuid)
     if portfolio is None:
@@ -187,7 +187,7 @@ def get_portfolio_by_uuid(
 def update_portfolio(
     portfolio_uuid: UUID4 = Path(...),
     data: UpdatePortfolioRequest = Body(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     portfolio = db.get_portfolio(portfolio_uuid)
     if portfolio is None:
@@ -224,7 +224,7 @@ def update_portfolio(
 )
 def remove_portfolio(
     portfolio_uuid: UUID4 = Path(...),
-    auth: tuple[UUID4, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticate),
 ):
     portfolio = db.get_portfolio(portfolio_uuid)
     if portfolio is None:
