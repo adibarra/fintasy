@@ -52,6 +52,12 @@ class UserResponse(BaseModel):
 async def authenticateToken(
     authorization: str = Header(...),
 ) -> tuple[str, str]:
+    if not len(authorization.split(" ")) == 2:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Bad Request",
+        )
+
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
@@ -69,7 +75,7 @@ async def authenticate(
     authorization: str = Header(...),
     uuid: str = Path(...),
 ) -> tuple[str, str]:
-    token_owner, token = authenticateToken(authorization)
+    token_owner, token = await authenticateToken(authorization)
 
     # Validate the token has permission for this resource
     if str(token_owner) != str(uuid):
