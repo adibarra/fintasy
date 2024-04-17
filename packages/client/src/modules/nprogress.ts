@@ -1,6 +1,6 @@
 /**
  * @author: adibarra (Alec Ibarra)
- * @description: Usermodule for installing nprogress
+ * @description: Module for installing nprogress
  */
 
 import NProgress from 'nprogress'

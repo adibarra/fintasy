@@ -1,6 +1,6 @@
 /**
  * @author: adibarra (Alec Ibarra)
- * @description: Usermodule for installing pinia
+ * @description: Module for installing pinia
  */
 
 import { createPinia } from 'pinia'
