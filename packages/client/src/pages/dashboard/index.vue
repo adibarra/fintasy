@@ -112,11 +112,11 @@ onMounted(async () => {
       <div flex grow-1 flex-col fn-outline bg--c-fg p-2>
         <PortfolioChart :data="chartData" />
       </div>
-      <div flex grow-3 flex-col fn-outline bg--c-fg p-2>
+      <div flex grow-3 flex-col fn-outline bg--c-fg p-2 max-xl:h-122>
         <PortfolioAssets :assets="assets" :cash="cash" />
       </div>
     </div>
-    <div flex grow flex-col fn-outline bg--c-fg p-2>
+    <div flex grow flex-col fn-outline bg--c-fg p-2 max-xl:h-205>
       <TransactionHistory :transactions="transactions" />
     </div>
   </div>
