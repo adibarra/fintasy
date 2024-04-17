@@ -1,0 +1,73 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n
+# cSpell: disable
+
+example:
+  hello-world: ¡Hola Mundo!
+
+pages:
+  main:
+    title: Principal
+
+  login:
+    title: Iniciar sesión/Registrarse
+    register: Registrarse
+    login: Iniciar sesión
+    email: Correo electrónico
+    username: Nombre de usuario
+    password: Contraseña
+    confirm-password: Confirmar contraseña
+    remember-me: Recordarme
+    forgot-password: ¿Olvidaste tu contraseña?
+    create-account: Crear cuenta
+    sign-in: Iniciar sesión
+    sign-up: Registrarse
+    no-account: ¿No tienes una cuenta?
+    already-have-account: ¿Ya tienes una cuenta?
+    missing-credentials: Por favor completa todos los campos.
+    invalid-credentials: Tus credenciales son incorrectas o no tienes una cuenta.
+    invalid-registration: La información de tu cuenta es incorrecta o ya tienes una cuenta.
+    username-requirements: El nombre de usuario debe tener entre 3 y 20 caracteres. Solo puede contener letras, números y guiones bajos.
+    password-requirements: La contraseña debe tener al menos 6 caracteres. Eso es todo.
+
+  dashboard:
+    title: Tablero
+    portfolio-value: Valor del portafolio
+    assets: Activos
+    history: Historial
+    cash: EFECTIVO
+    transactions: TRANSACCIONES
+
+    trade:
+      title: Comercio
+
+    tournaments:
+      title: Torneos
+
+    help:
+      title: Ayuda
+      index:
+        title: Índice
+
+      faq:
+        title: Preguntas frecuentes
+
+    settings:
+      title: Ajustes
+
+misc:
+  home: Inicio
+
+i18n:
+  language-changed-to: Idioma cambiado a
+  change-language: Cambiar idioma
+
+theme-switch:
+  toggle-theme: Alternar Tema
+  theme-toggled: Tema cambiado
+
+buttons:
+  go-back: Volver
+
+errors:
+  not-found: No encontrado
