@@ -1,6 +1,6 @@
 /**
  * @author: adibarra (Alec Ibarra)
- * @description: Usermodule for installing i18n
+ * @description: Module for installing i18n
  */
 
 import type { Locale } from 'vue-i18n'
