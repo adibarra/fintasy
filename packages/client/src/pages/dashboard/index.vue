@@ -84,7 +84,7 @@ function generateTransactions(count: number): Transaction[] {
 watch(() => state.auth.authenticated, () => {
   if (!state.auth.authenticated)
     router.push('/login')
-})
+}, { immediate: true })
 
 onMounted(async () => {
   const userRequest = await fintasy.getUser({ uuid: state.user.uuid })

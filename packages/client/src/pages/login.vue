@@ -20,11 +20,31 @@ useHead({
   title: `${t('pages.login.title')} • Fintasy`,
 })
 
+watch(() => state.auth.authenticated, () => {
+  if (state.auth.authenticated)
+    router.push('/dashboard')
+}, { immediate: true })
+
 async function handleSubmit() {
   if (activeForm.value === 'login')
     await login()
   else
     await createAccount()
+}
+
+async function createAccount() {
+  if (!email.value || !username.value || !password.value || password.value !== confirmPassword.value) {
+    error.value = t('pages.login.missing-credentials')
+    return
+  }
+
+  const createUser = await fintasy.createUser({ email: email.value, username: username.value, password: password.value })
+  if (createUser.code !== 200) {
+    error.value = t('pages.login.invalid-registration')
+    return
+  }
+
+  login()
 }
 
 async function login() {
@@ -41,34 +61,8 @@ async function login() {
 
   if (!rememberMe.value)
     email.value = ''
-  state.auth.authenticated = true
   state.user.uuid = login.data.owner
-  router.push('/dashboard')
-}
-
-async function createAccount() {
-  if (!email.value || !username.value || !password.value || password.value !== confirmPassword.value) {
-    error.value = t('pages.login.missing-credentials')
-    return
-  }
-
-  const createUser = await fintasy.createUser({ email: email.value, username: username.value, password: password.value })
-  if (createUser.code !== 200) {
-    error.value = t('pages.login.invalid-registration')
-    return
-  }
-
-  const login = await fintasy.login({ email: email.value, password: password.value })
-  if (login.code !== 200) {
-    error.value = t('pages.login.invalid-registration')
-    return
-  }
-
-  if (!rememberMe.value)
-    email.value = ''
   state.auth.authenticated = true
-  state.user.uuid = login.data.owner
-  router.push('/dashboard')
 }
 
 function toggleForm() {
