@@ -1,5 +1,5 @@
 # @author: adibarra (Alec Ibarra)
-# @description: User class for handling users
+# @description: User class for handling user validation and password hashing.
 
 import re
 from enum import Enum

@@ -1,3 +1,6 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Dockerfile to build and run client
+
 FROM node:alpine as build_client
 
 ENV PNPM_HOME="/pnpm"
