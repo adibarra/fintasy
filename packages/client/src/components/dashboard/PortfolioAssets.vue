@@ -4,14 +4,6 @@
 -->
 
 <script setup lang="ts">
-interface Asset {
-  symbol: string
-  quantity: number
-  price_cents: number
-  pl_day: number
-  pl_total: number
-}
-
 const props = defineProps({
   assets: {
     type: Array as PropType<Asset[]>,
@@ -22,6 +14,16 @@ const props = defineProps({
     required: true,
   },
 })
+
+const { t } = useI18n()
+
+interface Asset {
+  symbol: string
+  quantity: number
+  price_cents: number
+  pl_day: number
+  pl_total: number
+}
 
 const columns = [
   { key: 'symbol', title: 'Symbol', width: '20%' },
@@ -65,7 +67,9 @@ onMounted(() => handlePageChange(1))
 
 <template>
   <div flex>
-    <span ml-1 text-xl font-600>Assets</span>
+    <span ml-1 text-xl font-600>
+      {{ t('pages.dashboard.assets') }}
+    </span>
     <div grow />
     <span mx-2 text-xl>
       $
@@ -78,7 +82,7 @@ onMounted(() => handlePageChange(1))
       />
     </span>
     <span mr-2 mt-auto op-75>
-      CASH
+      {{ t('pages.dashboard.cash') }}
     </span>
   </div>
   <!-- eslint-disable unocss/order-attributify -->

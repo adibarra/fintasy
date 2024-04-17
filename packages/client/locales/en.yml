@@ -7,6 +7,7 @@ example:
 pages:
   main:
     title: Main
+
   login:
     title: Login
     sign-in: Sign In
@@ -25,18 +26,29 @@ pages:
     missing-credentials: Please fill out all fields.
     username-requirements: Username must be between 3 and 20 characters. It can only contain letters, numbers, and underscores.
     password-requirements: Password must be at least 6 characters. That's it.
+
   dashboard:
     title: Dashboard
+    portfolio-value: Portfolio Value
+    assets: Assets
+    history: History
+    cash: CASH
+    transactions: TRANSACTIONS
+
     trade:
       title: Trade
+
     tournaments:
       title: Tournaments
+
     help:
       title: Help
       index:
         title: Index
+
       faq:
         title: FAQ
+
     settings:
       title: Settings
 

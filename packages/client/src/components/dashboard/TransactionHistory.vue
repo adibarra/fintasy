@@ -13,6 +13,8 @@ const props = defineProps({
   },
 })
 
+const { t } = useI18n()
+
 const columns = [
   { key: 'symbol', title: 'Symbol', width: '20%' },
   { key: 'action', title: 'Action', width: '20%' },
@@ -55,7 +57,9 @@ onMounted(() => handlePageChange(1))
 
 <template>
   <div flex>
-    <span ml-1 text-xl font-600>History</span>
+    <span ml-1 text-xl font-600>
+      {{ t('pages.dashboard.history') }}
+    </span>
     <div grow />
     <span mx-2 text-xl>
       <n-number-animation
@@ -67,7 +71,7 @@ onMounted(() => handlePageChange(1))
       />
     </span>
     <span mr-2 mt-auto op-75>
-      TRANSACTIONS
+      {{ t('pages.dashboard.transactions') }}
     </span>
   </div>
   <!-- eslint-disable unocss/order-attributify -->
