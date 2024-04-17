@@ -10,19 +10,25 @@ import {
 } from '@vicons/carbon'
 import { useMessage } from 'naive-ui'
 
+const { t } = useI18n()
 const message = useMessage()
 </script>
 
 <template>
   <n-tooltip>
     <template #trigger>
-      <n-button text @click="() => { message.info(`Toggled Theme`); toggleTheme() }">
+      <n-button
+        text @click="() => {
+          message.info(t('theme-switch.theme-toggled'))
+          toggleTheme()
+        }"
+      >
         <n-icon size="22">
           <DarkIcon v-if="isDark" />
           <LightIcon v-else />
         </n-icon>
       </n-button>
     </template>
-    Toggle Theme
+    {{ t('theme-switch.toggle-theme') }}
   </n-tooltip>
 </template>

@@ -57,6 +57,14 @@ pages:
 misc:
   home: Home
 
+i18n:
+  language-changed-to: Language changed to
+  change-language: Change Language
+
+theme-switch:
+  toggle-theme: Toggle Theme
+  theme-toggled: Theme toggled
+
 buttons:
   go-back: Go Back
 
