@@ -36,5 +36,5 @@ useHead({
 
 <route lang="yaml">
   meta:
-    layout: default
+    layout: home
 </route>

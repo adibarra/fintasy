@@ -12,27 +12,6 @@ useHead({
 </script>
 
 <template>
-  <nav class="flex md:mx-6 md:my-4">
-    <router-link to="/" class="flex items-center justify-center gap-2">
-      <img
-        src="/pwa-192x192.png" alt="Fintasy Logo"
-        class="h-14"
-      >
-      <div class="text-2xl lg:text-4xl md:text-3xl">
-        Fintasy
-      </div>
-    </router-link>
-    <div class="grow" />
-    <div class="flex items-center gap-5">
-      <button
-        class="rd-10 bg--c-inverse hover:bg--c-accent px-6 py-2 text--c-bg md:text-lg"
-        @click="$router.push('/login')"
-      >
-        {{ t('pages.login.title') }}
-      </button>
-    </div>
-  </nav>
-
   <div class="h-10svh" />
   <div class="flex items-center justify-center">
     <div class="max-w-350 flex flex-col items-center justify-center xl:flex-row-reverse">
@@ -55,5 +34,5 @@ useHead({
 
 <route lang="yaml">
   meta:
-    layout: default
+    layout: home
 </route>
