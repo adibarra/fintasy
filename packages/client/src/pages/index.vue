@@ -23,11 +23,10 @@ useHead({
       >
       <div m-15>
         <div text-4xl text--c-accent lg:text-6xl md:text-5xl>
-          Take Your Stocks To The Next Level
+          {{ t('pages.main.content-title') }}
         </div>
         <div pt-10 text-base md:text-lg>
-          Fintasy is a stock market simulator that allows you to trade stocks with fake money. Compete against your
-          friends and see who can make the most money!
+          {{ t('pages.main.content-subtitle') }}
         </div>
       </div>
     </div>

@@ -4,11 +4,12 @@
 
 example:
   hello-world: ¡Hola Mundo!
-
 pages:
   main:
     title: Principal
-
+    content-title: Lleva tus acciones al siguiente nivel
+    content-subtitle: >-
+      Fintasy es un simulador de mercado de valores que te permite comerciar acciones con dinero ficticio. ¡Compite contra tus amigos y ve quién puede ganar más dinero!
   login:
     title: Iniciar sesión/Registrarse
     register: Registrarse
@@ -23,52 +24,42 @@ pages:
     create-account: Crear cuenta
     sign-in: Iniciar sesión
     sign-up: Registrarse
-    no-account: ¿No tienes una cuenta?
+    no-account: ¿Sin cuenta?
     already-have-account: ¿Ya tienes una cuenta?
-    missing-credentials: Por favor completa todos los campos.
+    missing-credentials: Por favor, llena todos los campos.
     invalid-credentials: Tus credenciales son incorrectas o no tienes una cuenta.
     invalid-registration: La información de tu cuenta es incorrecta o ya tienes una cuenta.
-    username-requirements: El nombre de usuario debe tener entre 3 y 20 caracteres. Solo puede contener letras, números y guiones bajos.
+    username-requirements: >-
+      El nombre de usuario debe tener entre 3 y 20 caracteres. Solo puede contener letras, números y guiones bajos.
     password-requirements: La contraseña debe tener al menos 6 caracteres. Eso es todo.
-
   dashboard:
-    title: Tablero
-    portfolio-value: Valor del portafolio
+    title: Tablero de control
+    portfolio-value: Valor de la cartera
     assets: Activos
     history: Historial
     cash: EFECTIVO
     transactions: TRANSACCIONES
-
     trade:
       title: Comercio
-
     tournaments:
       title: Torneos
-
     help:
       title: Ayuda
       index:
         title: Índice
-
       faq:
         title: Preguntas frecuentes
-
     settings:
-      title: Ajustes
-
+      title: Configuración
 misc:
   home: Inicio
-
 i18n:
   language-changed-to: Idioma cambiado a
   change-language: Cambiar idioma
-
 theme-switch:
-  toggle-theme: Alternar Tema
-  theme-toggled: Tema cambiado
-
+  toggle-theme: Alternar tema
+  theme-toggled: Tema alternado
 buttons:
   go-back: Volver
-
 errors:
   not-found: No encontrado

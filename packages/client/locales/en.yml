@@ -1,8 +1,15 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n
+
 example:
   hello-world: Hello World!
 pages:
   main:
     title: Main
+    content-title: Take Your Stocks To The Next Level
+    content-subtitle: >-
+      Fintasy is a stock market simulator that allows you to trade stocks with
+      fake money. Compete against your friends and see who can make the most money!
   login:
     title: Login/Register
     register: Register
