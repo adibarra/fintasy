@@ -423,7 +423,7 @@ export function useAPI(options?: { base?: string }) {
   function requireToken(ctx: BeforeFetchContext) {
     if (authenticated.value)
       return ctx
-    console.error('useAPI: API request cacelled. Not authenticated!')
+    console.error('useAPI: API request cancelled. Not authenticated!')
     ctx.cancel()
   }
 
