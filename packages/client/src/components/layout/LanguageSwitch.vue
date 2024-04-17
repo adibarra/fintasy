@@ -14,9 +14,9 @@ const { t, locale } = useI18n()
 const message = useMessage()
 
 async function setLocale(newLocale: string) {
-  message.info(`${t('i18n.language-changed-to')} ${newLocale}`)
   await loadLanguageAsync(newLocale)
   locale.value = newLocale
+  message.info(`${t('i18n.language-changed-to')} ${newLocale}`)
 }
 
 const locales = computed(() => {
