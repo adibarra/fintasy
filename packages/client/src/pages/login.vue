@@ -77,24 +77,6 @@ function toggleForm(form: 'login' | 'register') {
 </script>
 
 <template>
-  <nav mb-8 flex md:mx-6 md:my-4>
-    <router-link to="/" flex items-center justify-center gap-2>
-      <img src="/pwa-192x192.png" alt="Fintasy Logo" h-14>
-      <div text-2xl lg:text-4xl md:text-3xl>
-        Fintasy
-      </div>
-    </router-link>
-    <div grow />
-    <div flex items-center gap-5>
-      <button
-        rd-10 bg--c-accent hover:bg--c-inverse px-6 py-2 text--c-bg md:text-lg
-        @click="$router.push('/')"
-      >
-        {{ t('misc.home') }}
-      </button>
-    </div>
-  </nav>
-
   <div h-15svh />
 
   <!-- Login and Registration Forms -->
@@ -198,5 +180,5 @@ function toggleForm(form: 'login' | 'register') {
 
 <route lang="yaml">
   meta:
-    layout: default
+    layout: home
 </route>
