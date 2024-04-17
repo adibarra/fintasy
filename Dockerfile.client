@@ -11,7 +11,7 @@ COPY . .
 
 RUN corepack enable
 RUN pnpm install --prod --frozen-lockfile --ignore-scripts
-RUN pnpm run build:ci
+RUN pnpm run build
 
 
 FROM alpine as build_ngnix
