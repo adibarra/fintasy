@@ -9,8 +9,8 @@ const state = useStateStore()
 const fintasy = useAPI()
 
 const activeForm = useStorage<'login' | 'register'>('login-last-form', 'register')
-const rememberMe = useStorage('remember-me', false)
-const email = useStorage('email', '')
+const rememberMe = useStorage('login-remember-me', false)
+const email = useStorage('login-email', '')
 const password = ref('')
 const username = ref('')
 const confirmPassword = ref('')
@@ -20,8 +20,9 @@ useHead({
   title: `${t('pages.login.title')} • Fintasy`,
 })
 
-watch(() => state.auth.authenticated, () => {
-  if (state.auth.authenticated)
+// make sure uuid is set before redirecting
+watch(() => [fintasy.authenticated.value, state.user.uuid], () => {
+  if (fintasy.authenticated.value && state.user.uuid)
     router.push('/dashboard')
 }, { immediate: true })
 
@@ -62,7 +63,6 @@ async function login() {
   if (!rememberMe.value)
     email.value = ''
   state.user.uuid = login.data.owner
-  state.auth.authenticated = true
 }
 
 function toggleForm() {

@@ -8,7 +8,6 @@ import type { Transaction } from '~/types'
 import { ACTION } from '~/types'
 
 const { t } = useI18n()
-const router = useRouter()
 const state = useStateStore()
 const fintasy = useAPI()
 
@@ -81,15 +80,8 @@ function generateTransactions(count: number): Transaction[] {
   return transactions
 }
 
-watch(() => state.auth.authenticated, () => {
-  if (!state.auth.authenticated)
-    router.push('/login')
-}, { immediate: true })
-
 onMounted(async () => {
   const userRequest = await fintasy.getUser({ uuid: state.user.uuid })
-  if (userRequest.code === 401)
-    state.auth.authenticated = false
   if (userRequest.code !== 200)
     return
 

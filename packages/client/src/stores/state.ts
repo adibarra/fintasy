@@ -7,9 +7,6 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { Portfolio } from '~/types'
 
 export const useStateStore = defineStore('state', () => {
-  const auth = ref({
-    authenticated: false,
-  })
   const user = ref({
     uuid: '',
     username: '',
@@ -21,7 +18,7 @@ export const useStateStore = defineStore('state', () => {
     available: [] as Portfolio[],
   })
 
-  return { auth, user, portfolio }
+  return { user, portfolio }
 })
 
 if (import.meta.hot)
