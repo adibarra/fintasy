@@ -27,7 +27,7 @@ const buttonRoute = computed(() => {
     <div grow />
     <div flex items-center gap-5>
       <button
-        rd-10 bg--c-inverse hover:bg--c-accent px-6 py-2 text--c-bg md:text-lg
+        rd-10 fn-outline bg--c-inverse hover:bg--c-accent px-6 py-2 text--c-bg md:text-lg
         @click="$router.push(buttonRoute)"
       >
         {{ buttonName }}

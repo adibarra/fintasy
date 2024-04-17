@@ -79,7 +79,7 @@ function toggleForm() {
     <div mx-auto mb-5 max-w-150 min-w-80 w-90vw flex flex-col gap-5 fn-outline bg--c-fg px-8 py-8>
       <!-- Form Title -->
       <div mb-5 text-center text-3xl>
-        {{ activeForm === 'login' ? t('pages.login.title') : t('pages.login.register') }}
+        {{ activeForm === 'login' ? t('pages.login.login') : t('pages.login.register') }}
       </div>
 
       <!-- Email Input -->
@@ -174,12 +174,12 @@ function toggleForm() {
       </div>
 
       <!-- Submit Button -->
-      <n-button
-        mt-5 fn-outline bg--c-inverse text-lg text--c-bg
+      <button
+        mt-5 fn-outline bg--c-inverse hover:bg--c-accent text-lg text--c-bg py-0.5 px-2
         @click="handleSubmit"
       >
         {{ activeForm === 'login' ? t('pages.login.sign-in') : t('pages.login.create-account') }}
-      </n-button>
+      </button>
 
       <!-- Redirect Link -->
       <span flex flex-row items-center justify-center gap-2 text-lg>
