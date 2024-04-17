@@ -85,7 +85,7 @@ function toggleForm() {
       <!-- Email Input -->
       <div fn-outline fn-hover>
         <n-input-group>
-          <n-input-group-label w-25>
+          <n-input-group-label class="w-17%" min-w-fit>
             Email
           </n-input-group-label>
           <n-input
@@ -96,25 +96,27 @@ function toggleForm() {
       </div>
 
       <!-- Username Input (Only for Registration) -->
-      <div
-        v-if="activeForm === 'register'"
-        mb-5 fn-outline fn-hover
-      >
-        <n-input-group>
-          <n-input-group-label w-25>
-            Username
-          </n-input-group-label>
-          <n-input
-            v-model:value="username" :placeholder="t('pages.login.username')"
-            type="text"
-          />
-        </n-input-group>
+      <div v-if="activeForm === 'register'">
+        <div fn-outline fn-hover>
+          <n-input-group>
+            <n-input-group-label class="w-17%" min-w-fit>
+              Username
+            </n-input-group-label>
+            <n-input
+              v-model:value="username" :placeholder="t('pages.login.username')"
+              type="text"
+            />
+          </n-input-group>
+        </div>
+        <div px-2 py-1 op-75>
+          {{ t('pages.login.username-requirements') }}
+        </div>
       </div>
 
       <!-- Password Input -->
       <div fn-outline fn-hover>
         <n-input-group>
-          <n-input-group-label w-25>
+          <n-input-group-label class="w-17%" min-w-fit>
             Password
           </n-input-group-label>
           <n-input
@@ -130,20 +132,25 @@ function toggleForm() {
       <!-- Confirm Password Input (Only for Registration) -->
       <div
         v-if="activeForm === 'register'"
-        fn-outline fn-hover
+        mb-5
       >
-        <n-input-group>
-          <n-input-group-label w-25>
-            Confirm
-          </n-input-group-label>
-          <n-input
-            v-model:value="confirmPassword"
-            :placeholder="t('pages.login.confirm-password')"
-            type="password"
-            show-password-on="click"
-            @keypress.enter="handleSubmit"
-          />
-        </n-input-group>
+        <div fn-outline fn-hover>
+          <n-input-group>
+            <n-input-group-label class="w-17%" min-w-fit>
+              Confirm
+            </n-input-group-label>
+            <n-input
+              v-model:value="confirmPassword"
+              :placeholder="t('pages.login.confirm-password')"
+              type="password"
+              show-password-on="click"
+              @keypress.enter="handleSubmit"
+            />
+          </n-input-group>
+        </div>
+        <div px-2 py-1 op-75>
+          {{ t('pages.login.password-requirements') }}
+        </div>
       </div>
 
       <!-- Remember and Forgot password (Only for Login) -->
