@@ -1,37 +1,59 @@
 <script setup lang="ts">
+import {
+  HomeOutline as HomeIcon,
+} from '@vicons/ionicons5'
+import {
+  Dashboard as DashboardIcon,
+} from '@vicons/carbon'
+
 const { t } = useI18n()
-const route = useRoute()
-
-const buttonName = computed(() => {
-  if (route.path === '/')
-    return t('pages.login.title')
-
-  return t('misc.home')
-})
-const buttonRoute = computed(() => {
-  if (route.path === '/')
-    return '/login'
-
-  return '/'
-})
 </script>
 
 <template>
-  <nav mb-8 flex md:mx-6 md:my-4>
-    <router-link to="/" flex items-center justify-center gap-2>
-      <img src="/pwa-192x192.png" alt="Fintasy Logo" h-14>
-      <div text-2xl lg:text-4xl md:text-3xl>
+  <header z-40 text-lg>
+    <router-link
+      to="/"
+      focusable="false"
+      m-2 select-none outline-none lg:fixed flex gap-3 absolute
+    >
+      <img src="/pwa-512x512.png" alt="Fintasy Logo" mr-2 h-15>
+      <div text-3xl my-auto>
         Fintasy
       </div>
     </router-link>
-    <div grow />
-    <div flex items-center gap-5>
-      <button
-        rd-10 fn-outline bg--c-inverse hover:bg--c-accent px-6 py-2 text--c-bg md:text-lg
-        @click="$router.push(buttonRoute)"
-      >
-        {{ buttonName }}
-      </button>
-    </div>
-  </nav>
+
+    <nav flex flex-row gap-5 p-2 items-center>
+      <!-- spacer -->
+      <div grow />
+
+      <!-- home link -->
+      <n-tooltip>
+        <template #trigger>
+          <n-button text @click="$router.push('/')">
+            <span lt-md:hidden>{{ t('misc.home') }}</span>
+            <n-icon size="22" md:hidden>
+              <HomeIcon />
+            </n-icon>
+          </n-button>
+        </template>
+        {{ t('misc.home') }}
+      </n-tooltip>
+
+      <!-- dashboard link -->
+      <n-tooltip>
+        <template #trigger>
+          <n-button text @click="$router.push('/dashboard')">
+            <span lt-md:hidden>{{ t('pages.dashboard.title') }}</span>
+            <n-icon size="22" md:hidden>
+              <DashboardIcon />
+            </n-icon>
+          </n-button>
+        </template>
+        {{ t('pages.dashboard.title') }}
+      </n-tooltip>
+
+      <LanguageSwitch />
+      <ThemeSwitch />
+    </nav>
+  </header>
 </template>
