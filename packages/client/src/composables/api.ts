@@ -17,7 +17,8 @@ const authenticated = computed(() => Boolean(sessionToken.value))
  */
 export function useAPI(options?: { base?: string }) {
   const defaults = {
-    base: import.meta.env.VITE_API_BASE,
+    // TODO: temporary fallback, fix env loading in docker client image later
+    base: import.meta.env.VITE_API_BASE ?? 'https://fintasy-api.adibarra.com/api/v1',
     ...options,
   }
   const API_BASE = options?.base ?? defaults.base
