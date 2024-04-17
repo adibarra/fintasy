@@ -1,6 +1,6 @@
 /**
  * @author: adibarra (Alec Ibarra)
- * @description: Usermodule for installing vite-plugin-pwa
+ * @description: Module for installing vite-plugin-pwa
  */
 
 import type { UserModule } from '~/types'
