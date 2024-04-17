@@ -1,3 +1,6 @@
+# @authors: omer8 (Omer Siddiqui)
+# @description: SessionController class for user authentication and session management
+
 import secrets
 import string
 from collections import defaultdict
@@ -45,13 +48,3 @@ class SessionController:
         else:
             print("Login Failed. Please try again.")
             return None
-
-
-# Test
-if __name__ == "__main__":
-    email = "someone@gmail.com"
-    password = "password123"
-    session_token = SessionController.login(email, password)
-
-    if session_token:
-        print(f"Session Token: {session_token}")

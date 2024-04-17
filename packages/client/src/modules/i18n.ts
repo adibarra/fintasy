@@ -1,3 +1,8 @@
+/**
+ * @author: adibarra (Alec Ibarra)
+ * @description: Usermodule for installing i18n
+ */
+
 import type { Locale } from 'vue-i18n'
 import { createI18n } from 'vue-i18n'
 import type { UserModule } from '~/types'

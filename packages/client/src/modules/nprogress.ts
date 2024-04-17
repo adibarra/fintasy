@@ -1,3 +1,8 @@
+/**
+ * @author: adibarra (Alec Ibarra)
+ * @description: Usermodule for installing nprogress
+ */
+
 import NProgress from 'nprogress'
 import type { UserModule } from '~/types'
 

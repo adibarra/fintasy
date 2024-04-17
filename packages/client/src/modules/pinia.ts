@@ -1,3 +1,8 @@
+/**
+ * @author: adibarra (Alec Ibarra)
+ * @description: Usermodule for installing pinia
+ */
+
 import { createPinia } from 'pinia'
 import type { UserModule } from '~/types'
 
