@@ -13,8 +13,10 @@ import { useMessage } from 'naive-ui'
 
 const { t } = useI18n()
 const route = useRoute()
+const router = useRouter()
 const message = useMessage()
 const state = useStateStore()
+const fintasy = useAPI()
 
 interface Crumb { label: string, key: string }
 const breadcrumbs = computed(() => {
@@ -38,6 +40,12 @@ const breadcrumbs = computed(() => {
 const portfolios = computed(() => {
   return state.portfolio.available.map((p, i) => ({ key: i, label: p.name }))
 })
+
+// redirect to login if not authenticated
+watch(() => fintasy.authenticated.value, () => {
+  if (!fintasy.authenticated.value)
+    router.push('/login')
+}, { immediate: true })
 </script>
 
 <template>
@@ -122,7 +130,11 @@ const portfolios = computed(() => {
           { label: 'Logout', key: 'logout' },
         ]"
         trigger="click"
-        @select="(key) => message.info(`Selected ${key}`)"
+        @select="(key) => {
+          message.info(`Selected ${key}`)
+          if (key === 'logout')
+            fintasy.logout()
+        }"
       >
         <n-avatar
           size="small"
