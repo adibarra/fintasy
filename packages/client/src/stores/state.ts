@@ -9,9 +9,9 @@ import type { Portfolio } from '~/types'
 export const useStateStore = defineStore('state', () => {
   const auth = ref({
     authenticated: false,
-    uuid: '',
   })
   const user = ref({
+    uuid: '',
     username: '',
     avatar: 'https://avatars.githubusercontent.com/u/93070681?v=4',
     coins: 0,

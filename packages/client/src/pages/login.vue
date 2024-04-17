@@ -39,10 +39,10 @@ async function login() {
     return
   }
 
-  state.auth.authenticated = true
-  state.auth.uuid = login.data.owner
   if (!rememberMe.value)
     email.value = ''
+  state.auth.authenticated = true
+  state.user.uuid = login.data.owner
   router.push('/dashboard')
 }
 
@@ -64,15 +64,15 @@ async function createAccount() {
     return
   }
 
-  state.auth.authenticated = true
-  state.auth.uuid = login.data.owner
   if (!rememberMe.value)
     email.value = ''
+  state.auth.authenticated = true
+  state.user.uuid = login.data.owner
   router.push('/dashboard')
 }
 
-function toggleForm(form: 'login' | 'register') {
-  activeForm.value = form
+function toggleForm() {
+  activeForm.value = activeForm.value === 'login' ? 'register' : 'login'
 }
 </script>
 
@@ -80,10 +80,7 @@ function toggleForm(form: 'login' | 'register') {
   <div h-15svh />
 
   <!-- Login and Registration Forms -->
-  <div
-    v-show="activeForm === 'login' || activeForm === 'register'"
-    flex flex-col justify-center
-  >
+  <div flex flex-col justify-center>
     <!-- Form Title -->
     <div mb-5 text-center text-3xl>
       {{ activeForm === 'login' ? t('pages.login.title') : t('pages.login.register') }}
@@ -105,7 +102,10 @@ function toggleForm(form: 'login' | 'register') {
       </div>
 
       <!-- Username Input (Only for Registration) -->
-      <div v-if="activeForm === 'register'" mb-5 fn-outline fn-hover>
+      <div
+        v-if="activeForm === 'register'"
+        mb-5 fn-outline fn-hover
+      >
         <n-input-group>
           <n-input-group-label w-25>
             Username
@@ -124,29 +124,39 @@ function toggleForm(form: 'login' | 'register') {
             Password
           </n-input-group-label>
           <n-input
-            v-model:value="password" :placeholder="t('pages.login.password')"
-            type="password" show-password-on="click"
+            v-model:value="password"
+            :placeholder="t('pages.login.password')"
+            type="password"
+            show-password-on="click"
             @keypress.enter="handleSubmit"
           />
         </n-input-group>
       </div>
 
       <!-- Confirm Password Input (Only for Registration) -->
-      <div v-if="activeForm === 'register'" fn-outline fn-hover>
+      <div
+        v-if="activeForm === 'register'"
+        fn-outline fn-hover
+      >
         <n-input-group>
           <n-input-group-label w-25>
             Confirm
           </n-input-group-label>
           <n-input
-            v-model:value="confirmPassword" :placeholder="t('pages.login.confirm-password')"
-            type="password" show-password-on="click"
+            v-model:value="confirmPassword"
+            :placeholder="t('pages.login.confirm-password')"
+            type="password"
+            show-password-on="click"
             @keypress.enter="handleSubmit"
           />
         </n-input-group>
       </div>
 
       <!-- Remember and Forgot password (Only for Login) -->
-      <div v-if="activeForm === 'login'" flex items-center justify-between>
+      <div
+        v-if="activeForm === 'login'"
+        flex items-center justify-between
+      >
         <n-checkbox v-model:checked="rememberMe">
           {{ t('pages.login.remember-me') }}
         </n-checkbox>
@@ -163,18 +173,21 @@ function toggleForm(form: 'login' | 'register') {
       </div>
 
       <!-- Submit Button -->
-      <n-button mt-5 bg--c-inverse text-lg text--c-bg @click="handleSubmit">
+      <n-button
+        mt-5 bg--c-inverse text-lg text--c-bg
+        @click="handleSubmit"
+      >
         {{ activeForm === 'login' ? t('pages.login.sign-in') : t('pages.login.sign-up') }}
       </n-button>
     </div>
 
     <!-- Redirect Link -->
-    <div
+    <a
       flex cursor-pointer items-center justify-center text-lg fn-link
-      @click="toggleForm(activeForm === 'login' ? 'register' : 'login')"
+      @click="toggleForm"
     >
       {{ activeForm === 'login' ? t('pages.login.no-account-create-one') : t('pages.login.already-have-account') }}
-    </div>
+    </a>
   </div>
 </template>
 

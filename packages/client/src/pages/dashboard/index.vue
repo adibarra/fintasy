@@ -81,22 +81,22 @@ function generateTransactions(count: number): Transaction[] {
   return transactions
 }
 
-onMounted(async () => {
-  if (!state.auth.authenticated || !state.auth.uuid) {
-    state.auth.authenticated = false
-    state.auth.uuid = ''
+watch(() => state.auth.authenticated, () => {
+  if (!state.auth.authenticated)
     router.push('/login')
-    return
-  }
+})
 
-  const userRequest = await fintasy.getUser({ uuid: state.auth.uuid })
+onMounted(async () => {
+  const userRequest = await fintasy.getUser({ uuid: state.user.uuid })
+  if (userRequest.code === 401)
+    state.auth.authenticated = false
   if (userRequest.code !== 200)
     return
 
   state.user.username = userRequest.data.username
   state.user.coins = userRequest.data.coins
 
-  const portfoliosRequest = await fintasy.getPortfolios({ owner: state.auth.uuid, limit: 10 })
+  const portfoliosRequest = await fintasy.getPortfolios({ owner: state.user.uuid, limit: 10 })
   if (portfoliosRequest.code !== 200)
     return
 
