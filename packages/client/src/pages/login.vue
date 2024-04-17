@@ -76,7 +76,7 @@ function toggleForm() {
   <!-- Login and Registration Forms -->
   <div flex flex-col justify-center>
     <!-- Form Container -->
-    <div mx-auto mb-5 max-w-150 min-w-80 w-90vw flex flex-col gap-5 fn-outline bg--c-fg px-8 py-8>
+    <div mx-auto mb-5 max-w-150 min-w-80 w-90svw flex flex-col gap-5 fn-outline bg--c-fg px-8 py-8>
       <!-- Form Title -->
       <div mb-5 text-center text-3xl>
         {{ activeForm === 'login' ? t('pages.login.login') : t('pages.login.register') }}
