@@ -115,8 +115,8 @@ Make sure you are in the repo's root directory before running these commands.
 | pnpm install   | installs dependencies for entire project |
 | pnpm dev       | runs development environment             |
 | pnpm build     | builds the app for production            |
-| pnpm start     | runs the app backend for production      |
 | pnpm preview   | runs the full built app in preview mode  |
+| pnpm start     | runs the app server for production       |
 
 ## License
 
