@@ -89,7 +89,9 @@ function toggleForm() {
             {{ t('pages.login.email') }}
           </n-input-group-label>
           <n-input
-            v-model:value="email" :placeholder="t('pages.login.email')"
+            id="email"
+            v-model:value="email"
+            :placeholder="t('pages.login.email')"
             type="text"
           />
         </n-input-group>
@@ -103,7 +105,9 @@ function toggleForm() {
               {{ t('pages.login.username') }}
             </n-input-group-label>
             <n-input
-              v-model:value="username" :placeholder="t('pages.login.username')"
+              id="username"
+              v-model:value="username"
+              :placeholder="t('pages.login.username')"
               type="text"
             />
           </n-input-group>
@@ -120,6 +124,7 @@ function toggleForm() {
             {{ t('pages.login.password') }}
           </n-input-group-label>
           <n-input
+            id="password"
             v-model:value="password"
             :placeholder="t('pages.login.password')"
             type="password"
@@ -140,6 +145,7 @@ function toggleForm() {
               {{ t('pages.login.confirm') }}
             </n-input-group-label>
             <n-input
+              id="confirm-password"
               v-model:value="confirmPassword"
               :placeholder="t('pages.login.confirm-password')"
               type="password"
