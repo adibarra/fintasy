@@ -16,6 +16,7 @@ pages:
     email: Correo electrónico
     username: Nombre de usuario
     password: Contraseña
+    confirm: Confirmar
     confirm-password: Confirmar contraseña
     remember-me: Recordarme
     forgot-password: ¿Olvidaste tu contraseña?

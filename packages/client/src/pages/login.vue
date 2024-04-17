@@ -86,7 +86,7 @@ function toggleForm() {
       <div fn-outline fn-hover>
         <n-input-group>
           <n-input-group-label class="w-17%" min-w-fit>
-            Email
+            {{ t('pages.login.email') }}
           </n-input-group-label>
           <n-input
             v-model:value="email" :placeholder="t('pages.login.email')"
@@ -100,7 +100,7 @@ function toggleForm() {
         <div fn-outline fn-hover>
           <n-input-group>
             <n-input-group-label class="w-17%" min-w-fit>
-              Username
+              {{ t('pages.login.username') }}
             </n-input-group-label>
             <n-input
               v-model:value="username" :placeholder="t('pages.login.username')"
@@ -117,7 +117,7 @@ function toggleForm() {
       <div fn-outline fn-hover>
         <n-input-group>
           <n-input-group-label class="w-17%" min-w-fit>
-            Password
+            {{ t('pages.login.password') }}
           </n-input-group-label>
           <n-input
             v-model:value="password"
@@ -137,7 +137,7 @@ function toggleForm() {
         <div fn-outline fn-hover>
           <n-input-group>
             <n-input-group-label class="w-17%" min-w-fit>
-              Confirm
+              {{ t('pages.login.confirm') }}
             </n-input-group-label>
             <n-input
               v-model:value="confirmPassword"
