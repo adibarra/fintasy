@@ -7,9 +7,10 @@
 import {
   NotificationsOutline as BellIcon,
   CaretDownOutline as DropdownIcon,
+  LogOutOutline as LogoutIcon,
   RefreshOutline as RefreshIcon,
 } from '@vicons/ionicons5'
-import { useMessage } from 'naive-ui'
+import { NIcon, useMessage } from 'naive-ui'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -17,6 +18,14 @@ const router = useRouter()
 const message = useMessage()
 const state = useStateStore()
 const fintasy = useAPI()
+
+function renderIcon(icon: Component) {
+  return () => {
+    return h(NIcon, null, {
+      default: () => h(icon),
+    })
+  }
+}
 
 interface Crumb { label: string, key: string }
 const breadcrumbs = computed(() => {
@@ -60,9 +69,9 @@ watch(() => fintasy.authenticated.value, () => {
       <n-tooltip>
         <template #trigger>
           <n-button text hidden lg:block @click="$router.go(0)">
-            <n-icon size="20">
+            <NIcon size="20">
               <RefreshIcon />
-            </n-icon>
+            </NIcon>
           </n-button>
         </template>
         Refresh Page
@@ -99,9 +108,9 @@ watch(() => fintasy.authenticated.value, () => {
         >
           <div gap-1>
             {{ portfolios.length > 0 ? portfolios[state.portfolio.active].label : 'None' }}
-            <n-icon size="10">
+            <NIcon size="10">
               <DropdownIcon />
-            </n-icon>
+            </NIcon>
           </div>
         </n-dropdown>
       </div>
@@ -114,9 +123,9 @@ watch(() => fintasy.authenticated.value, () => {
         <template #trigger>
           <n-button text @click="() => message.info(`Clicked notifications`)">
             <n-badge dot processing>
-              <n-icon size="22">
+              <NIcon size="22">
                 <BellIcon />
-              </n-icon>
+              </NIcon>
             </n-badge>
           </n-button>
         </template>
@@ -126,13 +135,12 @@ watch(() => fintasy.authenticated.value, () => {
       <!-- user dropdown -->
       <n-dropdown
         :options="[
-          { label: 'Profile', key: 'profile' },
-          { label: 'Logout', key: 'logout' },
+          { label: 'Logout', key: 0, icon: renderIcon(LogoutIcon) },
         ]"
         trigger="click"
-        @select="(key) => {
-          message.info(`Selected ${key}`)
-          if (key === 'logout')
+        @select="(key, option) => {
+          message.info(`Selected ${option.label}`)
+          if (key === 0)
             fintasy.logout()
         }"
       >
