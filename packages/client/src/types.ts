@@ -73,5 +73,5 @@ export interface Quote {
 
 export interface Session {
   token: string
-  uuid: string
+  owner: string
 }

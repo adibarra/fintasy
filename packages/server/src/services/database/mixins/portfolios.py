@@ -94,8 +94,8 @@ class PortfolioMixin:
         owner: str = None,
         tournament: str = None,
         name: str = None,
-        offset: int = 0,
-        limit: int = 10,
+        offset: int = None,
+        limit: int = None,
     ):
         """
         Retrieves a list of portfolios from the database.
@@ -117,15 +117,19 @@ class PortfolioMixin:
             with conn.cursor() as cursor:
                 params = []
                 query = "SELECT * FROM portfolios WHERE TRUE"
-                if owner:
+                if owner is not None:
                     query += " AND owner = %s"
-                    params.append(owner)
-                if tournament:
+                    params.append(str(owner))
+                if tournament is not None:
                     query += " AND tournament = %s"
-                    params.append(tournament)
-                if name:
+                    params.append(str(tournament))
+                if name is not None:
                     query += " AND name = %s"
                     params.append(name)
+                if offset is None:
+                    offset = 0
+                if limit is None:
+                    limit = 10
                 query += f" OFFSET {offset} LIMIT {limit}"
                 cursor.execute(query, params)
                 if cursor.description:

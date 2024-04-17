@@ -3,24 +3,24 @@
  * @description: Composable for providing access to the Fintasy API
  */
 
-import type { UseFetchReturn } from '@vueuse/core'
+import type { AfterFetchContext, BeforeFetchContext, UseFetchReturn } from '@vueuse/core'
 import type { ACTION, INTERVAL, Portfolio, Quote, STATUS, Session, Tournament, Transaction, User } from '~/types'
+
+const sessionToken = useStorage('api-session-token', '')
+const authenticated = computed(() => Boolean(sessionToken.value))
 
 /**
  * Composable function to use the Fintasy API
  * @param options (optional) options for the API
  * @param options.base (optional) the base URL of the API (default: import.meta.env.VITE_API_BASE)
- * @param options.store (optional) whether to store the session token in session storage (default: true)
  * @returns an object with functions to interact with the API
  */
-export function useAPI(options?: { base?: string, store?: boolean }) {
+export function useAPI(options?: { base?: string }) {
   const defaults = {
     base: import.meta.env.VITE_API_BASE,
-    store: true,
     ...options,
   }
   const API_BASE = options?.base ?? defaults.base
-  const sessionToken = options?.store ? useSessionStorage('session-token', '') : ref('')
 
   enum API_QUERY {
     POST_SESSION, DELETE_SESSION,
@@ -33,6 +33,10 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
 
   return {
     /**
+     * Whether the user is authenticated
+     */
+    authenticated,
+    /**
      * Login to the API and store the session token
      * @param data
      * @param data.email the user's email
@@ -44,10 +48,7 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       }, {
-        afterFetch: (ctx) => {
-          sessionToken.value = ctx.data.data.token
-          return ctx
-        },
+        afterFetch: setToken,
       }).json<API_RESPONSE[API_QUERY.POST_SESSION]>()
       return handleErrors<API_QUERY.POST_SESSION>(response)
     },
@@ -59,10 +60,8 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
-        afterFetch: (ctx) => {
-          sessionToken.value = ''
-          return ctx
-        },
+        beforeFetch: requireToken,
+        afterFetch: clearToken,
       }).json<API_RESPONSE[API_QUERY.DELETE_SESSION]>()
       return handleErrors<API_QUERY.DELETE_SESSION>(response)
     },
@@ -90,6 +89,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/users/${data.uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_USER]>()
       return handleErrors<API_QUERY.GET_USER>(response)
     },
@@ -109,6 +111,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify({ email: data.email, username: data.username, password: data.password }),
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.PATCH_USER]>()
       return handleErrors<API_QUERY.PATCH_USER>(response)
     },
@@ -121,6 +126,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/users/${data.uuid}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.DELETE_USER]>()
       return handleErrors<API_QUERY.DELETE_USER>(response)
     },
@@ -138,6 +146,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify(removeEmpty(data)),
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.POST_PORTFOLIO]>()
       return handleErrors<API_QUERY.POST_PORTFOLIO>(response)
     },
@@ -155,6 +166,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/portfolios?${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_PORTFOLIOS]>()
       return handleErrors<API_QUERY.GET_PORTFOLIOS>(response)
     },
@@ -167,6 +181,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/portfolios/${data.uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_PORTFOLIO]>()
       return handleErrors<API_QUERY.GET_PORTFOLIO>(response)
     },
@@ -184,6 +201,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify({ name: data.name }),
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]>()
       return handleErrors<API_QUERY.PATCH_PORTFOLIO>(response)
     },
@@ -196,6 +216,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/portfolios/${data.uuid}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]>()
       return handleErrors<API_QUERY.DELETE_PORTFOLIO>(response)
     },
@@ -215,6 +238,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify(data),
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.POST_TRANSACTION]>()
       return handleErrors<API_QUERY.POST_TRANSACTION>(response)
     },
@@ -230,6 +256,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/transactions?${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_TRANSACTIONS]>()
       return handleErrors<API_QUERY.GET_TRANSACTIONS>(response)
     },
@@ -242,6 +271,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/transactions/${data.uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_TRANSACTION]>()
       return handleErrors<API_QUERY.GET_TRANSACTION>(response)
     },
@@ -260,6 +292,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify(data),
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.POST_TOURNAMENT]>()
       return handleErrors<API_QUERY.POST_TOURNAMENT>(response)
     },
@@ -279,6 +314,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/tournaments?${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENTS]>()
       return handleErrors<API_QUERY.GET_TOURNAMENTS>(response)
     },
@@ -291,6 +329,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/tournaments/${data.uuid}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENT]>()
       return handleErrors<API_QUERY.GET_TOURNAMENT>(response)
     },
@@ -310,6 +351,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
           'Authorization': `Bearer ${sessionToken.value}`,
         },
         body: JSON.stringify({ name: data.name, start_date: data.start_date, end_date: data.end_date }),
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]>()
       return handleErrors<API_QUERY.PATCH_TOURNAMENT>(response)
     },
@@ -322,6 +366,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/tournaments/${data.uuid}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]>()
       return handleErrors<API_QUERY.DELETE_TOURNAMENT>(response)
     },
@@ -334,6 +381,9 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/quotes/${data.symbol}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_QUOTE]>()
       return handleErrors<API_QUERY.GET_QUOTE>(response)
     },
@@ -352,9 +402,37 @@ export function useAPI(options?: { base?: string, store?: boolean }) {
       const response = await useFetch(`${API_BASE}/quotes/${data.symbol}/historical?${params}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
+      }, {
+        beforeFetch: requireToken,
+        onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_QUOTE_HISTORICAL]>()
       return handleErrors<API_QUERY.GET_QUOTE_HISTORICAL>(response)
     },
+  }
+
+  function setToken(ctx: AfterFetchContext) {
+    sessionToken.value = ctx.data.data.token
+    return ctx
+  }
+
+  function clearToken(ctx: AfterFetchContext) {
+    sessionToken.value = ''
+    return ctx
+  }
+
+  function requireToken(ctx: BeforeFetchContext) {
+    if (authenticated.value)
+      return ctx
+    console.error('useAPI: API request cacelled. Not authenticated!')
+    ctx.cancel()
+  }
+
+  function handleAuthErrors(ctx: { data: any, response: Response | null, error: any }) {
+    // 401: Unauthorized, token is invalid, expired, or missing
+    // 405: Method Not Allowed, user uuid is probably missing
+    if (ctx.response?.status === 401 || ctx.response?.status === 405)
+      sessionToken.value = ''
+    return ctx
   }
 
   function handleErrors<T extends keyof API_RESPONSE>(response: UseFetchReturn<API_RESPONSE[T]>): API_RESPONSE[T] {

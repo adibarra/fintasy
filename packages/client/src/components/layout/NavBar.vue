@@ -7,13 +7,25 @@
 import {
   NotificationsOutline as BellIcon,
   CaretDownOutline as DropdownIcon,
+  LogOutOutline as LogoutIcon,
   RefreshOutline as RefreshIcon,
 } from '@vicons/ionicons5'
-import { useMessage } from 'naive-ui'
+import { NIcon, useMessage } from 'naive-ui'
 
 const { t } = useI18n()
 const route = useRoute()
+const router = useRouter()
 const message = useMessage()
+const state = useStateStore()
+const fintasy = useAPI()
+
+function renderIcon(icon: Component) {
+  return () => {
+    return h(NIcon, null, {
+      default: () => h(icon),
+    })
+  }
+}
 
 interface Crumb { label: string, key: string }
 const breadcrumbs = computed(() => {
@@ -34,17 +46,15 @@ const breadcrumbs = computed(() => {
   return crumbs
 })
 
-const user = ref({
-  name: 'adibarra',
-  avatar: 'https://avatars.githubusercontent.com/u/93070681?v=4',
-  account: 'Default Portfolio',
-  accounts: [
-    { key: 0, label: 'Default Portfolio' },
-    { key: 1, label: 'Test Portfolio' },
-    { key: 2, label: 'Tournament Portfolio' },
-  ],
-  coins: 50,
+const portfolios = computed(() => {
+  return state.portfolio.available.map((p, i) => ({ key: i, label: p.name }))
 })
+
+// redirect to login if not authenticated
+watch(() => fintasy.authenticated.value, () => {
+  if (!fintasy.authenticated.value)
+    router.push('/login')
+}, { immediate: true })
 </script>
 
 <template>
@@ -59,9 +69,9 @@ const user = ref({
       <n-tooltip>
         <template #trigger>
           <n-button text hidden lg:block @click="$router.go(0)">
-            <n-icon size="20">
+            <NIcon size="20">
               <RefreshIcon />
-            </n-icon>
+            </NIcon>
           </n-button>
         </template>
         Refresh Page
@@ -83,24 +93,24 @@ const user = ref({
 
       <!-- coins -->
       <div hidden w-fit items-center justify-center fn-outline px-2 op-85 md:flex>
-        Coins: 🪙 {{ user.coins }}
+        Coins: 🪙 {{ state.user.coins }}
       </div>
 
       <!-- switch user portfolio account -->
       <div hidden w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 sm:flex fn-hover>
         <n-dropdown
-          :options="user.accounts"
+          :options="portfolios"
           trigger="click"
           @select="(key, option) => {
-            user.account = user.accounts[key].label
+            state.portfolio.active = key
             message.info(`Selected ${option.label}`)
           }"
         >
           <div gap-1>
-            {{ user.account }}
-            <n-icon size="10">
+            {{ portfolios.length > 0 ? portfolios[state.portfolio.active].label : 'None' }}
+            <NIcon size="10">
               <DropdownIcon />
-            </n-icon>
+            </NIcon>
           </div>
         </n-dropdown>
       </div>
@@ -113,9 +123,9 @@ const user = ref({
         <template #trigger>
           <n-button text @click="() => message.info(`Clicked notifications`)">
             <n-badge dot processing>
-              <n-icon size="22">
+              <NIcon size="22">
                 <BellIcon />
-              </n-icon>
+              </NIcon>
             </n-badge>
           </n-button>
         </template>
@@ -125,15 +135,18 @@ const user = ref({
       <!-- user dropdown -->
       <n-dropdown
         :options="[
-          { label: 'Profile', key: 'profile' },
-          { label: 'Logout', key: 'logout' },
+          { label: 'Logout', key: 0, icon: renderIcon(LogoutIcon) },
         ]"
         trigger="click"
-        @select="(key) => message.info(`Selected ${key}`)"
+        @select="(key, option) => {
+          message.info(`Selected ${option.label}`)
+          if (key === 0)
+            fintasy.logout()
+        }"
       >
         <n-avatar
           size="small"
-          :src="user.avatar"
+          :src="state.user.avatar"
           mr-5 cursor-pointer
         />
       </n-dropdown>

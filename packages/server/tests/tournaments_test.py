@@ -1,3 +1,6 @@
+# @authors: soltadd (Solomon Bedane)
+# @description: Testcases for the Tournament class
+
 import unittest
 
 

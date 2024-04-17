@@ -53,6 +53,12 @@ class TransactionResponse(BaseModel):
 async def authenticateToken(
     authorization: str = Header(...),
 ) -> tuple[str, str]:
+    if not len(authorization.split(" ")) == 2:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Bad Request",
+        )
+
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 

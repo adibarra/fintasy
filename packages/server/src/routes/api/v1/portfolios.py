@@ -2,7 +2,7 @@
 # @description: Portfolio routes for the API
 
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
 from helpers.portfolio import Portfolio
@@ -58,9 +58,21 @@ class PortfolioResponse(BaseModel):
     data: PortfolioData
 
 
+class PortfoliosResponse(BaseModel):
+    code: int
+    message: str
+    data: List[PortfolioData]
+
+
 async def authenticateToken(
     authorization: str = Header(...),
 ) -> tuple[str, str]:
+    if not len(authorization.split(" ")) == 2:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Bad Request",
+        )
+
     token = authorization.split(" ")[1]
     token_owner = db.get_session(token)
 
@@ -78,7 +90,7 @@ async def authenticate(
     authorization: str = Header(...),
     portfolio_uuid: UUID4 = Path(...),
 ) -> tuple[str, str]:
-    token_owner, token = authenticateToken(authorization)
+    token_owner, token = await authenticateToken(authorization)
 
     # Validate the token has permission for this portfolio
     portfolio = db.get_portfolio(str(portfolio_uuid))
@@ -127,26 +139,28 @@ def create_portfolio(
 
 
 @router.get(
-    "/portfolios", response_model=PortfolioResponse, status_code=status.HTTP_200_OK
+    "/portfolios", response_model=PortfoliosResponse, status_code=status.HTTP_200_OK
 )
 def get_portfolios(
-    data: GetPortfoliosRequest = Body(...),
+    owner: Optional[UUID4] = None,
+    tournament: Optional[UUID4] = None,
+    name: Optional[str] = None,
+    offset: Optional[int] = None,
+    limit: Optional[int] = None,
     auth: tuple[str, str] = Depends(authenticateToken),
 ):
     token_owner = auth[0]
 
     # Keep this check for now, might remove later with a more complex permission system
-    if str(data.owner) != token_owner:
+    if str(owner) != token_owner:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Forbidden",
         )
 
-    portfolios = db.get_portfolios(
-        str(data.owner), data.tournament, data.name, data.offset, data.limit
-    )
+    portfolios = db.get_portfolios(owner, tournament, name, offset, limit)
 
-    return PortfolioResponse(
+    return PortfoliosResponse(
         code=200,
         message="Ok",
         data=portfolios,

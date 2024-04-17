@@ -107,7 +107,7 @@ class Database(
                         CREATE TABLE IF NOT EXISTS portfolios (
                             uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                             owner UUID NOT NULL REFERENCES users(uuid),
-                            tournament UUID NOT NULL REFERENCES tournaments(uuid),
+                            tournament UUID REFERENCES tournaments(uuid),
                             name TEXT NOT NULL,
                             balance_cents BIGINT NOT NULL DEFAULT 1000000,
                             created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -1,4 +1,4 @@
-# @authors: soltadd (Solomon Bedane) & Caleb Kim (caleb-j-kim)
+# @authors: soltadd (Solomon Bedane), caleb-j-kim (Caleb Kim)
 # @description: Tournaments class for handling paper trading tournaments betwen users.
 
 from datetime import datetime
@@ -154,32 +154,3 @@ class Tournament:
             raise ValueError(f"{participant1} is not in this tournament")
         if participant2 not in self.participants:
             raise ValueError(f"{participant1} is not in this tournament")
-
-
-# Example usage
-if __name__ == "__main__":
-    # Create a new tournament
-    trading_rules = {
-        "stocks": True,
-        "ETFs": True,
-        "short_selling": True,
-        "options_trading": True,
-        "margin_trading": True,
-        "max_leverage": 2,
-    }
-    prizes = {"first_place": "Virtual Trophy", "second_place": "Honorable Mention"}
-    fintasy_challenge = Tournament(
-        "Fintasy Paper Trade Challenge", "3 months", 100000, trading_rules, prizes
-    )
-
-    # Add participants (these would be User objects and not strings)
-    participant1 = "Alec Daniel"
-    participant2 = "Solomon Bedaine"
-    participant3 = "Brenden Zacek"
-
-    fintasy_challenge.add_participant(participant1)
-    fintasy_challenge.add_participant(participant2)
-    fintasy_challenge.add_participant(participant3)
-
-    # Display leaderboard
-    fintasy_challenge.display_leaderboard()

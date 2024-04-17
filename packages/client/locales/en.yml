@@ -3,16 +3,43 @@
 
 example:
   hello-world: Hello World!
-
 pages:
   main:
     title: Main
+    content-title: Take Your Stocks To The Next Level
+    content-subtitle: >-
+      Fintasy is a stock market simulator that allows you to trade stocks with
+      fake money. Compete against your friends and see who can make the most money!
   login:
-    title: Login
-  register:
-    title: Register
+    title: Login/Register
+    register: Register
+    login: Login
+    email: Email
+    username: Username
+    password: Password
+    confirm: Confirm
+    confirm-password: Confirm Password
+    remember-me: Remember Me
+    forgot-password: Forgot Password?
+    create-account: Create Account
+    sign-in: Sign In
+    sign-up: Sign Up
+    no-account: No account?
+    already-have-account: Already have an account?
+    missing-credentials: Please fill out all fields.
+    invalid-credentials: Your credentials are incorrect or you do not have an account.
+    invalid-registration: Your account information is incorrect or you already have an account.
+    username-requirements: >-
+      Username must be between 3 and 20 characters. It can only contain letters,
+      numbers, and underscores.
+    password-requirements: Password must be at least 6 characters. That's it.
   dashboard:
     title: Dashboard
+    portfolio-value: Portfolio Value
+    assets: Assets
+    history: History
+    cash: CASH
+    transactions: TRANSACTIONS
     trade:
       title: Trade
     tournaments:
@@ -25,12 +52,15 @@ pages:
         title: FAQ
     settings:
       title: Settings
-
 misc:
   home: Home
-
+i18n:
+  language-changed-to: Language changed to
+  change-language: Change Language
+theme-switch:
+  toggle-theme: Toggle Theme
+  theme-toggled: Theme toggled
 buttons:
   go-back: Go Back
-
 errors:
   not-found: Not Found

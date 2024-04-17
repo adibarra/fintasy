@@ -1,3 +1,6 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Dockerfile to build and run server
+
 FROM python:alpine as server
 
 WORKDIR /app

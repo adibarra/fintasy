@@ -1,5 +1,6 @@
 # @author: mariptime (Akshay)
 # @description: Quote class
+
 from datetime import datetime, timedelta
 
 
