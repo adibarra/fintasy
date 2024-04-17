@@ -75,13 +75,13 @@ function toggleForm() {
 
   <!-- Login and Registration Forms -->
   <div flex flex-col justify-center>
-    <!-- Form Title -->
-    <div mb-5 text-center text-3xl>
-      {{ activeForm === 'login' ? t('pages.login.title') : t('pages.login.register') }}
-    </div>
-
     <!-- Form Container -->
     <div mx-auto mb-5 max-w-150 min-w-80 w-90vw flex flex-col gap-5 fn-outline bg--c-fg px-8 py-8>
+      <!-- Form Title -->
+      <div mb-5 text-center text-3xl>
+        {{ activeForm === 'login' ? t('pages.login.title') : t('pages.login.register') }}
+      </div>
+
       <!-- Email Input -->
       <div fn-outline fn-hover>
         <n-input-group>
@@ -132,7 +132,7 @@ function toggleForm() {
       <!-- Confirm Password Input (Only for Registration) -->
       <div
         v-if="activeForm === 'register'"
-        mb-5
+        mb-3
       >
         <div fn-outline fn-hover>
           <n-input-group>
@@ -175,20 +175,23 @@ function toggleForm() {
 
       <!-- Submit Button -->
       <n-button
-        mt-5 bg--c-inverse text-lg text--c-bg
+        mt-5 fn-outline bg--c-inverse text-lg text--c-bg
         @click="handleSubmit"
       >
-        {{ activeForm === 'login' ? t('pages.login.sign-in') : t('pages.login.sign-up') }}
+        {{ activeForm === 'login' ? t('pages.login.sign-in') : t('pages.login.create-account') }}
       </n-button>
-    </div>
 
-    <!-- Redirect Link -->
-    <a
-      flex cursor-pointer items-center justify-center text-lg fn-link
-      @click="toggleForm"
-    >
-      {{ activeForm === 'login' ? t('pages.login.no-account-create-one') : t('pages.login.already-have-account') }}
-    </a>
+      <!-- Redirect Link -->
+      <span flex flex-row items-center justify-center gap-2 text-lg>
+        {{ activeForm === 'login' ? t('pages.login.no-account') : t('pages.login.already-have-account') }}
+        <a
+          cursor-pointer fn-link
+          @click="toggleForm"
+        >
+          {{ activeForm === 'login' ? t('pages.login.sign-up') : t('pages.login.sign-in') }}
+        </a>
+      </span>
+    </div>
   </div>
 </template>
 
