@@ -3,10 +3,11 @@
  * @description: Composable for providing access to the Fintasy API
  */
 
-import type { UseFetchReturn } from '@vueuse/core'
+import type { AfterFetchContext, BeforeFetchContext, UseFetchReturn } from '@vueuse/core'
 import type { ACTION, INTERVAL, Portfolio, Quote, STATUS, Session, Tournament, Transaction, User } from '~/types'
 
 const sessionToken = useStorage('api-session-token', '')
+const authenticated = computed(() => Boolean(sessionToken.value))
 
 /**
  * Composable function to use the Fintasy API
@@ -34,7 +35,7 @@ export function useAPI(options?: { base?: string }) {
     /**
      * Whether the user is authenticated
      */
-    authenticated: computed(() => sessionToken.value !== ''),
+    authenticated,
     /**
      * Login to the API and store the session token
      * @param data
@@ -47,10 +48,7 @@ export function useAPI(options?: { base?: string }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       }, {
-        afterFetch: (ctx) => {
-          sessionToken.value = ctx.data.data.token
-          return ctx
-        },
+        afterFetch: setToken,
       }).json<API_RESPONSE[API_QUERY.POST_SESSION]>()
       return handleErrors<API_QUERY.POST_SESSION>(response)
     },
@@ -62,10 +60,8 @@ export function useAPI(options?: { base?: string }) {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
-        afterFetch: (ctx) => {
-          sessionToken.value = ''
-          return ctx
-        },
+        beforeFetch: requireToken,
+        afterFetch: clearToken,
       }).json<API_RESPONSE[API_QUERY.DELETE_SESSION]>()
       return handleErrors<API_QUERY.DELETE_SESSION>(response)
     },
@@ -94,6 +90,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_USER]>()
       return handleErrors<API_QUERY.GET_USER>(response)
@@ -115,6 +112,7 @@ export function useAPI(options?: { base?: string }) {
         },
         body: JSON.stringify({ email: data.email, username: data.username, password: data.password }),
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.PATCH_USER]>()
       return handleErrors<API_QUERY.PATCH_USER>(response)
@@ -129,6 +127,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.DELETE_USER]>()
       return handleErrors<API_QUERY.DELETE_USER>(response)
@@ -148,6 +147,7 @@ export function useAPI(options?: { base?: string }) {
         },
         body: JSON.stringify(removeEmpty(data)),
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.POST_PORTFOLIO]>()
       return handleErrors<API_QUERY.POST_PORTFOLIO>(response)
@@ -167,6 +167,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_PORTFOLIOS]>()
       return handleErrors<API_QUERY.GET_PORTFOLIOS>(response)
@@ -181,6 +182,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_PORTFOLIO]>()
       return handleErrors<API_QUERY.GET_PORTFOLIO>(response)
@@ -200,6 +202,7 @@ export function useAPI(options?: { base?: string }) {
         },
         body: JSON.stringify({ name: data.name }),
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.PATCH_PORTFOLIO]>()
       return handleErrors<API_QUERY.PATCH_PORTFOLIO>(response)
@@ -214,6 +217,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.DELETE_PORTFOLIO]>()
       return handleErrors<API_QUERY.DELETE_PORTFOLIO>(response)
@@ -235,6 +239,7 @@ export function useAPI(options?: { base?: string }) {
         },
         body: JSON.stringify(data),
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.POST_TRANSACTION]>()
       return handleErrors<API_QUERY.POST_TRANSACTION>(response)
@@ -252,6 +257,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_TRANSACTIONS]>()
       return handleErrors<API_QUERY.GET_TRANSACTIONS>(response)
@@ -266,6 +272,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_TRANSACTION]>()
       return handleErrors<API_QUERY.GET_TRANSACTION>(response)
@@ -286,6 +293,7 @@ export function useAPI(options?: { base?: string }) {
         },
         body: JSON.stringify(data),
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.POST_TOURNAMENT]>()
       return handleErrors<API_QUERY.POST_TOURNAMENT>(response)
@@ -307,6 +315,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENTS]>()
       return handleErrors<API_QUERY.GET_TOURNAMENTS>(response)
@@ -321,6 +330,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_TOURNAMENT]>()
       return handleErrors<API_QUERY.GET_TOURNAMENT>(response)
@@ -342,6 +352,7 @@ export function useAPI(options?: { base?: string }) {
         },
         body: JSON.stringify({ name: data.name, start_date: data.start_date, end_date: data.end_date }),
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.PATCH_TOURNAMENT]>()
       return handleErrors<API_QUERY.PATCH_TOURNAMENT>(response)
@@ -356,6 +367,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.DELETE_TOURNAMENT]>()
       return handleErrors<API_QUERY.DELETE_TOURNAMENT>(response)
@@ -370,6 +382,7 @@ export function useAPI(options?: { base?: string }) {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_QUOTE]>()
       return handleErrors<API_QUERY.GET_QUOTE>(response)
@@ -390,10 +403,28 @@ export function useAPI(options?: { base?: string }) {
         method: 'GET',
         headers: { Authorization: `Bearer ${sessionToken.value}` },
       }, {
+        beforeFetch: requireToken,
         onFetchError: handleAuthErrors,
       }).json<API_RESPONSE[API_QUERY.GET_QUOTE_HISTORICAL]>()
       return handleErrors<API_QUERY.GET_QUOTE_HISTORICAL>(response)
     },
+  }
+
+  function setToken(ctx: AfterFetchContext) {
+    sessionToken.value = ctx.data.data.token
+    return ctx
+  }
+
+  function clearToken(ctx: AfterFetchContext) {
+    sessionToken.value = ''
+    return ctx
+  }
+
+  function requireToken(ctx: BeforeFetchContext) {
+    if (authenticated.value)
+      return ctx
+    console.error('useAPI: API request cacelled. Not authenticated!')
+    ctx.cancel()
   }
 
   function handleAuthErrors(ctx: { data: any, response: Response | null, error: any }) {
