@@ -7,41 +7,64 @@ export default defineComponent({
     filters: Object,
   },
   setup(props) {
-    const tournaments = ref<Tournament[]>([])
-    const currentPage = ref(1)
-    const totalPages = ref(1)
+    const tournaments = ref(<tournament[]>); //I Know this is wrong, but working on it soon.
+    const showModal = ref(false);
+    const tournamentDetails = ref(null);
+    const currentPage = ref(0);
+    const totalPages = ref(1);
+    const fintasy = useAPI();
 
     const fetchTournaments = async (page: number) => {
       const params = {
-        uuid_owner: props.filters.uuidOwner,
+        owner: props.filters.uuidOwner,
         name: props.filters.name,
         status: props.filters.status,
-        start_date: props.filters.startDate,
-        start_date_before: props.filters.startDateBefore,
-        start_date_after: props.filters.startDateAfter,
-        end_date: props.filters.endDate,
-        end_date_before: props.filters.endDateBefore,
-        end_date_after: props.filters.endDateAfter,
+        start_date: props.filters.dateTimeRange[0].toISOString(), // Convert start date to ISO string
+        end_date: props.filters.dateTimeRange[1].toISOString(), // Convert end date to ISO string
         offset: (page - 1) * 10,
         limit: 10,
       }
 
-      tournaments.value = [
-        { id: 1, name: 'Tournament A', cost: '100 Coins' },
-        { id: 2, name: 'Tournament B', cost: '200 Coins' },
-      ]
-
-      totalPages.value = 5 // Example total pages
+      try {
+        const response = await fintasy.getTournaments(params)
+        if (response.success && response.data) {
+          tournaments.value = response.data.items
+          totalPages.value = response.data.totalPages
+        }
+        else {
+          console.error('Failed to fetch tournaments:', response.message)
+        }
+      }
+      catch (error) {
+        console.error('Error fetching tournaments:', error)
+      }
     }
 
-    const viewTournament = (id: number) => {
-      console.log(`Viewing tournament ${id}`)
-      // Implement navigation or modal display
+    watch(() => props.filters, () => fetchTournaments(currentPage.value), { deep: true })
+
+    onMounted(() => {
+      fetchTournaments(currentPage.value)
+    })
+
+    const closeTournamentModal = () => {
+      showModal.value = false;
+    };
+
+    const viewTournament = (uuid: string) => {
+      console.log(`Viewing tournament ${uuid}`)
+      const response = await fintasy.getTournament({ uuid });
+      if (response.success && response.data) {
+        tournamentDetails.value = response.data;
+        showModal.value = true;
+      } else {
+        alert('Failed to load tournament details.'); // Or handle this error differently
+      }
     }
 
     const joinTournament = (id: number) => {
       console.log(`Joining tournament ${id}`)
-      // Add logic for joining a tournament
+      // need logic for joining a tournament
+      closeTournamentModal();
     }
 
     const changePage = (page: number) => {
@@ -62,6 +85,8 @@ export default defineComponent({
       viewTournament,
       joinTournament,
       changePage,
+      showModal,
+      tournamentDetails,
     }
   },
 })
@@ -76,7 +101,7 @@ export default defineComponent({
         View
       </button>
       <button @click="joinTournament(tournament.id)">
-        Join
+        Quick Join
       </button>
     </div>
     <button :disabled="currentPage <= 1" @click="changePage(currentPage - 1)">

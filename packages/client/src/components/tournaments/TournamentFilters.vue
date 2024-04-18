@@ -5,11 +5,13 @@ export default defineComponent({
   name: 'TournamentFilters',
   emits: ['filter'],
   setup(props, { emit }) {
+    const range = ref([new Date(), new Date(Date.now() + 86400000)]) // This initializes the range to today and tomorrow.
     const filters = ref({
       name: '',
-      tags: '',
-      type: 'all',
-      status: 'all',
+      owner: '',
+      dateTimeRange: range.value,
+      status: '',
+
     })
 
     const applyFilters = () => {
@@ -29,18 +31,9 @@ export default defineComponent({
     <h2>Filters</h2>
     <form @submit.prevent="applyFilters">
       <input v-model="filters.name" placeholder="Tournament Name">
-      <input v-model="filters.tags" placeholder="Tags">
-      <select v-model="filters.type">
-        <option value="all">
-          All
-        </option>
-        <option value="server">
-          Server-Generated
-        </option>
-        <option value="user">
-          User-Created
-        </option>
-      </select>
+      <input v-model="filters.owner" placeholder="Owner">
+      <n-date-picker v-model="filters.dateTimeRange" type="datetimerange" clearable />
+      <pre>{{ JSON.stringify(filters.dateTimeRange) }}</pre>
       <select v-model="filters.status">
         <option value="all">
           All Status
