@@ -1,0 +1,70 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Japanese)
+# cSpell: disable
+
+example:
+  hello-world: こんにちは、世界！
+pages:
+  main:
+    title: メイン
+    content-title: 株式を次のレベルに引き上げる
+    content-subtitle: >-
+      Fintasyは、仮想のお金で株式を取引できる株式市場シミュレーターです。
+      友達と競い合って、誰が一番多くのお金を稼げるかを見てみましょう！
+  login:
+    title: ログイン/登録
+    register: 登録
+    login: ログイン
+    email: メールアドレス
+    username: ユーザー名
+    password: パスワード
+    confirm: 確認
+    confirm-password: パスワードの確認
+    remember-me: ログイン情報を記憶する
+    forgot-password: パスワードを忘れた場合
+    create-account: アカウントを作成する
+    sign-in: サインイン
+    sign-up: サインアップ
+    no-account: アカウントがありませんか？
+    already-have-account: すでにアカウントをお持ちですか？
+    missing-credentials: 全ての項目を入力してください。
+    email-taken: メールアドレスは既に登録されています。サインインしてください。
+    invalid-registration: アカウント情報が要件を満たしているか確認してください。
+    invalid-credentials: パスワードが正しいことを確認してください。
+    no-account-found: そのメールアドレスで登録されたアカウントは見つかりませんでした。
+    username-requirements: >-
+      3文字以上20文字以下であること。
+      英数字とアンダースコアのみが使用できます。
+    password-requirements: 6文字以上であること。
+    unknown-error: 不明なエラーが発生しました。後でもう一度試してください。
+  dashboard:
+    title: ダッシュボード
+    portfolio-value: ポートフォリオの価値
+    assets: 資産
+    history: 履歴
+    cash: 現金
+    transactions: 取引
+    trade:
+      title: 取引
+    tournaments:
+      title: トーナメント
+    help:
+      title: ヘルプ
+      index:
+        title: インデックス
+      faq:
+        title: よくある質問
+    settings:
+      title: 設定
+misc:
+  home: ホーム
+i18n:
+  language-changed-to: 言語が変更されました：
+  language: 言語
+theme-switch:
+  toggle-theme: テーマの切り替え
+  theme-toggled: テーマが切り替わりました
+buttons:
+  go-back: 戻る
+errors:
+  not-found: 見つかりません

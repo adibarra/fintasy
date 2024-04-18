@@ -1,0 +1,70 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (French)
+# cSpell: disable
+
+example:
+  hello-world: Bonjour le monde !
+pages:
+  main:
+    title: Principal
+    content-title: Amenez vos actions au niveau supérieur
+    content-subtitle: >-
+      Fintasy est un simulateur de marché boursier qui vous permet de trader des actions avec de l'argent fictif.
+      Affrontez vos amis et voyez qui peut gagner le plus d'argent !
+  login:
+    title: Connexion/Inscription
+    register: S'inscrire
+    login: Connexion
+    email: Email
+    username: Nom d'utilisateur
+    password: Mot de passe
+    confirm: Confirmer
+    confirm-password: Confirmer le mot de passe
+    remember-me: Se souvenir de moi
+    forgot-password: Mot de passe oublié ?
+    create-account: Créer un compte
+    sign-in: Se connecter
+    sign-up: S'inscrire
+    no-account: Pas de compte ?
+    already-have-account: Vous avez déjà un compte ?
+    missing-credentials: Veuillez remplir tous les champs.
+    email-taken: L'email est déjà utilisé. Essayez de vous connecter.
+    invalid-registration: Assurez-vous que vos informations de compte respectent les exigences.
+    invalid-credentials: Assurez-vous que votre mot de passe est correct.
+    no-account-found: Aucun compte trouvé avec cet email.
+    username-requirements: >-
+      Entre 3 et 20 caractères.
+      Lettres, chiffres et traits de soulignement uniquement.
+    password-requirements: Doit comporter au moins 6 caractères.
+    unknown-error: Une erreur inconnue s'est produite. Veuillez réessayer plus tard.
+  dashboard:
+    title: Tableau de bord
+    portfolio-value: Valeur du portefeuille
+    assets: Actifs
+    history: Historique
+    cash: ARGENT
+    transactions: TRANSACTIONS
+    trade:
+      title: Commerce
+    tournaments:
+      title: Tournois
+    help:
+      title: Aide
+      index:
+        title: Index
+      faq:
+        title: FAQ
+    settings:
+      title: Paramètres
+misc:
+  home: Accueil
+i18n:
+  language-changed-to: Langue changée en
+  language: Langue
+theme-switch:
+  toggle-theme: Basculer le thème
+  theme-toggled: Thème basculé
+buttons:
+  go-back: Revenir
+errors:
+  not-found: Non trouvé

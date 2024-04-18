@@ -1,0 +1,69 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Amharic)
+# cSpell: disable
+
+example:
+  hello-world: ሰላም ሰላም!
+pages:
+  main:
+    title: ዋና ገጽ
+    content-title: አንድ ቦታዎችን በመለየት ያለውን ኢንቨስትመንት እንዲጠቀሙ ይጠብቁ
+    content-subtitle: >-
+      ፊንታሲ የምዝገባ አባላት እናመሰግናለን እና ምንም ሕማም በፍጥነት ከሆነ የእኛን መንገድ ይስተናል!
+  login:
+    title: መግቢያ/መዝጋት
+    register: መዝጋት
+    login: መግቢያ
+    email: ኢሜል
+    username: የተጠቃሚ ስም
+    password: የይለፍ ቃል
+    confirm: አረጋግጥ
+    confirm-password: የይለፍ ቃል አረጋግጥ
+    remember-me: አስቀድመኝ
+    forgot-password: የይለፍ ቃል ረስተዋል?
+    create-account: አካውንት አድርገን
+    sign-in: መግቢያ
+    sign-up: መዝጋት
+    no-account: አካውንት የለውም?
+    already-have-account: እኛን ያሉትን አካውንቶች አስቀድማል።
+    missing-credentials: እባኮትን ከሆነ እባኮትዎን ያስገቡ።
+    email-taken: ኢሜል አስተዋይዎ በመጠቀም አልተወከደም። እባኮት መግቢያ ማረጋገጥ ይችላል።
+    invalid-registration: አካውንት መረጃዎትን የምሳያ ይስጡ።
+    invalid-credentials: የይለፍ ቃልዎ አልተሳሳተም።
+    no-account-found: የተጠቃሚ ኢሜላቸው አልተካሄደም።
+    username-requirements: >-
+      3 እና 20 የፍየሎች መለያ በመጠን ቃለመታደግን ይረዳል።
+      ፍየልና ቁልፍ እና አስፈላጊዎች ብቻ ናቸው።
+    password-requirements: በተጨማሪም 6 የፍየሎች እርምጃ አይደለም።
+    unknown-error: ያልታወቀ ስህተት ተጠናቋል። እባኮት ሌሎችን አግኝቶ በአንድ ሰዓት እንደገና ይንቀሳቀስ።
+  dashboard:
+    title: የመንገድ ቅጅ
+    portfolio-value: ቅጽል መስመር
+    assets: አካባቢዎች
+    history: ታሪክ
+    cash: ክፍያ
+    transactions: ቅጽል ውድድር
+    trade:
+      title: ግድግዳ
+    tournaments:
+      title: ተከታዮች
+    help:
+      title: እርዳታ
+      index:
+        title: ድጋፍ
+      faq:
+        title: ጥያቄዎች
+    settings:
+      title: ቅንብሮች
+misc:
+  home: መጀመሪያ
+i18n:
+  language-changed-to: ቋንቋ በማለያ ተደምሯል
+  language: ቋንቋ
+theme-switch:
+  toggle-theme: ተቀንስ ቀለም
+  theme-toggled: ተቀንስ ቀለም ተደምሯል
+buttons:
+  go-back: ተመለስ
+errors:
+  not-found: አልተገኘም

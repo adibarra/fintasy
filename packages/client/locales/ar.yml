@@ -1,0 +1,70 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Arabic)
+# cSpell: disable
+
+example:
+  hello-world: مرحباً بالعالم!
+pages:
+  main:
+    title: الرئيسية
+    content-title: ارفع أسهمك إلى المستوى التالي
+    content-subtitle: >-
+      فنتاسي هو محاكي لسوق الأسهم يتيح لك تداول الأسهم باستخدام الأموال الوهمية.
+      تنافس مع أصدقائك وانظر من يمكنه كسب أكبر قدر من المال!
+  login:
+    title: تسجيل الدخول/التسجيل
+    register: التسجيل
+    login: تسجيل الدخول
+    email: البريد الإلكتروني
+    username: اسم المستخدم
+    password: كلمة المرور
+    confirm: تأكيد
+    confirm-password: تأكيد كلمة المرور
+    remember-me: تذكرني
+    forgot-password: هل نسيت كلمة المرور؟
+    create-account: إنشاء حساب
+    sign-in: تسجيل الدخول
+    sign-up: التسجيل
+    no-account: ليس لديك حساب؟
+    already-have-account: هل لديك حساب بالفعل؟
+    missing-credentials: الرجاء ملء جميع الحقول.
+    email-taken: البريد الإلكتروني مستخدم بالفعل. جرب تسجيل الدخول.
+    invalid-registration: تأكد من أن معلومات حسابك تلبي المتطلبات.
+    invalid-credentials: تأكد من أن كلمة المرور الخاصة بك صحيحة.
+    no-account-found: لا يوجد حساب مع هذا البريد الإلكتروني.
+    username-requirements: >-
+      بين 3 و 20 حرفًا.
+      الأحرف والأرقام والشرطات فقط.
+    password-requirements: يجب أن تتكون من 6 أحرف على الأقل.
+    unknown-error: حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى لاحقًا.
+  dashboard:
+    title: لوحة القيادة
+    portfolio-value: قيمة المحفظة
+    assets: الأصول
+    history: التاريخ
+    cash: النقدية
+    transactions: المعاملات
+    trade:
+      title: التجارة
+    tournaments:
+      title: البطولات
+    help:
+      title: المساعدة
+      index:
+        title: الفهرس
+      faq:
+        title: الأسئلة الشائعة
+    settings:
+      title: الإعدادات
+misc:
+  home: الصفحة الرئيسية
+i18n:
+  language-changed-to: تم تغيير اللغة إلى
+  language: اللغة
+theme-switch:
+  toggle-theme: تبديل السمة
+  theme-toggled: تم تبديل السمة
+buttons:
+  go-back: العودة
+errors:
+  not-found: غير موجود

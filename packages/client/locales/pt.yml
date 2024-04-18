@@ -1,0 +1,70 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Portuguese)
+# cSpell: disable
+
+example:
+  hello-world: Olá Mundo!
+pages:
+  main:
+    title: Principal
+    content-title: Leve suas ações para o próximo nível
+    content-subtitle: >-
+      Fintasy é um simulador de mercado de ações que permite negociar ações com dinheiro fictício.
+      Compita com seus amigos e veja quem consegue ganhar mais dinheiro!
+  login:
+    title: Entrar/Registrar
+    register: Registrar
+    login: Entrar
+    email: Email
+    username: Nome de usuário
+    password: Senha
+    confirm: Confirmar
+    confirm-password: Confirmar Senha
+    remember-me: Lembrar-me
+    forgot-password: Esqueceu a senha?
+    create-account: Criar Conta
+    sign-in: Entrar
+    sign-up: Registrar
+    no-account: Sem conta?
+    already-have-account: Já possui uma conta?
+    missing-credentials: Por favor, preencha todos os campos.
+    email-taken: O email já está em uso. Tente entrar.
+    invalid-registration: Certifique-se de que suas informações de conta atendam aos requisitos.
+    invalid-credentials: Certifique-se de que sua senha está correta.
+    no-account-found: Nenhuma conta encontrada com esse email.
+    username-requirements: >-
+      Entre 3 e 20 caracteres.
+      Apenas letras, números e sublinhados.
+    password-requirements: Deve ter pelo menos 6 caracteres.
+    unknown-error: Ocorreu um erro desconhecido. Por favor, tente novamente mais tarde.
+  dashboard:
+    title: Painel
+    portfolio-value: Valor da Carteira
+    assets: Ativos
+    history: Histórico
+    cash: DINHEIRO
+    transactions: TRANSAÇÕES
+    trade:
+      title: Negociar
+    tournaments:
+      title: Torneios
+    help:
+      title: Ajuda
+      index:
+        title: Índice
+      faq:
+        title: Perguntas Frequentes
+    settings:
+      title: Configurações
+misc:
+  home: Início
+i18n:
+  language-changed-to: Idioma alterado para
+  language: Idioma
+theme-switch:
+  toggle-theme: Alternar Tema
+  theme-toggled: Tema alternado
+buttons:
+  go-back: Voltar
+errors:
+  not-found: Não Encontrado
