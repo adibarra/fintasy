@@ -1,0 +1,77 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Pirate English)
+# cSpell: disable
+
+example:
+  hello-world: Ahoy World!
+pages:
+  main:
+    title: Main
+    content-title: Take Yer Stocks To The Next Level
+    content-subtitle: >-
+      Fintasy be a stock market simulator that allows ye to trade stocks with fake doubloons.
+      Compete against yer mateys and see who can make the most booty!
+  login:
+    title: Log in/Register
+    register: Register
+    login: Log in
+    email: E-mail
+    username: Pirate Name
+    password: Secret Code
+    confirm: Confirm
+    confirm-password: Confirm Secret Code
+    remember-me: Remember Me Hearties
+    forgot-password: Forgot Yer Secret Code?
+    create-account: Create Account
+    sign-in: Sign In
+    sign-up: Sign Up
+    no-account: No Account?
+    already-have-account: Already Have an Account?
+    missing-credentials: Please fill out all fields, ye scallywag.
+    email-taken: Yer E-mail be already taken. Try signin' in, ye landlubber.
+    invalid-registration: Make sure yer account information meets the requirements, ye scurvy dog.
+    invalid-credentials: Make sure yer secret code be correct, ye scallywag.
+    no-account-found: No account found with that e-mail, ye bilge rat.
+    username-requirements: >-
+      Between 3 and 20 characters.
+      Letters, numbers, and underscores only, ye landlubber.
+    password-requirements: Must be at least 6 characters, ye scurvy dog.
+    unknown-error: Arrr! An unknown error occurred. Please try again later, ye scallywag.
+  dashboard:
+    title: Chart
+    portfolio-value: Booty Worth
+    assets: Plunder
+    history: Tales
+    cash: DOUBLOONS
+    transactions: Plunder Transacted
+    symbol: Symbol
+    quantity: Quantity
+    price: Price
+    profit-loss-day: Booty Gained/Lost Today
+    profit-loss-total: Booty Gained/Lost Overall
+    buy-sell-action: Action
+    date: Date
+    trade:
+      title: Trade
+    tournaments:
+      title: Competitions
+    help:
+      title: Help
+      index:
+        title: Index
+      faq:
+        title: Pirate FAQs
+    settings:
+      title: Settings
+misc:
+  home: Home Port
+i18n:
+  language-changed-to: Language Shifted to
+  language: Tongue
+theme-switch:
+  toggle-theme: Toggle the Theme
+  theme-toggled: Theme Shifted
+buttons:
+  go-back: Back to Port
+errors:
+  not-found: Treasure Not Found
