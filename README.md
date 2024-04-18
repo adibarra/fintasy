@@ -64,14 +64,24 @@ This is a one-time setup. If you have already done this, you can skip to the nex
 
 <details>
 <summary>Manual Environment Setup</summary>
-I hope you know what you're doing.
-You will need to install the following:
+I hope you know what you're doing. The devcontainer does all of this for you.
 
-1. [nvm](https://github.com/nvm-sh/nvm)
-2. [Node.js](https://nodejs.org/en/download/)
-3. [pnpm](https://pnpm.io/installation)
-4. [Python3](https://www.python.org/downloads/)
-5. [PostgreSQL](https://www.postgresql.org/download/)
+1. Install [Python3](https://www.python.org/downloads/) for your platform.
+2. Install [nvm](https://github.com/nvm-sh/nvm) for your platform.
+3. Git clone the repository.
+4. Run the following commands:
+
+```bash
+  $ nvm use || nvm install --lts
+  $ corepack enable
+  $ corepack install
+  $ cp --no-clobber .env.example .env.production
+  $ cp --no-clobber .env.example .env.development
+```
+
+5. You will need to set up a PostgreSQL database.
+6. You will also need an Alpaca Markets API key for the stock data.
+7. Additionally, make sure to fill out the `.env` files with the appropriate values.
 </details>
 
 ## Reconnect to Environment (devcontainer)
