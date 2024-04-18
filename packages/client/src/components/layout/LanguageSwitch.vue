@@ -21,7 +21,7 @@ async function setLocale(newLocale: string) {
 
 const locales = computed(() => {
   const locales = [
-    { key: 0, label: t('i18n.change-language'), type: 'header', disabled: true },
+    { key: 0, label: t('i18n.language'), type: 'header', disabled: true },
     { key: 1, type: 'divider' },
     ...availableLocales.map(locale => ({ key: `locale-${locale}`, label: locale })),
   ]
