@@ -11,18 +11,19 @@ const { t } = useI18n()
 
 <template>
   <header z-40 text-lg>
-    <router-link
-      to="/"
-      focusable="false"
-      absolute m-2 flex select-none gap-3 outline-none lg:fixed
-    >
-      <img src="/pwa-512x512.png" alt="Fintasy Logo" mr-2 h-15>
-      <div my-auto text-3xl>
-        Fintasy
-      </div>
-    </router-link>
-
     <nav flex flex-row items-center gap-5 p-2>
+      <!-- logo -->
+      <router-link
+        to="/"
+        focusable="false"
+        flex select-none gap-3 outline-none
+      >
+        <img src="/pwa-512x512.png" alt="Fintasy Logo" mr-2 h-8 md:h-12>
+        <div my-auto md:text-3xl>
+          Fintasy
+        </div>
+      </router-link>
+
       <!-- spacer -->
       <div grow />
 
@@ -30,7 +31,9 @@ const { t } = useI18n()
       <n-tooltip>
         <template #trigger>
           <n-button text @click="$router.push('/')">
-            <span lt-md:hidden>{{ t('misc.home') }}</span>
+            <span lt-md:hidden md:text-lg>
+              {{ t('misc.home') }}
+            </span>
             <n-icon size="22" md:hidden>
               <HomeIcon />
             </n-icon>
@@ -43,7 +46,9 @@ const { t } = useI18n()
       <n-tooltip>
         <template #trigger>
           <n-button text @click="$router.push('/dashboard')">
-            <span lt-md:hidden>{{ t('pages.dashboard.title') }}</span>
+            <span lt-md:hidden md:text-lg>
+              {{ t('pages.dashboard.title') }}
+            </span>
             <n-icon size="22" md:hidden>
               <DashboardIcon />
             </n-icon>
