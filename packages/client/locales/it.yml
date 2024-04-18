@@ -1,0 +1,70 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Italian)
+# cSpell: disable
+
+example:
+  hello-world: Ciao Mondo!
+pages:
+  main:
+    title: Principale
+    content-title: Porta le tue azioni al livello successivo
+    content-subtitle: >-
+      Fintasy è un simulatore di mercato azionario che ti permette di scambiare azioni con denaro fittizio.
+      Sfida i tuoi amici e vedi chi può guadagnare più soldi!
+  login:
+    title: Accesso/Registrazione
+    register: Registrazione
+    login: Accesso
+    email: Email
+    username: Nome utente
+    password: Password
+    confirm: Conferma
+    confirm-password: Conferma Password
+    remember-me: Ricordami
+    forgot-password: Password dimenticata?
+    create-account: Crea Account
+    sign-in: Accedi
+    sign-up: Registrati
+    no-account: Non hai un account?
+    already-have-account: Hai già un account?
+    missing-credentials: Si prega di compilare tutti i campi.
+    email-taken: L'email è già in uso. Prova ad accedere.
+    invalid-registration: Assicurati che le informazioni del tuo account soddisfino i requisiti.
+    invalid-credentials: Assicurati che la tua password sia corretta.
+    no-account-found: Nessun account trovato con questa email.
+    username-requirements: >-
+      Tra 3 e 20 caratteri.
+      Solo lettere, numeri e trattini bassi.
+    password-requirements: Deve contenere almeno 6 caratteri.
+    unknown-error: Si è verificato un errore sconosciuto. Si prega di riprovare più tardi.
+  dashboard:
+    title: Cruscotto
+    portfolio-value: Valore del Portafoglio
+    assets: Asset
+    history: Cronologia
+    cash: Contanti
+    transactions: Transazioni
+    trade:
+      title: Commercio
+    tournaments:
+      title: Tornei
+    help:
+      title: Aiuto
+      index:
+        title: Indice
+      faq:
+        title: Domande frequenti
+    settings:
+      title: Impostazioni
+misc:
+  home: Casa
+i18n:
+  language-changed-to: Lingua cambiata in
+  language: Lingua
+theme-switch:
+  toggle-theme: Cambia Tema
+  theme-toggled: Tema cambiato
+buttons:
+  go-back: Indietro
+errors:
+  not-found: Non Trovato

@@ -1,0 +1,70 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Hindi)
+# cSpell: disable
+
+example:
+  hello-world: नमस्ते दुनिया!
+pages:
+  main:
+    title: मुख्य
+    content-title: अपने स्टॉक्स को अगले स्तर पर ले जाएं
+    content-subtitle: >-
+      फिंटेसी एक स्टॉक मार्केट सिम्युलेटर है जो आपको फर्जी पैसे के साथ स्टॉक्स ट्रेड करने की अनुमति देता है।
+      अपने दोस्तों के साथ प्रतिस्पर्धा करें और देखें कि कौन सबसे अधिक पैसा कमा सकता है!
+  login:
+    title: लॉगिन/रजिस्टर
+    register: रजिस्टर
+    login: लॉगिन
+    email: ईमेल
+    username: उपयोगकर्ता नाम
+    password: पासवर्ड
+    confirm: पुष्टि करें
+    confirm-password: पासवर्ड की पुष्टि करें
+    remember-me: मुझे याद रखें
+    forgot-password: पासवर्ड भूल गए?
+    create-account: खाता बनाएं
+    sign-in: साइन इन करें
+    sign-up: साइन अप करें
+    no-account: कोई खाता नहीं है?
+    already-have-account: क्या आपके पास पहले से ही खाता है?
+    missing-credentials: कृपया सभी क्षेत्र भरें।
+    email-taken: ईमेल पहले से उपयोग में है। साइन इन करें।
+    invalid-registration: अपने खाता जानकारी को आवश्यकताओं के अनुसार सुनिश्चित करें।
+    invalid-credentials: अपना पासवर्ड सही होने की सुनिश्चित करें।
+    no-account-found: उस ईमेल के साथ कोई खाता नहीं मिला।
+    username-requirements: >-
+      3 से 20 अक्षरों के बीच।
+      केवल अक्षर, संख्या और अंडरस्कोर ही।
+    password-requirements: कम से कम 6 अक्षर होना चाहिए।
+    unknown-error: एक अज्ञात त्रुटि हुई। कृपया बाद में पुन. प्रयास करें।
+  dashboard:
+    title: डैशबोर्ड
+    portfolio-value: पोर्टफोलियो मूल्य
+    assets: संपत्तियां
+    history: इतिहास
+    cash: नकद
+    transactions: लेन-देन
+    trade:
+      title: व्यापार
+    tournaments:
+      title: प्रतियोगिताएँ
+    help:
+      title: सहायता
+      index:
+        title: सूची
+      faq:
+        title: सामान्य प्रश्न
+    settings:
+      title: सेटिंग्स
+misc:
+  home: होम
+i18n:
+  language-changed-to: भाषा बदल गई
+  language: भाषा
+theme-switch:
+  toggle-theme: थीम टॉगल करें
+  theme-toggled: थीम टॉगल की गई
+buttons:
+  go-back: पिछले पर जाएं
+errors:
+  not-found: नहीं मिला
