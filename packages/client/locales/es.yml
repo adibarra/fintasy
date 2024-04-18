@@ -1,5 +1,5 @@
 # @author: adibarra (Alec Ibarra)
-# @description: Translation file for i18n
+# @description: Translation file for i18n (Spanish)
 # cSpell: disable
 
 example:
@@ -9,10 +9,11 @@ pages:
     title: Principal
     content-title: Lleva tus acciones al siguiente nivel
     content-subtitle: >-
-      Fintasy es un simulador de mercado de valores que te permite comerciar acciones con dinero ficticio. ¡Compite contra tus amigos y ve quién puede ganar más dinero!
+      Fintasy es un simulador del mercado de valores que te permite comerciar acciones con dinero ficticio.
+      ¡Compite contra tus amigos y ve quién puede ganar más dinero!
   login:
-    title: Iniciar sesión/Registrarse
-    register: Registrarse
+    title: Iniciar sesión/Registro
+    register: Registro
     login: Iniciar sesión
     email: Correo electrónico
     username: Nombre de usuario
@@ -22,18 +23,22 @@ pages:
     remember-me: Recordarme
     forgot-password: ¿Olvidaste tu contraseña?
     create-account: Crear cuenta
-    sign-in: Iniciar sesión
+    sign-in: Ingresar
     sign-up: Registrarse
-    no-account: ¿Sin cuenta?
+    no-account: ¿No tienes una cuenta?
     already-have-account: ¿Ya tienes una cuenta?
-    missing-credentials: Por favor, llena todos los campos.
-    invalid-credentials: Tus credenciales son incorrectas o no tienes una cuenta.
-    invalid-registration: La información de tu cuenta es incorrecta o ya tienes una cuenta.
+    missing-credentials: Por favor completa todos los campos.
+    email-taken: El correo electrónico ya está en uso. Intenta iniciar sesión.
+    invalid-registration: Asegúrate de que la información de tu cuenta cumpla con los requisitos.
+    invalid-credentials: Asegúrate de que tu contraseña sea correcta.
+    no-account-found: No se encontró ninguna cuenta con ese correo electrónico.
     username-requirements: >-
-      El nombre de usuario debe tener entre 3 y 20 caracteres. Solo puede contener letras, números y guiones bajos.
-    password-requirements: La contraseña debe tener al menos 6 caracteres. Eso es todo.
+      Entre 3 y 20 caracteres.
+      Solo letras, números y guiones bajos.
+    password-requirements: Debe tener al menos 6 caracteres.
+    unknown-error: Se produjo un error desconocido. Por favor inténtalo de nuevo más tarde.
   dashboard:
-    title: Tablero de control
+    title: Tablero
     portfolio-value: Valor de la cartera
     assets: Activos
     history: Historial
@@ -50,15 +55,15 @@ pages:
       faq:
         title: Preguntas frecuentes
     settings:
-      title: Configuración
+      title: Ajustes
 misc:
   home: Inicio
 i18n:
   language-changed-to: Idioma cambiado a
-  change-language: Cambiar idioma
+  language: Idioma
 theme-switch:
-  toggle-theme: Alternar tema
-  theme-toggled: Tema alternado
+  toggle-theme: Cambiar tema
+  theme-toggled: Tema cambiado
 buttons:
   go-back: Volver
 errors:
