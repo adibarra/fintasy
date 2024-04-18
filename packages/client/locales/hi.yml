@@ -7,9 +7,9 @@ example:
 pages:
   main:
     title: मुख्य
-    content-title: अपने स्टॉक्स को अगले स्तर पर ले जाएं
+    content-title: अपने शेयरों को अगले स्तर पर ले जाएं
     content-subtitle: >-
-      फिंटेसी एक स्टॉक मार्केट सिम्युलेटर है जो आपको फर्जी पैसे के साथ स्टॉक्स ट्रेड करने की अनुमति देता है।
+      फिन्टेसी एक शेयर बाजार सिम्युलेटर है जो आपको फेक मनी के साथ शेयरों का व्यापार करने की अनुमति देता है।
       अपने दोस्तों के साथ प्रतिस्पर्धा करें और देखें कि कौन सबसे अधिक पैसा कमा सकता है!
   login:
     title: लॉगिन/रजिस्टर
@@ -25,29 +25,36 @@ pages:
     create-account: खाता बनाएं
     sign-in: साइन इन करें
     sign-up: साइन अप करें
-    no-account: कोई खाता नहीं है?
-    already-have-account: क्या आपके पास पहले से ही खाता है?
-    missing-credentials: कृपया सभी क्षेत्र भरें।
+    no-account: कोई खाता नहीं?
+    already-have-account: पहले से ही खाता है?
+    missing-credentials: कृपया सभी फ़ील्ड भरें।
     email-taken: ईमेल पहले से उपयोग में है। साइन इन करें।
-    invalid-registration: अपने खाता जानकारी को आवश्यकताओं के अनुसार सुनिश्चित करें।
-    invalid-credentials: अपना पासवर्ड सही होने की सुनिश्चित करें।
+    invalid-registration: अपने खाता जानकारी को योग्यता मानकों को पूरा करने के लिए सुनिश्चित करें।
+    invalid-credentials: अपना पासवर्ड सही हैं सुनिश्चित करें।
     no-account-found: उस ईमेल के साथ कोई खाता नहीं मिला।
     username-requirements: >-
-      3 से 20 अक्षरों के बीच।
-      केवल अक्षर, संख्या और अंडरस्कोर ही।
-    password-requirements: कम से कम 6 अक्षर होना चाहिए।
-    unknown-error: एक अज्ञात त्रुटि हुई। कृपया बाद में पुन. प्रयास करें।
+      3 से 20 अक्षर।
+      केवल अक्षर, संख्याएँ और अंडरस्कोर।
+    password-requirements: कम से कम 6 अक्षर होने चाहिए।
+    unknown-error: एक अज्ञात त्रुटि हुई है। कृपया बाद में पुन. प्रयास करें।
   dashboard:
     title: डैशबोर्ड
     portfolio-value: पोर्टफोलियो मूल्य
-    assets: संपत्तियां
+    assets: संपत्ति
     history: इतिहास
-    cash: नकद
+    cash: नकदी
     transactions: लेन-देन
+    symbol: प्रतीक
+    quantity: मात्रा
+    price: मूल्य
+    profit-loss-day: लाभ/हानि दिन
+    profit-loss-total: लाभ/हानि कुल
+    buy-sell-action: कार्रवाई
+    date: दिनांक
     trade:
       title: व्यापार
     tournaments:
-      title: प्रतियोगिताएँ
+      title: प्रतियोगिताएं
     help:
       title: सहायता
       index:
@@ -63,8 +70,8 @@ i18n:
   language: भाषा
 theme-switch:
   toggle-theme: थीम टॉगल करें
-  theme-toggled: थीम टॉगल की गई
+  theme-toggled: थीम टॉगल किया गया
 buttons:
-  go-back: पिछले पर जाएं
+  go-back: वापस जाएं
 errors:
   not-found: नहीं मिला

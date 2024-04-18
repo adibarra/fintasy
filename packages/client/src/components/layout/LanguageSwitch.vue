@@ -203,14 +203,14 @@ const localeMap = [
 async function setLocale(newLocale: string) {
   await loadLanguageAsync(newLocale)
   locale.value = newLocale
-  message.info(`${t('i18n.language-changed-to')} ${localeMap.filter(i => i.code === newLocale)[0].nativeName}`)
+  message.info(`${t('i18n.language-changed-to')} ${localeMap.filter(i => i.code === newLocale)[0]?.nativeName || newLocale}`)
 }
 
 const locales = computed(() => {
   const locales = [
     { key: 0, label: t('i18n.language'), type: 'header', disabled: true },
     { key: 1, type: 'divider' },
-    ...availableLocales.map(locale => ({ key: locale, label: localeMap.filter(i => i.code === locale)[0].nativeName })),
+    ...availableLocales.map(locale => ({ key: locale, label: localeMap.filter(i => i.code === locale)[0]?.nativeName || locale })),
   ]
   return locales
 })

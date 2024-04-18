@@ -7,9 +7,9 @@ example:
 pages:
   main:
     title: Hauptseite
-    content-title: Bringen Sie Ihre Aktien auf die nächste Stufe
+    content-title: Bringen Sie Ihre Aktien auf das nächste Level
     content-subtitle: >-
-      Fintasy ist ein Börsensimulator, der es Ihnen ermöglicht, Aktien mit fiktivem Geld zu handeln.
+      Fintasy ist ein Börsensimulator, der es Ihnen ermöglicht, Aktien mit Spielgeld zu handeln.
       Treten Sie gegen Ihre Freunde an und sehen Sie, wer am meisten Geld verdienen kann!
   login:
     title: Anmelden/Registrieren
@@ -26,24 +26,31 @@ pages:
     sign-in: Anmelden
     sign-up: Registrieren
     no-account: Kein Konto?
-    already-have-account: Sie haben bereits ein Konto?
+    already-have-account: Bereits einen Account?
     missing-credentials: Bitte füllen Sie alle Felder aus.
-    email-taken: E-Mail wird bereits verwendet. Versuchen Sie sich anzumelden.
+    email-taken: Diese E-Mail-Adresse wird bereits verwendet. Versuchen Sie, sich anzumelden.
     invalid-registration: Stellen Sie sicher, dass Ihre Kontoinformationen den Anforderungen entsprechen.
     invalid-credentials: Stellen Sie sicher, dass Ihr Passwort korrekt ist.
-    no-account-found: Kein Konto mit dieser E-Mail gefunden.
+    no-account-found: Kein Konto mit dieser E-Mail-Adresse gefunden.
     username-requirements: >-
       Zwischen 3 und 20 Zeichen.
       Nur Buchstaben, Zahlen und Unterstriche.
     password-requirements: Muss mindestens 6 Zeichen lang sein.
     unknown-error: Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.
   dashboard:
-    title: Übersicht
+    title: Dashboard
     portfolio-value: Portfolio-Wert
     assets: Vermögenswerte
     history: Verlauf
     cash: BARGELD
-    transactions: TRANSAKTIONEN
+    transactions: Transaktionen
+    symbol: Symbol
+    quantity: Menge
+    price: Preis
+    profit-loss-day: Gewinn/Verlust Tag
+    profit-loss-total: Gewinn/Verlust Gesamt
+    buy-sell-action: Aktion
+    date: Datum
     trade:
       title: Handel
     tournaments:
@@ -62,8 +69,8 @@ i18n:
   language-changed-to: Sprache geändert zu
   language: Sprache
 theme-switch:
-  toggle-theme: Thema wechseln
-  theme-toggled: Thema gewechselt
+  toggle-theme: Design wechseln
+  theme-toggled: Design gewechselt
 buttons:
   go-back: Zurück
 errors:

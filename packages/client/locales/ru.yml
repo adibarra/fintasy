@@ -9,17 +9,17 @@ pages:
     title: Главная
     content-title: Поднимите свои акции на новый уровень
     content-subtitle: >-
-      Fintasy - это симулятор фондового рынка, который позволяет вам торговать акциями с помощью фиктивных денег.
+      Fintasy - это симулятор фондового рынка, который позволяет торговать акциями с фальшивыми деньгами.
       Соревнуйтесь с друзьями и посмотрите, кто может заработать больше всего денег!
   login:
     title: Вход/Регистрация
     register: Регистрация
     login: Вход
-    email: Электронная почта
+    email: Эл. почта
     username: Имя пользователя
     password: Пароль
     confirm: Подтвердить
-    confirm-password: Подтвердите пароль
+    confirm-password: Подтвердить пароль
     remember-me: Запомнить меня
     forgot-password: Забыли пароль?
     create-account: Создать аккаунт
@@ -28,10 +28,10 @@ pages:
     no-account: Нет аккаунта?
     already-have-account: Уже есть аккаунт?
     missing-credentials: Пожалуйста, заполните все поля.
-    email-taken: Электронная почта уже используется. Попробуйте войти.
-    invalid-registration: Убедитесь, что ваша учетная запись соответствует требованиям.
+    email-taken: Этот адрес электронной почты уже используется. Попробуйте войти.
+    invalid-registration: Убедитесь, что информация вашего аккаунта соответствует требованиям.
     invalid-credentials: Убедитесь, что ваш пароль правильный.
-    no-account-found: Нет аккаунта с этим адресом электронной почты.
+    no-account-found: Аккаунт с таким адресом электронной почты не найден.
     username-requirements: >-
       От 3 до 20 символов.
       Только буквы, цифры и подчеркивания.
@@ -42,8 +42,15 @@ pages:
     portfolio-value: Стоимость портфеля
     assets: Активы
     history: История
-    cash: Наличные
+    cash: НАЛИЧНЫЕ
     transactions: Транзакции
+    symbol: Символ
+    quantity: Количество
+    price: Цена
+    profit-loss-day: Прибыль/Убыток за день
+    profit-loss-total: Общая прибыль/убыток
+    buy-sell-action: Действие
+    date: Дата
     trade:
       title: Торговля
     tournaments:
@@ -51,7 +58,7 @@ pages:
     help:
       title: Помощь
       index:
-        title: Справочник
+        title: Индекс
       faq:
         title: Часто задаваемые вопросы
     settings:
