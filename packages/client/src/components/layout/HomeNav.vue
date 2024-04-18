@@ -14,15 +14,15 @@ const { t } = useI18n()
     <router-link
       to="/"
       focusable="false"
-      m-2 select-none outline-none lg:fixed flex gap-3 absolute
+      absolute m-2 flex select-none gap-3 outline-none lg:fixed
     >
       <img src="/pwa-512x512.png" alt="Fintasy Logo" mr-2 h-15>
-      <div text-3xl my-auto>
+      <div my-auto text-3xl>
         Fintasy
       </div>
     </router-link>
 
-    <nav flex flex-row gap-5 p-2 items-center>
+    <nav flex flex-row items-center gap-5 p-2>
       <!-- spacer -->
       <div grow />
 

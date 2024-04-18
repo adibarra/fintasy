@@ -181,7 +181,7 @@ function toggleForm() {
 
       <!-- Submit Button -->
       <button
-        mt-5 fn-outline bg--c-inverse hover:bg--c-accent text-lg text--c-bg py-0.5 px-2
+        mt-5 fn-outline bg--c-inverse hover:bg--c-accent px-2 py-0.5 text-lg text--c-bg
         @click="handleSubmit"
       >
         {{ activeForm === 'login' ? t('pages.login.sign-in') : t('pages.login.create-account') }}
