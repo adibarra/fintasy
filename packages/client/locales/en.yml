@@ -43,6 +43,13 @@ pages:
     history: History
     cash: CASH
     transactions: TRANSACTIONS
+    symbol: Symbol
+    quantity: Qty
+    price: Price
+    profit-loss-day: P/L Day
+    profit-loss-total: P/L Total
+    buy-sell-action: Action
+    date: Date
     trade:
       title: Trade
     tournaments:

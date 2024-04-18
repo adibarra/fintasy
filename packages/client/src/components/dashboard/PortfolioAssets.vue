@@ -26,11 +26,11 @@ interface Asset {
 }
 
 const columns = [
-  { key: 'symbol', title: 'Symbol', width: '20%' },
-  { key: 'quantity', title: 'Qty', width: '15%' },
-  { key: 'price_cents', title: 'Price', width: '20%' },
-  { key: 'pl_day', title: 'P/L Day' },
-  { key: 'pl_total', title: 'P/L Total' },
+  { key: 'symbol', title: t('pages.dashboard.symbol'), width: '20%' },
+  { key: 'quantity', title: t('pages.dashboard.quantity'), width: '15%' },
+  { key: 'price_cents', title: t('pages.dashboard.price'), width: '20%' },
+  { key: 'pl_day', title: t('pages.dashboard.profit-loss-day') },
+  { key: 'pl_total', title: t('pages.dashboard.profit-loss-total') },
 ]
 
 const data = ref()
