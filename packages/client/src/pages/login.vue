@@ -15,14 +15,15 @@ const password = ref('')
 const username = ref('')
 const confirmPassword = ref('')
 const error = ref('')
+const waitForLogin = ref(false)
 
 useHead({
   title: `${t('pages.login.title')} • Fintasy`,
 })
 
 // make sure uuid is set before redirecting
-watch(() => [fintasy.authenticated.value, state.user.uuid], () => {
-  if (fintasy.authenticated.value && state.user.uuid)
+watch(() => [fintasy.authenticated.value, waitForLogin.value], () => {
+  if (fintasy.authenticated.value && !waitForLogin.value)
     router.push('/dashboard')
 }, { immediate: true })
 
@@ -40,12 +41,20 @@ async function createAccount() {
   }
 
   const createUser = await fintasy.createUser({ email: email.value, username: username.value, password: password.value })
-  if (createUser.code !== 200) {
-    error.value = t('pages.login.invalid-registration')
-    return
+  switch (createUser.code) {
+    case 400:
+      error.value = t('pages.login.invalid-registration')
+      break
+    case 409:
+      error.value = t('pages.login.email-taken')
+      break
+    case 200:
+      login()
+      break
+    default:
+      error.value = t('pages.login.unknown-error')
+      break
   }
-
-  login()
 }
 
 async function login() {
@@ -54,19 +63,33 @@ async function login() {
     return
   }
 
+  waitForLogin.value = true
   const login = await fintasy.login({ email: email.value, password: password.value })
-  if (login.code !== 200) {
-    error.value = t('pages.login.invalid-credentials')
-    return
+  switch (login.code) {
+    case 404:
+      error.value = t('pages.login.no-account-found')
+      break
+    case 403:
+      error.value = t('pages.login.invalid-credentials')
+      break
+    case 200:
+      if (!rememberMe.value)
+        email.value = ''
+      state.user.uuid = login.data.owner
+      break
+    default:
+      error.value = t('pages.login.unknown-error')
+      break
   }
-
-  if (!rememberMe.value)
-    email.value = ''
-  state.user.uuid = login.data.owner
+  waitForLogin.value = false
 }
 
 function toggleForm() {
   activeForm.value = activeForm.value === 'login' ? 'register' : 'login'
+
+  // clear confirm password if switching forms
+  if (activeForm.value === 'register')
+    confirmPassword.value = ''
 }
 </script>
 
@@ -89,9 +112,9 @@ function toggleForm() {
             {{ t('pages.login.email') }}
           </n-input-group-label>
           <n-input
-            id="email"
             v-model:value="email"
             :placeholder="t('pages.login.email')"
+            autocomplete="email"
             type="text"
           />
         </n-input-group>
@@ -105,9 +128,11 @@ function toggleForm() {
               {{ t('pages.login.username') }}
             </n-input-group-label>
             <n-input
-              id="username"
               v-model:value="username"
               :placeholder="t('pages.login.username')"
+              :status="username.length >= 3 || username.length === 0 ? undefined : 'error'"
+              :maxlength="20"
+              autocomplete="username"
               type="text"
             />
           </n-input-group>
@@ -124,9 +149,10 @@ function toggleForm() {
             {{ t('pages.login.password') }}
           </n-input-group-label>
           <n-input
-            id="password"
             v-model:value="password"
             :placeholder="t('pages.login.password')"
+            :status="password.length >= 6 || password.length === 0 ? undefined : 'error'"
+            :autocomplete="activeForm === 'register' ? 'new-password' : 'current-password'"
             type="password"
             show-password-on="click"
             @keypress.enter="handleSubmit"
@@ -145,9 +171,10 @@ function toggleForm() {
               {{ t('pages.login.confirm') }}
             </n-input-group-label>
             <n-input
-              id="confirm-password"
               v-model:value="confirmPassword"
               :placeholder="t('pages.login.confirm-password')"
+              :status="password === confirmPassword ? 'success' : 'error'"
+              autocomplete="new-password"
               type="password"
               show-password-on="click"
               @keypress.enter="handleSubmit"
@@ -200,6 +227,12 @@ function toggleForm() {
     </div>
   </div>
 </template>
+
+<style>
+.n-input .n-input__state-border {
+  display: none !important;
+}
+</style>
 
 <route lang="yaml">
   meta:
