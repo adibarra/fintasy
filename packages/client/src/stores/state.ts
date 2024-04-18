@@ -7,7 +7,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { Portfolio } from '~/types'
 
 export const useStateStore = defineStore('state', () => {
-  const user = ref({
+  const user = useStorage('state-user', {
     uuid: '',
     username: '',
     avatar: 'https://avatars.githubusercontent.com/u/93070681?v=4',
