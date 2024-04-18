@@ -19,7 +19,6 @@
     "lint:fix": "pnpm -r run lint:fix; eslint . --fix; exit 0",
     "postinstall": "npx simple-git-hooks",
     "preview": "pnpm -r run clean && pnpm -r --parallel run preview",
-    "start": "pnpm i && pnpm -r run start",
     "taze": "taze major -r -I",
     "test": "pnpm -r --parallel run test"
   },
