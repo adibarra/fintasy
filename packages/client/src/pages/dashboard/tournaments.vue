@@ -1,7 +1,5 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import TournamentFilters from '@/components/TournamentFilters'
-import TournamentsList from '@/components/TournamentsList'
 
 export default defineComponent({
   components: {
