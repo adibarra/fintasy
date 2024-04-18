@@ -7,31 +7,31 @@ example:
 pages:
   main:
     title: Principal
-    content-title: Leve suas ações para o próximo nível
+    content-title: Leve Suas Ações para o Próximo Nível
     content-subtitle: >-
       Fintasy é um simulador de mercado de ações que permite negociar ações com dinheiro fictício.
-      Compita com seus amigos e veja quem consegue ganhar mais dinheiro!
+      Desafie seus amigos e veja quem consegue ganhar mais dinheiro!
   login:
     title: Entrar/Registrar
     register: Registrar
     login: Entrar
-    email: Email
-    username: Nome de usuário
+    email: E-mail
+    username: Nome de Usuário
     password: Senha
     confirm: Confirmar
     confirm-password: Confirmar Senha
     remember-me: Lembrar-me
-    forgot-password: Esqueceu a senha?
+    forgot-password: Esqueceu a Senha?
     create-account: Criar Conta
     sign-in: Entrar
-    sign-up: Registrar
-    no-account: Sem conta?
-    already-have-account: Já possui uma conta?
+    sign-up: Registrar-se
+    no-account: Sem Conta?
+    already-have-account: Já tem uma conta?
     missing-credentials: Por favor, preencha todos os campos.
-    email-taken: O email já está em uso. Tente entrar.
-    invalid-registration: Certifique-se de que suas informações de conta atendam aos requisitos.
-    invalid-credentials: Certifique-se de que sua senha está correta.
-    no-account-found: Nenhuma conta encontrada com esse email.
+    email-taken: O e-mail já está em uso. Tente entrar.
+    invalid-registration: Verifique se as informações da sua conta atendem aos requisitos.
+    invalid-credentials: Verifique se sua senha está correta.
+    no-account-found: Nenhuma conta encontrada com esse e-mail.
     username-requirements: >-
       Entre 3 e 20 caracteres.
       Apenas letras, números e sublinhados.
@@ -39,13 +39,20 @@ pages:
     unknown-error: Ocorreu um erro desconhecido. Por favor, tente novamente mais tarde.
   dashboard:
     title: Painel
-    portfolio-value: Valor da Carteira
+    portfolio-value: Valor do Portfólio
     assets: Ativos
     history: Histórico
     cash: DINHEIRO
-    transactions: TRANSAÇÕES
+    transactions: Transações
+    symbol: Símbolo
+    quantity: Quantidade
+    price: Preço
+    profit-loss-day: Lucro/Prejuízo Diário
+    profit-loss-total: Lucro/Prejuízo Total
+    buy-sell-action: Ação
+    date: Data
     trade:
-      title: Negociar
+      title: Negociação
     tournaments:
       title: Torneios
     help:
@@ -57,7 +64,7 @@ pages:
     settings:
       title: Configurações
 misc:
-  home: Início
+  home: Página Inicial
 i18n:
   language-changed-to: Idioma alterado para
   language: Idioma

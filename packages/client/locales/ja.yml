@@ -7,10 +7,10 @@ example:
 pages:
   main:
     title: メイン
-    content-title: 株式を次のレベルに引き上げる
+    content-title: あなたの株を次のレベルに引き上げる
     content-subtitle: >-
-      Fintasyは、仮想のお金で株式を取引できる株式市場シミュレーターです。
-      友達と競い合って、誰が一番多くのお金を稼げるかを見てみましょう！
+      Fintasyは、架空のお金で株取引ができる株式市場シミュレーターです。
+      友達と競争して、誰が一番多くのお金を稼ぐことができるかを見てください！
   login:
     title: ログイン/登録
     register: 登録
@@ -20,23 +20,23 @@ pages:
     password: パスワード
     confirm: 確認
     confirm-password: パスワードの確認
-    remember-me: ログイン情報を記憶する
-    forgot-password: パスワードを忘れた場合
+    remember-me: ログイン情報を保存する
+    forgot-password: パスワードを忘れましたか？
     create-account: アカウントを作成する
     sign-in: サインイン
     sign-up: サインアップ
     no-account: アカウントがありませんか？
-    already-have-account: すでにアカウントをお持ちですか？
+    already-have-account: 既にアカウントをお持ちですか？
     missing-credentials: 全ての項目を入力してください。
-    email-taken: メールアドレスは既に登録されています。サインインしてください。
-    invalid-registration: アカウント情報が要件を満たしているか確認してください。
+    email-taken: そのメールアドレスはすでに使用されています。サインインしてください。
+    invalid-registration: アカウント情報が要件を満たしていることを確認してください。
     invalid-credentials: パスワードが正しいことを確認してください。
-    no-account-found: そのメールアドレスで登録されたアカウントは見つかりませんでした。
+    no-account-found: そのメールアドレスに一致するアカウントは見つかりませんでした。
     username-requirements: >-
-      3文字以上20文字以下であること。
-      英数字とアンダースコアのみが使用できます。
-    password-requirements: 6文字以上であること。
-    unknown-error: 不明なエラーが発生しました。後でもう一度試してください。
+      3文字以上20文字以下。
+      文字、数字、アンダースコアのみ。
+    password-requirements: 6文字以上である必要があります。
+    unknown-error: 不明なエラーが発生しました。後でもう一度やり直してください。
   dashboard:
     title: ダッシュボード
     portfolio-value: ポートフォリオの価値
@@ -44,8 +44,15 @@ pages:
     history: 履歴
     cash: 現金
     transactions: 取引
+    symbol: シンボル
+    quantity: 量
+    price: 価格
+    profit-loss-day: 日次損益
+    profit-loss-total: 累計損益
+    buy-sell-action: アクション
+    date: 日付
     trade:
-      title: 取引
+      title: トレード
     tournaments:
       title: トーナメント
     help:
@@ -53,7 +60,7 @@ pages:
       index:
         title: インデックス
       faq:
-        title: よくある質問
+        title: FAQ
     settings:
       title: 設定
 misc:

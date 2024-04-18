@@ -7,13 +7,13 @@ example:
 pages:
   main:
     title: الرئيسية
-    content-title: ارفع أسهمك إلى المستوى التالي
+    content-title: خذ أسهمك إلى المستوى التالي
     content-subtitle: >-
-      فنتاسي هو محاكي لسوق الأسهم يتيح لك تداول الأسهم باستخدام الأموال الوهمية.
-      تنافس مع أصدقائك وانظر من يمكنه كسب أكبر قدر من المال!
+      Fintasy هو محاكي سوق الأسهم الذي يتيح لك تداول الأسهم بأموال وهمية.
+      تنافس مع أصدقائك وانظر من يستطيع كسب أكبر قدر من المال!
   login:
     title: تسجيل الدخول/التسجيل
-    register: التسجيل
+    register: تسجيل
     login: تسجيل الدخول
     email: البريد الإلكتروني
     username: اسم المستخدم
@@ -27,23 +27,30 @@ pages:
     sign-up: التسجيل
     no-account: ليس لديك حساب؟
     already-have-account: هل لديك حساب بالفعل؟
-    missing-credentials: الرجاء ملء جميع الحقول.
-    email-taken: البريد الإلكتروني مستخدم بالفعل. جرب تسجيل الدخول.
+    missing-credentials: يرجى ملء جميع الحقول.
+    email-taken: البريد الإلكتروني مستخدم بالفعل. حاول تسجيل الدخول.
     invalid-registration: تأكد من أن معلومات حسابك تلبي المتطلبات.
     invalid-credentials: تأكد من أن كلمة المرور الخاصة بك صحيحة.
     no-account-found: لا يوجد حساب مع هذا البريد الإلكتروني.
     username-requirements: >-
       بين 3 و 20 حرفًا.
       الأحرف والأرقام والشرطات فقط.
-    password-requirements: يجب أن تتكون من 6 أحرف على الأقل.
-    unknown-error: حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى لاحقًا.
+    password-requirements: يجب أن تكون على الأقل 6 أحرف.
+    unknown-error: حدث خطأ غير معروف. يرجى المحاولة مرة أخرى في وقت لاحق.
   dashboard:
     title: لوحة القيادة
     portfolio-value: قيمة المحفظة
     assets: الأصول
     history: التاريخ
-    cash: النقدية
+    cash: نقد
     transactions: المعاملات
+    symbol: رمز
+    quantity: الكمية
+    price: السعر
+    profit-loss-day: الربح/الخسارة اليومية
+    profit-loss-total: الربح/الخسارة الإجمالية
+    buy-sell-action: الإجراء
+    date: التاريخ
     trade:
       title: التجارة
     tournaments:
