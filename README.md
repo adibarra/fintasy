@@ -106,17 +106,16 @@ Make sure you are in the repo's root directory before running these commands.
 
 ## Project Scripts
 
-| Scripts        | Description                              |
-| -------------- | ---------------------------------------- |
-| pnpm clean     | removes build artifacts                  |
-| pnpm clean:all | removes build artifacts and dependencies |
-| pnpm lint      | prints warnings about code formatting    |
-| pnpm lint:fix  | auto-fixes the code formatting           |
-| pnpm install   | installs dependencies for entire project |
-| pnpm dev       | runs development environment             |
-| pnpm build     | builds the app for production            |
-| pnpm preview   | runs the full built app in preview mode  |
-| pnpm start     | runs the app server for production       |
+| Scripts        | Description                                        |
+| -------------- | -------------------------------------------------- |
+| pnpm install   | installs dependencies for entire project           |
+| pnpm dev       | runs development environment                       |
+| pnpm clean     | removes build artifacts                            |
+| pnpm clean:all | removes build artifacts and dependencies           |
+| pnpm lint      | prints warnings about code formatting              |
+| pnpm lint:fix  | auto-fixes the code formatting                     |
+| pnpm build     | builds the app for production                      |
+| pnpm preview   | runs the full built app in production preview mode |
 
 ## License
 
