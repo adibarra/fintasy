@@ -1,31 +1,35 @@
-<script setup>
-import { computed, defineProps, ref } from 'vue'
+<script setup lang="ts">
+interface Item {
+  symbol: string
+  price_cents: number
+}
 
 const props = defineProps({
   items: {
-    type: Array,
+    type: Object as PropType<Item[]>,
     required: true,
   },
 })
 
 const searchFilter = ref('')
-
+const columns = [
+  { key: 'symbol', label: 'Symbol' },
+  { key: 'price', label: 'Price' },
+  { key: 'action', label: 'Buy/Sell' },
+]
 const filteredItems = computed(() => {
-  if (searchFilter.value !== '') {
-    return props.items.filter(item =>
-      item.id.toString().toLowerCase().includes(searchFilter.value.toLowerCase()),
-    )
-  }
-  return props.items
+  return props.items.filter((item) => {
+    return item.symbol.toString().toLowerCase().includes(searchFilter.value.toLowerCase())
+  })
 })
 
-function handleSearch(search) {
+function handleSearch(search: string) {
   searchFilter.value = search
 }
 </script>
 
 <template>
-  <div class="relative border bg-emerald">
+  <div class="bg-emerald">
     <div class="flex items-center justify-between">
       <SearchForm @search="handleSearch" />
 
@@ -35,34 +39,37 @@ function handleSearch(search) {
       </div>
     </div>
 
-    <table class="w-full text-left text-sm text-white">
-      <thead class="bg-gray-500 text-xs text-white uppercase">
+    <table class="w-full text-left text-sm">
+      <thead class="bg-gray-500 text-xs uppercase">
         <tr>
-          <th class="px-4 py-3">
-            ID
-          </th>
-          <th class="px-4 py-3">
-            Price
-          </th>
-          <th class="px-4 py-3">
-            <span class="sr-only">Actions</span>Buy/Sell
-          </th>
+          <template
+            v-for="column in columns"
+            :key="column.key"
+          >
+            <th class="px-4 py-3">
+              {{ column.label }}
+            </th>
+          </template>
         </tr>
       </thead>
 
       <tbody>
-        <tr v-for="item in filteredItems" :key="item.id" class="border-b">
-          <td class="px-4 py-3 text-white font-medium">
-            {{ item.id }}
-          </td>
-          <td class="px-4 py-3 text-white font-medium">
-            {{ item.price }}
+        <tr
+          v-for="item in filteredItems"
+          :key="item.symbol"
+          class="border-b font-900"
+        >
+          <td class="px-4 py-3">
+            {{ item.symbol }}
           </td>
           <td class="px-4 py-3">
-            <button class="mr-2 border bg-green-500 px-2 py-1 text-white hover:bg-green-600">
+            {{ `$${(item.price_cents / 100).toFixed(2)}` }}
+          </td>
+          <td class="px-4 py-3">
+            <button class="mr-2 border bg-green-500 px-2 py-1 hover:bg-green-600">
               ✓
             </button>
-            <button class="border bg-red-500 px-2 py-1 text-white hover:bg-red-600">
+            <button class="border bg-red-500 px-2 py-1 hover:bg-red-600">
               ✕
             </button>
           </td>
