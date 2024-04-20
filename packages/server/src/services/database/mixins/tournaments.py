@@ -171,7 +171,7 @@ class TournamentsMixin:
 
     def get_tournaments(
         self,
-        uuid_owner: str = None,
+        owner: str = None,
         name: str = None,
         status: str = None,
         start_date: str = None,
@@ -187,7 +187,7 @@ class TournamentsMixin:
         Retrieve tournaments from the database based on the provided filters.
 
         Args:
-            uuid_owner (str, optional): The UUID of the tournament owner. Defaults to None.
+            owner (str, optional): The UUID of the tournament owner. Defaults to None.
             name (str, optional): The name of the tournament. Defaults to None.
             status (str, optional): The status of the tournament. Defaults to None.
             start_date (str, optional): The start date of the tournament. Defaults to None.
@@ -210,9 +210,9 @@ class TournamentsMixin:
                 query = "SELECT * FROM tournaments WHERE TRUE"
                 params = []
 
-                if uuid_owner:
-                    query += " AND uuid_owner = %s"
-                    params.append(uuid_owner)
+                if owner:
+                    query += " AND owner = %s"
+                    params.append(owner)
                 if name:
                     query += " AND name = %s"
                     params.append(name)
