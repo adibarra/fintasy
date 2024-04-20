@@ -18,7 +18,7 @@ const fintasy = useAPI()
 const tournaments = ref<Tournament[]>([])
 const tournamentDetails = ref<Tournament>()
 const showModal = ref(false)
-const currentPage = ref(0)
+const currentPage = ref(1)
 const totalPages = ref(1)
 
 async function fetchTournaments(page: number) {
@@ -29,12 +29,14 @@ async function fetchTournaments(page: number) {
     start_date: props.filters.dateTimeRange?.[0]?.toISOString() ?? undefined,
     end_date: props.filters.dateTimeRange?.[1]?.toISOString() ?? undefined,
     offset: (page - 1) * 10,
-    limit: 11,
+    limit: 10,
   }
 
   const response = await fintasy.getTournaments(params)
-  if (response.code === 200)
+  if (response.code === 200) {
     tournaments.value = response.data
+    totalPages.value = Math.ceil(response.data.length / 10)
+  }
 }
 
 async function viewTournament(uuid: string) {
