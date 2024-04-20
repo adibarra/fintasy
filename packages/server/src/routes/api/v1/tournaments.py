@@ -2,6 +2,7 @@
 # @description: Portfolio routes for the API
 
 from datetime import datetime
+from enum import Enum
 from typing import List, Optional
 
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
@@ -13,8 +14,17 @@ db = Database()
 router = APIRouter(prefix="/api/v1")
 
 
+class TournamentStatus(Enum):
+    SCHEDULED = "SCHEDULED"
+    ONGOING = "ONGOING"
+    FINISHED = "FINISHED"
+
+
 class TournamentData(BaseModel):
+    uuid: UUID4
+    owner: UUID4
     name: str
+    status: TournamentStatus
     start_date: datetime
     end_date: datetime
     created_at: datetime
