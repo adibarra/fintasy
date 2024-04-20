@@ -156,12 +156,6 @@ class TournamentsMixin:
                     if tournament is not None:
                         column_names = [desc[0] for desc in cursor.description]
                         return dict(zip(column_names, tournament))
-                    else:
-                        print(
-                            f"Tournament with UUID '{uuid_tournament}' not found.",
-                            flush=True,
-                        )
-                        return None
         except Exception as e:
             print("Failed to get tournament by UUID:", e, flush=True)
             return None
@@ -210,37 +204,36 @@ class TournamentsMixin:
                 query = "SELECT * FROM tournaments WHERE TRUE"
                 params = []
 
-                if owner:
+                if owner is not None:
                     query += " AND owner = %s"
                     params.append(owner)
-                if name:
+                if name is not None:
                     query += " AND name = %s"
                     params.append(name)
-                if status:
+                if status is not None:
                     query += " AND status = %s"
                     params.append(status)
-                if start_date:
+                if start_date is not None:
                     query += " AND start_date = %s"
                     params.append(start_date)
-                if start_date_before:
+                if start_date_before is not None:
                     query += " AND start_date < %s"
                     params.append(start_date_before)
-                if start_date_after:
+                if start_date_after is not None:
                     query += " AND start_date > %s"
                     params.append(start_date_after)
-                if end_date:
+                if end_date is not None:
                     query += " AND end_date = %s"
                     params.append(end_date)
-                if end_date_before:
+                if end_date_before is not None:
                     query += " AND end_date < %s"
                     params.append(end_date_before)
-                if end_date_after:
+                if end_date_after is not None:
                     query += " AND end_date > %s"
                     params.append(end_date_after)
 
-                if offset and limit:
-                    query += " OFFSET %s LIMIT %s"
-                    params.extend([offset, limit])
+                query += " OFFSET %s LIMIT %s"
+                params.extend([offset, limit])
 
                 cursor.execute(query, params)
                 column_names = [desc[0] for desc in cursor.description]
