@@ -4,10 +4,10 @@ import type { STATUS, Tournament } from '~/types'
 const props = defineProps({
   filters: {
     type: Object as PropType<{
-      owner: string
-      name: string
-      status: STATUS
-      dateTimeRange: [Date, Date]
+      owner: string | undefined
+      name: string | undefined
+      status: STATUS | undefined
+      dateTimeRange: [Date, Date] | undefined
     }>,
     required: true,
   },
@@ -26,17 +26,15 @@ async function fetchTournaments(page: number) {
     owner: props.filters.owner,
     name: props.filters.name,
     status: props.filters.status,
-    start_date: props.filters.dateTimeRange[0].toISOString(), // Convert start date to ISO string
-    end_date: props.filters.dateTimeRange[1].toISOString(), // Convert end date to ISO string
+    start_date: props.filters.dateTimeRange?.[0]?.toISOString() ?? undefined,
+    end_date: props.filters.dateTimeRange?.[1]?.toISOString() ?? undefined,
     offset: (page - 1) * 10,
-    limit: 10,
+    limit: 11,
   }
 
   const response = await fintasy.getTournaments(params)
-  if (response.code === 200) {
+  if (response.code === 200)
     tournaments.value = response.data
-    totalPages.value = response.data.totalPages
-  }
 }
 
 async function viewTournament(uuid: string) {
@@ -81,7 +79,7 @@ watch(() => props.filters, () => {
       class="tournament-card"
     >
       <h3>{{ tournament.name }}</h3>
-      <p>{{ tournament.cost }}</p>
+      <p>{{ tournament.status }}</p>
       <button
         @click="viewTournament(tournament.uuid)"
       >

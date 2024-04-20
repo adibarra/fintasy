@@ -1,24 +1,23 @@
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import type { STATUS } from '~/types'
 
-export default defineComponent({
-  components: {
-    TournamentFilters,
-    TournamentsList,
-  },
-  setup() {
-    const currentFilters = ref({})
+interface filter {
+  owner: string | undefined
+  name: string | undefined
+  status: STATUS | undefined
+  dateTimeRange: [Date, Date] | undefined
+}
 
-    const applyFilters = (filters: any) => {
-      currentFilters.value = { ...filters } // Ensuring reactivity by spreading into a new object
-    }
-
-    return {
-      currentFilters,
-      applyFilters,
-    }
-  },
+const currentFilters = ref<filter>({
+  owner: undefined,
+  name: undefined,
+  status: undefined,
+  dateTimeRange: undefined,
 })
+
+function applyFilters(filters: any) {
+  currentFilters.value = { ...filters } // Ensuring reactivity by spreading into a new object
+}
 </script>
 
 <template>

@@ -1,29 +1,25 @@
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { STATUS } from '~/types'
 
-export default defineComponent({
-  name: 'TournamentFilters',
-  emits: ['filter'],
-  setup(props, { emit }) {
-    const range = ref([new Date(), new Date(Date.now() + 86400000)]) // This initializes the range to today and tomorrow.
-    const filters = ref({
-      name: '',
-      owner: '',
-      dateTimeRange: range.value,
-      status: '',
+interface filter {
+  owner: string | undefined
+  name: string | undefined
+  status: STATUS | undefined
+  dateTimeRange: [Date, Date] | undefined
+}
 
-    })
+const emit = defineEmits(['filter'])
+const filters = ref<filter>({
+  name: undefined,
+  owner: undefined,
+  dateTimeRange: undefined,
+  status: undefined,
 
-    const applyFilters = () => {
-      emit('filter', filters.value)
-    }
-
-    return {
-      filters,
-      applyFilters,
-    }
-  },
 })
+
+function applyFilters() {
+  emit('filter', filters.value)
+}
 </script>
 
 <template>
@@ -35,13 +31,13 @@ export default defineComponent({
       <n-date-picker v-model="filters.dateTimeRange" type="datetimerange" clearable />
       <pre>{{ JSON.stringify(filters.dateTimeRange) }}</pre>
       <select v-model="filters.status">
-        <option value="all">
-          All Status
-        </option>
-        <option value="open">
+        <option :value="STATUS.SCHEDULED">
           Open
         </option>
-        <option value="closed">
+        <option :value="STATUS.ONGOING">
+          On-going
+        </option>
+        <option :value="STATUS.FINISHED">
           Closed
         </option>
       </select>
