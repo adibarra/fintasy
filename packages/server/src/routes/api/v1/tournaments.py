@@ -100,7 +100,7 @@ async def authenticate(
         )
 
     # Validate the token has permission for this resource
-    if str(token_owner) != str(tournament.owner):
+    if str(token_owner) != str(tournament["owner"]):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Forbidden",
@@ -153,7 +153,7 @@ def get_tournaments(
     auth: tuple[str, str] = Depends(authenticateToken),
 ):
     tournaments = db.get_tournaments(
-        uuid_owner=str(owner),
+        owner=str(owner) if owner else None,
         name=name,
         status=status,
         start_date=start_date,
