@@ -139,7 +139,7 @@ def create_tournament(
 
 @router.get(
     "/tournaments",
-    response_model=TournamentResponse,
+    response_model=TournamentsResponse,
     status_code=status.HTTP_200_OK,
 )
 def get_tournaments(
