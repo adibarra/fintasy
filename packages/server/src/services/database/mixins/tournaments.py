@@ -14,11 +14,14 @@ class TournamentsMixin:
 
     connectionPool: "SimpleConnectionPool"
 
-    def create_tournament(self, name: str, start_date: str, end_date: str) -> dict:
+    def create_tournament(
+        self, owner: str, name: str, start_date: str, end_date: str
+    ) -> dict:
         """
         Creates a new tournament in the database.
 
         Args:
+            owner (str): The UUID of the tournament owner.
             name (str): The name of the tournament.
             start_date (str): The start date of the tournament.
             end_date (str): The end date of the tournament.
@@ -31,8 +34,8 @@ class TournamentsMixin:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO tournaments (name, start_date, end_date) VALUES (%s, %s, %s) RETURNING *",
-                    (name, start_date, end_date),
+                    "INSERT INTO tournaments (owner, name, start_date, end_date) VALUES (%s, %s, %s, %s) RETURNING *",
+                    (owner, name, start_date, end_date),
                 )
                 tournament = cursor.fetchone()
                 conn.commit()
