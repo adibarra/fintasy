@@ -59,12 +59,8 @@ app.include_router(transactions_router)
 app.include_router(tournaments_router)
 
 if __name__ == "__main__":
-    print("Server starting up...", flush=True)
-
     uvicorn.run(
         "main:app",
         host=API_HOST,
         port=API_PORT,
     )
-
-    print("Server shutting down...\n", flush=True)
