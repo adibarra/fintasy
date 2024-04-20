@@ -158,7 +158,7 @@ def get_portfolios(
             detail="Forbidden",
         )
 
-    portfolios = db.get_portfolios(owner, tournament, name, offset, limit)
+    portfolios = db.get_portfolios(str(owner), str(tournament), name, offset, limit)
 
     return PortfoliosResponse(
         code=200,
@@ -176,7 +176,7 @@ def get_portfolio_by_uuid(
     portfolio_uuid: UUID4 = Path(...),
     auth: tuple[str, str] = Depends(authenticate),
 ):
-    portfolio = db.get_portfolio(portfolio_uuid)
+    portfolio = db.get_portfolio(str(portfolio_uuid))
     if portfolio is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -200,7 +200,7 @@ def update_portfolio(
     data: UpdatePortfolioRequest = Body(...),
     auth: tuple[str, str] = Depends(authenticate),
 ):
-    portfolio = db.get_portfolio(portfolio_uuid)
+    portfolio = db.get_portfolio(str(portfolio_uuid))
     if portfolio is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -216,7 +216,7 @@ def update_portfolio(
                 detail="Bad Request",
             )
 
-    if not db.update_portfolio(portfolio_uuid, data.name):
+    if not db.update_portfolio(str(portfolio_uuid), data.name):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",
@@ -237,14 +237,14 @@ def remove_portfolio(
     portfolio_uuid: UUID4 = Path(...),
     auth: tuple[str, str] = Depends(authenticate),
 ):
-    portfolio = db.get_portfolio(portfolio_uuid)
+    portfolio = db.get_portfolio(str(portfolio_uuid))
     if portfolio is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Not Found",
         )
 
-    if not db.delete_portfolio(portfolio_uuid):
+    if not db.delete_portfolio(str(portfolio_uuid)):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",

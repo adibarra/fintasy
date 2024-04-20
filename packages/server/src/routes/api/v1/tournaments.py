@@ -90,9 +90,9 @@ async def authenticate(
     authorization: str = Header(...),
     tournament_uuid: UUID4 = Path(...),
 ) -> tuple[str, str]:
-    token_owner, token = authenticateToken(authorization)
+    token_owner, token = await authenticateToken(authorization)
 
-    tournament = db.get_tournament(tournament_uuid)
+    tournament = db.get_tournament(str(tournament_uuid))
     if tournament is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -153,7 +153,7 @@ def get_tournaments(
     auth: tuple[str, str] = Depends(authenticateToken),
 ):
     tournaments = db.get_tournaments(
-        uuid_owner=owner,
+        uuid_owner=str(owner),
         name=name,
         status=status,
         start_date=start_date,
@@ -177,7 +177,7 @@ def get_tournament(
     tournament_uuid: UUID4 = Path(...),
     auth: tuple[str, str] = Depends(authenticate),
 ):
-    tournament = db.get_tournament(tournament_uuid)
+    tournament = db.get_tournament(str(tournament_uuid))
     if tournament is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -209,7 +209,7 @@ def update_tournament(
             detail="Bad Request",
         )
 
-    tournament = db.get_tournament(tournament_uuid)
+    tournament = db.get_tournament(str(tournament_uuid))
     if tournament is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -217,7 +217,7 @@ def update_tournament(
         )
 
     if not db.update_tournament(
-        tournament_uuid, data.name, data.start_date, data.end_date
+        str(tournament_uuid), data.name, data.start_date, data.end_date
     ):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -239,14 +239,14 @@ def delete_tournament(
     tournament_uuid: UUID4 = Path(...),
     auth: tuple[str, str] = Depends(authenticate),
 ):
-    tournaments = db.get_tournament(tournament_uuid)
+    tournaments = db.get_tournament(str(tournament_uuid))
     if tournaments is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Not Found",
         )
 
-    if not db.delete_tournament(tournament_uuid):
+    if not db.delete_tournament(str(tournament_uuid)):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",
