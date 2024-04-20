@@ -15,7 +15,6 @@ import {
 import {
   Tournament as TournamentIcon,
 } from '@vicons/tabler'
-import { useSidebarStore } from '~/stores/sidebar'
 
 const { t } = useI18n()
 const route = useRoute()

@@ -1,3 +1,8 @@
+/**
+ * @author: adibarra (Alec Ibarra)
+ * @description: Module for installing vite-plugin-pwa
+ */
+
 import type { UserModule } from '~/types'
 
 // https://github.com/antfu/vite-plugin-pwa#automatic-reload-when-new-content-available

@@ -4,14 +4,6 @@
 -->
 
 <script setup lang="ts">
-interface Asset {
-  symbol: string
-  quantity: number
-  price_cents: number
-  pl_day: number
-  pl_total: number
-}
-
 const props = defineProps({
   assets: {
     type: Array as PropType<Asset[]>,
@@ -23,12 +15,22 @@ const props = defineProps({
   },
 })
 
+const { t } = useI18n()
+
+interface Asset {
+  symbol: string
+  quantity: number
+  price_cents: number
+  pl_day: number
+  pl_total: number
+}
+
 const columns = [
-  { key: 'symbol', title: 'Symbol', width: '20%' },
-  { key: 'quantity', title: 'Qty', width: '15%' },
-  { key: 'price_cents', title: 'Price', width: '20%' },
-  { key: 'pl_day', title: 'P/L Day' },
-  { key: 'pl_total', title: 'P/L Total' },
+  { key: 'symbol', title: t('pages.dashboard.symbol'), width: '20%' },
+  { key: 'quantity', title: t('pages.dashboard.quantity'), width: '15%' },
+  { key: 'price_cents', title: t('pages.dashboard.price'), width: '20%' },
+  { key: 'pl_day', title: t('pages.dashboard.profit-loss-day') },
+  { key: 'pl_total', title: t('pages.dashboard.profit-loss-total') },
 ]
 
 const data = ref()
@@ -65,7 +67,9 @@ onMounted(() => handlePageChange(1))
 
 <template>
   <div flex>
-    <span ml-1 text-xl font-600>Assets</span>
+    <span ml-1 text-xl font-600>
+      {{ t('pages.dashboard.assets') }}
+    </span>
     <div grow />
     <span mx-2 text-xl>
       $
@@ -78,7 +82,7 @@ onMounted(() => handlePageChange(1))
       />
     </span>
     <span mr-2 mt-auto op-75>
-      CASH
+      {{ t('pages.dashboard.cash') }}
     </span>
   </div>
   <!-- eslint-disable unocss/order-attributify -->

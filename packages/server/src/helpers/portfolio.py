@@ -13,7 +13,7 @@ class Portfolio:
     """
 
     PORTFOLIO_VALID_CHARACTERS = (
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ "
     )
     PORTFOLIO_LENGTH_MIN = 1
     PORTFOLIO_LENGTH_MAX = 20
@@ -33,7 +33,6 @@ class Portfolio:
         ERROR_TYPES.PORTFOLIO_LONG: "Portfolio name must be less than or equal to 20 characters long",
         ERROR_TYPES.PORTFOLIO_INVALID_CHARACTERS: "Portfolio name must contain only valid characters",
         ERROR_TYPES.PORTFOLIO_NAME_EXISTS: "Portfolio name must be unique",
-        # TODO: move error messages from the code to here
     }
 
     def __init__(self):
@@ -56,7 +55,7 @@ class Portfolio:
                 self.portfolios[portfolio_name] = portfolio_name
                 return self.portfolios[portfolio_name]
 
-    def validate_portfolio_name(self, portfolio_name: str):
+    def validate_portfolio_name(portfolio_name: str):
         """
         Validates the given portfolio name.
 
@@ -92,9 +91,6 @@ class Portfolio:
                     ]
                 )
 
-        if portfolio_name in self.portfolios:
-            raise ValueError("Portfolio name must be unique.")
-        self.portfolios[portfolio_name] = portfolio_name
         return True
 
     def remove_portfolio(self, portfolio_name: str):
@@ -121,18 +117,18 @@ class Portfolio:
         portfolio_name: str,
         company_name: str,
         qty: int,
-        unit_price: float,
-        daily_PL: float,
-        total_PL: float,
+        unit_price: int,
+        daily_PL: int,
+        total_PL: int,
     ):  # unit_price, dailyPL, and totalPL will be received through API later
         """
         Args:
             portfolio_name (str): The portfolio name must exist inside of the dictionary.
             company_name (str): The company name must contain only valid characters and is greater than one character.
             qty (int): The stock quantity must contain only valid integers.
-            unit_price (float): The unit price must contain only valid float values.
-            daily_PL (float): The daily PL must contain only valid float values.
-            total_PL (float): The total PL must contain only valid float values.
+            unit_price (int): The unit price must contain only valid int values that are converted into dollars and cents.
+            daily_PL (int): The daily PL must contain only valid int values that are converted into dollars and cents.
+            total_PL (int): The total PL must contain only valid int values that are converted into dollars and cents.
 
         Raises:
             KeyError: If the portfolio name or company name doesn't exist inside of the dictionary.
@@ -244,11 +240,11 @@ class Portfolio:
         self.portfolios[portfolio_name] = {"balance": 500}
         return True
 
-    def change_balance(self, portfolio_name: str, balance: float, transaction: float):
+    def change_balance(self, portfolio_name: str, balance: int, transaction: int):
         """
         Args:
             portfolio_name (str): The portfolio must exist inside of the dictionary
-            transaction (float): The new must contain only valid float values or if it's greater than the portfolio's current balance.
+            transaction (int): The new must contain only valid int values or if it's greater than the portfolio's current balance.
 
         Raises:
             KeyError: If the portfolio name doesn't exist inside of the dictionary.

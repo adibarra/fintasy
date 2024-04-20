@@ -1,0 +1,77 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (German)
+# cSpell: disable
+
+example:
+  hello-world: Hallo Welt!
+pages:
+  main:
+    title: Hauptseite
+    content-title: Bringen Sie Ihre Aktien auf das nächste Level
+    content-subtitle: >-
+      Fintasy ist ein Börsensimulator, der es Ihnen ermöglicht, Aktien mit Spielgeld zu handeln.
+      Treten Sie gegen Ihre Freunde an und sehen Sie, wer am meisten Geld verdienen kann!
+  login:
+    title: Anmelden/Registrieren
+    register: Registrieren
+    login: Anmelden
+    email: E-Mail
+    username: Benutzername
+    password: Passwort
+    confirm: Bestätigen
+    confirm-password: Passwort bestätigen
+    remember-me: Angemeldet bleiben
+    forgot-password: Passwort vergessen?
+    create-account: Konto erstellen
+    sign-in: Anmelden
+    sign-up: Registrieren
+    no-account: Kein Konto?
+    already-have-account: Bereits einen Account?
+    missing-credentials: Bitte füllen Sie alle Felder aus.
+    email-taken: Diese E-Mail-Adresse wird bereits verwendet. Versuchen Sie, sich anzumelden.
+    invalid-registration: Stellen Sie sicher, dass Ihre Kontoinformationen den Anforderungen entsprechen.
+    invalid-credentials: Stellen Sie sicher, dass Ihr Passwort korrekt ist.
+    no-account-found: Kein Konto mit dieser E-Mail-Adresse gefunden.
+    username-requirements: >-
+      Zwischen 3 und 20 Zeichen.
+      Nur Buchstaben, Zahlen und Unterstriche.
+    password-requirements: Muss mindestens 6 Zeichen lang sein.
+    unknown-error: Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.
+  dashboard:
+    title: Dashboard
+    portfolio-value: Portfolio-Wert
+    assets: Vermögenswerte
+    history: Verlauf
+    cash: BARGELD
+    transactions: Transaktionen
+    symbol: Symbol
+    quantity: Menge
+    price: Preis
+    profit-loss-day: Gewinn/Verlust Tag
+    profit-loss-total: Gewinn/Verlust Gesamt
+    buy-sell-action: Aktion
+    date: Datum
+    trade:
+      title: Handel
+    tournaments:
+      title: Turniere
+    help:
+      title: Hilfe
+      index:
+        title: Index
+      faq:
+        title: FAQ
+    settings:
+      title: Einstellungen
+misc:
+  home: Startseite
+i18n:
+  language-changed-to: Sprache geändert zu
+  language: Sprache
+theme-switch:
+  toggle-theme: Design wechseln
+  theme-toggled: Design gewechselt
+buttons:
+  go-back: Zurück
+errors:
+  not-found: Nicht gefunden

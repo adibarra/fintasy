@@ -1,0 +1,77 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Spanish)
+# cSpell: disable
+
+example:
+  hello-world: ¡Hola Mundo!
+pages:
+  main:
+    title: Principal
+    content-title: Lleva Tus Acciones Al Siguiente Nivel
+    content-subtitle: >-
+      Fintasy es un simulador de mercado de valores que te permite negociar acciones con dinero ficticio.
+      ¡Compite contra tus amigos y ve quién puede ganar más dinero!
+  login:
+    title: Iniciar sesión/Registrarse
+    register: Registrarse
+    login: Iniciar sesión
+    email: Correo electrónico
+    username: Nombre de usuario
+    password: Contraseña
+    confirm: Confirmar
+    confirm-password: Confirmar contraseña
+    remember-me: Recuérdame
+    forgot-password: ¿Olvidaste tu contraseña?
+    create-account: Crear cuenta
+    sign-in: Iniciar sesión
+    sign-up: Registrarse
+    no-account: ¿No tienes una cuenta?
+    already-have-account: ¿Ya tienes una cuenta?
+    missing-credentials: Por favor complete todos los campos.
+    email-taken: El correo electrónico ya está en uso. Intente iniciar sesión.
+    invalid-registration: Asegúrese de que la información de su cuenta cumpla con los requisitos.
+    invalid-credentials: Asegúrese de que su contraseña sea correcta.
+    no-account-found: No se encontró ninguna cuenta con ese correo electrónico.
+    username-requirements: >-
+      Entre 3 y 20 caracteres.
+      Solo letras, números y guiones bajos.
+    password-requirements: Debe tener al menos 6 caracteres.
+    unknown-error: Se produjo un error desconocido. Por favor, inténtelo de nuevo más tarde.
+  dashboard:
+    title: Tablero
+    portfolio-value: Valor del portafolio
+    assets: Activos
+    history: Historial
+    cash: EFECTIVO
+    transactions: TRANSACCIONES
+    symbol: Símbolo
+    quantity: Cant.
+    price: Precio
+    profit-loss-day: P/L Día
+    profit-loss-total: P/L Total
+    buy-sell-action: Acción
+    date: Fecha
+    trade:
+      title: Comercio
+    tournaments:
+      title: Torneos
+    help:
+      title: Ayuda
+      index:
+        title: Índice
+      faq:
+        title: Preguntas frecuentes
+    settings:
+      title: Configuración
+misc:
+  home: Inicio
+i18n:
+  language-changed-to: Idioma cambiado a
+  language: Idioma
+theme-switch:
+  toggle-theme: Alternar Tema
+  theme-toggled: Tema alternado
+buttons:
+  go-back: Volver
+errors:
+  not-found: No encontrado

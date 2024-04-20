@@ -1,0 +1,77 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Bengali)
+# cSpell: disable
+
+example:
+  hello-world: ওহে বিশ্ব!
+pages:
+  main:
+    title: মূল
+    content-title: আপনার শেয়ারগুলি নতুন উচ্চতায় নিন
+    content-subtitle: >-
+      ফিন্টেসি একটি স্টক মার্কেট সিমুলেটর, যা আপনাকে ফেক মানি দিয়ে শেয়ার ক্রয় বিক্রয় করতে দেয়।
+      আপনার বন্ধুদের সাথে প্রতিযোগিতামূলক করুন এবং দেখুন কে সবচেয়ে অনেক টাকা উপার্জন করতে পারে!
+  login:
+    title: লগইন / রেজিস্টার
+    register: রেজিস্টার
+    login: লগইন
+    email: ইমেল
+    username: ব্যবহারকারীর নাম
+    password: পাসওয়ার্ড
+    confirm: নিশ্চিত করুন
+    confirm-password: পাসওয়ার্ড নিশ্চিত করুন
+    remember-me: আমাকে মনে কর
+    forgot-password: পাসওয়ার্ড ভুলে গেছেন?
+    create-account: অ্যাকাউন্ট তৈরি করুন
+    sign-in: সাইন ইন করুন
+    sign-up: সাইন আপ করুন
+    no-account: কোন অ্যাকাউন্ট নেই?
+    already-have-account: ইতিমধ্যে একটি অ্যাকাউন্ট আছে?
+    missing-credentials: দয়া করে সমস্ত ক্ষেত্র পূরণ করুন।
+    email-taken: ইমেলটি ইতিমধ্যে ব্যবহৃত হয়েছে। সাইন ইন করুন।
+    invalid-registration: আপনার অ্যাকাউন্ট তথ্য প্রয়োজনের মানগুলি পূরণ করে নিন।
+    invalid-credentials: আপনার পাসওয়ার্ড সঠিক কিনা তা নিশ্চিত করুন।
+    no-account-found: সেই ইমেল দিয়ে কোন অ্যাকাউন্ট পাওয়া যায়নি।
+    username-requirements: >-
+      3 থেকে 20 টি অক্ষরের মধ্যে।
+      বর্ণ, সংখ্যা, এবং আন্ডারস্কোর মাত্র।
+    password-requirements: অন্তত 6 টি অক্ষর হতে হবে।
+    unknown-error: অজানা ত্রুটি ঘটেছে। দয়া করে পরে আবার চেষ্টা করুন।
+  dashboard:
+    title: ড্যাশবোর্ড
+    portfolio-value: পোর্টফোলিও মান
+    assets: সম্পত্তি
+    history: ইতিহাস
+    cash: নগদ
+    transactions: লেনদেন
+    symbol: প্রতীক
+    quantity: পরিমাণ
+    price: মূল্য
+    profit-loss-day: লাভ / ক্ষতি দিন
+    profit-loss-total: মোট লাভ / ক্ষতি
+    buy-sell-action: অ্যাকশন
+    date: তারিখ
+    trade:
+      title: লেনদেন
+    tournaments:
+      title: টুর্নামেন্ট
+    help:
+      title: সাহায্য
+      index:
+        title: সূচি
+      faq:
+        title: সাধারণ প্রশ্ন
+    settings:
+      title: সেটিংস
+misc:
+  home: হোম
+i18n:
+  language-changed-to: ভাষা পরিবর্তন করা হয়েছে
+  language: ভাষা
+theme-switch:
+  toggle-theme: থিম টগল করুন
+  theme-toggled: থিম পালটা হয়েছে
+buttons:
+  go-back: ফিরে যান
+errors:
+  not-found: পাওয়া যায়নি

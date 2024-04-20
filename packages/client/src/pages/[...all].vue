@@ -15,7 +15,7 @@ useHead({
 </script>
 
 <template>
-  <div h-20vh />
+  <div h-20svh />
   <div mx-auto w-fit rd-2 p-5 outline-1 outline>
     <div text-4xl font-900>
       <span text-red>404:</span>
@@ -36,5 +36,5 @@ useHead({
 
 <route lang="yaml">
   meta:
-    layout: default
+    layout: home
 </route>

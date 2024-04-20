@@ -21,6 +21,8 @@ const props = defineProps({
   },
 })
 
+const { t } = useI18n()
+
 const chartdiv = ref<HTMLElement>()
 
 onMounted(() => {
@@ -97,7 +99,9 @@ onMounted(() => {
 
 <template>
   <div flex>
-    <span ml-1 text-xl font-600>Portfolio Value</span>
+    <span ml-1 text-xl font-600>
+      {{ t('pages.dashboard.portfolio-value') }}
+    </span>
     <div grow />
     <span
       :class="data[data.length - 1].value >= 0 ? 'color-lime-600 dark:color-lime-500' : 'color-red-500'"

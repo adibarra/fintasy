@@ -1,16 +1,55 @@
 # @author: adibarra (Alec Ibarra)
-# @description: Translation file for i18n
+# @description: Translation file for i18n (English)
 
 example:
   hello-world: Hello World!
-
 pages:
   main:
     title: Main
+    content-title: Take Your Stocks To The Next Level
+    content-subtitle: >-
+      Fintasy is a stock market simulator that allows you to trade stocks with fake money.
+      Compete against your friends and see who can make the most money!
   login:
     title: Login/Register
+    register: Register
+    login: Login
+    email: Email
+    username: Username
+    password: Password
+    confirm: Confirm
+    confirm-password: Confirm Password
+    remember-me: Remember Me
+    forgot-password: Forgot Password?
+    create-account: Create Account
+    sign-in: Sign In
+    sign-up: Sign Up
+    no-account: No account?
+    already-have-account: Already have an account?
+    missing-credentials: Please fill out all fields.
+    email-taken: Email is already taken. Try signing in.
+    invalid-registration: Make sure your account information meets the requirements.
+    invalid-credentials: Make sure your password is correct.
+    no-account-found: No account found with that email.
+    username-requirements: >-
+      Between 3 and 20 characters.
+      Letters, numbers, and underscores only.
+    password-requirements: Must be at least 6 characters.
+    unknown-error: An unknown error occurred. Please try again later.
   dashboard:
     title: Dashboard
+    portfolio-value: Portfolio Value
+    assets: Assets
+    history: History
+    cash: CASH
+    transactions: TRANSACTIONS
+    symbol: Symbol
+    quantity: Qty
+    price: Price
+    profit-loss-day: P/L Day
+    profit-loss-total: P/L Total
+    buy-sell-action: Action
+    date: Date
     trade:
       title: Trade
     tournaments:
@@ -23,12 +62,15 @@ pages:
         title: FAQ
     settings:
       title: Settings
-
 misc:
   home: Home
-
+i18n:
+  language-changed-to: Language changed to
+  language: Language
+theme-switch:
+  toggle-theme: Toggle Theme
+  theme-toggled: Theme toggled
 buttons:
   go-back: Go Back
-
 errors:
   not-found: Not Found

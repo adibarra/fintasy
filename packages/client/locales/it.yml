@@ -1,0 +1,77 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Italian)
+# cSpell: disable
+
+example:
+  hello-world: Ciao mondo!
+pages:
+  main:
+    title: Principale
+    content-title: Porta le tue azioni al livello successivo
+    content-subtitle: >-
+      Fintasy è un simulatore di borsa che ti permette di scambiare azioni con denaro finto.
+      Sfida i tuoi amici e vedi chi riesce a fare più soldi!
+  login:
+    title: Accedi/Registrati
+    register: Registrati
+    login: Accedi
+    email: Email
+    username: Nome utente
+    password: Password
+    confirm: Conferma
+    confirm-password: Conferma Password
+    remember-me: Ricordami
+    forgot-password: Hai dimenticato la password?
+    create-account: Crea Account
+    sign-in: Accedi
+    sign-up: Registrati
+    no-account: Nessun account?
+    already-have-account: Hai già un account?
+    missing-credentials: Si prega di compilare tutti i campi.
+    email-taken: L'email è già in uso. Prova ad accedere.
+    invalid-registration: Assicurati che le informazioni del tuo account soddisfino i requisiti.
+    invalid-credentials: Assicurati che la password sia corretta.
+    no-account-found: Nessun account trovato con quell'email.
+    username-requirements: >-
+      Tra 3 e 20 caratteri.
+      Solo lettere, numeri e trattini bassi.
+    password-requirements: Deve essere lunga almeno 6 caratteri.
+    unknown-error: Si è verificato un errore sconosciuto. Si prega di riprovare più tardi.
+  dashboard:
+    title: Dashboard
+    portfolio-value: Valore del Portafoglio
+    assets: Attività
+    history: Cronologia
+    cash: CONTANTI
+    transactions: Transazioni
+    symbol: Simbolo
+    quantity: Quantità
+    price: Prezzo
+    profit-loss-day: Guadagno/Perdita Giornaliero
+    profit-loss-total: Guadagno/Perdita Totale
+    buy-sell-action: Azione
+    date: Data
+    trade:
+      title: Commercio
+    tournaments:
+      title: Tornei
+    help:
+      title: Aiuto
+      index:
+        title: Indice
+      faq:
+        title: FAQ
+    settings:
+      title: Impostazioni
+misc:
+  home: Casa
+i18n:
+  language-changed-to: Lingua cambiata in
+  language: Lingua
+theme-switch:
+  toggle-theme: Cambia Tema
+  theme-toggled: Tema Cambiato
+buttons:
+  go-back: Torna Indietro
+errors:
+  not-found: Non Trovato

@@ -3,14 +3,13 @@
   "type": "module",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@9.0.2",
   "description": "CS.3354 Project: Competitive paper trading platform",
   "contributors": [
     "adibarra <github@adibarra.com> (https://adibarra.com)"
   ],
   "scripts": {
-    "build": "pnpm -r run clean:all && pnpm i && pnpm -r --parallel run build",
-    "build:ci": "pnpm -r --parallel run build",
+    "build": "pnpm -r --parallel run build",
     "clean": "pnpm -r run clean",
     "clean:all": "pnpm -r run clean:all && rm -rf node_modules/ .pnpm-store/",
     "dev": "pnpm -r run clean && pnpm -r --parallel run dev",
@@ -20,17 +19,16 @@
     "lint:fix": "pnpm -r run lint:fix; eslint . --fix; exit 0",
     "postinstall": "npx simple-git-hooks",
     "preview": "pnpm -r run clean && pnpm -r --parallel run preview",
-    "start": "pnpm i && pnpm -r run start",
     "taze": "taze major -r -I",
     "test": "pnpm -r --parallel run test"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.12.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-format": "^0.1.0",
+    "@antfu/eslint-config": "^2.14.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-format": "^0.1.1",
     "lint-staged": "^15.2.2",
     "simple-git-hooks": "^2.11.1",
-    "taze": "^0.13.3"
+    "taze": "^0.13.6"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

@@ -14,11 +14,14 @@ class TournamentsMixin:
 
     connectionPool: "SimpleConnectionPool"
 
-    def create_tournament(self, name: str, start_date: str, end_date: str) -> dict:
+    def create_tournament(
+        self, owner: str, name: str, start_date: str, end_date: str
+    ) -> dict:
         """
         Creates a new tournament in the database.
 
         Args:
+            owner (str): The UUID of the tournament owner.
             name (str): The name of the tournament.
             start_date (str): The start date of the tournament.
             end_date (str): The end date of the tournament.
@@ -31,8 +34,8 @@ class TournamentsMixin:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO tournaments (name, start_date, end_date) VALUES (%s, %s, %s) RETURNING *",
-                    (name, start_date, end_date),
+                    "INSERT INTO tournaments (owner, name, start_date, end_date) VALUES (%s, %s, %s, %s) RETURNING *",
+                    (owner, name, start_date, end_date),
                 )
                 tournament = cursor.fetchone()
                 conn.commit()
@@ -40,10 +43,10 @@ class TournamentsMixin:
                     column_names = [desc[0] for desc in cursor.description]
                     return dict(zip(column_names, tournament))
                 else:
-                    print("Failed to retrieve the created tournament.")
+                    print("Failed to retrieve the created tournament.", flush=True)
                     return None
         except Exception as e:
-            print("Failed to create tournament:", e)
+            print("Failed to create tournament:", e, flush=True)
             return None
         finally:
             if conn:
@@ -96,7 +99,7 @@ class TournamentsMixin:
                 conn.commit()
                 return True
         except Exception as e:
-            print("Failed to update tournament by UUID:", e)
+            print("Failed to update tournament by UUID:", e, flush=True)
             return False
         finally:
             if conn:
@@ -123,7 +126,7 @@ class TournamentsMixin:
                 conn.commit()
                 return True
         except Exception as e:
-            print("Failed to delete tournament by UUID:", e)
+            print("Failed to delete tournament by UUID:", e, flush=True)
             return False
         finally:
             if conn:
@@ -153,11 +156,8 @@ class TournamentsMixin:
                     if tournament is not None:
                         column_names = [desc[0] for desc in cursor.description]
                         return dict(zip(column_names, tournament))
-                    else:
-                        print(f"Tournament with UUID '{uuid_tournament}' not found.")
-                        return None
         except Exception as e:
-            print("Failed to get tournament by UUID:", e)
+            print("Failed to get tournament by UUID:", e, flush=True)
             return None
         finally:
             if conn:
@@ -165,7 +165,7 @@ class TournamentsMixin:
 
     def get_tournaments(
         self,
-        uuid_owner: str = None,
+        owner: str = None,
         name: str = None,
         status: str = None,
         start_date: str = None,
@@ -181,7 +181,7 @@ class TournamentsMixin:
         Retrieve tournaments from the database based on the provided filters.
 
         Args:
-            uuid_owner (str, optional): The UUID of the tournament owner. Defaults to None.
+            owner (str, optional): The UUID of the tournament owner. Defaults to None.
             name (str, optional): The name of the tournament. Defaults to None.
             status (str, optional): The status of the tournament. Defaults to None.
             start_date (str, optional): The start date of the tournament. Defaults to None.
@@ -204,37 +204,36 @@ class TournamentsMixin:
                 query = "SELECT * FROM tournaments WHERE TRUE"
                 params = []
 
-                if uuid_owner:
-                    query += " AND uuid_owner = %s"
-                    params.append(uuid_owner)
-                if name:
+                if owner is not None:
+                    query += " AND owner = %s"
+                    params.append(owner)
+                if name is not None:
                     query += " AND name = %s"
                     params.append(name)
-                if status:
+                if status is not None:
                     query += " AND status = %s"
                     params.append(status)
-                if start_date:
+                if start_date is not None:
                     query += " AND start_date = %s"
                     params.append(start_date)
-                if start_date_before:
+                if start_date_before is not None:
                     query += " AND start_date < %s"
                     params.append(start_date_before)
-                if start_date_after:
+                if start_date_after is not None:
                     query += " AND start_date > %s"
                     params.append(start_date_after)
-                if end_date:
+                if end_date is not None:
                     query += " AND end_date = %s"
                     params.append(end_date)
-                if end_date_before:
+                if end_date_before is not None:
                     query += " AND end_date < %s"
                     params.append(end_date_before)
-                if end_date_after:
+                if end_date_after is not None:
                     query += " AND end_date > %s"
                     params.append(end_date_after)
 
-                if offset and limit:
-                    query += " OFFSET %s LIMIT %s"
-                    params.extend([offset, limit])
+                query += " OFFSET %s LIMIT %s"
+                params.extend([offset, limit])
 
                 cursor.execute(query, params)
                 column_names = [desc[0] for desc in cursor.description]
@@ -243,7 +242,7 @@ class TournamentsMixin:
                 ]
                 return tournaments
         except Exception as e:
-            print("Failed to get tournaments:", e)
+            print("Failed to get tournaments:", e, flush=True)
             return []
         finally:
             if conn:

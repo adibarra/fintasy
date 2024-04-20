@@ -43,7 +43,7 @@ class MetaMixin:
                 conn.commit()
                 return result
         except Exception as e:
-            print(f"Failed to execute query: ({query[:20]}) {e}")
+            print(f"Failed to execute query: ({query[:20]}) {e}", flush=True)
         finally:
             if conn:
                 self.connectionPool.putconn(conn)
@@ -68,7 +68,7 @@ class MetaMixin:
                 conn.commit()
                 return [table[0] for table in result]
         except Exception as e:
-            print("Failed to show tables:", e)
+            print("Failed to show tables:", e, flush=True)
             return []
         finally:
             if conn:

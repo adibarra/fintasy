@@ -1,0 +1,73 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Emoji)
+# cSpell: disable
+
+example:
+  hello-world: 👋🌍
+pages:
+  main:
+    title: 🏠
+    content-title: 💹📈📉
+    content-subtitle: 💼📊📉💵🔄📈💰
+  login:
+    title: 🔐📝
+    register: 📝🔓
+    login: 🔓📝
+    email: 📧
+    username: 👤
+    password: 🔑
+    confirm: 🔄
+    confirm-password: 🔄🔑
+    remember-me: 🔒
+    forgot-password: ❓🔑
+    create-account: 🆕📝
+    sign-in: 🔓➡️
+    sign-up: 🔓🆙
+    no-account: ❌📝❓
+    already-have-account: ✅📝❓
+    missing-credentials: ❌📝🔘📝
+    email-taken: 📧❌📝🔓🔛
+    invalid-registration: 🚫✅📝🔗🔑❌
+    invalid-credentials: 🚫✅🔑❌
+    no-account-found: ❌📝❌🔍📧
+    username-requirements: 3️⃣-2️⃣0️⃣👤
+    password-requirements: 6️⃣🔑
+    unknown-error: ❓❌🔘🔄🔄
+  dashboard:
+    title: 📊🔑
+    portfolio-value: 💼💰💰
+    assets: 💼💼
+    history: 📜
+    cash: 💵
+    transactions: 💳
+    symbol: 🔣
+    quantity: 💹
+    price: 💰
+    profit-loss-day: 📈/📉
+    profit-loss-total: 📈/📉
+    buy-sell-action: ➕/➖
+    date: 📅
+    trade:
+      title: 📈/📉
+    tournaments:
+      title: 🎮🏆
+    help:
+      title: ❓🆘
+      index:
+        title: 📝
+      faq:
+        title: ❓❓❓
+    settings:
+      title: ⚙️
+misc:
+  home: 🏠
+i18n:
+  language-changed-to: 🌐🔄
+  language: 🌐
+theme-switch:
+  toggle-theme: 🔛🔄
+  theme-toggled: 🔄🔛
+buttons:
+  go-back: ↩️🔙
+errors:
+  not-found: ❌🔍

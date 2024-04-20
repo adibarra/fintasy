@@ -1,0 +1,77 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Chinese)
+# cSpell: disable
+
+example:
+  hello-world: 你好，世界！
+pages:
+  main:
+    title: 主页
+    content-title: 把你的股票带到新的水平
+    content-subtitle: >-
+      Fintasy 是一个股票市场模拟器，允许您使用虚拟货币交易股票。
+      与朋友竞争，看看谁能赚最多的钱！
+  login:
+    title: 登录/注册
+    register: 注册
+    login: 登录
+    email: 电子邮件
+    username: 用户名
+    password: 密码
+    confirm: 确认
+    confirm-password: 确认密码
+    remember-me: 记住我
+    forgot-password: 忘记密码？
+    create-account: 创建账号
+    sign-in: 登录
+    sign-up: 注册
+    no-account: 没有账号？
+    already-have-account: 已经有账号了？
+    missing-credentials: 请填写所有字段。
+    email-taken: 该电子邮件已被使用。请尝试登录。
+    invalid-registration: 确保您的帐户信息符合要求。
+    invalid-credentials: 确保您的密码是正确的。
+    no-account-found: 找不到该电子邮件的账户。
+    username-requirements: >-
+      3 到 20 个字符。
+      只能是字母、数字和下划线。
+    password-requirements: 必须至少 6 个字符。
+    unknown-error: 发生了未知错误。请稍后重试。
+  dashboard:
+    title: 仪表盘
+    portfolio-value: 投资组合价值
+    assets: 资产
+    history: 历史
+    cash: 现金
+    transactions: 交易
+    symbol: 符号
+    quantity: 数量
+    price: 价格
+    profit-loss-day: 每日盈亏
+    profit-loss-total: 总盈亏
+    buy-sell-action: 操作
+    date: 日期
+    trade:
+      title: 交易
+    tournaments:
+      title: 锦标赛
+    help:
+      title: 帮助
+      index:
+        title: 索引
+      faq:
+        title: 常见问题
+    settings:
+      title: 设置
+misc:
+  home: 主页
+i18n:
+  language-changed-to: 语言已更改为
+  language: 语言
+theme-switch:
+  toggle-theme: 切换主题
+  theme-toggled: 主题已切换
+buttons:
+  go-back: 返回
+errors:
+  not-found: 未找到

@@ -18,6 +18,10 @@ useHead({
     Should be a nice settings page. It should look like the wireframe.
   </span>
 
+  <div>
+    <LanguageSwitch />
+  </div>
+
   <!-- Some spacers and a temporary footer -->
   <span op-50>
     <div h-10 />
