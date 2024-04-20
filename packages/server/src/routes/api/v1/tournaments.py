@@ -36,19 +36,6 @@ class UpdateTournamentRequest(BaseModel):
         exclude_none = True
 
 
-class GetTournamentsRequest(BaseModel):
-    name: Optional[str] = None
-    owner: Optional[UUID4] = None
-    status: Optional[str] = None
-    start_date: Optional[datetime] = None
-    end_date: Optional[datetime] = None
-    offset: Optional[int] = None
-    limit: Optional[int] = None
-
-    class Config:
-        exclude_none = True
-
-
 class TournamentResponse(BaseModel):
     code: int
     message: str
@@ -119,20 +106,20 @@ async def authenticate(
 )
 def create_tournament(
     data: CreateTournamentRequest = Body(...),
+    auth: tuple[str, str] = Depends(authenticateToken),
 ):
-    if not all(
-        [
-            Tournament.validate_name(data.name),
-            Tournament.validate_date(data.start_date),
-            Tournament.validate_end(data.end_date),
-        ]
-    ):
+    try:
+        Tournament.validate_name(data.name)
+        Tournament.validate_dates(data.start_date, data.end_date)
+    except ValueError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Bad Request",
         )
 
-    tournaments = db.create_tournament(data)
+    tournaments = db.create_tournament(
+        auth[0], data.name, data.start_date, data.end_date
+    )
     return TournamentResponse(
         code=200,
         message="Ok",
@@ -203,13 +190,10 @@ def update_tournament(
     data: UpdateTournamentRequest = Body(...),
     auth: tuple[str, str] = Depends(authenticate),
 ):
-    if not all(
-        [
-            Tournament.validate_name(data.name),
-            Tournament.validate_date(data.start_date),
-            Tournament.validate_end(data.end_date),
-        ]
-    ):
+    try:
+        Tournament.validate_name(data.name)
+        Tournament.validate_dates(data.start_date, data.end_date)
+    except ValueError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Bad Request",
