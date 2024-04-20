@@ -175,7 +175,7 @@ def get_tournaments(
 )
 def get_tournament(
     tournament_uuid: UUID4 = Path(...),
-    auth: tuple[str, str] = Depends(authenticate),
+    auth: tuple[str, str] = Depends(authenticateToken),
 ):
     tournament = db.get_tournament(str(tournament_uuid))
     if tournament is None:
