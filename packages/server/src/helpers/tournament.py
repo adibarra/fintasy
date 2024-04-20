@@ -12,6 +12,59 @@ class Tournament:
     Creates a new tournament with a name, duration, trading rules, and prizes.
     """
 
+    TOURNAMENT_VALID_CHARACTERS = (
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#_ "
+    )
+    TOURNAMENT_LENGTH_MIN = 1
+    TOURNAMENT_LENGTH_MAX = 20
+
+    ERROR_TYPES = Enum(
+        "ERROR_TYPES",
+        [
+            "PORTFOLIO_SHORT",
+            "PORTFOLIO_LONG",
+            "PORTFOLIO_INVALID_CHARACTERS",
+            "PORTFOLIO_NAME_EXISTS",
+        ],
+    )
+
+    ERROR_MESSAGES = {
+        ERROR_TYPES.TOURNAMENT_SHORT: "Portfolio name must be at least 1 character long",
+        ERROR_TYPES.TOURNAMENT_LONG: "Portfolio name must be less than or equal to 20 characters long",
+        ERROR_TYPES.TOURNAMENT_INVALID_CHARACTERS: "Portfolio name must contain only valid characters",
+        ERROR_TYPES.TOURNAMENT_NAME_EXISTS: "Portfolio name must be unique",
+        ERROR_TYPES.TOURNAMENT_DATE_INVALID: "Start date must be before end date",
+    }
+
+    def validate_name(name: str) -> bool:
+        if len(name) < Tournament.TOURNAMENT_LENGTH_MIN:
+            raise ValueError(
+                Tournament.ERROR_MESSAGES[Tournament.ERROR_TYPES.TOURNAMENT_SHORT]
+            )
+
+        if len(name) > Tournament.TOURNAMENT_LENGTH_MAX:
+            raise ValueError(
+                Tournament.ERROR_MESSAGES[Tournament.ERROR_TYPES.TOURNAMENT_LONG]
+            )
+
+        for char in name:
+            if char not in Tournament.TOURNAMENT_VALID_CHARACTERS:
+                raise ValueError(
+                    Tournament.ERROR_MESSAGES[
+                        Tournament.ERROR_TYPES.TOURNAMENT_INVALID_CHARACTERS
+                    ]
+                )
+        return True
+
+    def validate_dates(start_date: datetime, end_date: datetime) -> bool:
+        if start_date > end_date:
+            raise ValueError(
+                Tournament.ERROR_MESSAGES[
+                    Tournament.ERROR_TYPES.TOURNAMENT_DATE_INVALID
+                ]
+            )
+        return True
+
     def __init__(self, name, duration, trading_rules, prizes):
         self.name = name
         self.duration = duration
