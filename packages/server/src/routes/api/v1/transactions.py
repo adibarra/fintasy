@@ -76,7 +76,7 @@ async def authenticate(
     authorization: str = Header(...),
     transaction_uuid: UUID4 = Path(...),
 ) -> tuple[str, str]:
-    token_owner, token = authenticateToken(authorization)
+    token_owner, token = await authenticateToken(authorization)
 
     # Validate the token has permission for this user's transactions
     transaction = db.get_transaction_by_uuid(str(transaction_uuid))
