@@ -1,5 +1,5 @@
-# @authors: soltadd (Solomon Bedane), caleb-j-kim (Caleb Kim)
-# @description: Tournaments class for handling paper trading tournaments betwen users.
+# @authors: soltadd (Solomon Bedane), caleb-j-kim (Caleb Kim), adibarra (Alec Ibarra)
+# @description: Tournaments class for handling paper trading tournaments between users.
 
 from datetime import datetime
 from enum import Enum
@@ -21,10 +21,11 @@ class Tournament:
     ERROR_TYPES = Enum(
         "ERROR_TYPES",
         [
-            "PORTFOLIO_SHORT",
-            "PORTFOLIO_LONG",
-            "PORTFOLIO_INVALID_CHARACTERS",
-            "PORTFOLIO_NAME_EXISTS",
+            "TOURNAMENT_SHORT",
+            "TOURNAMENT_LONG",
+            "TOURNAMENT_INVALID_CHARACTERS",
+            "TOURNAMENT_NAME_EXISTS",
+            "TOURNAMENT_DATE_INVALID",
         ],
     )
 
@@ -199,7 +200,7 @@ class Tournament:
             self.place = ""
 
     """
-    Makes a trade betwen 2 users.
+    Makes a trade between 2 users.
     """
 
     def make_trade(self, participant1, participant2):
