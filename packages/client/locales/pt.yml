@@ -1,0 +1,77 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Portuguese)
+# cSpell: disable
+
+example:
+  hello-world: Olá Mundo!
+pages:
+  main:
+    title: Principal
+    content-title: Leve Suas Ações para o Próximo Nível
+    content-subtitle: >-
+      Fintasy é um simulador de mercado de ações que permite negociar ações com dinheiro fictício.
+      Desafie seus amigos e veja quem consegue ganhar mais dinheiro!
+  login:
+    title: Entrar/Registrar
+    register: Registrar
+    login: Entrar
+    email: E-mail
+    username: Nome de Usuário
+    password: Senha
+    confirm: Confirmar
+    confirm-password: Confirmar Senha
+    remember-me: Lembrar-me
+    forgot-password: Esqueceu a Senha?
+    create-account: Criar Conta
+    sign-in: Entrar
+    sign-up: Registrar-se
+    no-account: Sem Conta?
+    already-have-account: Já tem uma conta?
+    missing-credentials: Por favor, preencha todos os campos.
+    email-taken: O e-mail já está em uso. Tente entrar.
+    invalid-registration: Verifique se as informações da sua conta atendem aos requisitos.
+    invalid-credentials: Verifique se sua senha está correta.
+    no-account-found: Nenhuma conta encontrada com esse e-mail.
+    username-requirements: >-
+      Entre 3 e 20 caracteres.
+      Apenas letras, números e sublinhados.
+    password-requirements: Deve ter pelo menos 6 caracteres.
+    unknown-error: Ocorreu um erro desconhecido. Por favor, tente novamente mais tarde.
+  dashboard:
+    title: Painel
+    portfolio-value: Valor do Portfólio
+    assets: Ativos
+    history: Histórico
+    cash: DINHEIRO
+    transactions: Transações
+    symbol: Símbolo
+    quantity: Quantidade
+    price: Preço
+    profit-loss-day: Lucro/Prejuízo Diário
+    profit-loss-total: Lucro/Prejuízo Total
+    buy-sell-action: Ação
+    date: Data
+    trade:
+      title: Negociação
+    tournaments:
+      title: Torneios
+    help:
+      title: Ajuda
+      index:
+        title: Índice
+      faq:
+        title: Perguntas Frequentes
+    settings:
+      title: Configurações
+misc:
+  home: Página Inicial
+i18n:
+  language-changed-to: Idioma alterado para
+  language: Idioma
+theme-switch:
+  toggle-theme: Alternar Tema
+  theme-toggled: Tema alternado
+buttons:
+  go-back: Voltar
+errors:
+  not-found: Não Encontrado

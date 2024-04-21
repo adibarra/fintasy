@@ -1,0 +1,77 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Amharic)
+# cSpell: disable
+
+example:
+  hello-world: ሰላም ሁሉም!
+pages:
+  main:
+    title: ዋና ገጽ
+    content-title: ለምንድን እንኳን ኮምፕልትን ለውጥ በማድረግ ይዘገባሉ
+    content-subtitle: >-
+      ፊንፋሽ ከማንኛውም የቅንጭብ ገንዘብ አሳቢ መሆን የሚችል እንደሆነ የገጹን የኢትዮጵያዊ እና የግዴታ ምንጭ የሚያገኙትን የማንኛውም የተግባራትን በፈተና ላይ ይወሰዳል።
+      እርስዎን ከመልእክት ላይ ለመሰረት ይረዳል።
+  login:
+    title: ግባት/መለያ
+    register: ይመዝገቡ
+    login: መልዕክት
+    email: ኢሜል
+    username: የተጠቃሚ ስም
+    password: የይለፍ ቃል
+    confirm: ይረጋግጡ
+    confirm-password: ይረጋግጡ የይለፍ ቃል
+    remember-me: አስታውሰው
+    forgot-password: የይለፍ ቃል አልተረዱም?
+    create-account: መለያ አንቀላፍ
+    sign-in: መልዕክት አስገቡ
+    sign-up: መለያ አንቀላፍ
+    no-account: መለያ የለዎትም።
+    already-have-account: በዚህ በመለያ እንደሚሆን አስተያየት አለዎት?
+    missing-credentials: እባኮትን እንደተከሳሹ መረጃዎች ይምረጡ።
+    email-taken: ኢሜል ከተላኩ ነው። መልዕክት አስገብተዋል።
+    invalid-registration: የመለያዎት መረጃዎች የሚያስፈልጉትን እንቅስቃሴ እንደምታውቅ ለማስገባት ያግኙ።
+    invalid-credentials: የመለያዎት የይለፍ ቃል ተሳሳቢ ነው።
+    no-account-found: ምንም መለያ አልተገኙም።
+    username-requirements: >-
+      3 እና 20 ጠቀሜ በመጠቀም።
+      ፊደል፣ ቁጥሮና ማስጠንቀቂያዎች ብቻ ይመስላል።
+    password-requirements: በታች 6 ጠቀሜ ይቅርታ አለው።
+    unknown-error: የማንኛውንም ምንነት ማንነት ላይ ያስተያያል። እባኮትን በእንደገና ይሞክሩ።
+  dashboard:
+    title: መነሻ ቦታ
+    portfolio-value: የፖለቲካ እሴት
+    assets: ባንክ
+    history: ታሪክ
+    cash: ገንዘብ
+    transactions: እንቅስቃሴዎች
+    symbol: ምርመራ
+    quantity: ብዛት
+    price: ዋጋ
+    profit-loss-day: የአሁኑ ግንዛቤ
+    profit-loss-total: የሚኖሩ ግንዛቤ
+    buy-sell-action: ቅጥያ/ሽያጭ እንቅስቃሴ
+    date: ቀን
+    trade:
+      title: ግዝዎች
+    tournaments:
+      title: ጠመንጃዎች
+    help:
+      title: እርዳታ
+      index:
+        title: ፕሮግራም
+      faq:
+        title: ተዘጋጅቶች
+    settings:
+      title: ቅንብሮች
+misc:
+  home: መጋቢት
+i18n:
+  language-changed-to: ቋንቋ ተቀየሩ
+  language: ቋንቋ
+theme-switch:
+  toggle-theme: በቀላሉ ቅርጸ እንቅስቃሴ
+  theme-toggled: ቅርጸ እንቅስቃሴ ተደርጓል
+buttons:
+  go-back: ተመለስ
+errors:
+  not-found: አልተገኘም

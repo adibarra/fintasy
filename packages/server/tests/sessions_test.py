@@ -1,3 +1,6 @@
+# @authors: omer8 (Omer Siddiqui)
+# @description: Testcases for the SessionController class
+
 import unittest
 
 from src.helpers.sessions import SessionController

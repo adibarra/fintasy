@@ -1,3 +1,6 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Dockerfile to build and run client
+
 FROM node:alpine as build_client
 
 ENV PNPM_HOME="/pnpm"
@@ -8,7 +11,7 @@ COPY . .
 
 RUN corepack enable
 RUN pnpm install --prod --frozen-lockfile --ignore-scripts
-RUN pnpm run build:ci
+RUN pnpm run build
 
 
 FROM alpine as build_ngnix

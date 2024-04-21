@@ -1,0 +1,77 @@
+# @author: adibarra (Alec Ibarra)
+# @description: Translation file for i18n (Russian)
+# cSpell: disable
+
+example:
+  hello-world: Привет, мир!
+pages:
+  main:
+    title: Главная
+    content-title: Поднимите свои акции на новый уровень
+    content-subtitle: >-
+      Fintasy - это симулятор фондового рынка, который позволяет торговать акциями с фальшивыми деньгами.
+      Соревнуйтесь с друзьями и посмотрите, кто может заработать больше всего денег!
+  login:
+    title: Вход/Регистрация
+    register: Регистрация
+    login: Вход
+    email: Эл. почта
+    username: Имя пользователя
+    password: Пароль
+    confirm: Подтвердить
+    confirm-password: Подтвердить пароль
+    remember-me: Запомнить меня
+    forgot-password: Забыли пароль?
+    create-account: Создать аккаунт
+    sign-in: Войти
+    sign-up: Зарегистрироваться
+    no-account: Нет аккаунта?
+    already-have-account: Уже есть аккаунт?
+    missing-credentials: Пожалуйста, заполните все поля.
+    email-taken: Этот адрес электронной почты уже используется. Попробуйте войти.
+    invalid-registration: Убедитесь, что информация вашего аккаунта соответствует требованиям.
+    invalid-credentials: Убедитесь, что ваш пароль правильный.
+    no-account-found: Аккаунт с таким адресом электронной почты не найден.
+    username-requirements: >-
+      От 3 до 20 символов.
+      Только буквы, цифры и подчеркивания.
+    password-requirements: Должен содержать не менее 6 символов.
+    unknown-error: Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.
+  dashboard:
+    title: Панель управления
+    portfolio-value: Стоимость портфеля
+    assets: Активы
+    history: История
+    cash: НАЛИЧНЫЕ
+    transactions: Транзакции
+    symbol: Символ
+    quantity: Количество
+    price: Цена
+    profit-loss-day: Прибыль/Убыток за день
+    profit-loss-total: Общая прибыль/убыток
+    buy-sell-action: Действие
+    date: Дата
+    trade:
+      title: Торговля
+    tournaments:
+      title: Турниры
+    help:
+      title: Помощь
+      index:
+        title: Индекс
+      faq:
+        title: Часто задаваемые вопросы
+    settings:
+      title: Настройки
+misc:
+  home: Главная
+i18n:
+  language-changed-to: Язык изменен на
+  language: Язык
+theme-switch:
+  toggle-theme: Сменить тему
+  theme-toggled: Тема изменена
+buttons:
+  go-back: Назад
+errors:
+  not-found: Не найдено

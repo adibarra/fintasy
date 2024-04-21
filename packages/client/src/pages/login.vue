@@ -1,105 +1,240 @@
 <!--
-  @author: Mariptime (Akshay)
+  @author: adibarra (Alec Ibarra), Mariptime (Akshay)
   @description: This component is used to display the login/register page of the application.
 -->
-
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-
 const { t } = useI18n()
+const router = useRouter()
+const state = useStateStore()
+const fintasy = useAPI()
+
+const activeForm = useStorage<'login' | 'register'>('login-last-form', 'register')
+const rememberMe = useStorage('login-remember-me', false)
+const email = useStorage('login-email', '')
+const password = ref('')
+const username = ref('')
+const confirmPassword = ref('')
+const error = ref('')
+const waitForLogin = ref(false)
 
 useHead({
   title: `${t('pages.login.title')} • Fintasy`,
 })
 
-const email = ref('')
-const password = ref('')
+// make sure uuid is set before redirecting
+watch(() => [fintasy.authenticated.value, waitForLogin.value], () => {
+  if (fintasy.authenticated.value && !waitForLogin.value)
+    router.push('/dashboard')
+}, { immediate: true })
 
-function submitForm() {
-  // Implement your form submission logic here
+async function handleSubmit() {
+  if (activeForm.value === 'login')
+    await login()
+  else
+    await createAccount()
 }
 
-function authenticateWithGoogle() {
-  // Implement Google authentication logic
+async function createAccount() {
+  if (!email.value || !username.value || !password.value || password.value !== confirmPassword.value) {
+    error.value = t('pages.login.missing-credentials')
+    return
+  }
+
+  const createUser = await fintasy.createUser({ email: email.value, username: username.value, password: password.value })
+  switch (createUser.code) {
+    case 400:
+      error.value = t('pages.login.invalid-registration')
+      break
+    case 409:
+      error.value = t('pages.login.email-taken')
+      break
+    case 200:
+      login()
+      break
+    default:
+      error.value = t('pages.login.unknown-error')
+      break
+  }
 }
 
-function authenticateWithFacebook() {
-  // Implement Facebook authentication logic
+async function login() {
+  if (!email.value || !password.value) {
+    error.value = t('pages.login.missing-credentials')
+    return
+  }
+
+  waitForLogin.value = true
+  const login = await fintasy.login({ email: email.value, password: password.value })
+  switch (login.code) {
+    case 404:
+      error.value = t('pages.login.no-account-found')
+      break
+    case 403:
+      error.value = t('pages.login.invalid-credentials')
+      break
+    case 200:
+      if (!rememberMe.value)
+        email.value = ''
+      state.user.uuid = login.data.owner
+      break
+    default:
+      error.value = t('pages.login.unknown-error')
+      break
+  }
+  waitForLogin.value = false
+}
+
+function toggleForm() {
+  activeForm.value = activeForm.value === 'login' ? 'register' : 'login'
+
+  // clear confirm password if switching forms
+  if (activeForm.value === 'register')
+    confirmPassword.value = ''
 }
 </script>
 
 <template>
-  <nav class="flex md:mx-6 md:my-4">
-    <router-link to="/" class="flex items-center justify-center gap-2">
-      <img src="/pwa-192x192.png" alt="Fintasy Logo" class="h-14">
-      <div class="text-2xl lg:text-4xl md:text-3xl">
-        Fintasy
+  <div h-15svh />
+
+  <!-- Login and Registration Forms -->
+  <div flex flex-col justify-center>
+    <!-- Form Container -->
+    <div mx-auto mb-5 max-w-150 min-w-80 w-90svw flex flex-col gap-5 fn-outline bg--c-fg px-8 py-8>
+      <!-- Form Title -->
+      <div mb-5 text-center text-3xl>
+        {{ activeForm === 'login' ? t('pages.login.login') : t('pages.login.register') }}
       </div>
-    </router-link>
-    <div class="grow" />
-    <div class="flex items-center gap-5">
-      <button class="rd-10 bg--c-accent hover:bg--c-inverse px-6 py-2 text--c-bg md:text-lg" @click="$router.push('/')">
-        {{ t('Home') }}
+
+      <!-- Email Input -->
+      <div fn-outline fn-hover>
+        <n-input-group>
+          <n-input-group-label class="w-17%" min-w-fit>
+            {{ t('pages.login.email') }}
+          </n-input-group-label>
+          <n-input
+            v-model:value="email"
+            :placeholder="t('pages.login.email')"
+            autocomplete="email"
+            type="text"
+          />
+        </n-input-group>
+      </div>
+
+      <!-- Username Input (Only for Registration) -->
+      <div v-if="activeForm === 'register'">
+        <div fn-outline fn-hover>
+          <n-input-group>
+            <n-input-group-label class="w-17%" min-w-fit>
+              {{ t('pages.login.username') }}
+            </n-input-group-label>
+            <n-input
+              v-model:value="username"
+              :placeholder="t('pages.login.username')"
+              :status="username.length >= 3 || username.length === 0 ? undefined : 'error'"
+              :maxlength="20"
+              autocomplete="username"
+              type="text"
+            />
+          </n-input-group>
+        </div>
+        <div px-2 py-1 op-75>
+          {{ t('pages.login.username-requirements') }}
+        </div>
+      </div>
+
+      <!-- Password Input -->
+      <div fn-outline fn-hover>
+        <n-input-group>
+          <n-input-group-label class="w-17%" min-w-fit>
+            {{ t('pages.login.password') }}
+          </n-input-group-label>
+          <n-input
+            v-model:value="password"
+            :placeholder="t('pages.login.password')"
+            :status="password.length >= 6 || password.length === 0 ? undefined : 'error'"
+            :autocomplete="activeForm === 'register' ? 'new-password' : 'current-password'"
+            type="password"
+            show-password-on="click"
+            @keypress.enter="handleSubmit"
+          />
+        </n-input-group>
+      </div>
+
+      <!-- Confirm Password Input (Only for Registration) -->
+      <div
+        v-if="activeForm === 'register'"
+        mb-3
+      >
+        <div fn-outline fn-hover>
+          <n-input-group>
+            <n-input-group-label class="w-17%" min-w-fit>
+              {{ t('pages.login.confirm') }}
+            </n-input-group-label>
+            <n-input
+              v-model:value="confirmPassword"
+              :placeholder="t('pages.login.confirm-password')"
+              :status="password === confirmPassword ? 'success' : 'error'"
+              autocomplete="new-password"
+              type="password"
+              show-password-on="click"
+              @keypress.enter="handleSubmit"
+            />
+          </n-input-group>
+        </div>
+        <div px-2 py-1 op-75>
+          {{ t('pages.login.password-requirements') }}
+        </div>
+      </div>
+
+      <!-- Remember and Forgot password (Only for Login) -->
+      <div
+        v-if="activeForm === 'login'"
+        flex items-center justify-between
+      >
+        <n-checkbox v-model:checked="rememberMe">
+          {{ t('pages.login.remember-me') }}
+        </n-checkbox>
+        <!-- forgot password link commented out for now
+        <router-link to="/forgot-password" fn-link>
+          {{ t('pages.login.forgot-password') }}
+        </router-link>
+        -->
+      </div>
+
+      <!-- Error Message -->
+      <div v-if="error" text-red>
+        {{ error }}
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        mt-5 fn-outline bg--c-inverse hover:bg--c-accent px-2 py-0.5 text-lg text--c-bg
+        @click="handleSubmit"
+      >
+        {{ activeForm === 'login' ? t('pages.login.sign-in') : t('pages.login.create-account') }}
       </button>
-    </div>
-  </nav>
-  <div style="filter: drop-shadow(0px 0px 12px rgba(5, 150, 105, 2));" class="bg-white px-10 py-8 md:mx-96 md:my-24">
-    <div class="mb-4 flex justify-center gap-2">
-      <router-link to="/login" class="flex items-center justify-center gap-2">
-        <button class="bg-emerald-600 px-4 py-2 text-white">
-          {{ t('Login') }}
-        </button>
-      </router-link>
-      <router-link to="/register" class="flex items-center justify-center gap-2">
-        <button class="bg-emerald-600 px-4 py-2 text-white">
-          {{ t('Register') }}
-        </button>
-      </router-link>
-    </div>
 
-    <div>
-      <!-- Login form -->
-      <form class="space-y-4" @submit.prevent="submitForm">
-        <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-          <label for="email" class="block">{{ t('Enter your Email') }}</label>
-          <input
-            id="email" v-model="email" type="text" required
-            class="mt-1 w-full border bg-white p-2 text-black"
-          >
-        </div>
-
-        <div class="text-4xl text-emerald-600 lg:text-2xl md:text-5xl">
-          <label for="Enter your Password" class="block">{{ t('Enter your Password') }}</label>
-          <input
-            id="password" v-model="password" type="password" required
-            class="mt-1 w-full border bg-white p-2 text-black"
-          >
-        </div>
-
-        <button type="submit" class="w-full bg-emerald-600 p-2 text-white" @click="$router.push('/dashboard')">
-          {{ t('Login') }}
-        </button>
-
-        <div class="mt-10">
-          <p class="mb-2 text-black">
-            {{ t('Or Login with Socials') }}:
-          </p>
-          <div class="flex">
-            <button class="mb-2 mr-4 w-full bg-red-500 p-2 text-white" @click="authenticateWithGoogle">
-              {{ t('Google') }}
-            </button>
-            <button class="mb-2 ml-4 w-full bg-blue-500 p-2 text-white" @click="authenticateWithFacebook">
-              {{ t('Facebook') }}
-            </button>
-          </div>
-          <!-- Add more buttons for other third-party authentication options as needed -->
-        </div>
-      </form>
+      <!-- Redirect Link -->
+      <span flex flex-row items-center justify-center gap-2 text-lg>
+        {{ activeForm === 'login' ? t('pages.login.no-account') : t('pages.login.already-have-account') }}
+        <a
+          cursor-pointer fn-link
+          @click="toggleForm"
+        >
+          {{ activeForm === 'login' ? t('pages.login.sign-up') : t('pages.login.sign-in') }}
+        </a>
+      </span>
     </div>
   </div>
 </template>
 
+<style>
+.n-input .n-input__state-border {
+  display: none !important;
+}
+</style>
+
 <route lang="yaml">
   meta:
-    layout: default
+    layout: home
 </route>

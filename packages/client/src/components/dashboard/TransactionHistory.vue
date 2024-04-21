@@ -13,12 +13,14 @@ const props = defineProps({
   },
 })
 
+const { t } = useI18n()
+
 const columns = [
-  { key: 'symbol', title: 'Symbol', width: '20%' },
-  { key: 'action', title: 'Action', width: '20%' },
-  { key: 'quantity', title: 'Qty', width: '15%' },
-  { key: 'price_cents', title: 'Price', width: '20%' },
-  { key: 'created_at', title: 'Date' },
+  { key: 'symbol', title: t('pages.dashboard.symbol'), width: '20%' },
+  { key: 'action', title: t('pages.dashboard.buy-sell-action'), width: '20%' },
+  { key: 'quantity', title: t('pages.dashboard.quantity'), width: '15%' },
+  { key: 'price_cents', title: t('pages.dashboard.price'), width: '20%' },
+  { key: 'created_at', title: t('pages.dashboard.date') },
 ]
 
 const data = ref()
@@ -55,7 +57,9 @@ onMounted(() => handlePageChange(1))
 
 <template>
   <div flex>
-    <span ml-1 text-xl font-600>History</span>
+    <span ml-1 text-xl font-600>
+      {{ t('pages.dashboard.history') }}
+    </span>
     <div grow />
     <span mx-2 text-xl>
       <n-number-animation
@@ -67,7 +71,7 @@ onMounted(() => handlePageChange(1))
       />
     </span>
     <span mr-2 mt-auto op-75>
-      TRANSACTIONS
+      {{ t('pages.dashboard.transactions') }}
     </span>
   </div>
   <!-- eslint-disable unocss/order-attributify -->
