@@ -2,8 +2,8 @@ import unittest
 
 from alpaca import AlpacaService
 
-class TestAlpaca(unittest.TestCase):
 
+class TestAlpaca(unittest.TestCase):
     def setUp(self):
         # Initialize SessionController object
         self.alpaca_service = AlpacaService()
@@ -13,7 +13,7 @@ class TestAlpaca(unittest.TestCase):
 
         invalidSymbol = "invalidSym"
         self.assertIsNone(self.alpaca_service.get_latest_alpaca_quote(invalidSymbol))
-    
+
     def test_valid_latest_quote(self):
         """Test Alpaca API Latest Quotes with valid info"""
 
@@ -30,7 +30,9 @@ class TestAlpaca(unittest.TestCase):
         """Test Alpaca API Historical Quotes with valid info"""
 
         validSymbol = "AAPL"
-        self.assertIsNotNone(self.alpaca_service.get_historical_alpaca_quote(validSymbol))
+        self.assertIsNotNone(
+            self.alpaca_service.get_historical_alpaca_quote(validSymbol)
+        )
 
 
 if __name__ == "__main__":
