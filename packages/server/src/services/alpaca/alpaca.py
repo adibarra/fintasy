@@ -1,4 +1,4 @@
-# @Author: Omer Siddiqui
+# @Author: Omer Siddiqui 
 # File with helper function to retrieve stock info from Alpaca Markets API
 
 import requests
