@@ -2,8 +2,7 @@
 # File with helper function to retrieve stock info from Alpaca Markets API
 
 import requests
-
-from src.config import APCA_API_KEY, APCA_API_SECRET
+from config import APCA_API_KEY, APCA_API_SECRET
 
 # Alpaca API Endpoint
 api_host = "https://data.alpaca.markets/v2/stocks/trades"
