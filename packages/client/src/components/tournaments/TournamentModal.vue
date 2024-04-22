@@ -46,7 +46,7 @@ export default {
   justify-content: center;
 }
 .modal-content {
-  background: white;
+  background: black;
   padding: 20px;
   border-radius: 5px;
   width: 90%;

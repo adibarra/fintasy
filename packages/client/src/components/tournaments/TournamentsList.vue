@@ -52,7 +52,7 @@ async function viewTournament(uuid: string) {
   }
 }
 
-function joinTournament(uuid: string) {
+async function joinTournament(uuid: string) {
   console.log(`Joining tournament ${uuid}`)
   let tournamentName = '' // Initialize a variable for the tournament name
   try {
@@ -69,12 +69,12 @@ function joinTournament(uuid: string) {
   }
 
   // Construct the portfolio name based on the tournament name
-  const portfolioName = `${tournamentName} Portfolio`
+  const portfolioName = `${tournamentName}`
 
   // Proceed to create a portfolio
   try {
     const portfolioResponse = await fintasy.createPortfolio({ name: portfolioName, tournament: uuid })
-    console.log('Portfolio created successfully:', portfolioResponse)
+    console.log('Portfolio created successfully:', portfolioName, portfolioResponse)
     closeTournamentModal()
   }
   catch (error) {
