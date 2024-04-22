@@ -43,7 +43,7 @@ class SessionController:
         token, uuid = SessionController.authenticate_user(email, password)
         if token:
             # Add sessionToken to sessionTokenToUUID Map
-            seshTokenToUUID[session_token] = uuid
+            seshTokenToUUID[token] = uuid
             return token
         else:
             print("Login Failed. Please try again.")

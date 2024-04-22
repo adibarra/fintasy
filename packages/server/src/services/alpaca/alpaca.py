@@ -2,10 +2,7 @@
 # File with helper function to retrieve stock info from Alpaca Markets API
 
 import requests
-#from config import APCA_API_KEY, APCA_API_SECRET
-
-APCA_API_KEY = 'PK6OU4VE4ULW9H037IJR'
-APCA_API_SECRET = 'B2shlnpi2YVCrAutPngoVZSbCInfG6citfu1HUuP'
+from config import APCA_API_KEY, APCA_API_SECRET
 
 # Alpaca API Endpoint
 api_host = "https://data.alpaca.markets/v2/stocks/trades"
@@ -65,17 +62,27 @@ class AlpacaService:
         # Check if the request was successful
         if response.status_code == 200:
             response_data = response.json()
-            print(response_data)
-
+            #print(response_data)
+            
+            data = []
+            for quote in response_data['trades'][symbol]:
+                quote_data = {
+                    'symbol': symbol,
+                    'price_cents': quote['p'],
+                    'timestamp': quote['t']
+                }
+                data.append(quote_data)
+            
+            return data
+                
         # Otherwise print error message
         else:
             print(f"Error: {response.status_code} - {response.text}")
             return None
         
 # Sample Tests
-"""
-alpaca = AlpacaService()
-alpaca.get_latest_alpaca_quote("AAPL")
 
-alpaca.get_historical_alpaca_quote('AAPL', '2022-01-03T00:00:00Z', '2022-01-04T00:00:00Z', 10)
-"""
+#alpaca = AlpacaService()
+#alpaca.get_latest_alpaca_quote("AAPL")
+
+#alpaca.get_historical_alpaca_quote('AAPL', '2022-01-03T00:00:00Z', '2022-01-04T00:00:00Z', 10)
