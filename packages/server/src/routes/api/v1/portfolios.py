@@ -158,7 +158,13 @@ def get_portfolios(
             detail="Forbidden",
         )
 
-    portfolios = db.get_portfolios(str(owner), str(tournament), name, offset, limit)
+    portfolios = db.get_portfolios(
+        owner=str(owner) if owner is not None else None,
+        tournament=str(tournament) if tournament is not None else None,
+        name=name,
+        offset=offset,
+        limit=limit,
+    )
 
     return PortfoliosResponse(
         code=200,
