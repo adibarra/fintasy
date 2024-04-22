@@ -142,7 +142,7 @@ watch(() => props.filters, () => {
       Prev
     </button>
     <button
-      :disabled="currentPage.data >= totalPages"
+      :disabled="currentPage.data >= totalPages.data"
       @click="changePage(currentPage.data + 1)"
     >
       Next
