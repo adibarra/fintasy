@@ -10,7 +10,6 @@ export const useStateStore = defineStore('state', () => {
   const user = useStorage('state-user', {
     uuid: '',
     username: '',
-    avatar: 'https://avatars.githubusercontent.com/u/93070681?v=4',
     coins: 0,
   })
   const portfolio = ref({

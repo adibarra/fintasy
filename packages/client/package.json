@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.9.2",
+    "@dicebear/collection": "^8.0.1",
+    "@dicebear/core": "^8.0.1",
     "@iconify-json/carbon": "^1.1.31",
     "@intlify/unplugin-vue-i18n": "^4.0.0",
     "@shikijs/markdown-it": "^1.3.0",
