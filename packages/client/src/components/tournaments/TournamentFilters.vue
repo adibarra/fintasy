@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import { STATUS } from '~/types'
 
-interface filter {
-  owner: string | undefined
-  name: string | undefined
-  status: STATUS | undefined
-  dateTimeRange: [Date, Date] | undefined
+interface TournamentFilter {
+  owner?: string
+  name?: string
+  status?: STATUS
+  start_date?: Date
+  end_date?: Date
 }
 
 const emit = defineEmits(['filter'])
-const filters = ref<filter>({
+const dateTimeRange = ref<[Date?, Date?]>([undefined, undefined])
+const filters = ref<TournamentFilter>({
   name: undefined,
   owner: undefined,
-  dateTimeRange: undefined,
   status: undefined,
-
+  start_date: dateTimeRange.value[0],
+  end_date: dateTimeRange.value[1],
 })
 
 function applyFilters() {
@@ -28,9 +30,15 @@ function applyFilters() {
     <form @submit.prevent="applyFilters">
       <input v-model="filters.name" placeholder="Tournament Name">
       <input v-model="filters.owner" placeholder="Owner">
-      <n-date-picker v-model="filters.dateTimeRange" type="datetimerange" clearable />
-      <pre>{{ JSON.stringify(filters.dateTimeRange) }}</pre>
+
+      <!-- might need to use event instead of v-model to properly extract data we need -->
+      <n-date-picker v-model="dateTimeRange" type="datetimerange" clearable />
+
+      <pre>{{ JSON.stringify(dateTimeRange) }}</pre>
       <select v-model="filters.status">
+        <option :value="undefined">
+          All
+        </option>
         <option :value="STATUS.SCHEDULED">
           Open
         </option>

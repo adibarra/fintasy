@@ -1,40 +1,46 @@
 <script setup lang="ts">
 import type { STATUS } from '~/types'
 
-interface filter {
-  owner: string | undefined
-  name: string | undefined
-  status: STATUS | undefined
-  dateTimeRange: [Date, Date] | undefined
+interface TournamentFilter {
+  owner?: string
+  name?: string
+  status?: STATUS
+  start_date?: Date
+  end_date?: Date
 }
 
-const currentFilters = ref<filter>({
+const currentFilters = ref<TournamentFilter>({
   owner: undefined,
   name: undefined,
   status: undefined,
-  dateTimeRange: undefined,
+  start_date: undefined,
+  end_date: undefined,
 })
 
 function applyFilters(filters: any) {
-  currentFilters.value = { ...filters } // Ensuring reactivity by spreading into a new object
+  // Ensuring reactivity by spreading into a new object
+  currentFilters.value = { ...filters }
 }
 </script>
 
 <template>
-  <div class="app">
-    <div class="filter-section">
+  <div h-full w-full flex flex-col gap-2 xl:flex-row>
+    <div
+      class="filter-section"
+      fn-outline bg--c-fg p-4
+    >
       <TournamentFilters @filter="applyFilters" />
     </div>
-    <div class="tournaments-section">
+    <div
+      class="tournaments-section"
+      fn-outline bg--c-fg p-4
+    >
       <TournamentsList :filters="currentFilters" />
     </div>
   </div>
 </template>
 
 <style>
-.app {
-  display: flex;
-}
 .filter-section {
   flex: 1;
 }

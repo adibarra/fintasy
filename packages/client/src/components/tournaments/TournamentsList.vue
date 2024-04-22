@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import type { STATUS, Tournament } from '~/types'
 
+interface TournamentFilter {
+  owner?: string
+  name?: string
+  status?: STATUS
+  start_date?: Date
+  end_date?: Date
+}
+
 const props = defineProps({
   filters: {
-    type: Object as PropType<{
-      owner: string | undefined
-      name: string | undefined
-      status: STATUS | undefined
-      dateTimeRange: [Date, Date] | undefined
-    }>,
+    type: Object as PropType<TournamentFilter>,
     required: true,
   },
 })
@@ -20,15 +23,15 @@ const tournaments = ref<Tournament[]>([])
 const tournamentDetails = ref<Tournament>()
 const showModal = ref(false)
 const currentPage = ref(1)
-const totalPages = ref(1)
+const hasNextPage = ref(false)
 
 async function fetchTournaments(page: number) {
   const params = {
     owner: props.filters.owner,
     name: props.filters.name,
     status: props.filters.status,
-    start_date: props.filters.dateTimeRange?.[0]?.toISOString() ?? undefined,
-    end_date: props.filters.dateTimeRange?.[1]?.toISOString() ?? undefined,
+    start_date: props.filters.start_date?.toISOString() ?? undefined,
+    end_date: props.filters.end_date?.toISOString() ?? undefined,
     offset: (page - 1) * 10,
     limit: 10,
   }
@@ -36,8 +39,7 @@ async function fetchTournaments(page: number) {
   const response = await fintasy.getTournaments(params)
   if (response.code === 200) {
     tournaments.value = response.data
-    totalPages.value = Math.ceil(response.data.length / 10)
-    console.log(`Viewing tournament ${totalPages.value}`)
+    hasNextPage.value = response.data.length === 11
   }
 }
 
@@ -103,11 +105,18 @@ function closeTournamentModal() {
   showModal.value = false
 }
 
-function changePage(page: number) {
-  if (page < 1 || page > totalPages.value)
-    return
-  currentPage.value = page
-  fetchTournaments(page)
+function nextPage() {
+  if (hasNextPage.value) {
+    currentPage.value++
+    fetchTournaments(currentPage.value)
+  }
+}
+
+function prevPage() {
+  if (currentPage.value > 1) {
+    currentPage.value--
+    fetchTournaments(currentPage.value)
+  }
 }
 
 watch(() => props.filters, () => {
@@ -124,30 +133,34 @@ watch(() => props.filters, () => {
     >
       <h3>{{ tournament.name }}</h3>
       <p>{{ tournament.status }}</p>
+      <div flex gap-5>
+        <button @click="viewTournament(tournament.uuid)">
+          View
+        </button>
+        <button @click="joinTournament(tournament.uuid)">
+          Quick Join
+        </button>
+      </div>
+    </div>
+    <div flex justify-center gap-5>
       <button
-        @click="viewTournament(tournament.uuid)"
+        :disabled="currentPage <= 1"
+        :class="{ 'op-50': currentPage <= 1 }"
+        fn-outline px-2 py-1 fn-hover
+        @click="prevPage"
       >
-        View
+        &lt; Prev
       </button>
       <button
-        @click="joinTournament(tournament.uuid)"
+        :disabled="!hasNextPage"
+        :class="{ 'op-50': !hasNextPage }"
+        fn-outline px-2 py-1 fn-hover
+        @click="nextPage"
       >
-        Quick Join
+        Next
+        &gt;
       </button>
     </div>
-    <button
-      :disabled="currentPage.data <= 1"
-      @click="changePage(currentPage.data - 1)"
-    >
-      Prev
-    </button>
-    <button
-      :disabled="currentPage.data >= totalPages.data"
-      @click="changePage(currentPage.data + 1)"
-    >
-      Next
-    </button>
-    <TournamentModal :visible="showModal" :tournament="tournamentDetails" @close="closeTournamentModal" />
   </div>
 </template>
 
