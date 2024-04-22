@@ -137,13 +137,13 @@ watch(() => props.filters, () => {
     </div>
     <button
       :disabled="currentPage <= 1"
-      @click="changePage(currentPage - 1)"
+      @click="changePage(currentPage.data - 1)"
     >
       Prev
     </button>
     <button
       :disabled="currentPage >= totalPages"
-      @click="changePage(currentPage + 1)"
+      @click="changePage(currentPage.data + 1)"
     >
       Next
     </button>
