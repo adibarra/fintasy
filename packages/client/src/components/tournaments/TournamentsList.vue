@@ -36,6 +36,7 @@ async function fetchTournaments(page: number) {
   if (response.code === 200) {
     tournaments.value = response.data
     totalPages.value = Math.ceil(response.data.length / 10)
+    console.log(`Viewing tournament ${totalPages.value}`)
   }
 }
 
@@ -53,8 +54,33 @@ async function viewTournament(uuid: string) {
 
 function joinTournament(uuid: string) {
   console.log(`Joining tournament ${uuid}`)
-  // need logic for joining a tournament
-  closeTournamentModal()
+  let tournamentName = '' // Initialize a variable for the tournament name
+  try {
+    const tournamentResponse = await fintasy.getTournament({ uuid })
+    if (tournamentResponse.code === 200)
+      tournamentName = tournamentResponse.data.name
+    else
+      throw new Error('Failed to fetch tournament details')
+  }
+  catch (error) {
+    console.error('Error fetching tournament details:', error)
+    alert('Failed to load tournament details.') // Or handle this error differently
+    return // Stop further execution if the tournament details cannot be fetched
+  }
+
+  // Construct the portfolio name based on the tournament name
+  const portfolioName = `${tournamentName} Portfolio`
+
+  // Proceed to create a portfolio
+  try {
+    const portfolioResponse = await fintasy.createPortfolio({ name: portfolioName, tournament: uuid })
+    console.log('Portfolio created successfully:', portfolioResponse)
+    closeTournamentModal()
+  }
+  catch (error) {
+    console.error('Failed to create portfolio:', error)
+    // You might want to handle this error in the UI, e.g., showing an error message to the user
+  }
 }
 
 function closeTournamentModal() {
@@ -105,6 +131,7 @@ watch(() => props.filters, () => {
     >
       Next
     </button>
+    <TournamentModal :visible="showModal" :tournament="tournamentDetails" @close="closeTournamentModal" />
   </div>
 </template>
 
