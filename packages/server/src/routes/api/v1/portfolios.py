@@ -123,7 +123,7 @@ def create_portfolio(
     portfolio = db.create_portfolio(
         token_owner,
         data.name,
-        data.tournament,
+        str(data.tournament) if data.tournament is not None else None,
     )
     if portfolio is None:
         raise HTTPException(
@@ -158,7 +158,13 @@ def get_portfolios(
             detail="Forbidden",
         )
 
-    portfolios = db.get_portfolios(str(owner), str(tournament), name, offset, limit)
+    portfolios = db.get_portfolios(
+        owner=str(owner) if owner is not None else None,
+        tournament=str(tournament) if tournament is not None else None,
+        name=name,
+        offset=offset,
+        limit=limit,
+    )
 
     return PortfoliosResponse(
         code=200,
