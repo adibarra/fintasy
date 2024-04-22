@@ -33,72 +33,60 @@ async function fetchTournaments(page: number) {
     start_date: props.filters.start_date?.toISOString() ?? undefined,
     end_date: props.filters.end_date?.toISOString() ?? undefined,
     offset: (page - 1) * 10,
-    limit: 10,
+    limit: 11,
   }
 
   const response = await fintasy.getTournaments(params)
-  if (response.code === 200) {
-    tournaments.value = response.data
-    hasNextPage.value = response.data.length === 11
+  if (response.code !== 200) {
+    console.error('Failed to fetch tournaments:', response)
+    return
   }
+
+  tournaments.value = response.data.slice(0, 10)
+  hasNextPage.value = response.data.length === 11
 }
 
 async function viewTournament(uuid: string) {
   console.log(`Viewing tournament ${uuid}`)
   const response = await fintasy.getTournament({ uuid })
-  if (response.code === 200) {
-    tournamentDetails.value = response.data
-    showModal.value = true
+  if (response.code !== 200) {
+    console.error('Failed to load tournament details.') // Or handle this error differently
+    return
   }
-  else {
-    alert('Failed to load tournament details.') // Or handle this error differently
-  }
+
+  tournamentDetails.value = response.data
+  showModal.value = true
 }
 
 async function joinTournament(uuid: string) {
   console.log(`Joining tournament ${uuid}`)
-  let tournamentName = '' // Initialize a variable for the tournament name
-  try {
-    const tournamentResponse = await fintasy.getTournament({ uuid })
-    if (tournamentResponse.code === 200)
-      tournamentName = tournamentResponse.data.name
-    else
-      throw new Error('Failed to fetch tournament details')
-  }
-  catch (error) {
-    console.error('Error fetching tournament details:', error)
-    alert('Failed to load tournament details.') // Or handle this error differently
-    return // Stop further execution if the tournament details cannot be fetched
-  }
 
+  const tournamentResponse = await fintasy.getTournament({ uuid })
+  if (tournamentResponse.code !== 200) {
+    console.error('Failed to fetch tournament details')
+    return
+  }
   // Construct the portfolio name based on the tournament name
-  const portfolioName = `${tournamentName}`
+  const portfolioName = tournamentResponse.data.name
 
   // Proceed to create a portfolio
-  try {
-    const portfolioResponse = await fintasy.createPortfolio({ name: portfolioName, tournament: uuid })
-    console.log('Portfolio created successfully:', portfolioName, portfolioResponse)
-    closeTournamentModal()
-    const portfoliosRequest = await fintasy.getPortfolios({ owner: state.user.uuid, limit: 10 })
-    if (portfoliosRequest.code !== 200)
-      return
-
-    state.portfolio.active = 0
-    state.portfolio.available = portfoliosRequest.data
-
-    if (portfoliosRequest.data.length !== 0)
-      return
-
-    const createPortfolioRequest = await fintasy.createPortfolio({ name: 'Default Portfolio' })
-    if (createPortfolioRequest.code !== 200)
-      return
-
-    state.portfolio.available = [createPortfolioRequest.data]
+  const portfolioResponse = await fintasy.createPortfolio({ name: portfolioName, tournament: uuid })
+  if (portfolioResponse.code !== 200) {
+    console.error('Failed to create portfolio:', portfolioResponse)
+    return
   }
-  catch (error) {
-    console.error('Failed to create portfolio:', error)
-    // You might want to handle this error in the UI, e.g., showing an error message to the user
+
+  console.log('Portfolio created successfully:', portfolioName, portfolioResponse)
+  closeTournamentModal()
+
+  // Update the user's available portfolios
+  const portfoliosRequest = await fintasy.getPortfolios({ owner: state.user.uuid, limit: 10 })
+  if (portfoliosRequest.code !== 200) {
+    console.error('Failed to fetch user portfolios:', portfoliosRequest)
+    return
   }
+
+  state.portfolio.available = portfoliosRequest.data
 }
 
 function closeTournamentModal() {
