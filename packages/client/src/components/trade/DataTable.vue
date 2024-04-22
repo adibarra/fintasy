@@ -29,6 +29,7 @@ const searchFilter = ref('')
 const columns = [
   { key: 'symbol', label: 'Symbol' },
   { key: 'price', label: 'Price' },
+  { key: 'quantity', label: 'Qty' },
   { key: 'action', label: 'Buy/Sell' },
 ]
 
@@ -70,9 +71,20 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-emerald">
+  <div>
     <div class="flex items-center justify-between">
-      <SearchForm @search="handleSearch" />
+      <div mx-2 my-2>
+        <input
+          type="text"
+          placeholder="Search"
+          class="bg-gray-50 pl-2 text-gray-900"
+          grow fn-outline
+          @input="(e) => {
+            const target = e.target as HTMLInputElement
+            handleSearch(target.value)
+          }"
+        >
+      </div>
 
       <div class="flex items-center justify-end text-sm font-semibold">
         <FilterRadios />
@@ -80,14 +92,14 @@ onMounted(async () => {
       </div>
     </div>
 
-    <table class="w-full text-left text-sm">
-      <thead class="bg-gray-500 text-xs uppercase">
-        <tr>
+    <table class="flex flex-col text-sm">
+      <thead class="text-xs uppercase">
+        <tr flex>
           <template
             v-for="column in columns"
             :key="column.key"
           >
-            <th class="px-4 py-3">
+            <th class="px-2 py-2" grow>
               {{ column.label }}
             </th>
           </template>
@@ -99,29 +111,37 @@ onMounted(async () => {
           v-for="item in filteredItems"
           :key="item.symbol"
           class="border-b font-900"
+          flex
         >
-          <td class="px-4 py-3">
+          <td class="px-2 py-2" grow w-12 text-center>
             {{ item.symbol }}
           </td>
-          <td class="px-4 py-3">
+          <td class="px-2 py-2" grow w-15 text-center>
             {{ `$${(item.price_cents / 100).toFixed(2)}` }}
           </td>
-          <td>
-            <form class="flex items-center px-4 py-3">
-              <input
-                type="text"
-                placeholder="Quantity"
-                class="bg-gray-50 pl-2 text-gray-900"
-                grow
-                fn-outline @input="quantitySetter($event.target.value as string)"
-              >
-            </form>
+          <td class="px-2 py-2" grow w-15 text-center>
+            <input
+              type="text"
+              placeholder="Qty"
+              class="bg-gray-50 text-gray-900"
+              fn-outline w-15 text-center
+              @input="e => {
+                const target = e!.target as HTMLInputElement
+                quantitySetter(target.value)
+              }"
+            >
           </td>
-          <td class="px-4 py-3">
-            <button class="mr-2 border bg-green-500 px-2 py-1 hover:bg-green-600" @click="initializeTransaction('BUY' as ACTION)">
+          <td class="px-2 py-2" grow w-15 text-center>
+            <button
+              class="mr-2 border bg-green-500 px-2 py-1 hover:bg-green-600"
+              @click="initializeTransaction('BUY' as ACTION)"
+            >
               ✓
             </button>
-            <button class="border bg-red-500 px-2 py-1 hover:bg-red-600" @click="initializeTransaction('SELL' as ACTION)">
+            <button
+              class="border bg-red-500 px-2 py-1 hover:bg-red-600"
+              @click="initializeTransaction('SELL' as ACTION)"
+            >
               ✕
             </button>
           </td>

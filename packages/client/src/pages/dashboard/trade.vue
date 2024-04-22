@@ -36,7 +36,7 @@ function generateAssets(count: number) {
   <!-- main wrapper div -->
   <div flex grow gap-3>
     <!-- left side div -->
-    <div h-full w-25vw fn-outline bg--c-fg>
+    <div h-full w-26vw fn-outline bg--c-fg>
       <div m-8 fn-outline>
         <DataTable :items="items" />
       </div>
