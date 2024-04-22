@@ -22,6 +22,7 @@ const state = useStateStore()
 const tournaments = ref<Tournament[]>([])
 const tournamentDetails = ref<Tournament>()
 const showModal = ref(false)
+const hideNext = ref(false)
 const currentPage = ref(1)
 const hasNextPage = ref(false)
 

@@ -40,13 +40,13 @@ function applyFilters() {
           All
         </option>
         <option :value="STATUS.SCHEDULED">
-          Open
+          Scheduled
         </option>
         <option :value="STATUS.ONGOING">
           On-going
         </option>
         <option :value="STATUS.FINISHED">
-          Closed
+          Finished
         </option>
       </select>
       <!-- More filters can be added here -->
