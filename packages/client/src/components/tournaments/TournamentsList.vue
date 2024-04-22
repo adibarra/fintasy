@@ -14,6 +14,7 @@ const props = defineProps({
 })
 
 const fintasy = useAPI()
+const state = useStateStore()
 
 const tournaments = ref<Tournament[]>([])
 const tournamentDetails = ref<Tournament>()
@@ -76,6 +77,21 @@ async function joinTournament(uuid: string) {
     const portfolioResponse = await fintasy.createPortfolio({ name: portfolioName, tournament: uuid })
     console.log('Portfolio created successfully:', portfolioName, portfolioResponse)
     closeTournamentModal()
+    const portfoliosRequest = await fintasy.getPortfolios({ owner: state.user.uuid, limit: 10 })
+    if (portfoliosRequest.code !== 200)
+      return
+
+    state.portfolio.active = 0
+    state.portfolio.available = portfoliosRequest.data
+
+    if (portfoliosRequest.data.length !== 0)
+      return
+
+    const createPortfolioRequest = await fintasy.createPortfolio({ name: 'Default Portfolio' })
+    if (createPortfolioRequest.code !== 200)
+      return
+
+    state.portfolio.available = [createPortfolioRequest.data]
   }
   catch (error) {
     console.error('Failed to create portfolio:', error)
