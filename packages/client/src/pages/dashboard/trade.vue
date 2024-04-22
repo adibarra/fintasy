@@ -1,11 +1,9 @@
-<script setup>
-const fintasy = useAPI()
-
+<script setup lang="ts">
 const trend = generateData(Math.floor(Math.random() * 1500) + 500)
 const items = generateAssets(Math.floor(Math.random() * 100) + 100)
 
 // Generate random test data
-function generateData(count) {
+function generateData(count: number) {
   const data = []
   const startDate = new Date().getTime() - 1000 * 60 * 15 * count
   let value = 1000
@@ -21,7 +19,7 @@ function generateData(count) {
 }
 
 // Generate random assets
-function generateAssets(count) {
+function generateAssets(count: number) {
   const assets = []
 
   for (let i = 0; i < count; ++i) {
@@ -32,14 +30,6 @@ function generateAssets(count) {
   }
   return assets
 }
-
-onMounted(async () => {
-  // const response = await fintasy.get
-  // if (Response.code === 200)
-  //   items.value = response.data
-  // else
-  //   console.log('Error fetching data')
-})
 </script>
 
 <template>
@@ -56,6 +46,9 @@ onMounted(async () => {
     <div grow fn-outline bg--c-fg p-10>
       <div h-80>
         <PortfolioChart :data="trend" />
+      </div>
+      <div grow py-15>
+        <DataTable :items="items" />
       </div>
     </div>
   </div>
