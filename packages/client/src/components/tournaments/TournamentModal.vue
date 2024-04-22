@@ -1,34 +1,40 @@
-<script>
-export default {
-  props: {
-    visible: Boolean,
-    tournament: {
-      type: Object,
-      default: () => ({}),
-    },
+<script setup lang="ts">
+import type { Tournament } from '~/types'
+
+const props = defineProps({
+  visible: {
+    type: Boolean,
+    required: true,
   },
-  methods: {
-    closeModal() {
-      this.$emit('close')
-    },
-    formatDate(date) {
-      return new Date(date).toLocaleDateString('en-US') // Adjust format as necessary
-    },
+  tournament: {
+    type: Object as PropType<Tournament>,
+    required: true,
   },
+})
+
+const emit = defineEmits(['close'])
+
+function closeModal() {
+  emit('close')
+}
+
+function formatDate(date: string) {
+  // Adjust format as necessary
+  return new Date(date).toLocaleDateString('en-US')
 }
 </script>
 
 <template>
-  <div v-if="visible" class="modal">
+  <div v-if="props.visible" class="modal">
     <div class="modal-content">
       <span class="close" @click="closeModal">&times;</span>
-      <h2>{{ tournament.name }}</h2>
-      <p><strong>Owner:</strong> {{ tournament.owner }}</p>
-      <p><strong>Status:</strong> {{ tournament.status }}</p>
-      <p><strong>Start Date:</strong> {{ formatDate(tournament.start_date) }}</p>
-      <p><strong>End Date:</strong> {{ formatDate(tournament.end_date) }}</p>
-      <p><strong>Created At:</strong> {{ formatDate(tournament.created_at) }}</p>
-      <p><strong>Updated At:</strong> {{ formatDate(tournament.updated_at) }}</p>
+      <h2>{{ props.tournament.name }}</h2>
+      <p><strong>Owner:</strong> {{ props.tournament.owner }}</p>
+      <p><strong>Status:</strong> {{ props.tournament.status }}</p>
+      <p><strong>Start Date:</strong> {{ formatDate(props.tournament.start_date) }}</p>
+      <p><strong>End Date:</strong> {{ formatDate(props.tournament.end_date) }}</p>
+      <p><strong>Created At:</strong> {{ formatDate(props.tournament.created_at) }}</p>
+      <p><strong>Updated At:</strong> {{ formatDate(props.tournament.updated_at) }}</p>
     </div>
   </div>
 </template>
