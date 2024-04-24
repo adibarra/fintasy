@@ -1,4 +1,12 @@
 ---
+# package labels
+- name: package/client
+  color: 0a95f1
+  description: Related to the client package.
+- name: package/server
+  color: 69aac5
+  description: Related to the server package.
+
 # type labels
 - name: type/bug
   color: ee0701
