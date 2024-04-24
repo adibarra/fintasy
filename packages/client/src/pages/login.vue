@@ -46,7 +46,7 @@ async function createAccount() {
       error.value = t('pages.login.invalid-registration')
       break
     case 409:
-      error.value = t('pages.login.email-taken')
+      error.value = t('pages.login.unique-taken')
       break
     case 200:
       login()

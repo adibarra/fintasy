@@ -28,7 +28,7 @@ pages:
     no-account: ¿No tienes una cuenta?
     already-have-account: ¿Ya tienes una cuenta?
     missing-credentials: Por favor complete todos los campos.
-    email-taken: El correo electrónico ya está en uso. Intente iniciar sesión.
+    unique-taken: El correo electrónico o nombre de usuario ya está en uso. Intente iniciar sesión.
     invalid-registration: Asegúrese de que la información de su cuenta cumpla con los requisitos.
     invalid-credentials: Asegúrese de que su contraseña sea correcta.
     no-account-found: No se encontró ninguna cuenta con ese correo electrónico.
