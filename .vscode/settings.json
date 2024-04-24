@@ -59,6 +59,7 @@
     "pycache",
     "pydantic",
     "resourcemonitor",
+    "seedrandom",
     "Shiki",
     "shikijs",
     "sider",

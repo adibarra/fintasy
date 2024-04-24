@@ -4,12 +4,14 @@
 -->
 
 <script setup lang="ts">
+import seedrandom from 'seedrandom'
 import type { Transaction } from '~/types'
 import { ACTION } from '~/types'
 
 const { t } = useI18n()
 const state = useStateStore()
 const fintasy = useAPI()
+const rng = seedrandom(state.user.username)
 
 useHead({
   title: `${t('pages.dashboard.title')} • Fintasy`,
@@ -23,10 +25,10 @@ interface Asset {
   pl_total: number
 }
 
-const cash = (Math.random() * 1500) + 500
-const chartData = generateData(Math.floor(Math.random() * 1500) + 500)
-const assets = generateAssets(Math.floor(Math.random() * 100) + 100)
-const transactions = generateTransactions(Math.floor(Math.random() * 100) + 200)
+const cash = (rng() * 1500) + 500
+const chartData = generateData(Math.floor(rng() * 1500) + 500)
+const assets = generateAssets(Math.floor(rng() * 100) + 100)
+const transactions = generateTransactions(Math.floor(rng() * 100) + 200)
 
 // Generate random data
 function generateData(count: number) {
@@ -35,7 +37,7 @@ function generateData(count: number) {
   let value = 1000
 
   for (let i = 0; i < count; ++i) {
-    value = Math.round((Math.random() * 1 - 0.495) * 100 + value)
+    value = Math.round((rng() * 1 - 0.495) * 100 + value)
     data.push({
       date: startDate + 1000 * 60 * 15 * i,
       value,
@@ -50,11 +52,11 @@ function generateAssets(count: number): Asset[] {
 
   for (let i = 0; i < count; ++i) {
     assets.push({
-      symbol: Math.random().toString(36).substring(2, 6).toUpperCase(),
-      quantity: Math.floor(Math.random() * 100),
-      price_cents: Math.random() * 10000 + 2500,
-      pl_day: Math.random() * 2500 + 1000,
-      pl_total: Math.random() * 5000 + 1000,
+      symbol: rng().toString(36).substring(2, 6).toUpperCase(),
+      quantity: Math.floor(rng() * 100),
+      price_cents: rng() * 10000 + 2500,
+      pl_day: rng() * 2500 + 1000,
+      pl_total: rng() * 5000 + 1000,
     })
   }
   return assets
@@ -66,14 +68,14 @@ function generateTransactions(count: number): Transaction[] {
   const date = new Date()
 
   for (let i = 0; i < count; ++i) {
-    date.setTime(date.getTime() - Math.random() * 86400000)
+    date.setTime(date.getTime() - rng() * 86400000)
     transactions.push({
-      uuid: Math.random().toString(36).substring(2),
-      portfolio: Math.random().toString(36).substring(2),
-      symbol: Math.random().toString(36).substring(2, 6).toUpperCase(),
-      action: Math.random() > 0.5 ? ACTION.BUY : ACTION.SELL,
-      quantity: Math.floor(Math.random() * 100),
-      price_cents: Math.floor(Math.random() * 100000),
+      uuid: rng().toString(36).substring(2),
+      portfolio: rng().toString(36).substring(2),
+      symbol: rng().toString(36).substring(2, 6).toUpperCase(),
+      action: rng() > 0.5 ? ACTION.BUY : ACTION.SELL,
+      quantity: Math.floor(rng() * 100),
+      price_cents: Math.floor(rng() * 100000),
       created_at: date.toLocaleDateString(),
     })
   }
