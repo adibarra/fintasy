@@ -17,8 +17,7 @@ jobs:
       packages: write
     strategy:
       matrix:
-        include:
-          - name: [client, server]
+        name: [client, server]
     steps:
       - name: Check out code from GitHub
         uses: actions/checkout@v4
