@@ -15,6 +15,15 @@ jobs:
     permissions:
       contents: read
       packages: write
+    strategy:
+      matrix:
+        include:
+          - name: Client
+            file: Dockerfile.client
+            tags: ghcr.io/${{ GITHUB.repository }}/client:latest
+          - name: Server
+            file: Dockerfile.server
+            tags: ghcr.io/${{ GITHUB.repository }}/server:latest
     steps:
       - name: Check out code from GitHub
         uses: actions/checkout@v4
@@ -26,20 +35,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push client image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: Dockerfile.client
-          push: true
-          tags: ghcr.io/${{ GITHUB.repository }}/client:latest
-
-      - name: Build and push server image
+      - name: Build and push ${{ matrix.name }} image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          file: Dockerfile.server
-          tags: ghcr.io/${{ GITHUB.repository }}/server:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          file: ${{ matrix.file }}
+          tags: ${{ matrix.tags }}
