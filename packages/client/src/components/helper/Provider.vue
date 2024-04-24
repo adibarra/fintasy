@@ -3,7 +3,7 @@
   @description: This component is used to provide the global theme and configuration for the application.
 -->
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { darkTheme } from 'naive-ui'
 
 const theme = computed(() => (colorTheme.value === 'dark' ? darkTheme : null))
