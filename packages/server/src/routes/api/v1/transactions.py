@@ -99,7 +99,7 @@ def create_transaction(
 ):
     # Attempt creating transaction
     transaction = db.create_transaction(
-        data.portfolio, data.symbol, data.action, data.quantity
+        str(data.portfolio), str(data.symbol), str(data.action), data.quantity
     )
     if transaction is None:
         raise HTTPException(
