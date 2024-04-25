@@ -113,25 +113,25 @@ onMounted(async () => {
           class="border-b font-900"
           flex
         >
-          <td class="px-2 py-2" grow w-12 text-center>
+          <td class="px-2 py-2" w-12 grow text-center>
             {{ item.symbol }}
           </td>
-          <td class="px-2 py-2" grow w-15 text-center>
+          <td class="px-2 py-2" w-15 grow text-center>
             {{ `$${(item.price_cents / 100).toFixed(2)}` }}
           </td>
-          <td class="px-2 py-2" grow w-15 text-center>
+          <td class="px-2 py-2" w-15 grow text-center>
             <input
               type="text"
               placeholder="Qty"
               class="bg-gray-50 text-gray-900"
-              fn-outline w-15 text-center
+              w-15 fn-outline text-center
               @input="e => {
                 const target = e!.target as HTMLInputElement
                 quantitySetter(target.value)
               }"
             >
           </td>
-          <td class="px-2 py-2" grow w-15 text-center>
+          <td class="px-2 py-2" w-15 grow text-center>
             <button
               class="mr-2 border bg-green-500 px-2 py-1 hover:bg-green-600"
               @click="initializeTransaction('BUY' as ACTION)"
