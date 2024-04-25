@@ -91,12 +91,12 @@ class UsersMixin:
             if conn:
                 self.connectionPool.putconn(conn)
 
-    def get_user_by_email(self, email: str) -> dict:
+    def get_user_by_username(self, username: str) -> dict:
         """
-        Retrieves a user from the database by email.
+        Retrieves a user from the database by username.
 
         Args:
-            email (str): The email of the user.
+            username (str): The username of the user.
 
         Returns:
             dict: A dictionary representing the user if found, None otherwise.
@@ -106,17 +106,19 @@ class UsersMixin:
         try:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM users WHERE email = %s LIMIT 1", (email,))
+                cursor.execute(
+                    "SELECT * FROM users WHERE username = %s LIMIT 1", (username,)
+                )
                 if cursor.description:
                     user = cursor.fetchone()
                     if user is not None:
                         column_names = [desc[0] for desc in cursor.description]
                         return dict(zip(column_names, [str(value) for value in user]))
                     else:
-                        print(f"User with email '{email}' not found.", flush=True)
+                        print(f"User with username '{username}' not found.", flush=True)
                         return None
         except Exception as e:
-            print("Failed to get user by email:", e, flush=True)
+            print("Failed to get user by username:", e, flush=True)
             return None
         finally:
             if conn:

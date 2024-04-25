@@ -19,3 +19,9 @@ type/docs:
   - 'docs/**/*'
   - '**/README.md'
   - LICENSE
+
+package/client:
+  - 'packages/client/**/*'
+
+package/server:
+  - 'packages/server/**/*'

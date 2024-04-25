@@ -26,7 +26,7 @@ pages:
     no-account: ❌📝❓
     already-have-account: ✅📝❓
     missing-credentials: ❌📝🔘📝
-    email-taken: 📧❌📝🔓🔛
+    unique-taken: 🔒🔑🆔📧❌ 📝🔢📬 🔁🔄🔛 🔓🆔
     invalid-registration: 🚫✅📝🔗🔑❌
     invalid-credentials: 🚫✅🔑❌
     no-account-found: ❌📝❌🔍📧

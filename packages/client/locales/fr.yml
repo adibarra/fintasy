@@ -28,7 +28,7 @@ pages:
     no-account: Pas de compte ?
     already-have-account: Vous avez déjà un compte ?
     missing-credentials: Veuillez remplir tous les champs.
-    email-taken: L'adresse e-mail est déjà utilisée. Essayez de vous connecter.
+    unique-taken: L'adresse e-mail ou le nom d'utilisateur est déjà utilisé(e). Essayez de vous connecter.
     invalid-registration: Assurez-vous que vos informations de compte respectent les exigences.
     invalid-credentials: Assurez-vous que votre mot de passe est correct.
     no-account-found: Aucun compte trouvé avec cet e-mail.

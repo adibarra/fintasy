@@ -27,10 +27,10 @@ pages:
     no-account: No account?
     already-have-account: Already have an account?
     missing-credentials: Please fill out all fields.
-    email-taken: Email is already taken. Try signing in.
+    unique-taken: Username or email is already taken. Try signing in.
     invalid-registration: Make sure your account information meets the requirements.
     invalid-credentials: Make sure your password is correct.
-    no-account-found: No account found with that email.
+    no-account-found: No account found with that username.
     username-requirements: >-
       Between 3 and 20 characters.
       Letters, numbers, and underscores only.

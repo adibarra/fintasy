@@ -11,6 +11,8 @@ import {
   RefreshOutline as RefreshIcon,
 } from '@vicons/ionicons5'
 import { NIcon, useMessage } from 'naive-ui'
+import { createAvatar } from '@dicebear/core'
+import { identicon } from '@dicebear/collection'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -48,6 +50,10 @@ const breadcrumbs = computed(() => {
 
 const portfolios = computed(() => {
   return state.portfolio.available.map((p, i) => ({ key: i, label: p.name }))
+})
+
+const avatar = computed(() => {
+  return createAvatar(identicon, { seed: state.user.username }).toDataUriSync()
 })
 
 // redirect to login if not authenticated
@@ -146,7 +152,7 @@ watch(() => fintasy.authenticated.value, () => {
       >
         <n-avatar
           size="small"
-          :src="state.user.avatar"
+          :src="avatar"
           mr-5 cursor-pointer
         />
       </n-dropdown>

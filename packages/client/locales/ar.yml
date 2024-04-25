@@ -28,7 +28,7 @@ pages:
     no-account: ليس لديك حساب؟
     already-have-account: هل لديك حساب بالفعل؟
     missing-credentials: يرجى ملء جميع الحقول.
-    email-taken: البريد الإلكتروني مستخدم بالفعل. حاول تسجيل الدخول.
+    unique-taken: اسم المستخدم أو البريد الإلكتروني مستخدم بالفعل. حاول تسجيل الدخول.
     invalid-registration: تأكد من أن معلومات حسابك تلبي المتطلبات.
     invalid-credentials: تأكد من أن كلمة المرور الخاصة بك صحيحة.
     no-account-found: لا يوجد حساب مع هذا البريد الإلكتروني.

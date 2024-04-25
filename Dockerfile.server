@@ -1,7 +1,7 @@
 # @author: adibarra (Alec Ibarra)
 # @description: Dockerfile to build and run server
 
-FROM python:alpine as server
+FROM python:alpine AS server
 
 WORKDIR /app
 COPY /packages/server/ .
