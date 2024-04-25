@@ -35,7 +35,7 @@ class TransactionsMixin:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO transactions (uuid_portfolio, symbol, action, quantity) VALUES (%s, %s, %s, %s) RETURNING *",
+                    "INSERT INTO transactions (portfolio, symbol, action, quantity) VALUES (%s, %s, %s, %s) RETURNING *",
                     (uuid_portfolio, symbol, action, quantity),
                 )
                 column_names = [desc[0] for desc in cursor.description]
@@ -68,7 +68,7 @@ class TransactionsMixin:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "SELECT * FROM transactions WHERE uuid_portfolio = %s OFFSET %s LIMIT %s",
+                    "SELECT * FROM transactions WHERE portfolio = %s OFFSET %s LIMIT %s",
                     (uuid_portfolio, offset, limit),
                 )
                 column_names = [desc[0] for desc in cursor.description]
