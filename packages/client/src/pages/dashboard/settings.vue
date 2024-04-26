@@ -19,30 +19,31 @@ useHead({
 <template>
   <div h-full w-full flex flex-col gap-2 xl:flex-row>
     <div flex grow flex-col fn-outline bg--c-fg p-2 max-xl:h-205>
-      <div mb-5 max-w-150 min-w-80 w-90svw flex flex-col gap-5 px-8 py-8>
-        <div flex gap-4>
-          Change Language: <LanguageSwitch />
-        </div>
+      <div mb-4 ml-2 text-3xl>
+        {{ t('pages.dashboard.settings.title') }}
+      </div>
+      <div max-w-100 min-w-60 w-50svw flex grow flex-col gap-5 px-4 pb-4>
         <button
-          mt-5 fn-outline px-2 py-0.5 text-lg
+          fn-outline px-2 py-0.5 text-lg
           @click="usernameModal = true"
         >
           Change Username
         </button>
         <button
-          mt-5 fn-outline px-2 py-0.5 text-lg
+          fn-outline px-2 py-0.5 text-lg
           @click="emailModal = true"
         >
           Change Email
         </button>
         <button
-          mt-5 fn-outline px-2 py-0.5 text-lg
+          fn-outline px-2 py-0.5 text-lg
           @click="passwordModal = true"
         >
           Change Password
         </button>
+        <div grow />
         <button
-          mt-5 fn-outline px-2 py-0.5 text-lg text-red
+          fn-outline px-2 py-0.5 text-lg text-red
           @click="deleteModal = true"
         >
           Delete Account
