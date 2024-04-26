@@ -1,6 +1,6 @@
 <!--
   @author: adibarra (Alec Ibarra)
-  @description: This component is used to display the change username modal.
+  @description: This component is used to display the change email modal.
 -->
 
 <script setup lang="ts">
@@ -10,23 +10,23 @@ const { t } = useI18n()
 const fintasy = useAPI()
 const state = useStateStore()
 
-const username = ref('')
+const email = ref('')
 const error = ref('')
 
-async function changeUsername(slotCloseFunc: Function) {
-  if (!username.value) {
-    error.value = 'Username is required'
+async function changeEmail(slotCloseFunc: Function) {
+  if (!email.value) {
+    error.value = 'Email is required'
     return
   }
 
-  // change username
-  const response = await fintasy.updateUser({ uuid: state.user.uuid, username: username.value })
+  // change email
+  const response = await fintasy.updateUser({ uuid: state.user.uuid, email: email.value })
   switch (response.code) {
     case 400:
-      error.value = 'Username does not meet requirements'
+      error.value = 'Email does not meet requirements'
       return
     case 409:
-      error.value = 'Username is already taken'
+      error.value = 'Email is already taken'
       return
     case 200:
       break
@@ -40,7 +40,7 @@ async function changeUsername(slotCloseFunc: Function) {
 }
 
 function close(slotCloseFunc: Function) {
-  username.value = ''
+  email.value = ''
   error.value = ''
   isOpen.value = false
   slotCloseFunc()
@@ -50,7 +50,7 @@ function close(slotCloseFunc: Function) {
 <template>
   <Modal v-model="isOpen">
     <template #header>
-      <span ml-2 text-3xl>Change Username</span>
+      <span ml-2 text-3xl>Change Email</span>
     </template>
     <template #content>
       <div mx-auto max-w-100 min-w-50 w-80svw flex flex-col gap-5 px-8 py-8>
@@ -58,18 +58,15 @@ function close(slotCloseFunc: Function) {
           <div fn-outline fn-hover>
             <n-input-group>
               <n-input-group-label class="w-17%" min-w-fit>
-                Username
+                {{ t('pages.login.email') }}
               </n-input-group-label>
               <n-input
-                v-model:value="username"
-                placeholder="CoolNewUsername"
+                v-model:value="email"
+                placeholder="newEmail@example.com"
                 autocomplete="none"
                 type="text"
               />
             </n-input-group>
-          </div>
-          <div px-2 py-1 op-75>
-            {{ t('pages.login.username-requirements') }}
           </div>
         </div>
         <div v-if="error" px-2 py-1 text-red>
@@ -81,7 +78,7 @@ function close(slotCloseFunc: Function) {
       <div flex gap-2 flex-justify-end>
         <button
           fn-outline bg--c-inverse p-1 px-2 text--c-bg
-          @click="changeUsername(footerProps.close)"
+          @click="changeEmail(footerProps.close)"
         >
           <span mx-2>Submit</span>
         </button>
