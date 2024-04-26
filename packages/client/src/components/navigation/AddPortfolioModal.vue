@@ -18,7 +18,7 @@ function createPortfolio(slotCloseFunc: Function) {
     return
   }
 
-  // Add portfolio
+  // add portfolio
   fintasy.createPortfolio({ name: portfolioName.value })
   state.refresh.portfolio()
   portfolioName.value = ''
@@ -65,7 +65,7 @@ function close(slotCloseFunc: Function) {
     <template #footer="footerProps">
       <div flex gap-2 flex-justify-end>
         <button
-          fn-outline bg--c-inverse p-1 px-2 text--c-bg
+          fn-outline bg--c-inverse hover:bg--c-accent p-1 px-2 text--c-bg
           @click="createPortfolio(footerProps.close)"
         >
           <span mx-2>Submit</span>

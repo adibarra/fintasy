@@ -22,7 +22,7 @@ const message = useMessage()
 const state = useStateStore()
 const fintasy = useAPI()
 
-const addPortfolioModal = ref(false)
+const modal = ref(false)
 
 function renderIcon(icon: Component) {
   return () => {
@@ -132,13 +132,13 @@ onMounted(() => {
         </div>
         <div
           flex cursor-pointer items-center fn-outline fn-hover
-          @click="addPortfolioModal = true"
+          @click="modal = true"
         >
           <NIcon size="20">
             <AddIcon />
           </NIcon>
         </div>
-        <NavAddPortfolio v-model="addPortfolioModal" />
+        <AddPortfolioModal v-model="modal" />
       </div>
 
       <!-- theme switch -->
