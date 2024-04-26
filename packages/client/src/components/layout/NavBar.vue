@@ -5,6 +5,7 @@
 
 <script setup lang="ts">
 import {
+  AddOutline as AddIcon,
   NotificationsOutline as BellIcon,
   CaretDownOutline as DropdownIcon,
   LogOutOutline as LogoutIcon,
@@ -20,6 +21,8 @@ const router = useRouter()
 const message = useMessage()
 const state = useStateStore()
 const fintasy = useAPI()
+
+const addPortfolioModal = ref(false)
 
 function renderIcon(icon: Component) {
   return () => {
@@ -103,22 +106,40 @@ watch(() => fintasy.authenticated.value, () => {
       </div>
 
       <!-- switch user portfolio account -->
-      <div hidden w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 sm:flex fn-hover>
-        <n-dropdown
-          :options="portfolios"
-          trigger="click"
-          @select="(key, option) => {
-            state.portfolio.active = key
-            message.info(`Selected ${option.label}`)
-          }"
+      <div hidden h-fit gap-2 sm:flex>
+        <div w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 fn-hover>
+          <n-dropdown
+            :options="portfolios"
+            trigger="click"
+            @select="(key, option) => {
+              state.portfolio.active = key
+              message.info(`Selected ${option.label}`)
+            }"
+          >
+            <div gap-1>
+              {{ portfolios.length > 0 ? portfolios[state.portfolio.active].label : 'None' }}
+              <NIcon size="10">
+                <DropdownIcon />
+              </NIcon>
+            </div>
+          </n-dropdown>
+        </div>
+        <div
+          flex cursor-pointer items-center fn-outline fn-hover
+          @click="addPortfolioModal = true"
         >
-          <div gap-1>
-            {{ portfolios.length > 0 ? portfolios[state.portfolio.active].label : 'None' }}
-            <NIcon size="10">
-              <DropdownIcon />
-            </NIcon>
-          </div>
-        </n-dropdown>
+          <NIcon size="20">
+            <AddIcon />
+          </NIcon>
+        </div>
+        <Modal v-model="addPortfolioModal">
+          <template #header>
+            <h3>Add Portfolio</h3>
+          </template>
+          <template #content>
+            <p>Content</p>
+          </template>
+        </Modal>
       </div>
 
       <!-- theme switch -->
