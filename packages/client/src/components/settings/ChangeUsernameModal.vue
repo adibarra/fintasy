@@ -83,13 +83,13 @@ function close(slotCloseFunc: Function) {
           fn-outline bg--c-inverse p-1 px-2 text--c-bg
           @click="changeUsername(footerProps.close)"
         >
-          <span mx-2>Submit</span>
+          <span mx-2>Save</span>
         </button>
         <button
           fn-outline p-1 px-2 fn-hover
           @click="close(footerProps.close)"
         >
-          <span mx-2>Close</span>
+          <span mx-2>Cancel</span>
         </button>
       </div>
     </template>
