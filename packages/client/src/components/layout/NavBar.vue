@@ -64,6 +64,11 @@ watch(() => fintasy.authenticated.value, () => {
   if (!fintasy.authenticated.value)
     router.push('/login')
 }, { immediate: true })
+
+onMounted(async () => {
+  state.refresh.user()
+  state.refresh.portfolio()
+})
 </script>
 
 <template>
@@ -111,7 +116,7 @@ watch(() => fintasy.authenticated.value, () => {
           <n-dropdown
             :options="portfolios"
             trigger="click"
-            @select="(key, option) => {
+            @select="(key: any, option: any) => {
               state.portfolio.active = key
               message.info(`Selected ${option.label}`)
             }"
@@ -132,14 +137,7 @@ watch(() => fintasy.authenticated.value, () => {
             <AddIcon />
           </NIcon>
         </div>
-        <Modal v-model="addPortfolioModal">
-          <template #header>
-            <h3>Add Portfolio</h3>
-          </template>
-          <template #content>
-            <p>Content</p>
-          </template>
-        </Modal>
+        <NavAddPortfolio v-model="addPortfolioModal" />
       </div>
 
       <!-- theme switch -->

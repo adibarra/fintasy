@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to display a generic modal dialog.
+-->
+
 <script setup lang="ts">
 const modelValue = defineModel<boolean>()
 
@@ -10,13 +15,12 @@ function close() {
   <Teleport to="body">
     <div
       v-if="modelValue"
-
       absolute left-0 top-0 z-999 h-full w-full flex items-center justify-center bg-black bg-opacity-50 p-2
       @click="close"
     >
       <div
 
-        h-fit max-h-full max-w-full w-fit fn-outline bg--c-bg p-2
+        h-fit max-h-full max-w-full w-fit fn-outline bg--c-fg p-2
         @click.stop
       >
         <slot name="header" />
