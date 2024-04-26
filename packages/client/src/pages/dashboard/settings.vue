@@ -6,8 +6,8 @@
 <script setup lang="ts">
 const { t } = useI18n()
 
-const usernameModal = ref(false)
 const emailModal = ref(false)
+const usernameModal = ref(false)
 const passwordModal = ref(false)
 const deleteModal = ref(false)
 
@@ -25,15 +25,15 @@ useHead({
       <div max-w-100 min-w-60 w-50svw flex grow flex-col gap-5 px-4 pb-4>
         <button
           fn-outline px-2 py-0.5 text-lg
-          @click="usernameModal = true"
-        >
-          Change Username
-        </button>
-        <button
-          fn-outline px-2 py-0.5 text-lg
           @click="emailModal = true"
         >
           Change Email
+        </button>
+        <button
+          fn-outline px-2 py-0.5 text-lg
+          @click="usernameModal = true"
+        >
+          Change Username
         </button>
         <button
           fn-outline px-2 py-0.5 text-lg
@@ -51,8 +51,8 @@ useHead({
       </div>
     </div>
   </div>
-  <ChangeUsernameModal v-model="usernameModal" />
   <ChangeEmailModal v-model="emailModal" />
+  <ChangeUsernameModal v-model="usernameModal" />
   <ChangePasswordModal v-model="passwordModal" />
   <DeleteUserModal v-model="deleteModal" />
 </template>
