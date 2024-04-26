@@ -141,6 +141,9 @@ onMounted(() => {
         <AddPortfolioModal v-model="modal" />
       </div>
 
+      <!-- language switch -->
+      <LanguageSwitch />
+
       <!-- theme switch -->
       <ThemeSwitch />
 
