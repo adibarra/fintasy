@@ -81,31 +81,6 @@ function generateTransactions(count: number): Transaction[] {
   }
   return transactions
 }
-
-onMounted(async () => {
-  const userRequest = await fintasy.getUser({ uuid: state.user.uuid })
-  if (userRequest.code !== 200)
-    return
-
-  state.user.username = userRequest.data.username
-  state.user.coins = userRequest.data.coins
-
-  const portfoliosRequest = await fintasy.getPortfolios({ owner: state.user.uuid, limit: 10 })
-  if (portfoliosRequest.code !== 200)
-    return
-
-  state.portfolio.active = 0
-  state.portfolio.available = portfoliosRequest.data
-
-  if (portfoliosRequest.data.length !== 0)
-    return
-
-  const createPortfolioRequest = await fintasy.createPortfolio({ name: 'Default Portfolio' })
-  if (createPortfolioRequest.code !== 200)
-    return
-
-  state.portfolio.available = [createPortfolioRequest.data]
-})
 </script>
 
 <template>

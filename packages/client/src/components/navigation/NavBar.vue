@@ -65,7 +65,8 @@ watch(() => fintasy.authenticated.value, () => {
     router.push('/login')
 }, { immediate: true })
 
-onMounted(async () => {
+// get state on mount, manually refresh when needed
+onMounted(() => {
   state.refresh.user()
   state.refresh.portfolio()
 })
