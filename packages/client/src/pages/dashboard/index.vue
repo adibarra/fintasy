@@ -10,7 +10,6 @@ import { ACTION } from '~/types'
 
 const { t } = useI18n()
 const state = useStateStore()
-const fintasy = useAPI()
 const rng = seedrandom(state.user.username)
 
 useHead({
