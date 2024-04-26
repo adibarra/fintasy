@@ -9,6 +9,7 @@ const { t } = useI18n()
 const usernameModal = ref(false)
 const emailModal = ref(false)
 const passwordModal = ref(false)
+const deleteModal = ref(false)
 
 useHead({
   title: `${t('pages.dashboard.settings.title')} • Fintasy`,
@@ -40,12 +41,19 @@ useHead({
         >
           Change Password
         </button>
+        <button
+          mt-5 fn-outline px-2 py-0.5 text-lg text-red
+          @click="deleteModal = true"
+        >
+          Delete Account
+        </button>
       </div>
     </div>
   </div>
   <ChangeUsernameModal v-model="usernameModal" />
   <ChangeEmailModal v-model="emailModal" />
   <ChangePasswordModal v-model="passwordModal" />
+  <DeleteUserModal v-model="deleteModal" />
 </template>
 
 <route lang="yaml">
