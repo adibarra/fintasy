@@ -50,16 +50,16 @@ function close(slotCloseFunc: Function) {
     <template #footer="footerProps">
       <div flex gap-2 flex-justify-end>
         <button
-          fn-outline bg-red p-1 px-2 text--c-bg
-          @click="deleteUser(footerProps.close)"
-        >
-          <span mx-2>Delete</span>
-        </button>
-        <button
           fn-outline p-1 px-2 fn-hover
           @click="close(footerProps.close)"
         >
           <span mx-2>Cancel</span>
+        </button>
+        <button
+          fn-outline bg-red p-1 px-2 text--c-bg
+          @click="deleteUser(footerProps.close)"
+        >
+          <span mx-2>Delete</span>
         </button>
       </div>
     </template>
