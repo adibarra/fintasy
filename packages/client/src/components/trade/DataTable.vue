@@ -1,30 +1,22 @@
 <script setup lang="ts">
-import type { ACTION } from '~/types'
+import type { ACTION, Quote } from '~/types'
 
 const props = defineProps({
-  items: {
-    type: Object as PropType<Item[]>,
+  quotes: {
+    type: Object as PropType<Quote[]>,
     required: true,
   },
 })
-const fintasy = useAPI()
-const symbol = ref('')
-const price = ref(0)
-const timeStamp = ref('')
+
+const emit = defineEmits<{
+  selected: [quote: Quote]
+}>()
+
 const state = useStateStore()
+const fintasy = useAPI()
+
 const quantity = ref(0)
 
-interface Item {
-  symbol: string
-  price_cents: number
-}
-
-// const pagination = ref({
-//   page: 1,
-//   pageSlot: 6,
-//   itemsPerPage: 7,
-//   itemCount: props.items.length,
-// })
 const searchFilter = ref('')
 const columns = [
   { key: 'symbol', label: 'Symbol' },
@@ -33,9 +25,9 @@ const columns = [
   { key: 'action', label: 'Buy/Sell' },
 ]
 
-const filteredItems = computed(() => {
-  return props.items.filter((item) => {
-    return item.symbol.toString().toLowerCase().includes(searchFilter.value.toLowerCase())
+const filteredQuotes = computed(() => {
+  return props.quotes.filter((quote) => {
+    return quote.symbol.toString().toLowerCase().includes(searchFilter.value.toLowerCase())
   })
 })
 
@@ -43,31 +35,15 @@ function handleSearch(search: string) {
   searchFilter.value = search
 }
 
-function quantitySetter(qty: string) {
-  quantity.value = Number.parseInt(qty)
-}
-
-function initializeTransaction(action: ACTION) {
-  const portfolioUID = state.portfolio.available[state.portfolio.active].uuid
+function createTransaction(quote: Quote, quantity: number, action: ACTION) {
+  const uuid = state.portfolio.available[state.portfolio.active].uuid
   fintasy.createTransaction({
-    portfolio: portfolioUID,
-    symbol: symbol.value,
+    portfolio: uuid,
+    symbol: quote.symbol,
     action,
-    quantity: quantity.value,
+    quantity,
   })
 }
-
-onMounted(async () => {
-  const response = await fintasy.getQuote({ symbol: searchFilter.value })
-  if (response.code === 200) {
-    symbol.value = response.data.symbol
-    price.value = response.data.price_cents
-    timeStamp.value = response.data.timestamp
-  }
-  else {
-    console.log('Error fetching data')
-  }
-})
 </script>
 
 <template>
@@ -84,11 +60,6 @@ onMounted(async () => {
             handleSearch(target.value)
           }"
         >
-      </div>
-
-      <div class="flex items-center justify-end text-sm font-semibold">
-        <FilterRadios />
-        <FilterDropdown />
       </div>
     </div>
 
@@ -108,39 +79,40 @@ onMounted(async () => {
 
       <tbody>
         <tr
-          v-for="item in filteredItems"
-          :key="item.symbol"
+          v-for="quote in filteredQuotes"
+          :key="quote.symbol"
           class="border-b font-900"
           flex
+          @click="() => {
+            emit('selected', quote)
+            console.log(quote)
+          }"
         >
           <td class="px-2 py-2" w-12 grow text-center>
-            {{ item.symbol }}
+            {{ quote.symbol }}
           </td>
           <td class="px-2 py-2" w-15 grow text-center>
-            {{ `$${(item.price_cents / 100).toFixed(2)}` }}
+            {{ `$${(quote.price_cents / 100).toFixed(2)}` }}
           </td>
           <td class="px-2 py-2" w-15 grow text-center>
             <input
+              v-model="quantity"
               type="text"
               placeholder="Qty"
               class="bg-gray-50 text-gray-900"
               w-15 fn-outline text-center
-              @input="e => {
-                const target = e!.target as HTMLInputElement
-                quantitySetter(target.value)
-              }"
             >
           </td>
           <td class="px-2 py-2" w-15 grow text-center>
             <button
               class="mr-2 border bg-green-500 px-2 py-1 hover:bg-green-600"
-              @click="initializeTransaction('BUY' as ACTION)"
+              @click="createTransaction(quote, quantity, 'BUY' as ACTION)"
             >
               ✓
             </button>
             <button
               class="border bg-red-500 px-2 py-1 hover:bg-red-600"
-              @click="initializeTransaction('SELL' as ACTION)"
+              @click="createTransaction(quote, quantity, 'SELL' as ACTION)"
             >
               ✕
             </button>

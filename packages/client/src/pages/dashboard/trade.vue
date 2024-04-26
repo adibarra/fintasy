@@ -1,15 +1,53 @@
-<script setup lang="ts">
-const trend = generateData(Math.floor(Math.random() * 1500) + 500)
-const items = generateAssets(Math.floor(Math.random() * 100) + 100)
+<!--
+  @author: adibarra (Alec Ibarra), maclark (Mason Clark)
+  @description: This component is used to display the trading page of the application.
+-->
 
-// Generate random test data
+<script setup lang="ts">
+import seedrandom from 'seedrandom'
+import type { Quote } from '~/types'
+
+const state = useStateStore()
+const fintasy = useAPI()
+
+const rng = seedrandom(state.user.username)
+const trend = ref(generateData(Math.floor(rng() * 1500) + 500))
+const quotes = ref<Quote[]>([])
+
+const availableSymbols = ref<string[]>([
+  'AAPL',
+  'GOOGL',
+  'AMZN',
+  'MSFT',
+  'TSLA',
+  'FB',
+  'NVDA',
+  'PYPL',
+  'INTC',
+  'ADBE',
+])
+
+// get quotes for available symbols
+async function getQuotes() {
+  const quotes: Quote[] = []
+  availableSymbols.value.forEach(async (symbol) => {
+    const response = await fintasy.getQuote({ symbol })
+    if (response.code !== 200)
+      return
+
+    quotes.push(response.data)
+  })
+  return quotes
+}
+
+// generate random test data
 function generateData(count: number) {
   const data = []
   const startDate = new Date().getTime() - 1000 * 60 * 15 * count
   let value = 1000
 
   for (let i = 0; i < count; ++i) {
-    value = Math.round((Math.random() * 1 - 0.495) * 100 + value)
+    value = Math.round((rng() * 1 - 0.495) * 100 + value)
     data.push({
       date: startDate + 1000 * 60 * 15 * i,
       value,
@@ -18,18 +56,9 @@ function generateData(count: number) {
   return data
 }
 
-// Generate random assets
-function generateAssets(count: number) {
-  const assets = []
-
-  for (let i = 0; i < count; ++i) {
-    assets.push({
-      symbol: Math.random().toString(36).substring(2, 6).toUpperCase(),
-      price_cents: Math.random() * 10000 + 2500,
-    })
-  }
-  return assets
-}
+onMounted(async () => {
+  quotes.value = await getQuotes()
+})
 </script>
 
 <template>
@@ -38,7 +67,7 @@ function generateAssets(count: number) {
     <!-- left side div -->
     <div h-full w-26vw fn-outline bg--c-fg>
       <div m-8 fn-outline>
-        <DataTable :items="items" />
+        <DataTable :quotes="quotes" />
       </div>
     </div>
 
@@ -48,7 +77,7 @@ function generateAssets(count: number) {
         <PortfolioChart :data="trend" />
       </div>
       <div grow py-15>
-        <DataTable :items="items" />
+        <DataTable :quotes="quotes" />
       </div>
     </div>
   </div>
@@ -57,4 +86,8 @@ function generateAssets(count: number) {
 <route lang="yaml">
   meta:
     layout: dashboard
-</route>
+</route>{
+      symbol: response.data.symbol,
+      price_cents: response.data.price_cents,
+      timestamp: ''
+    }
