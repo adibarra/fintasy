@@ -163,7 +163,7 @@ onMounted(async () => {
           { label: 'Logout', key: 0, icon: renderIcon(LogoutIcon) },
         ]"
         trigger="click"
-        @select="(key, option) => {
+        @select="(key: any, option: any) => {
           message.info(`Selected ${option.label}`)
           if (key === 0)
             fintasy.logout()
