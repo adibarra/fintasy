@@ -1,3 +1,8 @@
+<!--
+  @author: maclark (Mason Clark)
+  @description: This component is used to display the filter dropdown in the trading page.
+-->
+
 <script setup>
 const props = defineProps({
   items: {

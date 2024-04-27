@@ -1,9 +1,17 @@
+<!--
+  @author: maclark (Mason Clark)
+  @description: This component is used to display the filter radios in the trading page.
+-->
+
 <script setup lang="ts">
-import { SortAmountDownAlt as arrowDownIcon, SortAmountUp as arrowUpIcon } from '@vicons/fa'
+import {
+  SortAmountDownAlt as ArrowDownIcon,
+  SortAmountUp as ArrowUpIcon,
+} from '@vicons/fa'
 
 const emit = defineEmits(['filter'])
 
-function filter(e) {
+function filter(e: any) {
   emit('filter', e.target.value)
 }
 </script>
@@ -13,7 +21,7 @@ function filter(e) {
     <input type="radio" name="show" value="hiLow">
     <span class="m1-1 whitespace-nowrap">
       <n-icon>
-        <arrowUpIcon />
+        <ArrowUpIcon />
       </n-icon>
     </span>
   </label>
@@ -21,7 +29,7 @@ function filter(e) {
     <input type="radio" name="show" value="lowHi">
     <span class="m1-1 whitespace-nowrap">
       <n-icon>
-        <arrowDownIcon />
+        <ArrowDownIcon />
       </n-icon>
     </span>
   </label>
