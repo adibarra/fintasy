@@ -5,11 +5,12 @@
 
 <script setup lang="ts">
 import seedrandom from 'seedrandom'
-import type { Quote } from '~/types'
+import type { Quote, Transaction } from '~/types'
 
 const state = useStateStore()
 const fintasy = useAPI()
 
+const amntOwned = ref<Transaction[]>([])
 const currentSymbol = ref(`${state.user.username}'s Portfolio`)
 const trend = ref(generateData(state.user.username, 2000))
 const quotes = ref<Quote[]>([])
@@ -67,6 +68,13 @@ function generateData(seed: string, count: number) {
 
 onMounted(async () => {
   quotes.value = await getQuotes()
+  await state.refresh.transactions()
+  amntOwned.value = state.transactions
+  const assets = {}
+  amntOwned.value.forEach((transaction) => {
+    transaction.symbol in assets ? assets[transaction.symbol] += transaction.quantity * transaction.action === ACTION.BUY ? 1 : -1 : assets[transaction.symbol] = transaction.quantity
+    console.log(transaction)
+  })
 })
 </script>
 
