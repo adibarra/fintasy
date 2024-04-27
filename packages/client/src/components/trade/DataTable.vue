@@ -105,7 +105,7 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
         v-for="quote in filteredQuotes"
         :key="quote.symbol"
         :class="{ 'bg--c-accent text--c-bg': selected === quote }"
-        flex border-b font-900
+        flex border-b font-900 first:border-t
         @click="() => {
           emit('selected', quote)
           selected = quote
