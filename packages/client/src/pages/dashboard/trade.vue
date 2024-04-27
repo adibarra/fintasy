@@ -66,7 +66,6 @@ function generateData(count: number) {
 
 onMounted(async () => {
   quotes.value = await getQuotes()
-  console.log(quotes.value)
 })
 </script>
 
@@ -95,8 +94,4 @@ onMounted(async () => {
 <route lang="yaml">
   meta:
     layout: dashboard
-</route>{
-      symbol: response.data.symbol,
-      price_cents: response.data.price_cents,
-      timestamp: ''
-    }
+</route>
