@@ -36,9 +36,6 @@ class UpdateUserRequest(BaseModel):
     username: Optional[str] = None
     password: Optional[str] = None
 
-    class Config:
-        exclude_none = True
-
 
 class UserResponse(BaseModel):
     code: int
@@ -157,11 +154,11 @@ def patch_user(
 
     # Validate and update fields if present
     try:
-        if data.email:
+        if data.email is not None:
             User.validate_email(data.email)
-        if data.username:
+        if data.username is not None:
             User.validate_username(data.username)
-        if data.password:
+        if data.password is not None:
             User.validate_password(data.password)
     except ValueError:
         raise HTTPException(
@@ -171,7 +168,10 @@ def patch_user(
 
     # Attempt updating user
     if not db.update_user(
-        str(uuid), data.email, data.username, User.hash_password(data.password)
+        str(uuid),
+        data.email,
+        data.username,
+        User.hash_password(data.password) if data.password else None,
     ):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,

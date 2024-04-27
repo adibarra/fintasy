@@ -15,13 +15,13 @@ const props = defineProps({
 
 const { t } = useI18n()
 
-const columns = [
+const columns = computed(() => [
   { key: 'symbol', title: t('pages.dashboard.symbol'), width: '20%' },
   { key: 'action', title: t('pages.dashboard.buy-sell-action'), width: '20%' },
   { key: 'quantity', title: t('pages.dashboard.quantity'), width: '15%' },
   { key: 'price_cents', title: t('pages.dashboard.price'), width: '20%' },
   { key: 'created_at', title: t('pages.dashboard.date') },
-]
+])
 
 const data = ref()
 const loading = ref(false)

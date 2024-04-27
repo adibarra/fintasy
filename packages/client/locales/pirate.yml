@@ -28,7 +28,7 @@ pages:
     no-account: No Account?
     already-have-account: Already Have an Account?
     missing-credentials: Please fill out all fields, ye scallywag.
-    email-taken: Yer E-mail be already taken. Try signin' in, ye landlubber.
+    unique-taken: Arrr! This email address or username be already plundered. Give signin' a try, ye landlubber.
     invalid-registration: Make sure yer account information meets the requirements, ye scurvy dog.
     invalid-credentials: Make sure yer secret code be correct, ye scallywag.
     no-account-found: No account found with that e-mail, ye bilge rat.

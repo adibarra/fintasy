@@ -25,13 +25,13 @@ interface Asset {
   pl_total: number
 }
 
-const columns = [
+const columns = computed(() => [
   { key: 'symbol', title: t('pages.dashboard.symbol'), width: '20%' },
   { key: 'quantity', title: t('pages.dashboard.quantity'), width: '15%' },
   { key: 'price_cents', title: t('pages.dashboard.price'), width: '20%' },
   { key: 'pl_day', title: t('pages.dashboard.profit-loss-day') },
   { key: 'pl_total', title: t('pages.dashboard.profit-loss-total') },
-]
+])
 
 const data = ref()
 const loading = ref(false)

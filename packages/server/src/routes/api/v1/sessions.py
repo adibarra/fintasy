@@ -20,7 +20,7 @@ class SessionData(BaseModel):
 
 
 class SessionRequest(BaseModel):
-    email: str
+    username: str
     password: str
 
 
@@ -61,7 +61,7 @@ def create_session(
     data: SessionRequest = Body(...),
 ):
     # Check if user exists
-    user = db.get_user_by_email(data.email)
+    user = db.get_user_by_username(data.username)
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

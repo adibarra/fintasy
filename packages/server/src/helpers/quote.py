@@ -11,30 +11,22 @@ class Quote:
 
     INTERVALS = ["MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR"]
 
-    def __init__(self, symbol: str, price: int, timestamp: datetime):
+    def get_quote(symbol: str, price: int, timestamp: datetime):
         """
-        Initializes a Quote object.
+        Returns the quote information.
 
         Args:
             symbol (str): The symbol of the quote.
             price (float): The price of the symbol.
             timestamp (datetime): The timestamp of the quote.
-        """
-        self.symbol = symbol
-        self.price = price
-        self.timestamp = timestamp if timestamp else datetime.now()
-
-    def get_quote(self):
-        """
-        Returns the quote information.
 
         Returns:
             dict: A dictionary containing the quote information.
         """
         return {
-            "symbol": self.symbol,
-            "price": self.price,
-            "timestamp": self.timestamp.isoformat(),
+            "symbol": symbol,
+            "price": price,
+            "timestamp": datetime.now().isoformat(),
         }
 
     @staticmethod
@@ -78,7 +70,7 @@ class Quote:
 
         return historical_data
 
-    def review_historical_prices(self, start_date, end_date):
+    def review_historical_prices(start_date, end_date):
         """
         Review historical prices based on start and end dates.
 

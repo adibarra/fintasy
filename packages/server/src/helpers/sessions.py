@@ -5,8 +5,6 @@ import secrets
 import string
 from collections import defaultdict
 
-from config import API_HOST, API_PORT
-
 seshTokenToUUID = defaultdict(str)
 
 
@@ -43,7 +41,7 @@ class SessionController:
         token, uuid = SessionController.authenticate_user(email, password)
         if token:
             # Add sessionToken to sessionTokenToUUID Map
-            seshTokenToUUID[session_token] = uuid
+            seshTokenToUUID[token] = uuid
             return token
         else:
             print("Login Failed. Please try again.")

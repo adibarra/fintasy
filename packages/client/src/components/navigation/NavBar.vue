@@ -5,12 +5,15 @@
 
 <script setup lang="ts">
 import {
+  AddOutline as AddIcon,
   NotificationsOutline as BellIcon,
   CaretDownOutline as DropdownIcon,
   LogOutOutline as LogoutIcon,
   RefreshOutline as RefreshIcon,
 } from '@vicons/ionicons5'
 import { NIcon, useMessage } from 'naive-ui'
+import { createAvatar } from '@dicebear/core'
+import { identicon } from '@dicebear/collection'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -18,6 +21,8 @@ const router = useRouter()
 const message = useMessage()
 const state = useStateStore()
 const fintasy = useAPI()
+
+const modal = ref(false)
 
 function renderIcon(icon: Component) {
   return () => {
@@ -50,11 +55,21 @@ const portfolios = computed(() => {
   return state.portfolio.available.map((p, i) => ({ key: i, label: p.name }))
 })
 
+const avatar = computed(() => {
+  return createAvatar(identicon, { seed: state.user.username }).toDataUriSync()
+})
+
 // redirect to login if not authenticated
 watch(() => fintasy.authenticated.value, () => {
   if (!fintasy.authenticated.value)
     router.push('/login')
 }, { immediate: true })
+
+// get state on mount, manually refresh when needed
+onMounted(() => {
+  state.refresh.user()
+  state.refresh.portfolio()
+})
 </script>
 
 <template>
@@ -97,23 +112,37 @@ watch(() => fintasy.authenticated.value, () => {
       </div>
 
       <!-- switch user portfolio account -->
-      <div hidden w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 sm:flex fn-hover>
-        <n-dropdown
-          :options="portfolios"
-          trigger="click"
-          @select="(key, option) => {
-            state.portfolio.active = key
-            message.info(`Selected ${option.label}`)
-          }"
+      <div hidden h-fit gap-2 sm:flex>
+        <div w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 fn-hover>
+          <n-dropdown
+            :options="portfolios"
+            trigger="click"
+            @select="(key: any, option: any) => {
+              state.portfolio.active = key
+              message.info(`Selected ${option.label}`)
+            }"
+          >
+            <div gap-1>
+              {{ portfolios.length > 0 ? portfolios[state.portfolio.active].label : 'None' }}
+              <NIcon size="10">
+                <DropdownIcon />
+              </NIcon>
+            </div>
+          </n-dropdown>
+        </div>
+        <div
+          flex cursor-pointer items-center fn-outline fn-hover
+          @click="modal = true"
         >
-          <div gap-1>
-            {{ portfolios.length > 0 ? portfolios[state.portfolio.active].label : 'None' }}
-            <NIcon size="10">
-              <DropdownIcon />
-            </NIcon>
-          </div>
-        </n-dropdown>
+          <NIcon size="20">
+            <AddIcon />
+          </NIcon>
+        </div>
+        <AddPortfolioModal v-model="modal" />
       </div>
+
+      <!-- language switch -->
+      <LanguageSwitch />
 
       <!-- theme switch -->
       <ThemeSwitch />
@@ -138,7 +167,7 @@ watch(() => fintasy.authenticated.value, () => {
           { label: 'Logout', key: 0, icon: renderIcon(LogoutIcon) },
         ]"
         trigger="click"
-        @select="(key, option) => {
+        @select="(key: any, option: any) => {
           message.info(`Selected ${option.label}`)
           if (key === 0)
             fintasy.logout()
@@ -146,7 +175,7 @@ watch(() => fintasy.authenticated.value, () => {
       >
         <n-avatar
           size="small"
-          :src="state.user.avatar"
+          :src="avatar"
           mr-5 cursor-pointer
         />
       </n-dropdown>
