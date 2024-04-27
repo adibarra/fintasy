@@ -3,7 +3,7 @@
 
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import List, Optional
 
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
 from pydantic import UUID4, BaseModel
@@ -45,6 +45,15 @@ class TransactionResponse(BaseModel):
     code: int
     message: str
     data: Optional[TransactionData] = None
+
+    class Config:
+        exclude_none = True
+
+
+class TransactionsResponse(BaseModel):
+    code: int
+    message: str
+    data: Optional[List[TransactionData]] = None
 
     class Config:
         exclude_none = True
@@ -99,7 +108,7 @@ def create_transaction(
 ):
     # Attempt creating transaction
     transaction = db.create_transaction(
-        str(data.portfolio), str(data.symbol), data.action.value, data.quantity, 52.48
+        str(data.portfolio), str(data.symbol), data.action.value, data.quantity, 100
     )
     if transaction is None:
         raise HTTPException(
@@ -142,7 +151,7 @@ def get_transactions(
             detail="Not Found",
         )
 
-    return TransactionResponse(
+    return TransactionsResponse(
         code=200,
         message="Ok",
         data=transactions,
