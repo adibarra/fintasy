@@ -102,15 +102,13 @@ def create_transaction(
             detail="Not Found",
         )
 
-    price_cents = int(quote["latestPrice"] * 100)
-
     # Attempt creating transaction
     transaction = db.create_transaction(
-        str(data.portfolio),
-        data.symbol,
-        data.action,
-        data.quantity,
-        price_cents * data.quantity,
+        uuid_portfolio=str(data.portfolio),
+        symbol=data.symbol,
+        action=data.action,
+        quantity=data.quantity,
+        price_cents=int(quote["price_cents"]) * data.quantity,
     )
     if transaction is None:
         raise HTTPException(
