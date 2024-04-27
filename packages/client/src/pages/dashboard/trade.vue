@@ -13,7 +13,6 @@ const fintasy = useAPI()
 const rng = seedrandom(state.user.username)
 const trend = ref(generateData(Math.floor(rng() * 1500) + 500))
 const quotes = ref<Quote[]>([])
-
 const availableSymbols = ref<string[]>([
   'AAPL',
   'GOOGL',
@@ -30,13 +29,22 @@ const availableSymbols = ref<string[]>([
 // get quotes for available symbols
 async function getQuotes() {
   const quotes: Quote[] = []
-  availableSymbols.value.forEach(async (symbol) => {
-    const response = await fintasy.getQuote({ symbol })
-    if (response.code !== 200)
-      return
 
-    quotes.push(response.data)
+  const quotePromises = availableSymbols.value.map(async (symbol) => {
+    const response = await fintasy.getQuote({ symbol })
+    if (response.code === 200)
+      return response.data
+
+    return undefined
   })
+
+  const resolvedQuotes = await Promise.all(quotePromises)
+
+  resolvedQuotes.forEach((quote) => {
+    if (quote !== undefined)
+      quotes.push(quote)
+  })
+
   return quotes
 }
 
@@ -58,6 +66,7 @@ function generateData(count: number) {
 
 onMounted(async () => {
   quotes.value = await getQuotes()
+  console.log(quotes.value)
 })
 </script>
 

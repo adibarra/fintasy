@@ -17,7 +17,7 @@ router = APIRouter(
 
 class QuoteData(BaseModel):
     symbol: str
-    price: int
+    price_cents: int
     timestamp: datetime
 
 
@@ -62,7 +62,7 @@ async def authenticate(
 
 
 @router.get(
-    "/quote/{symbol}", response_model=QuoteResponse, status_code=status.HTTP_200_OK
+    "/quotes/{symbol}", response_model=QuoteResponse, status_code=status.HTTP_200_OK
 )
 def get_quote(
     symbol: str = Path(...),
@@ -70,6 +70,7 @@ def get_quote(
 ):
     symbol = symbol.upper()[:4]
     quote = AlpacaService.get_quote(symbol)
+    print(quote, flush=True)
     if quote is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -84,7 +85,7 @@ def get_quote(
 
 
 @router.get(
-    "/quote/historical/{symbol}",
+    "/quotes/{symbol}/historical",
     response_model=QuoteHistoricalResponse,
     status_code=status.HTTP_200_OK,
 )
@@ -99,14 +100,14 @@ def get_historical_quote(
 ):
     # TODO: implement get_quote_historical in quotes helper class
     # it should access the external api to get the quote historical data
-    quote_data = {}
+    quote_data = [{}]
     if quote_data is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Not Found",
         )
 
-    return QuoteResponse(
+    return QuoteHistoricalResponse(
         code=200,
         message="Ok",
         data=quote_data,

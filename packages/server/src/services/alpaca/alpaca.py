@@ -1,8 +1,10 @@
 # @Author: adibarra (Alec Ibarra), omer8 (Omer Siddiqui)
 # @description: Helper function to retrieve stock info from Alpaca Markets API
 
-import datetime
+import math
+from collections import deque
 from dataclasses import asdict, dataclass
+from datetime import datetime, timedelta, timezone
 
 import requests
 from config import APCA_API_KEY, APCA_API_SECRET
@@ -19,27 +21,55 @@ headers = {
 class Quote:
     symbol: str
     price_cents: int
-    timestamp: datetime.datetime
+    timestamp: datetime
 
 
-CACHE_MAX_SIZE = 100
-CACHE: dict[str, Quote] = {}
+class Cache:
+    MAX_SIZE = 100
+
+    def __init__(self, MAX_SIZE: int = MAX_SIZE):
+        self.cache = {}
+        self.MAX_SIZE = MAX_SIZE
+        self.key_queue = deque()
+
+    def get(self, key):
+        return self.cache.get(key)
+
+    def has(self, key):
+        return key in self.cache
+
+    def set(self, key, value):
+        if self.has(key):
+            self.key_queue.remove(key)
+        else:
+            if len(self.cache) >= self.MAX_SIZE:
+                oldest_key = self.key_queue.popleft()
+                del self.cache[oldest_key]
+            self.cache[key] = (datetime.now(), value)
+        self.key_queue.append(key)
+
+    def delete(self, key):
+        if key in self.cache:
+            self.key_queue.remove(key)
+            del self.cache[key]
+
+    def clear(self):
+        self.cache.clear()
+        self.key_queue.clear()
+
+
+CACHE = Cache(100)
 
 
 class AlpacaService:
-    def get_quote(symbol: str) -> Quote | None:
+    def get_quote(symbol: str) -> dict | None:
         """Sends a GET Request to Alpaca API to retrieve latest quote"""
         # Check if the symbol is in the cache
-        if symbol in CACHE:
-            quote = CACHE[symbol]
-            # Get current time
-            current_time = datetime.datetime.now()
-            # Get timestamp from cache
-            timestamp = quote.timestamp
-            # Calculate time difference
-            time_diff = current_time - timestamp
-            # Check if time difference is less than 15 minutes
-            if time_diff.total_seconds() < 900:
+        if CACHE.has(symbol):
+            time, quote = CACHE.get(symbol)
+            time_diff = datetime.now() - time
+
+            if time_diff < timedelta(minutes=15):
                 return quote
 
         # Construct request url
@@ -50,18 +80,15 @@ class AlpacaService:
         if response.status_code == 200:
             response_data = response.json()
 
-            price_cents = response_data["trades"][symbol]["p"] * 100
+            price_cents = math.floor(response_data["trades"][symbol]["p"] * 100)
             timestamp_str = response_data["trades"][symbol]["t"]
-            timestamp = datetime.datetime.strptime(
-                timestamp_str[:-4], "%Y-%m-%dT%H:%M:%S.%f"
-            )
+            timestamp = datetime.strptime(timestamp_str[:-4], "%Y-%m-%dT%H:%M:%S.%f")
+            timestamp = timestamp.replace(tzinfo=timezone.utc)
 
             quote = Quote(symbol, price_cents, timestamp)
 
             # Add the quote to the cache
-            if len(CACHE) >= CACHE_MAX_SIZE:
-                CACHE.popitem()
-            CACHE[symbol] = asdict(quote)
+            CACHE.set(symbol, asdict(quote))
             return asdict(quote)
 
         return None
