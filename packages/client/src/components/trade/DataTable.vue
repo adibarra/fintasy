@@ -2,6 +2,10 @@
 import type { ACTION, Quote } from '~/types'
 
 const props = defineProps({
+  assetMap: {
+    type: Object as PropType<Record<string, number>>,
+    required: true,
+  },
   quotes: {
     type: Object as PropType<Quote[]>,
     required: true,
@@ -144,7 +148,7 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
             ✕
           </button>
         </td><td class="px-2 py-2" w-15 grow text-center>
-          {{ quote.price_cents }}
+          {{ props.assetMap[quote.symbol] || 0 }}
         </td>
       </tr>
     </tbody>

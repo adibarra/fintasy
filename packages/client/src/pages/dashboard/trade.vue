@@ -10,7 +10,13 @@ import { ACTION, type Quote } from '~/types'
 const state = useStateStore()
 const fintasy = useAPI()
 
-const assetQtyMap = ref<Record<string, number>>({})
+const assetQtyMap = computed<Record<string, number>>(() => {
+  return state.transactions.forEach((transaction) => {
+    const symbol = transaction.symbol
+    const quantity = transaction.quantity * (transaction.action === ACTION.BUY ? 1 : -1)
+    symbol in assetQtyMap.value ? assetQtyMap.value[symbol] += quantity : assetQtyMap.value[symbol] = quantity
+  })
+})
 const currentSymbol = ref(`${state.user.username}'s Portfolio`)
 const trend = ref(generateData(state.user.username, 2000))
 const quotes = ref<Quote[]>([])
@@ -69,11 +75,6 @@ function generateData(seed: string, count: number) {
 onMounted(async () => {
   quotes.value = await getQuotes()
   await state.refresh.transactions()
-  state.transactions.forEach((transaction) => {
-    const symbol = transaction.symbol
-    const quantity = transaction.quantity * (transaction.action === ACTION.BUY ? 1 : -1)
-    symbol in assetQtyMap.value ? assetQtyMap.value[symbol] += quantity : assetQtyMap.value[symbol] = quantity
-  })
 })
 </script>
 
@@ -90,6 +91,7 @@ onMounted(async () => {
     </div>
     <div grow py-15>
       <DataTable
+        :asset-map="assetQtyMap"
         :quotes="quotes"
         @selected="quote => {
           trend = generateData(quote.symbol, 2000)
