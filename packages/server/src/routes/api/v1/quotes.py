@@ -70,7 +70,7 @@ def get_quote(
 ):
     symbol = symbol.upper()[:4]
     quote = AlpacaService.get_quote(symbol)
-    print(quote, flush=True)
+
     if quote is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

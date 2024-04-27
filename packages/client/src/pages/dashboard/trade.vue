@@ -10,8 +10,8 @@ import type { Quote } from '~/types'
 const state = useStateStore()
 const fintasy = useAPI()
 
-const rng = seedrandom(state.user.username)
-const trend = ref(generateData(Math.floor(rng() * 1500) + 500))
+const currentSymbol = ref(`${state.user.username}'s Portfolio`)
+const trend = ref(generateData(state.user.username, 2000))
 const quotes = ref<Quote[]>([])
 const availableSymbols = ref<string[]>([
   'AAPL',
@@ -49,13 +49,14 @@ async function getQuotes() {
 }
 
 // generate random test data
-function generateData(count: number) {
+function generateData(seed: string, count: number) {
+  const rand = seedrandom(seed)
   const data = []
   const startDate = new Date().getTime() - 1000 * 60 * 15 * count
   let value = 1000
 
   for (let i = 0; i < count; ++i) {
-    value = Math.round((rng() * 1 - 0.495) * 100 + value)
+    value = Math.round((rand() * 1 - 0.495) * 100 + value)
     data.push({
       date: startDate + 1000 * 60 * 15 * i,
       value,
@@ -75,17 +76,32 @@ onMounted(async () => {
     <!-- left side div -->
     <div h-full w-26vw fn-outline bg--c-fg>
       <div m-8 fn-outline>
-        <DataTable :quotes="quotes" />
+        <DataTable
+          :quotes="quotes"
+          @selected="quote => {
+            trend = generateData(quote.symbol, 2000)
+            currentSymbol = quote.symbol
+          }"
+        />
       </div>
     </div>
 
     <!-- right side div -->
     <div grow fn-outline bg--c-fg p-10>
       <div h-80>
-        <PortfolioChart :data="trend" />
+        <PortfolioChart
+          :name="`${currentSymbol} Trend`"
+          :data="trend"
+        />
       </div>
       <div grow py-15>
-        <DataTable :quotes="quotes" />
+        <DataTable
+          :quotes="quotes"
+          @selected="quote => {
+            trend = generateData(quote.symbol, 2000)
+            currentSymbol = quote.symbol
+          }"
+        />
       </div>
     </div>
   </div>

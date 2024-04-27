@@ -85,7 +85,6 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
           flex
           @click="() => {
             emit('selected', quote)
-            console.log(quote)
           }"
         >
           <td class="px-2 py-2" w-12 grow text-center>
