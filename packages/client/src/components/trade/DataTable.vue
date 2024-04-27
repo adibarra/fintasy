@@ -18,6 +18,8 @@ const fintasy = useAPI()
 const quantity = ref(0)
 
 const searchFilter = ref('')
+const radioFilter = ref(' ')
+
 const columns = [
   { key: 'symbol', label: 'Symbol' },
   { key: 'price', label: 'Price' },
@@ -26,13 +28,30 @@ const columns = [
 ]
 
 const filteredQuotes = computed(() => {
-  return props.quotes.filter((quote) => {
+  const items = props.quotes.toSorted((a: Quote, b: Quote) => {
+    switch (radioFilter.value) {
+      case 'hiLow':
+        return b.price_cents - a.price_cents
+
+      case 'lowHi':
+        return a.price_cents - b.price_cents
+
+        break
+    }
+    return 0
+  })
+
+  return items.filter((quote) => {
     return quote.symbol.toString().toLowerCase().includes(searchFilter.value.toLowerCase())
   })
 })
 
 function handleSearch(search: string) {
   searchFilter.value = search
+}
+
+function handleRadioFilter(filter: string) {
+  radioFilter.value = filter
 }
 
 function createTransaction(quote: Quote, quantity: number, action: ACTION) {
@@ -61,63 +80,67 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
           }"
         >
       </div>
+
+      <div class="flex items-center justify-end text-sm font-semibold">
+        <FilterRadios @filter="handleRadioFilter" />
+      </div>
     </div>
-
-    <table class="flex flex-col text-sm">
-      <thead class="text-xs uppercase">
-        <tr flex>
-          <template
-            v-for="column in columns"
-            :key="column.key"
-          >
-            <th class="px-2 py-2" grow>
-              {{ column.label }}
-            </th>
-          </template>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr
-          v-for="quote in filteredQuotes"
-          :key="quote.symbol"
-          class="border-b font-900"
-          flex
-          @click="() => {
-            emit('selected', quote)
-          }"
-        >
-          <td class="px-2 py-2" w-12 grow text-center>
-            {{ quote.symbol }}
-          </td>
-          <td class="px-2 py-2" w-15 grow text-center>
-            {{ `$${(quote.price_cents / 100).toFixed(2)}` }}
-          </td>
-          <td class="px-2 py-2" w-15 grow text-center>
-            <input
-              v-model="quantity"
-              type="text"
-              placeholder="Qty"
-              class="bg-gray-50 text-gray-900"
-              w-15 fn-outline text-center
-            >
-          </td>
-          <td class="px-2 py-2" w-15 grow text-center>
-            <button
-              class="mr-2 border bg-green-500 px-2 py-1 hover:bg-green-600"
-              @click="createTransaction(quote, quantity, 'BUY' as ACTION)"
-            >
-              ✓
-            </button>
-            <button
-              class="border bg-red-500 px-2 py-1 hover:bg-red-600"
-              @click="createTransaction(quote, quantity, 'SELL' as ACTION)"
-            >
-              ✕
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
+
+  <table class="flex flex-col text-sm">
+    <thead class="text-xs uppercase">
+      <tr flex>
+        <template
+          v-for="column in columns"
+          :key="column.key"
+        >
+          <th class="px-2 py-2" grow>
+            {{ column.label }}
+          </th>
+        </template>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr
+        v-for="quote in filteredQuotes"
+        :key="quote.symbol"
+        class="border-b font-900"
+        flex
+        @click="() => {
+          emit('selected', quote)
+        }"
+      >
+        <td class="px-2 py-2" w-12 grow text-center>
+          {{ quote.symbol }}
+        </td>
+        <td class="px-2 py-2" w-15 grow text-center>
+          {{ `$${(quote.price_cents / 100).toFixed(2)}` }}
+        </td>
+        <td class="px-2 py-2" w-15 grow text-center>
+          <input
+            v-model="quantity"
+            type="text"
+            placeholder="Qty"
+            class="bg-gray-50 text-gray-900"
+            w-15 fn-outline text-center
+          >
+        </td>
+        <td class="px-2 py-2" w-15 grow text-center>
+          <button
+            class="mr-2 border bg-green-500 px-2 py-1 hover:bg-green-600"
+            @click="createTransaction(quote, quantity, 'BUY' as ACTION)"
+          >
+            ✓
+          </button>
+          <button
+            class="border bg-red-500 px-2 py-1 hover:bg-red-600"
+            @click="createTransaction(quote, quantity, 'SELL' as ACTION)"
+          >
+            ✕
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
