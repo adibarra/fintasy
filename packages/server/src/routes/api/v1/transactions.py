@@ -2,8 +2,7 @@
 # @description: Transaction routes for the API
 
 from datetime import datetime
-from enum import Enum
-from typing import List, Optional
+from typing import List, Literal, Optional
 
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
 from pydantic import UUID4, BaseModel
@@ -13,29 +12,18 @@ db = Database()
 router = APIRouter(prefix="/api/v1")
 
 
-class ACTION(Enum):
-    BUY = "BUY"
-    SELL = "SELL"
-
-
 class CreateTransactionRequest(BaseModel):
     portfolio: UUID4
     symbol: str
-    action: ACTION
+    action: Literal["BUY", "SELL"]
     quantity: int
-
-
-class GetTransactionRequest(BaseModel):
-    portfolio: UUID4
-    offset: int = 0
-    limit: int = 10
 
 
 class TransactionData(BaseModel):
     uuid: UUID4
     portfolio: UUID4
     symbol: str
-    action: ACTION
+    action: Literal["BUY", "SELL"]
     quantity: int
     price_cents: int
     created_at: datetime
@@ -108,7 +96,7 @@ def create_transaction(
 ):
     # Attempt creating transaction
     transaction = db.create_transaction(
-        str(data.portfolio), str(data.symbol), data.action.value, data.quantity, 100
+        data.portfolio, data.symbol, data.action, data.quantity
     )
     if transaction is None:
         raise HTTPException(
@@ -129,22 +117,24 @@ def create_transaction(
     status_code=status.HTTP_200_OK,
 )
 def get_transactions(
-    data: GetTransactionRequest = Body(...),
+    portfolio: UUID4,
+    offset: int = 0,
+    limit: int = 10,
     auth: tuple[str, str] = Depends(authenticateToken),
 ):
     token_owner = auth[0]
 
     # Keep the user from accessing another user's transactions
     # Fix by adding a more granular permission system later
-    portfolio = db.get_portfolio(str(data.portfolio))
-    if token_owner != str(portfolio["owner"]):
+    portfolio_obj = db.get_portfolio(str(portfolio))
+    if token_owner != str(portfolio_obj["owner"]):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Forbidden",
         )
 
     # Attempt getting transactions
-    transactions = db.get_transactions(str(data.portfolio), data.offset, data.limit)
+    transactions = db.get_transactions(str(portfolio), offset, limit)
     if transactions is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
