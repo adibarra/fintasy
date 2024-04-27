@@ -2,5 +2,6 @@ argon2-cffi
 fastapi
 psycopg2-binary
 python-dotenv
+requests
 ruff
 uvicorn
