@@ -86,14 +86,24 @@ function generateTransactions(count: number): Transaction[] {
   <div h-full w-full flex flex-col gap-2 xl:flex-row>
     <div flex grow flex-col gap-2>
       <div flex grow-1 flex-col fn-outline bg--c-fg p-2>
-        <PortfolioChart :data="chartData" />
+        <PortfolioChart
+          :name="t('pages.dashboard.portfolio-value')"
+          :data="chartData"
+        />
       </div>
       <div flex grow-3 flex-col fn-outline bg--c-fg p-2 max-xl:h-122>
-        <PortfolioAssets :assets="assets" :cash="cash" />
+        <PortfolioAssets
+          :name="t('pages.dashboard.assets')"
+          :assets="assets"
+          :cash="cash"
+        />
       </div>
     </div>
     <div flex grow flex-col fn-outline bg--c-fg p-2 max-xl:h-205>
-      <TransactionHistory :transactions="transactions" />
+      <TransactionHistory
+        :name="t('pages.dashboard.history')"
+        :transactions="transactions"
+      />
     </div>
   </div>
 </template>

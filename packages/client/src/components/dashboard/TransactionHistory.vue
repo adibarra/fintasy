@@ -7,6 +7,10 @@
 import { ACTION, type Transaction } from '~/types'
 
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   transactions: {
     type: Array as PropType<Transaction[]>,
     required: true,
@@ -58,7 +62,7 @@ onMounted(() => handlePageChange(1))
 <template>
   <div flex>
     <span ml-1 text-xl font-600>
-      {{ t('pages.dashboard.history') }}
+      {{ props.name }}
     </span>
     <div grow />
     <span mx-2 text-xl>

@@ -7,6 +7,10 @@
 import { computed, ref } from 'vue'
 
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   assets: {
     type: Array as PropType<Asset[]>,
     required: true,
@@ -70,7 +74,7 @@ onMounted(() => handlePageChange(1))
 <template>
   <div flex>
     <span ml-1 text-xl font-600>
-      {{ t('pages.dashboard.assets') }}
+      {{ props.name }}
     </span>
     <div grow />
     <span mx-2 text-xl>

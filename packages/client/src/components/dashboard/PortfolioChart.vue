@@ -10,6 +10,10 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import am5themes_Dark from '@amcharts/amcharts5/themes/Dark'
 
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   data: {
     type: Array as PropType<
       {
@@ -90,6 +94,10 @@ onMounted(() => {
   series.appear(2500, 100)
   chart.appear(2500, 100)
 
+  watch(() => props.data, (data) => {
+    series.data.setAll(data)
+  })
+
   onBeforeUnmount(() => {
     if (root)
       root.dispose()
@@ -100,7 +108,7 @@ onMounted(() => {
 <template>
   <div flex>
     <span ml-1 text-xl font-600>
-      {{ t('pages.dashboard.portfolio-value') }}
+      {{ props.name }}
     </span>
     <div grow />
     <span
