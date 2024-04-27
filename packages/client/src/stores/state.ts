@@ -4,24 +4,33 @@
  */
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import type { Portfolio } from '~/types'
+import type { Portfolio, Transaction } from '~/types'
 
 const fintasy = useAPI()
 
 export const useStateStore = defineStore('state', () => {
-  const user = useStorage('state-user', {
+  const user = useStorage<{
+    uuid: string
+    username: string
+    coins: number
+  }>('state-user', {
     uuid: '',
     username: '',
     coins: 0,
   })
-  const portfolio = ref({
+  const portfolio = ref<{
+    active: number
+    available: Portfolio[]
+  }>({
     active: 0,
-    available: [] as Portfolio[],
+    available: [],
   })
+  const transactions = ref<Transaction[]>([])
 
   return {
     user,
     portfolio,
+    transactions,
     refresh: {
       user: async () => {
         const userRequest = await fintasy.getUser({ uuid: user.value.uuid })
@@ -47,6 +56,13 @@ export const useStateStore = defineStore('state', () => {
           return
 
         portfolio.value.available = [createPortfolioRequest.data]
+      },
+      transactions: async () => {
+        const transactionsRequest = await fintasy.getTransactions({ portfolio: portfolio.value.available[portfolio.value.active].uuid, limit: 10 })
+        if (transactionsRequest.code !== 200)
+          return
+
+        transactions.value = transactionsRequest.data
       },
     },
   }
