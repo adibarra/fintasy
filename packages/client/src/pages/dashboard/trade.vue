@@ -85,13 +85,13 @@ onMounted(async () => {
 
   <!-- right side div -->
   <div grow fn-outline bg--c-fg p-10>
-    <div h-80>
+    <div mb-15 h-80>
       <PortfolioChart
         :name="`${currentSymbol} Trend`"
         :data="trend"
       />
     </div>
-    <div grow py-15>
+    <div grow>
       <DataTable
         :asset-map="assetQtyMap"
         :quotes="quotes"
