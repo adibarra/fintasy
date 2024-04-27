@@ -40,10 +40,10 @@ export function useAPI(options?: { base?: string }) {
     /**
      * Login to the API and store the session token
      * @param data
-     * @param data.email the user's email
+     * @param data.username the user's username
      * @param data.password the user's password
      */
-    login: async (data: { email: string, password: string }) => {
+    login: async (data: { username: string, password: string }) => {
       const response = await useFetch(`${API_BASE}/sessions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

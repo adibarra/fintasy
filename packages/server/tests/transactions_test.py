@@ -4,7 +4,7 @@
 import unittest
 
 from src.helpers.portfolio import Portfolio
-from src.helpers.transactions import Transactions
+from src.helpers.transactions import Transaction
 
 
 class TestTransactionsMethods(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestTransactionsMethods(unittest.TestCase):
         self.initial_balance = 1000
 
     def test_buy_transaction_execution(self):
-        transaction = Transactions(self.portfolio, "Tech Co", 10, 50, "buy")
+        transaction = Transaction(self.portfolio, "Tech Co", 10, 50, "buy")
         transaction.execute()
         # Verify the balance is updated correctly and the stock is added
         self.assertEqual(
@@ -29,7 +29,7 @@ class TestTransactionsMethods(unittest.TestCase):
         self.portfolio.add_data(
             self.portfolio_name, "Tech Co", 10, 50, 0, 0
         )  # Adjust add_data method usage as necessary
-        transaction = Transactions(self.portfolio, "Tech Co", 5, 60, "sell")
+        transaction = Transaction(self.portfolio, "Tech Co", 5, 60, "sell")
         transaction.execute()
         # Verify the balance is updated correctly and the stock quantity is updated
         self.assertEqual(
@@ -41,7 +41,7 @@ class TestTransactionsMethods(unittest.TestCase):
         )  # Adjust based on actual implementation
 
     def test_invalid_transaction_type(self):
-        transaction = Transactions(self.portfolio, "Tech Co", 10, 50, "swap")
+        transaction = Transaction(self.portfolio, "Tech Co", 10, 50, "swap")
         self.assertRaises(ValueError, transaction.execute)
 
     def test_buy_transaction_insufficient_funds(self):
@@ -54,7 +54,7 @@ class TestTransactionsMethods(unittest.TestCase):
         )  # Set the low balance
 
         # Attempt to execute a buy transaction that exceeds available funds
-        transaction = Transactions(self.portfolio, "Expensive Co", 5, 50, "buy")
+        transaction = Transaction(self.portfolio, "Expensive Co", 5, 50, "buy")
 
         # Verify that a ValueError is raised due to insufficient funds
         self.assertRaises(ValueError, transaction.execute)

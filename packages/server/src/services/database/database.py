@@ -82,7 +82,7 @@ class Database(
                         CREATE TABLE IF NOT EXISTS users (
                             uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                             email TEXT UNIQUE NOT NULL,
-                            username TEXT NOT NULL,
+                            username TEXT UNIQUE NOT NULL,
                             password_hash TEXT NOT NULL,
                             coins INT NOT NULL DEFAULT 10,
                             created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -93,7 +93,7 @@ class Database(
                     cursor.execute("""
                         CREATE TABLE IF NOT EXISTS tournaments (
                             uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                            owner UUID NOT NULL REFERENCES users(uuid),
+                            owner UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,
                             name TEXT NOT NULL,
                             status STATUS NOT NULL,
                             start_date TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -106,8 +106,8 @@ class Database(
                     cursor.execute("""
                         CREATE TABLE IF NOT EXISTS portfolios (
                             uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                            owner UUID NOT NULL REFERENCES users(uuid),
-                            tournament UUID REFERENCES tournaments(uuid),
+                            owner UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,
+                            tournament UUID REFERENCES tournaments(uuid) ON DELETE CASCADE,
                             name TEXT NOT NULL,
                             balance_cents BIGINT NOT NULL DEFAULT 1000000,
                             created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -118,7 +118,7 @@ class Database(
                     cursor.execute("""
                         CREATE TABLE IF NOT EXISTS transactions (
                             uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                            portfolio UUID NOT NULL REFERENCES portfolios(uuid),
+                            portfolio UUID NOT NULL REFERENCES portfolios(uuid) ON DELETE CASCADE,
                             symbol TEXT NOT NULL,
                             action ACTION NOT NULL,
                             quantity INT NOT NULL,
@@ -129,7 +129,7 @@ class Database(
 
                     cursor.execute("""
                         CREATE TABLE IF NOT EXISTS sessions (
-                            owner UUID UNIQUE NOT NULL REFERENCES users(uuid),
+                            owner UUID UNIQUE NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,
                             token TEXT NOT NULL DEFAULT gen_random_uuid(),
                             created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
                             updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -138,7 +138,7 @@ class Database(
 
                     cursor.execute("""
                         CREATE TABLE IF NOT EXISTS attributes (
-                            owner UUID NOT NULL REFERENCES users(uuid),
+                            owner UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,
                             key TEXT NOT NULL,
                             value TEXT NOT NULL,
                             created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -155,8 +155,8 @@ class Database(
 
                     cursor.execute("""
                         CREATE TABLE IF NOT EXISTS friends (
-                            owner UUID NOT NULL REFERENCES users(uuid),
-                            friend UUID NOT NULL REFERENCES users(uuid)
+                            owner UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,
+                            friend UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE
                         );
                     """)
 

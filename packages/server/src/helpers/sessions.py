@@ -5,8 +5,6 @@ import secrets
 import string
 from collections import defaultdict
 
-from config import API_HOST, API_PORT
-
 seshTokenToUUID = defaultdict(str)
 
 

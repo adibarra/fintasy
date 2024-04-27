@@ -10,9 +10,9 @@ const fintasy = useAPI()
 
 const activeForm = useStorage<'login' | 'register'>('login-last-form', 'register')
 const rememberMe = useStorage('login-remember-me', false)
-const email = useStorage('login-email', '')
+const username = useStorage('login-username', '')
+const email = ref('')
 const password = ref('')
-const username = ref('')
 const confirmPassword = ref('')
 const error = ref('')
 const waitForLogin = ref(false)
@@ -46,7 +46,7 @@ async function createAccount() {
       error.value = t('pages.login.invalid-registration')
       break
     case 409:
-      error.value = t('pages.login.email-taken')
+      error.value = t('pages.login.unique-taken')
       break
     case 200:
       login()
@@ -58,13 +58,13 @@ async function createAccount() {
 }
 
 async function login() {
-  if (!email.value || !password.value) {
+  if (!username.value || !password.value) {
     error.value = t('pages.login.missing-credentials')
     return
   }
 
   waitForLogin.value = true
-  const login = await fintasy.login({ email: email.value, password: password.value })
+  const login = await fintasy.login({ username: username.value, password: password.value })
   switch (login.code) {
     case 404:
       error.value = t('pages.login.no-account-found')
@@ -74,7 +74,7 @@ async function login() {
       break
     case 200:
       if (!rememberMe.value)
-        email.value = ''
+        username.value = ''
       state.user.uuid = login.data.owner
       break
     default:
@@ -105,23 +105,25 @@ function toggleForm() {
         {{ activeForm === 'login' ? t('pages.login.login') : t('pages.login.register') }}
       </div>
 
-      <!-- Email Input -->
-      <div fn-outline fn-hover>
-        <n-input-group>
-          <n-input-group-label class="w-17%" min-w-fit>
-            {{ t('pages.login.email') }}
-          </n-input-group-label>
-          <n-input
-            v-model:value="email"
-            :placeholder="t('pages.login.email')"
-            autocomplete="email"
-            type="text"
-          />
-        </n-input-group>
+      <!-- Email Input (Only for Registration) -->
+      <div v-if="activeForm === 'register'">
+        <div fn-outline fn-hover>
+          <n-input-group>
+            <n-input-group-label class="w-17%" min-w-fit>
+              {{ t('pages.login.email') }}
+            </n-input-group-label>
+            <n-input
+              v-model:value="email"
+              :placeholder="t('pages.login.email')"
+              autocomplete="email"
+              type="text"
+            />
+          </n-input-group>
+        </div>
       </div>
 
-      <!-- Username Input (Only for Registration) -->
-      <div v-if="activeForm === 'register'">
+      <!-- Username Input -->
+      <div>
         <div fn-outline fn-hover>
           <n-input-group>
             <n-input-group-label class="w-17%" min-w-fit>
@@ -137,8 +139,12 @@ function toggleForm() {
             />
           </n-input-group>
         </div>
-        <div px-2 py-1 op-75>
-          {{ t('pages.login.username-requirements') }}
+
+        <!-- Username Requirements (Only for Registration) -->
+        <div v-if="activeForm === 'register'">
+          <div px-2 py-1 op-75>
+            {{ t('pages.login.username-requirements') }}
+          </div>
         </div>
       </div>
 

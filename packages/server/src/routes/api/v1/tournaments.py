@@ -153,7 +153,7 @@ def get_tournaments(
     auth: tuple[str, str] = Depends(authenticateToken),
 ):
     tournaments = db.get_tournaments(
-        owner=str(owner) if owner else None,
+        owner=str(owner) if owner is not None else None,
         name=name,
         status=status,
         start_date=start_date,

@@ -123,7 +123,7 @@ def create_portfolio(
     portfolio = db.create_portfolio(
         token_owner,
         data.name,
-        data.tournament,
+        str(data.tournament) if data.tournament is not None else None,
     )
     if portfolio is None:
         raise HTTPException(
