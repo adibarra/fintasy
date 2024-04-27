@@ -1,5 +1,10 @@
+<!--
+  @author: adibarra (Alec Ibarra), maclark (Mason Clark)
+  @description: This component is used to display the data table in the trading page.
+-->
+
 <script setup lang="ts">
-import type { ACTION, Quote } from '~/types'
+import { ACTION, type Quote } from '~/types'
 
 const props = defineProps({
   assetMap: {
@@ -58,20 +63,21 @@ function handleRadioFilter(filter: string) {
   radioFilter.value = filter
 }
 
-function createTransaction(quote: Quote, quantity: number, action: ACTION) {
+async function createTransaction(quote: Quote, quantity: number, action: ACTION) {
   const uuid = state.portfolio.available[state.portfolio.active].uuid
-  fintasy.createTransaction({
+  await fintasy.createTransaction({
     portfolio: uuid,
     symbol: quote.symbol,
     action,
     quantity,
   })
+  await state.refresh.transactions()
 }
 </script>
 
 <template>
   <div>
-    <div class="flex items-center justify-between">
+    <div class="flex items-center">
       <div mx-2 my-2>
         <input
           type="text"
@@ -84,6 +90,8 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
           }"
         >
       </div>
+
+      <div grow />
 
       <div class="flex items-center justify-end text-sm font-semibold">
         <FilterRadios @filter="handleRadioFilter" />
@@ -134,16 +142,16 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
             w-15 fn-outline text-center
           >
         </td>
-        <td w-15 grow px-2 py-2 text-center>
+        <td w-15 flex grow justify-center gap-2 p-1>
           <button
-            mr-2 b-1 bg-green-500 px-2 py-1 hover:bg-green-600
-            @click="createTransaction(quote, 0, 'BUY' as ACTION)"
+            b-1 bg-green-500 px-2 py-1 hover:bg-green-600
+            @click="createTransaction(quote, 1, ACTION.BUY)"
           >
             ✓
           </button>
           <button
             b-1 bg-red-500 px-2 py-1 hover:bg-red-600
-            @click="createTransaction(quote, 0, 'SELL' as ACTION)"
+            @click="createTransaction(quote, 1, ACTION.SELL)"
           >
             ✕
           </button>
