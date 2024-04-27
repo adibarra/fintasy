@@ -6,6 +6,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Path, status
 from pydantic import BaseModel
+from services.alpaca import AlpacaService
 from services.database import Database
 
 db = Database()
@@ -67,10 +68,9 @@ def get_quote(
     symbol: str = Path(...),
     auth: tuple[str, str] = Depends(authenticate),
 ):
-    # TODO: implement get_quote in quotes helper class
-    # it should access the external api to get the quote
-    quote_data = {}
-    if quote_data is None:
+    symbol = symbol.upper()[:4]
+    quote = AlpacaService.get_quote(symbol)
+    if quote is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Not Found",
@@ -79,7 +79,7 @@ def get_quote(
     return QuoteResponse(
         code=200,
         message="Ok",
-        data=quote_data,
+        data=quote,
     )
 
 

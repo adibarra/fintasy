@@ -8,16 +8,12 @@ from src.helpers.quote import Quote
 
 
 class TestQuoteMethods(unittest.TestCase):
-    def setUp(self):
-        # Initialize any required objects or variables for testing
-        self.quote_obj = Quote()
-
     def test_historical_graph_data_shown(self):
         """Test review_historical_prices with valid start and end dates"""
         start_date = "03/03/24"
         end_date = "03/05/24"
         expected_outcome = "Historical Graph and data shown"
-        outcome = self.quote_obj.review_historical_prices(start_date, end_date)
+        outcome = Quote.review_historical_prices(start_date, end_date)
         self.assertEqual(outcome, expected_outcome)
 
     def test_end_date_before_today(self):
@@ -25,7 +21,7 @@ class TestQuoteMethods(unittest.TestCase):
         start_date = "03/03/24"
         end_date = "03/26/24"
         expected_outcome = "End date must be before today's date"
-        outcome = self.quote_obj.review_historical_prices(start_date, end_date)
+        outcome = Quote.review_historical_prices(start_date, end_date)
         self.assertEqual(outcome, expected_outcome)
 
     def test_historical_graph_data_shown_2(self):
@@ -33,7 +29,7 @@ class TestQuoteMethods(unittest.TestCase):
         start_date = "03/25/24"
         end_date = "03/25/24"
         expected_outcome = "Historical Graph and data shown"
-        outcome = self.quote_obj.review_historical_prices(start_date, end_date)
+        outcome = Quote.review_historical_prices(start_date, end_date)
         self.assertEqual(outcome, expected_outcome)
 
     def test_start_date_before_end_date(self):
@@ -41,7 +37,7 @@ class TestQuoteMethods(unittest.TestCase):
         start_date = "03/10/24"
         end_date = "03/05/24"
         expected_outcome = "Start date must be before End Date"
-        outcome = self.quote_obj.review_historical_prices(start_date, end_date)
+        outcome = Quote.review_historical_prices(start_date, end_date)
         self.assertEqual(outcome, expected_outcome)
 
     def test_invalid_interval_get_historical_quotes(self):
@@ -51,13 +47,7 @@ class TestQuoteMethods(unittest.TestCase):
         end_time = datetime(2024, 3, 5)
         invalid_interval = "INVALID"
         with self.assertRaises(ValueError):
-            self.quote_obj.get_historical_quotes(
-                symbol, start_time, end_time, invalid_interval
-            )
-
-    def tearDown(self):
-        # Clean up any resources used for testing
-        pass
+            Quote.get_historical_quotes(symbol, start_time, end_time, invalid_interval)
 
 
 if __name__ == "__main__":
