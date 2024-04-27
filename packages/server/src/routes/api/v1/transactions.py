@@ -6,6 +6,7 @@ from typing import List, Literal, Optional
 
 from fastapi import APIRouter, Body, Depends, Header, HTTPException, Path, status
 from pydantic import UUID4, BaseModel
+from services.alpaca import AlpacaService
 from services.database import Database
 
 db = Database()
@@ -94,9 +95,22 @@ def create_transaction(
     data: CreateTransactionRequest = Body(...),
     auth: tuple[str, str] = Depends(authenticateToken),
 ):
+    quote = AlpacaService.get_quote(data.symbol)
+    if quote is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Not Found",
+        )
+
+    price_cents = int(quote["latestPrice"] * 100)
+
     # Attempt creating transaction
     transaction = db.create_transaction(
-        data.portfolio, data.symbol, data.action, data.quantity
+        str(data.portfolio),
+        data.symbol,
+        data.action,
+        data.quantity,
+        price_cents * data.quantity,
     )
     if transaction is None:
         raise HTTPException(
