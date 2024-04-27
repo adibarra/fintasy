@@ -11,11 +11,13 @@ const state = useStateStore()
 const fintasy = useAPI()
 
 const assetQtyMap = computed<Record<string, number>>(() => {
-  return state.transactions.forEach((transaction) => {
+  const map: Record<string, number> = {}
+  state.transactions.forEach((transaction) => {
     const symbol = transaction.symbol
     const quantity = transaction.quantity * (transaction.action === ACTION.BUY ? 1 : -1)
-    symbol in assetQtyMap.value ? assetQtyMap.value[symbol] += quantity : assetQtyMap.value[symbol] = quantity
+    symbol in map ? map[symbol] += quantity : map[symbol] = quantity
   })
+  return map
 })
 const currentSymbol = ref(`${state.user.username}'s Portfolio`)
 const trend = ref(generateData(state.user.username, 2000))
