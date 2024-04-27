@@ -41,7 +41,7 @@ export const useStateStore = defineStore('state', () => {
         user.value.coins = userRequest.data.coins
       },
       portfolio: async () => {
-        const portfoliosRequest = await fintasy.getPortfolios({ owner: user.value.uuid, limit: 10 })
+        const portfoliosRequest = await fintasy.getPortfolios({ owner: user.value.uuid, limit: 99 })
         if (portfoliosRequest.code !== 200)
           return
 
@@ -58,7 +58,7 @@ export const useStateStore = defineStore('state', () => {
         portfolio.value.available = [createPortfolioRequest.data]
       },
       transactions: async () => {
-        const transactionsRequest = await fintasy.getTransactions({ portfolio: portfolio.value.available[portfolio.value.active].uuid, limit: 10 })
+        const transactionsRequest = await fintasy.getTransactions({ portfolio: portfolio.value.available[portfolio.value.active].uuid, limit: 999 })
         if (transactionsRequest.code !== 200)
           return
 
