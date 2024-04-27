@@ -15,10 +15,8 @@ const emit = defineEmits<{
 const state = useStateStore()
 const fintasy = useAPI()
 
-const quantity = ref(0)
-
 const searchFilter = ref('')
-const radioFilter = ref(' ')
+const radioFilter = ref('')
 
 const columns = [
   { key: 'symbol', label: 'Symbol' },
@@ -36,9 +34,9 @@ const filteredQuotes = computed(() => {
       case 'lowHi':
         return a.price_cents - b.price_cents
 
-        break
+      default:
+        return 0
     }
-    return 0
   })
 
   return items.filter((quote) => {
@@ -119,7 +117,6 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
         </td>
         <td class="px-2 py-2" w-15 grow text-center>
           <input
-            v-model="quantity"
             type="text"
             placeholder="Qty"
             class="bg-gray-50 text-gray-900"
@@ -129,13 +126,13 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
         <td class="px-2 py-2" w-15 grow text-center>
           <button
             class="mr-2 border bg-green-500 px-2 py-1 hover:bg-green-600"
-            @click="createTransaction(quote, quantity, 'BUY' as ACTION)"
+            @click="createTransaction(quote, 0, 'BUY' as ACTION)"
           >
             ✓
           </button>
           <button
             class="border bg-red-500 px-2 py-1 hover:bg-red-600"
-            @click="createTransaction(quote, quantity, 'SELL' as ACTION)"
+            @click="createTransaction(quote, 0, 'SELL' as ACTION)"
           >
             ✕
           </button>
