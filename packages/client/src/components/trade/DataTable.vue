@@ -15,6 +15,7 @@ const emit = defineEmits<{
 const state = useStateStore()
 const fintasy = useAPI()
 
+const selected = ref<Quote | null>(null)
 const searchFilter = ref('')
 const radioFilter = ref('')
 
@@ -103,19 +104,20 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
       <tr
         v-for="quote in filteredQuotes"
         :key="quote.symbol"
-        class="border-b font-900"
-        flex
+        :class="{ 'bg--c-accent text--c-bg': selected === quote }"
+        flex border-b font-900
         @click="() => {
           emit('selected', quote)
+          selected = quote
         }"
       >
-        <td class="px-2 py-2" w-12 grow text-center>
+        <td w-12 grow px-2 py-2 text-center>
           {{ quote.symbol }}
         </td>
-        <td class="px-2 py-2" w-15 grow text-center>
+        <td w-15 grow px-2 py-2 text-center>
           {{ `$${(quote.price_cents / 100).toFixed(2)}` }}
         </td>
-        <td class="px-2 py-2" w-15 grow text-center>
+        <td w-15 grow px-2 py-2 text-center>
           <input
             type="text"
             placeholder="Qty"
@@ -123,15 +125,15 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
             w-15 fn-outline text-center
           >
         </td>
-        <td class="px-2 py-2" w-15 grow text-center>
+        <td w-15 grow px-2 py-2 text-center>
           <button
-            class="mr-2 border bg-green-500 px-2 py-1 hover:bg-green-600"
+            mr-2 b-1 bg-green-500 px-2 py-1 hover:bg-green-600
             @click="createTransaction(quote, 0, 'BUY' as ACTION)"
           >
             ✓
           </button>
           <button
-            class="border bg-red-500 px-2 py-1 hover:bg-red-600"
+            b-1 bg-red-500 px-2 py-1 hover:bg-red-600
             @click="createTransaction(quote, 0, 'SELL' as ACTION)"
           >
             ✕
