@@ -72,37 +72,23 @@ onMounted(async () => {
 
 <template>
   <!-- main wrapper div -->
-  <div flex grow gap-3>
-    <!-- left side div -->
-    <div h-full w-26vw fn-outline bg--c-fg>
-      <div m-8 fn-outline>
-        <DataTable
-          :quotes="quotes"
-          @selected="quote => {
-            trend = generateData(quote.symbol, 2000)
-            currentSymbol = quote.symbol
-          }"
-        />
-      </div>
-    </div>
 
-    <!-- right side div -->
-    <div grow fn-outline bg--c-fg p-10>
-      <div h-80>
-        <PortfolioChart
-          :name="`${currentSymbol} Trend`"
-          :data="trend"
-        />
-      </div>
-      <div grow py-15>
-        <DataTable
-          :quotes="quotes"
-          @selected="quote => {
-            trend = generateData(quote.symbol, 2000)
-            currentSymbol = quote.symbol
-          }"
-        />
-      </div>
+  <!-- right side div -->
+  <div grow fn-outline bg--c-fg p-10>
+    <div h-80>
+      <PortfolioChart
+        :name="`${currentSymbol} Trend`"
+        :data="trend"
+      />
+    </div>
+    <div grow py-15>
+      <DataTable
+        :quotes="quotes"
+        @selected="quote => {
+          trend = generateData(quote.symbol, 2000)
+          currentSymbol = quote.symbol
+        }"
+      />
     </div>
   </div>
 </template>

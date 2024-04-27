@@ -24,6 +24,7 @@ const columns = [
   { key: 'price', label: 'Price' },
   { key: 'quantity', label: 'Qty' },
   { key: 'action', label: 'Buy/Sell' },
+  { key: 'owned', label: 'Owned' },
 ]
 
 const filteredQuotes = computed(() => {
@@ -83,6 +84,10 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
       <div class="flex items-center justify-end text-sm font-semibold">
         <FilterRadios @filter="handleRadioFilter" />
       </div>
+
+      <div class="flex items-center justify-end">
+        <FilterDropdown />
+      </div>
     </div>
   </div>
 
@@ -111,13 +116,13 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
           selected = quote
         }"
       >
-        <td w-12 grow px-2 py-2 text-center>
+        <td class="px-2 py-2" w-15 grow text-center>
           {{ quote.symbol }}
         </td>
-        <td w-15 grow px-2 py-2 text-center>
+        <td class="px-2 py-2" w-11 grow text-center>
           {{ `$${(quote.price_cents / 100).toFixed(2)}` }}
         </td>
-        <td w-15 grow px-2 py-2 text-center>
+        <td class="px-2 py-2" w-11 grow text-center>
           <input
             type="text"
             placeholder="Qty"
@@ -138,6 +143,8 @@ function createTransaction(quote: Quote, quantity: number, action: ACTION) {
           >
             ✕
           </button>
+        </td><td class="px-2 py-2" w-15 grow text-center>
+          {{ quote.price_cents }}
         </td>
       </tr>
     </tbody>
