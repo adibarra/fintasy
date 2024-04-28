@@ -55,7 +55,7 @@ async function createTransaction(action: ACTION) {
   </td>
   <td w-15 flex grow justify-center gap-2 p-1>
     <button
-      b-1 bg-green-500 px-2 py-1 hover:bg-green-600
+      b-1 bg-lime-600 px-2 py-1 dark:bg-lime-500 hover:bg-lime-700 hover:dark:bg-lime-600
       @click="createTransaction(ACTION.BUY)"
     >
       ✓
