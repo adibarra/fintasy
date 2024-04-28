@@ -5,6 +5,7 @@
 
 <script setup lang="ts">
 import seedrandom from 'seedrandom'
+import { ACTION } from '~/types'
 
 const { t } = useI18n()
 const state = useStateStore()
@@ -28,8 +29,32 @@ const cash = computed(() => {
   return (balance_cents / 100)
 })
 const chartData = generateData(state.user.username, 2000)
-const assets = generateAssets(state.user.username, 24)
 const transactions = computed(() => state.transactions)
+const assets = computed(() => {
+  const rand = seedrandom(state.user.username)
+  const assets: Asset[] = []
+  transactions.value.forEach((transaction) => {
+    const index = assets.findIndex(a => a.symbol === transaction.symbol)
+    const quantity = transaction.action === ACTION.BUY ? transaction.quantity : -transaction.quantity
+    if (index === -1) {
+      assets.push({
+        symbol: transaction.symbol,
+        quantity,
+        price_cents: transaction.price_cents,
+        pl_day: 0,
+        pl_total: 0,
+      })
+    }
+    else {
+      assets[index].quantity += quantity
+    }
+  })
+  assets.forEach((asset) => {
+    asset.pl_day = asset.quantity * asset.price_cents * (rand() * 0.01)
+    asset.pl_total = asset.pl_day * 1.3
+  })
+  return assets
+})
 
 // generate random data
 function generateData(seed: string, count: number) {
@@ -46,23 +71,6 @@ function generateData(seed: string, count: number) {
     value = Math.round((rand() * 1 - 0.4995) * 100 + value)
   }
   return data
-}
-
-// generate random assets
-function generateAssets(seed: string, count: number): Asset[] {
-  const rand = seedrandom(seed)
-  const assets = []
-
-  for (let i = 0; i < count; ++i) {
-    assets.push({
-      symbol: rand().toString(36).substring(2, 6).toUpperCase(),
-      quantity: Math.floor(rand() * 100),
-      price_cents: rand() * 10000 + 2500,
-      pl_day: rand() * 2500 + 1000,
-      pl_total: rand() * 5000 + 1000,
-    })
-  }
-  return assets
 }
 </script>
 
