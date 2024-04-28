@@ -30,7 +30,7 @@ async function createTransaction(action: ACTION) {
     action,
     quantity: quantity.value,
   })
-  await state.refresh.transactions()
+  await state.refresh.portfolios()
 }
 </script>
 
