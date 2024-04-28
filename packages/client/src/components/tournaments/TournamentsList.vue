@@ -79,7 +79,7 @@ async function joinTournament(uuid: string) {
     return
   }
 
-  message.info('Portfolio created successfully')
+  message.success('Portfolio created successfully')
   await state.refresh.portfolios()
   state.portfolio.active = state.portfolio.available.findIndex(p => p.uuid === portfolioResponse.data.uuid)
   router.push('/dashboard/trade')

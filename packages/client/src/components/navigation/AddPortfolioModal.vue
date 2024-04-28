@@ -34,7 +34,7 @@ async function createPortfolio(slotCloseFunc: Function) {
       return
   }
 
-  message.info('Portfolio created successfully')
+  message.success('Portfolio created successfully')
   state.refresh.portfolios()
   close(slotCloseFunc)
 }

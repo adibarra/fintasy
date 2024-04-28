@@ -111,7 +111,7 @@ onMounted(() => {
         Coins: 🪙 {{ state.user.coins }}
       </div>
 
-      <!-- switch user portfolio account -->
+      <!-- switch / create portfolio -->
       <div h-fit flex gap-2>
         <div w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 fn-hover>
           <n-dropdown
@@ -119,7 +119,7 @@ onMounted(() => {
             trigger="click"
             @select="(key: any, option: any) => {
               state.portfolio.active = key
-              message.info(`Selected ${option.label}`)
+              message.info(`Switched to ${option.label}`)
             }"
           >
             <div gap-1>
@@ -169,10 +169,10 @@ onMounted(() => {
           { key: 2, label: 'Logout', icon: renderIcon(LogoutIcon) },
         ]"
         trigger="click"
-        @select="(key: any, option: any) => {
-          message.info(`Selected ${option.label}`)
+        @select="async (key: any, option: any) => {
           if (key === 0)
-            fintasy.logout()
+            message.success('Logged out')
+          await fintasy.logout()
         }"
       >
         <n-avatar
