@@ -69,6 +69,7 @@ export const useStateStore = defineStore('state', () => {
       return
 
     transactions.value = transactionsRequest.data
+      .toSorted((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
   }
 
   async function refreshAll() {

@@ -43,7 +43,6 @@ function handlePageChange() {
   loading.value = true
   setTimeout(() => {
     data.value = props.transactions
-      .toSorted((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
       .slice((page - 1) * itemsPerPage, page * itemsPerPage)
       .map((transaction: Transaction) => {
         return {
