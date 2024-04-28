@@ -81,15 +81,17 @@ function handleRadioFilter(filter: string) {
 <template>
   <div>
     <div class="flex items-center">
-      <input
-        type="text"
-        placeholder="Search"
-        my-2 max-w-50 grow fn-outline bg--c-fg py-0.5 pl-2 text--c-inverse
-        @input="(e) => {
-          const target = e.target as HTMLInputElement
-          handleSearch(target.value)
-        }"
-      >
+      <div mr-2 max-w-50 min-w-20 flex grow>
+        <input
+          type="text"
+          placeholder="Search"
+          my-2 w-full fn-outline bg--c-fg py-0.5 pl-2 text--c-inverse
+          @input="(e) => {
+            const target = e.target as HTMLInputElement
+            handleSearch(target.value)
+          }"
+        >
+      </div>
 
       <div grow />
 
