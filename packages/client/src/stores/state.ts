@@ -38,6 +38,8 @@ export const useStateStore = defineStore('state', () => {
 
     user.value.username = userRequest.data.username
     user.value.coins = userRequest.data.coins
+
+    await refreshPortfolios()
   }
 
   async function refreshPortfolios() {
@@ -56,6 +58,8 @@ export const useStateStore = defineStore('state', () => {
       return
 
     portfolio.value.available = [createPortfolioRequest.data]
+
+    await refreshTransactions()
   }
 
   async function refreshTransactions() {
@@ -66,16 +70,21 @@ export const useStateStore = defineStore('state', () => {
     transactions.value = transactionsRequest.data
   }
 
+  async function refreshAll() {
+    await refreshUser()
+    await refreshPortfolios()
+    await refreshTransactions()
+  }
+
+  watch(() => user.value.uuid, refreshAll)
+  watch(() => portfolio.value.active, refreshTransactions)
+
   return {
     user,
     portfolio,
     transactions,
     refresh: {
-      all: async () => {
-        await refreshUser()
-        await refreshPortfolios()
-        await refreshTransactions()
-      },
+      all: refreshAll,
       user: refreshUser,
       portfolios: refreshPortfolios,
       transactions: refreshTransactions,
