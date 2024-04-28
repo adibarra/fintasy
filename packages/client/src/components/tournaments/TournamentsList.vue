@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useMessage } from 'naive-ui'
 import type { STATUS, Tournament } from '~/types'
 
 interface TournamentFilter {
@@ -18,6 +19,8 @@ const props = defineProps({
 
 const fintasy = useAPI()
 const state = useStateStore()
+const router = useRouter()
+const message = useMessage()
 
 const tournaments = ref<Tournament[]>([])
 const tournamentDetails = ref<Tournament>()
@@ -70,23 +73,17 @@ async function joinTournament(uuid: string) {
   const portfolioName = tournamentResponse.data.name
 
   // Proceed to create a portfolio
-  const portfolioResponse = await fintasy.createPortfolio({ name: portfolioName, tournament: uuid })
+  const portfolioResponse = await fintasy.createPortfolio({ name: tournamentResponse.data.name, tournament: uuid })
   if (portfolioResponse.code !== 200) {
     console.error('Failed to create portfolio:', portfolioResponse)
     return
   }
 
-  console.log('Portfolio created successfully:', portfolioName, portfolioResponse)
+  message.info('Portfolio created successfully')
+  await state.refresh.portfolios()
+  state.portfolio.active = state.portfolio.available.findIndex(p => p.uuid === portfolioResponse.data.uuid)
+  router.push('/dashboard/trade')
   closeTournamentModal()
-
-  // Update the user's available portfolios
-  const portfoliosRequest = await fintasy.getPortfolios({ owner: state.user.uuid, limit: 10 })
-  if (portfoliosRequest.code !== 200) {
-    console.error('Failed to fetch user portfolios:', portfoliosRequest)
-    return
-  }
-
-  state.portfolio.available = portfoliosRequest.data
 }
 
 function closeTournamentModal() {
