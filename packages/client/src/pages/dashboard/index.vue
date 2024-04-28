@@ -5,8 +5,6 @@
 
 <script setup lang="ts">
 import seedrandom from 'seedrandom'
-import type { Transaction } from '~/types'
-import { ACTION } from '~/types'
 
 const { t } = useI18n()
 const state = useStateStore()
@@ -70,27 +68,6 @@ function generateAssets(seed: string, count: number): Asset[] {
     })
   }
   return assets
-}
-
-// generate random transactions
-function generateTransactions(seed: string, count: number): Transaction[] {
-  const rand = seedrandom(seed)
-  const transactions = []
-  const date = new Date()
-
-  for (let i = 0; i < count; ++i) {
-    date.setTime(date.getTime() - rand() * 86400000)
-    transactions.push({
-      uuid: rand().toString(36).substring(2),
-      portfolio: rand().toString(36).substring(2),
-      symbol: rand().toString(36).substring(2, 6).toUpperCase(),
-      action: rand() > 0.5 ? ACTION.BUY : ACTION.SELL,
-      quantity: Math.floor(rand() * 100),
-      price_cents: Math.floor(rand() * 100000),
-      created_at: date.toLocaleDateString(),
-    })
-  }
-  return transactions
 }
 </script>
 
