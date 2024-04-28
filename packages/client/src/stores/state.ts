@@ -4,7 +4,7 @@
  */
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import type { Portfolio, Transaction } from '~/types'
+import type { Portfolio, Tournament, Transaction } from '~/types'
 
 const fintasy = useAPI()
 
@@ -30,6 +30,7 @@ export const useStateStore = defineStore('state', () => {
     available: [],
   })
   const transactions = ref<Transaction[]>([])
+  const tournaments = ref<Tournament[]>([])
 
   async function refreshUser() {
     const userRequest = await fintasy.getUser({ uuid: user.value.uuid })
@@ -72,10 +73,20 @@ export const useStateStore = defineStore('state', () => {
       .toSorted((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
   }
 
+  async function refreshTournaments() {
+    const tournamentsRequest = await fintasy.getTournaments({ limit: 999 })
+    if (tournamentsRequest.code !== 200)
+      return
+
+    tournaments.value = tournamentsRequest.data
+      .toSorted((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+  }
+
   async function refreshAll() {
     await refreshUser()
     await refreshPortfolios()
     await refreshTransactions()
+    await refreshTournaments()
   }
 
   watch(() => user.value.uuid, refreshAll)
@@ -85,11 +96,13 @@ export const useStateStore = defineStore('state', () => {
     user,
     portfolio,
     transactions,
+    tournaments,
     refresh: {
       all: refreshAll,
       user: refreshUser,
       portfolios: refreshPortfolios,
       transactions: refreshTransactions,
+      tournaments: refreshTournaments,
     },
   }
 })
