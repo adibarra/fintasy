@@ -13,6 +13,7 @@ export const useStateStore = defineStore('state', () => {
     uuid: string
     username: string
     coins: number
+    created_at: string
   }
 
   interface PortfolioState {
@@ -24,6 +25,7 @@ export const useStateStore = defineStore('state', () => {
     uuid: '',
     username: '',
     coins: 0,
+    created_at: '',
   })
   const portfolio = ref<PortfolioState>({
     active: 0,
@@ -39,6 +41,7 @@ export const useStateStore = defineStore('state', () => {
 
     user.value.username = userRequest.data.username
     user.value.coins = userRequest.data.coins
+    user.value.created_at = userRequest.data.created_at
 
     await refreshPortfolios()
   }

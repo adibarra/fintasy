@@ -24,6 +24,7 @@ const props = defineProps({
 })
 
 const chartdiv = ref<HTMLElement>()
+const prevLastValue = ref(0)
 const lastValue = computed(() => {
   if (props.data.length === 0)
     return 0
@@ -56,6 +57,26 @@ onMounted(() => {
     behavior: 'none',
   }))
   cursor.lineY.set('visible', false)
+
+  const baseInterval = {
+    timeUnit: 'second',
+    count: 1,
+  }
+
+  if (props.data.length > 60) {
+    baseInterval.timeUnit = 'second'
+    baseInterval.count = 5
+  }
+
+  if (props.data.length > 60 * 60) {
+    baseInterval.timeUnit = 'minute'
+    baseInterval.count = 1
+  }
+
+  if (props.data.length > 60 * 60 * 3) {
+    baseInterval.timeUnit = 'minute'
+    baseInterval.count = 15
+  }
 
   // create axes
   const xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
@@ -97,6 +118,7 @@ onMounted(() => {
   // make data reactive
   watch(() => props.data, (data) => {
     series.data.setAll(data)
+    prevLastValue.value = lastValue.value
   })
 
   // handle cleanup
@@ -119,7 +141,7 @@ onMounted(() => {
     >
       $
       <n-number-animation
-        :from="0"
+        :from="prevLastValue"
         :to="lastValue"
         :duration="4000"
         :active="true"
