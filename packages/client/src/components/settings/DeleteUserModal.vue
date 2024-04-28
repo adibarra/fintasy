@@ -4,10 +4,13 @@
 -->
 
 <script setup lang="ts">
+import { useMessage } from 'naive-ui'
+
 const isOpen = defineModel<boolean>()
 
 const fintasy = useAPI()
 const state = useStateStore()
+const message = useMessage()
 
 const error = ref('')
 
@@ -22,6 +25,7 @@ async function deleteUser(slotCloseFunc: Function) {
       return
   }
 
+  message.info('User deleted successfully')
   state.refresh.user()
   close(slotCloseFunc)
 }

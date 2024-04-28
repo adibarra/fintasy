@@ -54,6 +54,8 @@
     "pinia",
     "plpgsql",
     "pomdtr",
+    "popleft",
+    "popselect",
     "pseudocode",
     "psycopg",
     "putconn",

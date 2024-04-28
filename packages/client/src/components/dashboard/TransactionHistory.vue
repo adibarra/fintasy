@@ -7,6 +7,10 @@
 import { ACTION, type Transaction } from '~/types'
 
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   transactions: {
     type: Array as PropType<Transaction[]>,
     required: true,
@@ -23,42 +27,45 @@ const columns = computed(() => [
   { key: 'created_at', title: t('pages.dashboard.date') },
 ])
 
-const data = ref()
-const loading = ref(false)
+const data = ref<any[]>([])
+const loading = ref(true)
 const pagination = ref({
   page: 1,
   pageSlot: 6,
   itemsPerPage: 14,
-  itemCount: props.transactions.length,
+  itemCount: computed(() => props.transactions.length),
 })
 
-function handlePageChange(page: number) {
-  pagination.value.page = page
-  if (!loading.value) {
-    loading.value = true
-    setTimeout(() => {
-      data.value = props.transactions.slice((page - 1) * pagination.value.itemsPerPage, page * pagination.value.itemsPerPage)
-      data.value = data.value.map((transaction: Transaction) => {
+function handlePageChange() {
+  const page = pagination.value.page
+  const itemsPerPage = pagination.value.itemsPerPage
+
+  loading.value = true
+  setTimeout(() => {
+    data.value = props.transactions
+      .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+      .map((transaction: Transaction) => {
         return {
           symbol: transaction.symbol,
           action: ACTION[transaction.action],
           quantity: `x${transaction.quantity}`,
           price_cents: `$${(transaction.price_cents / 100).toFixed(2)}`,
-          created_at: transaction.created_at,
+          created_at: new Date(transaction.created_at).toLocaleDateString(),
         }
       })
-      loading.value = false
-    }, 250)
-  }
+    loading.value = false
+  }, props.transactions.length === 0 ? 1000 : 250)
 }
 
-onMounted(() => handlePageChange(1))
+watch(() => [props.transactions, pagination.value.page], () => {
+  handlePageChange()
+}, { immediate: true })
 </script>
 
 <template>
   <div flex>
     <span ml-1 text-xl font-600>
-      {{ t('pages.dashboard.history') }}
+      {{ props.name }}
     </span>
     <div grow />
     <span mx-2 text-xl>
@@ -83,7 +90,7 @@ onMounted(() => handlePageChange(1))
     :remote="true"
     :flex-height="true"
     mt-2 min-h-65 grow text-xxs sm:text-xs md:text-sm xl:w-110
-    @update:page="handlePageChange"
+    @update:page="page => pagination.page = page"
   />
   <!-- eslint-disable unocss/order-attributify -->
 </template>

@@ -5,6 +5,10 @@
 
 <script setup lang="ts">
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   assets: {
     type: Array as PropType<Asset[]>,
     required: true,
@@ -15,7 +19,7 @@ const props = defineProps({
   },
 })
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 interface Asset {
   symbol: string
@@ -42,33 +46,37 @@ const pagination = ref({
   itemCount: props.assets.length,
 })
 
-function handlePageChange(page: number) {
-  pagination.value.page = page
-  if (!loading.value) {
-    loading.value = true
-    setTimeout(() => {
-      data.value = props.assets.slice((page - 1) * pagination.value.itemsPerPage, page * pagination.value.itemsPerPage)
-      data.value = data.value.map((asset: Asset) => {
+function handlePageChange() {
+  const page = pagination.value.page
+  const itemsPerPage = pagination.value.itemsPerPage
+
+  loading.value = true
+  setTimeout(() => {
+    data.value = props.assets
+      .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+      .map((asset: Asset) => {
+        const moneyFormat = new Intl.NumberFormat(locale.value, { style: 'currency', currency: 'USD' })
         return {
           symbol: asset.symbol,
           quantity: `x${asset.quantity}`,
-          price_cents: `$${(asset.price_cents / 100).toFixed(2)}`,
-          pl_day: `$${(asset.pl_day / 100).toFixed(2)}`,
-          pl_total: `$${(asset.pl_total / 100).toFixed(2)}`,
+          price_cents: moneyFormat.format(asset.price_cents / 100),
+          pl_day: moneyFormat.format(asset.pl_day / 100),
+          pl_total: moneyFormat.format(asset.pl_total / 100),
         }
       })
-      loading.value = false
-    }, 250)
-  }
+    loading.value = false
+  }, props.assets.length === 0 ? 1000 : 250)
 }
 
-onMounted(() => handlePageChange(1))
+watch(() => [props.assets, pagination.value.page], () => {
+  handlePageChange()
+}, { immediate: true })
 </script>
 
 <template>
   <div flex>
     <span ml-1 text-xl font-600>
-      {{ t('pages.dashboard.assets') }}
+      {{ props.name }}
     </span>
     <div grow />
     <span mx-2 text-xl>
@@ -94,7 +102,7 @@ onMounted(() => handlePageChange(1))
     :remote="true"
     :flex-height="true"
     mt-2 min-h-65 grow text-xxs sm:text-xs md:text-sm
-    @update:page="handlePageChange"
+    @update:page="page => pagination.page = page"
   />
   <!-- eslint-enable unocss/order-attributify -->
 </template>

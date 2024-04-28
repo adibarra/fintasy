@@ -177,6 +177,35 @@ class PortfolioMixin:
             if conn:
                 self.connectionPool.putconn(conn)
 
+    def update_portfolio_balance(self, uuid_portfolio: str, balance_cents: int) -> bool:
+        """
+        Updates the name of a portfolio in the database by UUID.
+
+        Args:
+            uuid_portfolio (str): The UUID of the portfolio to update.
+            balance_cents (int): The new balance for the portfolio.
+
+        Returns:
+            bool: True if the portfolio was successfully updated, False otherwise.
+        """
+
+        conn = None
+        try:
+            conn = self.connectionPool.getconn()
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE portfolios SET balance_cents = %s WHERE uuid = %s",
+                    (balance_cents, uuid_portfolio),
+                )
+                conn.commit()
+                return True
+        except Exception as e:
+            print("Failed to update portfolio balance by UUID:", e, flush=True)
+            return False
+        finally:
+            if conn:
+                self.connectionPool.putconn(conn)
+
     def delete_portfolio(self, uuid_portfolio: str) -> bool:
         """
         Deletes a portfolio from the database by UUID.
