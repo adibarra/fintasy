@@ -28,8 +28,16 @@ const cash = computed(() => {
   const balance_cents = state.portfolio.available[state.portfolio.active].balance_cents
   return (balance_cents / 100)
 })
-const chartData = generateData(state.user.username, 2000)
 const transactions = computed(() => state.transactions)
+const chartData = computed(() => generateData(
+  state.user.username,
+  transactions.value.length > 0
+    ? (new Date().getTime()
+    - new Date(transactions.value[transactions.value.length - 1].created_at).getTime())
+    / 1000 / 60 / 15
+    : 0,
+),
+)
 const assets = computed(() => {
   const rand = seedrandom(state.user.username)
   const assets: Asset[] = []
