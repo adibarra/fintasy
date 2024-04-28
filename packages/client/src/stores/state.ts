@@ -65,7 +65,7 @@ export const useStateStore = defineStore('state', () => {
   }
 
   async function refreshTransactions() {
-    if (portfolio.value.available.length !== 0)
+    if (portfolio.value.available.length === 0)
       return
 
     const portfolioUUID = portfolio.value.available[portfolio.value.active].uuid
