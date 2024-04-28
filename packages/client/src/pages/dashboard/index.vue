@@ -29,12 +29,7 @@ const cash = computed(() => {
 })
 const chartData = generateData(state.user.username, 2000)
 const assets = generateAssets(state.user.username, 24)
-const transactions = computed(() => {
-  return state.transactions.map((transaction) => {
-    transaction.created_at = new Date(transaction.created_at).toLocaleDateString()
-    return transaction
-  })
-})
+const transactions = computed(() => state.transactions)
 
 // generate random data
 function generateData(seed: string, count: number) {

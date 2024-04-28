@@ -43,6 +43,7 @@ function handlePageChange() {
   loading.value = true
   setTimeout(() => {
     data.value = props.transactions
+      .toSorted((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
       .slice((page - 1) * itemsPerPage, page * itemsPerPage)
       .map((transaction: Transaction) => {
         return {
@@ -50,7 +51,7 @@ function handlePageChange() {
           action: ACTION[transaction.action],
           quantity: `x${transaction.quantity}`,
           price_cents: `$${(transaction.price_cents / 100).toFixed(2)}`,
-          created_at: transaction.created_at,
+          created_at: new Date(transaction.created_at).toLocaleDateString(),
         }
       })
     loading.value = false
