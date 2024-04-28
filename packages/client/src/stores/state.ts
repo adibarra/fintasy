@@ -65,7 +65,11 @@ export const useStateStore = defineStore('state', () => {
   }
 
   async function refreshTransactions() {
-    const transactionsRequest = await fintasy.getTransactions({ portfolio: portfolio.value.available[portfolio.value.active].uuid, limit: 999 })
+    if (portfolio.value.available.length !== 0)
+      return
+
+    const portfolioUUID = portfolio.value.available[portfolio.value.active].uuid
+    const transactionsRequest = await fintasy.getTransactions({ portfolio: portfolioUUID, limit: 999 })
     if (transactionsRequest.code !== 200)
       return
 
