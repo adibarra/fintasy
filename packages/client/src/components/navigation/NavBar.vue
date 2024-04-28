@@ -17,21 +17,13 @@ import { createAvatar } from '@dicebear/core'
 import { identicon } from '@dicebear/collection'
 
 const { t } = useI18n()
+const fintasy = useAPI()
+const state = useStateStore()
+const message = useMessage()
 const route = useRoute()
 const router = useRouter()
-const message = useMessage()
-const state = useStateStore()
-const fintasy = useAPI()
 
 const modal = ref(false)
-
-function renderIcon(icon: Component) {
-  return () => {
-    return h(NIcon, null, {
-      default: () => h(icon),
-    })
-  }
-}
 
 interface Crumb { label: string, key: string }
 const breadcrumbs = computed(() => {
@@ -60,6 +52,14 @@ const avatar = computed(() => {
   return createAvatar(identicon, { seed: state.user.username }).toDataUriSync()
 })
 
+function renderIcon(icon: Component) {
+  return () => {
+    return h(NIcon, null, {
+      default: () => h(icon),
+    })
+  }
+}
+
 // redirect to login if not authenticated
 watch(() => fintasy.authenticated.value, () => {
   if (!fintasy.authenticated.value)
@@ -76,7 +76,7 @@ onMounted(() => {
   <n-layout-header bordered h-48px w-full flex>
     <div flex grow items-center gap-5 py-1>
       <!-- parent should be w-55 to match sidebar size -->
-      <div h-full w-55 flex items-center justify-center>
+      <div hidden h-full w-55 items-center justify-center lg:flex>
         <Logo />
       </div>
 
@@ -112,7 +112,7 @@ onMounted(() => {
       </div>
 
       <!-- switch user portfolio account -->
-      <div hidden h-fit gap-2 sm:flex>
+      <div h-fit flex gap-2>
         <div w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 fn-hover>
           <n-dropdown
             :options="portfolios"
