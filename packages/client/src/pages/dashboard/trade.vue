@@ -20,7 +20,7 @@ const assetQtyMap = computed<Record<string, number>>(() => {
   return map
 })
 const loading = computed(() => state.transactions.length === 0)
-const currentSymbol = ref(`${state.user.username}'s Portfolio`)
+const currentSymbol = ref(`${state.user.username.toUpperCase()}'s Portfolio`)
 const trend = ref(generateData(state.user.username, 2000))
 const quotes = ref<Quote[]>([])
 const availableSymbols = ref<string[]>([
