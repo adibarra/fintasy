@@ -24,6 +24,7 @@ const emit = defineEmits<{
 const selected = ref<Quote | null>(null)
 const searchFilter = ref('')
 const radioFilter = ref('')
+const filterValue = ref('All')
 
 const columns = [
   { key: 'symbol', label: 'Symbol' },
@@ -50,9 +51,23 @@ const filteredQuotes = computed(() => {
   })
 
   return items.filter((quote) => {
-    return quote.symbol.toString().toLowerCase().includes(searchFilter.value.toLowerCase())
+    return ownedFilter(map, quote) && quote.symbol.toString().toLowerCase()
+      .includes(searchFilter.value.toLowerCase())
   })
 })
+
+function ownedFilter(assetMap: Record<string, number>, quote: Quote) {
+  switch (filterValue.value) {
+    case 'Owned':
+      return assetMap[quote.symbol] > 0
+
+    case 'Not Owned':
+      return assetMap[quote.symbol] === 0
+
+    default:
+      return true
+  }
+}
 
 function handleSearch(search: string) {
   searchFilter.value = search
@@ -85,7 +100,7 @@ function handleRadioFilter(filter: string) {
       </div>
 
       <div class="flex items-center justify-end">
-        <FilterDropdown :items="assetMap" />
+        <FilterDropdown v-model="filterValue" />
       </div>
     </div>
   </div>
