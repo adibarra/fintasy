@@ -34,6 +34,8 @@ const columns = [
 ]
 
 const filteredQuotes = computed(() => {
+  const map = props.assetMap as Record<string, number>
+
   const items = props.quotes.toSorted((a: Quote, b: Quote) => {
     switch (radioFilter.value) {
       case 'hiLow':
@@ -83,7 +85,7 @@ function handleRadioFilter(filter: string) {
       </div>
 
       <div class="flex items-center justify-end">
-        <FilterDropdown />
+        <FilterDropdown :items="assetMap" />
       </div>
     </div>
   </div>

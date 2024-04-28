@@ -3,18 +3,18 @@
   @description: This component is used to display the filter dropdown in the trading page.
 -->
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   items: {
-    type: Array,
+    type: Object as PropType<Record<string, number>>,
     required: true,
   },
 })
-const show = ref(false)
-const fintasy = useAPI()
 
-const statuses = computed(() => {
-  return props.items.map(item => item.status)
+const show = ref(false)
+
+const status = computed(() => {
+  return Object.keys(props.items)
 })
 </script>
 
@@ -29,7 +29,10 @@ const statuses = computed(() => {
       </h6>
       <u1 class="text-sm space-y-2">
         <li>
-          <input id="active" type="checkbox" name="active" value="active">
+          <input id="filter_option_${index}" type="checkbox" :value="status" class="h-4 w-4 bg-gray">
+          <label for="filter_option_${index}" class="ml-2 text-gray-900 font-medium">
+            {{ status }}
+          </label>
         </li>
       </u1>
     </div>
