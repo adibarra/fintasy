@@ -19,7 +19,7 @@ const assetQtyMap = computed<Record<string, number>>(() => {
   })
   return map
 })
-const loading = computed(() => state.transactions.length === 0)
+const loading = ref(false)
 const currentSymbol = ref(`${state.user.username.toUpperCase()}'s Portfolio`)
 const trend = ref(generateData(state.user.username, 2000))
 const quotes = ref<Quote[]>([])
@@ -40,6 +40,7 @@ const availableSymbols = ref<string[]>([
 async function getQuotes() {
   const quotes: Quote[] = []
 
+  loading.value = true
   const quotePromises = availableSymbols.value.map(async (symbol) => {
     const response = await fintasy.getQuote({ symbol })
     if (response.code === 200)
@@ -49,6 +50,7 @@ async function getQuotes() {
   })
 
   const resolvedQuotes = await Promise.all(quotePromises)
+  loading.value = false
 
   resolvedQuotes.forEach((quote) => {
     if (quote !== undefined)
