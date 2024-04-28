@@ -50,6 +50,7 @@ async function createTransaction(action: ACTION) {
       placeholder="Qty"
       class="bg-gray-50 text-gray-900"
       w-15 fn-outline text-center
+      @input="quantity = Math.abs(quantity)"
     >
   </td>
   <td w-15 flex grow justify-center gap-2 p-1>
