@@ -61,7 +61,7 @@ const assets = computed(() => {
     asset.pl_day = asset.quantity * asset.price_cents * (rand() * 0.01)
     asset.pl_total = asset.pl_day * 1.3
   })
-  return assets
+  return assets.filter(asset => asset.quantity > 0)
 })
 
 // generate random data
