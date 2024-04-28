@@ -10,6 +10,7 @@ import {
   CaretDownOutline as DropdownIcon,
   LogOutOutline as LogoutIcon,
   RefreshOutline as RefreshIcon,
+  PersonCircleOutline as UserIcon,
 } from '@vicons/ionicons5'
 import { NIcon, useMessage } from 'naive-ui'
 import { createAvatar } from '@dicebear/core'
@@ -163,7 +164,9 @@ onMounted(() => {
       <!-- user dropdown -->
       <n-dropdown
         :options="[
-          { label: 'Logout', key: 0, icon: renderIcon(LogoutIcon) },
+          { key: 0, label: state.user.username, icon: renderIcon(UserIcon), disabled: true },
+          { key: 1, type: 'divider' },
+          { key: 2, label: 'Logout', icon: renderIcon(LogoutIcon) },
         ]"
         trigger="click"
         @select="(key: any, option: any) => {
