@@ -23,6 +23,8 @@ const fintasy = useAPI()
 const quantity = ref(0)
 
 async function createTransaction(action: ACTION) {
+  if (state.portfolio.available.length === 0)
+    return
   const uuid = state.portfolio.available[state.portfolio.active].uuid
   await fintasy.createTransaction({
     portfolio: uuid,
@@ -30,7 +32,7 @@ async function createTransaction(action: ACTION) {
     action,
     quantity: quantity.value,
   })
-  await state.refresh.portfolios()
+  await state.refresh.transactions()
 }
 </script>
 
