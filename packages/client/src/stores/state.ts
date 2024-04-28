@@ -52,14 +52,13 @@ export const useStateStore = defineStore('state', () => {
     portfolio.value.available = portfoliosRequest.data
       .toSorted((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
 
-    if (portfoliosRequest.data.length !== 0)
-      return
+    if (portfoliosRequest.data.length === 0) {
+      const createPortfolioRequest = await fintasy.createPortfolio({ name: 'Default Portfolio' })
+      if (createPortfolioRequest.code !== 200)
+        return
 
-    const createPortfolioRequest = await fintasy.createPortfolio({ name: 'Default Portfolio' })
-    if (createPortfolioRequest.code !== 200)
-      return
-
-    portfolio.value.available = [createPortfolioRequest.data]
+      portfolio.value.available = [createPortfolioRequest.data]
+    }
 
     await refreshTransactions()
   }
