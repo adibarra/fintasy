@@ -28,7 +28,7 @@ const columns = computed(() => [
 ])
 
 const data = ref<any[]>([])
-const loading = computed(() => props.transactions.length === 0)
+const loading = ref(true)
 const pagination = ref({
   page: 1,
   pageSlot: 6,
@@ -39,17 +39,22 @@ const pagination = ref({
 function handlePageChange() {
   const page = pagination.value.page
   const itemsPerPage = pagination.value.itemsPerPage
-  data.value = props.transactions
-    .slice((page - 1) * itemsPerPage, page * itemsPerPage)
-    .map((transaction: Transaction) => {
-      return {
-        symbol: transaction.symbol,
-        action: ACTION[transaction.action],
-        quantity: `x${transaction.quantity}`,
-        price_cents: `$${(transaction.price_cents / 100).toFixed(2)}`,
-        created_at: transaction.created_at,
-      }
-    })
+
+  loading.value = true
+  setTimeout(() => {
+    data.value = props.transactions
+      .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+      .map((transaction: Transaction) => {
+        return {
+          symbol: transaction.symbol,
+          action: ACTION[transaction.action],
+          quantity: `x${transaction.quantity}`,
+          price_cents: `$${(transaction.price_cents / 100).toFixed(2)}`,
+          created_at: transaction.created_at,
+        }
+      })
+    loading.value = false
+  }, props.transactions.length === 0 ? 1000 : 250)
 }
 
 watch(() => [props.transactions, pagination.value.page], () => {
