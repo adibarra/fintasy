@@ -36,14 +36,14 @@ function generateData(seed: string, count: number) {
   const rand = seedrandom(seed)
   const data = []
   const startDate = new Date().getTime() - 1000 * 60 * 15 * count
-  let value = 1000
+  let value = 10000
 
-  for (let i = 0; i < count; ++i) {
-    value = Math.round((rand() * 1 - 0.495) * 100 + value)
+  for (let i = 0; i < count - 1; i++) {
     data.push({
       date: startDate + 1000 * 60 * 15 * i,
       value,
     })
+    value = Math.round((rand() * 1 - 0.4995) * 100 + value)
   }
   return data
 }
