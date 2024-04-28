@@ -95,14 +95,76 @@ def create_transaction(
     data: CreateTransactionRequest = Body(...),
     auth: tuple[str, str] = Depends(authenticateToken),
 ):
-    quote = AlpacaService.get_quote(data.symbol)
-    if quote is None:
+    token_owner = auth[0]
+
+    # check if the portfolio exists
+    portfolio = db.get_portfolio(str(data.portfolio))
+    if portfolio is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Not Found",
         )
 
-    # Attempt creating transaction
+    # check if the user owns the portfolio
+    if portfolio["owner"] != token_owner:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Forbidden",
+        )
+
+    # get the stock quote
+    quote = AlpacaService.get_quote(data.symbol)
+    if quote is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Bad Request",
+        )
+
+    # check if the user can do the transaction
+    if data.action == "BUY":
+        # check if the user has enough funds to buy the stock
+        new_balance = portfolio["balance_cents"] - (
+            quote["price_cents"] * data.quantity
+        )
+        if new_balance < 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Bad Request",
+            )
+
+        # update the portfolio balance
+        if not db.update_portfolio_balance(portfolio["uuid"], new_balance):
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Internal Server Error",
+            )
+
+    else:
+        # check if the user has enough stocks to sell
+        transactions = db.get_transactions(portfolio["uuid"], 0, 9999)
+        if transactions is None:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Internal Server Error",
+            )
+
+        # calculate the user's stock quantity
+        stock_quantity = 0
+        for transaction in transactions:
+            if transaction["symbol"] == data.symbol:
+                if transaction["action"] == "BUY":
+                    stock_quantity += transaction["quantity"]
+                else:
+                    stock_quantity -= transaction["quantity"]
+
+        # check if the user has enough stocks to sell
+        if stock_quantity < data.quantity:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Bad Request",
+            )
+
+    # attempt creating transaction
     transaction = db.create_transaction(
         uuid_portfolio=str(data.portfolio),
         symbol=data.symbol,
@@ -112,8 +174,8 @@ def create_transaction(
     )
     if transaction is None:
         raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Conflict",
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal Server Error",
         )
 
     return TransactionResponse(
