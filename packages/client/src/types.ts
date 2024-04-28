@@ -12,11 +12,13 @@ export enum ACTION {
   BUY = 'BUY',
   SELL = 'SELL',
 }
+
 export enum STATUS {
   SCHEDULED = 'SCHEDULED',
   ONGOING = 'ONGOING',
   FINISHED = 'FINISHED',
 }
+
 export enum INTERVAL {
   FIVE_MIN = '5m',
   FIFTEEN_MIN = '15m',

@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra)
+  @description: This component is used to display the home navigation bar.
+-->
+
 <script setup lang="ts">
 import {
   HomeOutline as HomeIcon,
