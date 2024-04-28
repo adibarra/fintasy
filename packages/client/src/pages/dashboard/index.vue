@@ -10,7 +10,6 @@ import { ACTION } from '~/types'
 
 const { t } = useI18n()
 const state = useStateStore()
-const rng = seedrandom(state.user.username)
 
 useHead({
   title: `${t('pages.dashboard.title')} • Fintasy`,
@@ -24,19 +23,25 @@ interface Asset {
   pl_total: number
 }
 
-const cash = (rng() * 1500) + 500
-const chartData = generateData(Math.floor(rng() * 1500) + 500)
-const assets = generateAssets(Math.floor(rng() * 100) + 100)
-const transactions = generateTransactions(Math.floor(rng() * 100) + 200)
+const cash = computed(() => {
+  if (state.portfolio.available.length === 0)
+    return 0
+  const balance_cents = state.portfolio.available[state.portfolio.active].balance_cents
+  return (balance_cents / 100)
+})
+const chartData = generateData(state.user.username, 2000)
+const assets = generateAssets(state.user.username, 24)
+const transactions = generateTransactions(state.user.username, 271)
 
-// Generate random data
-function generateData(count: number) {
+// generate random data
+function generateData(seed: string, count: number) {
+  const rand = seedrandom(seed)
   const data = []
   const startDate = new Date().getTime() - 1000 * 60 * 15 * count
   let value = 1000
 
   for (let i = 0; i < count; ++i) {
-    value = Math.round((rng() * 1 - 0.495) * 100 + value)
+    value = Math.round((rand() * 1 - 0.495) * 100 + value)
     data.push({
       date: startDate + 1000 * 60 * 15 * i,
       value,
@@ -45,36 +50,38 @@ function generateData(count: number) {
   return data
 }
 
-// Generate random assets
-function generateAssets(count: number): Asset[] {
+// generate random assets
+function generateAssets(seed: string, count: number): Asset[] {
+  const rand = seedrandom(seed)
   const assets = []
 
   for (let i = 0; i < count; ++i) {
     assets.push({
-      symbol: rng().toString(36).substring(2, 6).toUpperCase(),
-      quantity: Math.floor(rng() * 100),
-      price_cents: rng() * 10000 + 2500,
-      pl_day: rng() * 2500 + 1000,
-      pl_total: rng() * 5000 + 1000,
+      symbol: rand().toString(36).substring(2, 6).toUpperCase(),
+      quantity: Math.floor(rand() * 100),
+      price_cents: rand() * 10000 + 2500,
+      pl_day: rand() * 2500 + 1000,
+      pl_total: rand() * 5000 + 1000,
     })
   }
   return assets
 }
 
-// Generate random transactions
-function generateTransactions(count: number): Transaction[] {
+// generate random transactions
+function generateTransactions(seed: string, count: number): Transaction[] {
+  const rand = seedrandom(seed)
   const transactions = []
   const date = new Date()
 
   for (let i = 0; i < count; ++i) {
-    date.setTime(date.getTime() - rng() * 86400000)
+    date.setTime(date.getTime() - rand() * 86400000)
     transactions.push({
-      uuid: rng().toString(36).substring(2),
-      portfolio: rng().toString(36).substring(2),
-      symbol: rng().toString(36).substring(2, 6).toUpperCase(),
-      action: rng() > 0.5 ? ACTION.BUY : ACTION.SELL,
-      quantity: Math.floor(rng() * 100),
-      price_cents: Math.floor(rng() * 100000),
+      uuid: rand().toString(36).substring(2),
+      portfolio: rand().toString(36).substring(2),
+      symbol: rand().toString(36).substring(2, 6).toUpperCase(),
+      action: rand() > 0.5 ? ACTION.BUY : ACTION.SELL,
+      quantity: Math.floor(rand() * 100),
+      price_cents: Math.floor(rand() * 100000),
       created_at: date.toLocaleDateString(),
     })
   }
