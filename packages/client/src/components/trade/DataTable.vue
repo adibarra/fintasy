@@ -4,7 +4,7 @@
 -->
 
 <script setup lang="ts">
-import { ACTION, type Quote } from '~/types'
+import type { Quote } from '~/types'
 
 const props = defineProps({
   assetMap: {
@@ -20,9 +20,6 @@ const props = defineProps({
 const emit = defineEmits<{
   selected: [quote: Quote]
 }>()
-
-const state = useStateStore()
-const fintasy = useAPI()
 
 const selected = ref<Quote | null>(null)
 const searchFilter = ref('')
@@ -61,17 +58,6 @@ function handleSearch(search: string) {
 
 function handleRadioFilter(filter: string) {
   radioFilter.value = filter
-}
-
-async function createTransaction(quote: Quote, quantity: number, action: ACTION) {
-  const uuid = state.portfolio.available[state.portfolio.active].uuid
-  await fintasy.createTransaction({
-    portfolio: uuid,
-    symbol: quote.symbol,
-    action,
-    quantity,
-  })
-  await state.refresh.transactions()
 }
 </script>
 
@@ -128,36 +114,10 @@ async function createTransaction(quote: Quote, quantity: number, action: ACTION)
           selected = quote
         }"
       >
-        <td class="px-2 py-2" w-15 grow text-center>
-          {{ quote.symbol }}
-        </td>
-        <td class="px-2 py-2" w-11 grow text-center>
-          {{ `$${(quote.price_cents / 100).toFixed(2)}` }}
-        </td>
-        <td class="px-2 py-2" w-11 grow text-center>
-          <input
-            type="text"
-            placeholder="Qty"
-            class="bg-gray-50 text-gray-900"
-            w-15 fn-outline text-center
-          >
-        </td>
-        <td w-15 flex grow justify-center gap-2 p-1>
-          <button
-            b-1 bg-green-500 px-2 py-1 hover:bg-green-600
-            @click="createTransaction(quote, 1, ACTION.BUY)"
-          >
-            ✓
-          </button>
-          <button
-            b-1 bg-red-500 px-2 py-1 hover:bg-red-600
-            @click="createTransaction(quote, 1, ACTION.SELL)"
-          >
-            ✕
-          </button>
-        </td><td class="px-2 py-2" w-15 grow text-center>
-          {{ props.assetMap[quote.symbol] || 0 }}
-        </td>
+        <DataTableRow
+          :asset-map="assetMap"
+          :quote="quote"
+        />
       </tr>
     </tbody>
   </table>
