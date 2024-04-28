@@ -15,7 +15,12 @@ class TransactionsMixin:
     connectionPool: "SimpleConnectionPool"
 
     def create_transaction(
-        self, uuid_portfolio: str, symbol: str, action: str, quantity: int
+        self,
+        uuid_portfolio: str,
+        symbol: str,
+        action: str,
+        quantity: int,
+        price_cents: int,
     ) -> dict:
         """
         Creates a new transaction in the database.
@@ -25,6 +30,7 @@ class TransactionsMixin:
             symbol (str): The symbol of the stock involved in the transaction.
             action (str): The action of the transaction, either 'buy' or 'sell'.
             quantity (int): The quantity of stocks involved in the transaction.
+            price_cents (int): The price of the stock at the time of the transaction (in cents).
 
         Returns:
             dict: The created transaction if successful, None otherwise.
@@ -35,8 +41,8 @@ class TransactionsMixin:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO transactions (uuid_portfolio, symbol, action, quantity) VALUES (%s, %s, %s, %s) RETURNING *",
-                    (uuid_portfolio, symbol, action, quantity),
+                    "INSERT INTO transactions (portfolio, symbol, action, quantity, price_cents) VALUES (%s, %s, %s, %s, %s) RETURNING *",
+                    (uuid_portfolio, symbol, action, quantity, price_cents),
                 )
                 column_names = [desc[0] for desc in cursor.description]
                 transaction = dict(zip(column_names, cursor.fetchone()))
@@ -68,7 +74,7 @@ class TransactionsMixin:
             conn = self.connectionPool.getconn()
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "SELECT * FROM transactions WHERE uuid_portfolio = %s OFFSET %s LIMIT %s",
+                    "SELECT * FROM transactions WHERE portfolio = %s OFFSET %s LIMIT %s",
                     (uuid_portfolio, offset, limit),
                 )
                 column_names = [desc[0] for desc in cursor.description]

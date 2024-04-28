@@ -37,6 +37,7 @@ async def not_found_exception_handler(request, exc):
 @app.exception_handler(ValidationError)
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request, exc):
+    print("Validation error:", exc)
     return JSONResponse(
         status_code=status.HTTP_400_BAD_REQUEST,
         content={"code": 400, "message": "Bad Request"},

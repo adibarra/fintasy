@@ -4,11 +4,14 @@
 -->
 
 <script setup lang="ts">
+import { useMessage } from 'naive-ui'
+
 const isOpen = defineModel<boolean>()
 
 const { t } = useI18n()
 const fintasy = useAPI()
 const state = useStateStore()
+const message = useMessage()
 
 const password = ref('')
 const confirmPassword = ref('')
@@ -38,6 +41,7 @@ async function changePassword(slotCloseFunc: Function) {
       return
   }
 
+  message.info('Password changed successfully')
   state.refresh.user()
   close(slotCloseFunc)
 }

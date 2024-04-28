@@ -4,11 +4,14 @@
 -->
 
 <script setup lang="ts">
+import { useMessage } from 'naive-ui'
+
 const isOpen = defineModel<boolean>()
 
 const { t } = useI18n()
 const fintasy = useAPI()
 const state = useStateStore()
+const message = useMessage()
 
 const email = ref('')
 const error = ref('')
@@ -35,6 +38,7 @@ async function changeEmail(slotCloseFunc: Function) {
       return
   }
 
+  message.info('Email changed successfully')
   state.refresh.user()
   close(slotCloseFunc)
 }

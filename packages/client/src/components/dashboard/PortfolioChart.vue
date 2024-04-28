@@ -10,24 +10,31 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 import am5themes_Dark from '@amcharts/amcharts5/themes/Dark'
 
 const props = defineProps({
+  name: {
+    type: String,
+    required: true,
+  },
   data: {
-    type: Array as PropType<
-      {
-        date: number
-        value: number
-      }[]
-    >,
+    type: Array as PropType<{
+      date: number
+      value: number
+    }[]>,
     required: true,
   },
 })
 
-const { t } = useI18n()
-
 const chartdiv = ref<HTMLElement>()
+const lastValue = computed(() => {
+  if (props.data.length === 0)
+    return 0
+  return props.data[props.data.length - 1].value
+})
 
 onMounted(() => {
+  // bind to chartdiv
   const root = am5.Root.new(chartdiv.value!)
 
+  // add responsive theme
   watch(isDark, (isDark) => {
     root.setThemes(isDark
       ? [
@@ -39,19 +46,18 @@ onMounted(() => {
         ])
   }, { immediate: true })
 
+  // create chart
   const chart = root.container.children.push(am5xy.XYChart.new(root, {
     paddingLeft: 0,
   }))
 
-  // Add cursor
-  // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+  // add cursor
   const cursor = chart.set('cursor', am5xy.XYCursor.new(root, {
     behavior: 'none',
   }))
   cursor.lineY.set('visible', false)
 
-  // Create axes
-  // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+  // create axes
   const xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
     maxDeviation: 0.1,
     baseInterval: {
@@ -68,8 +74,7 @@ onMounted(() => {
     renderer: am5xy.AxisRendererY.new(root, { }),
   }))
 
-  // Add series
-  // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+  // add series
   const series = chart.series.push(am5xy.LineSeries.new(root, {
     name: 'Series',
     xAxis,
@@ -82,14 +87,19 @@ onMounted(() => {
     }),
   }))
 
-  // Set data
+  // set data
   series.data.setAll(props.data)
 
-  // Make stuff animate on load
-  // https://www.amcharts.com/docs/v5/concepts/animations/
+  // make stuff animate on load
   series.appear(2500, 100)
   chart.appear(2500, 100)
 
+  // make data reactive
+  watch(() => props.data, (data) => {
+    series.data.setAll(data)
+  })
+
+  // handle cleanup
   onBeforeUnmount(() => {
     if (root)
       root.dispose()
@@ -100,17 +110,17 @@ onMounted(() => {
 <template>
   <div flex>
     <span ml-1 text-xl font-600>
-      {{ t('pages.dashboard.portfolio-value') }}
+      {{ props.name }}
     </span>
     <div grow />
     <span
-      :class="data[data.length - 1].value >= 0 ? 'color-lime-600 dark:color-lime-500' : 'color-red-500'"
+      :class="lastValue >= 0 ? 'color-lime-600 dark:color-lime-500' : 'color-red-500'"
       mx-2 text-xl font-600
     >
       $
       <n-number-animation
         :from="0"
-        :to="data[data.length - 1].value"
+        :to="lastValue"
         :duration="4000"
         :active="true"
         show-separator

@@ -1,34 +1,74 @@
-<script setup>
-// const items = ref([]);
-// onMounted(async () => {
-//   const response = await fetch()
+<!--
+  @author: adibarra (Alec Ibarra), maclark (Mason Clark)
+  @description: This component is used to display the trading page of the application.
+-->
 
-// })
-const trend = generateData(Math.floor(Math.random() * 1500) + 500)
+<script setup lang="ts">
+import seedrandom from 'seedrandom'
+import { ACTION, type Quote } from '~/types'
 
-const items = [
-  {
-    id: 2,
-    price: 250,
+const state = useStateStore()
+const fintasy = useAPI()
 
-  },
-  {
-    id: 3,
-    price: 500,
-  },
-  {
-    id: 4,
-    price: 750,
-  },
-]
+const assetQtyMap = computed<Record<string, number>>(() => {
+  const map: Record<string, number> = {}
+  state.transactions.forEach((transaction) => {
+    const symbol = transaction.symbol
+    const quantity = transaction.quantity * (transaction.action === ACTION.BUY ? 1 : -1)
+    symbol in map ? map[symbol] += quantity : map[symbol] = quantity
+  })
+  return map
+})
+const loading = ref(false)
+const currentSymbol = ref(`${state.user.username.toUpperCase()}'s Portfolio`)
+const trend = ref(generateData(state.user.username, 2000))
+const quotes = ref<Quote[]>([])
+const availableSymbols = ref<string[]>([
+  'AAPL',
+  'GOOGL',
+  'AMZN',
+  'MSFT',
+  'TSLA',
+  'FB',
+  'NVDA',
+  'PYPL',
+  'INTC',
+  'ADBE',
+])
 
-function generateData(count) {
+// get quotes for available symbols
+async function getQuotes() {
+  const quotes: Quote[] = []
+
+  loading.value = true
+  const quotePromises = availableSymbols.value.map(async (symbol) => {
+    const response = await fintasy.getQuote({ symbol })
+    if (response.code === 200)
+      return response.data
+
+    return undefined
+  })
+
+  const resolvedQuotes = await Promise.all(quotePromises)
+  loading.value = false
+
+  resolvedQuotes.forEach((quote) => {
+    if (quote !== undefined)
+      quotes.push(quote)
+  })
+
+  return quotes
+}
+
+// generate random test data
+function generateData(seed: string, count: number) {
+  const rand = seedrandom(seed)
   const data = []
   const startDate = new Date().getTime() - 1000 * 60 * 15 * count
   let value = 1000
 
   for (let i = 0; i < count; ++i) {
-    value = Math.round((Math.random() * 1 - 0.495) * 100 + value)
+    value = Math.round((rand() * 1 - 0.495) * 100 + value)
     data.push({
       date: startDate + 1000 * 60 * 15 * i,
       value,
@@ -36,21 +76,37 @@ function generateData(count) {
   }
   return data
 }
+
+onMounted(async () => {
+  quotes.value = await getQuotes()
+  await state.refresh.transactions()
+})
 </script>
 
 <template>
   <!-- main wrapper div -->
-  <div flex grow gap-3>
-    <div h-full w-25vw bg--c-fg>
-      left div
-      <div p-8>
-        <DataTable :items="items" />
-      </div>
-    </div>
 
-    <div grow p-10>
-      <div h-80>
-        <PortfolioChart :data="trend" />
+  <!-- right side div -->
+  <div flex grow flex-col fn-outline bg--c-fg p-10>
+    <div mb-15 h-80>
+      <PortfolioChart
+        :name="`${currentSymbol} Trend`"
+        :data="trend"
+      />
+    </div>
+    <div flex grow>
+      <div v-if="loading" flex grow items-center justify-center>
+        <n-spin />
+      </div>
+      <div v-else grow>
+        <DataTable
+          :asset-map="assetQtyMap"
+          :quotes="quotes"
+          @selected="quote => {
+            trend = generateData(quote.symbol, 2000)
+            currentSymbol = quote.symbol
+          }"
+        />
       </div>
     </div>
   </div>
