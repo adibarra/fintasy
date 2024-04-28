@@ -19,6 +19,7 @@ const assetQtyMap = computed<Record<string, number>>(() => {
   })
   return map
 })
+const loading = computed(() => state.transactions.length === 0)
 const currentSymbol = ref(`${state.user.username}'s Portfolio`)
 const trend = ref(generateData(state.user.username, 2000))
 const quotes = ref<Quote[]>([])
@@ -84,22 +85,27 @@ onMounted(async () => {
   <!-- main wrapper div -->
 
   <!-- right side div -->
-  <div grow fn-outline bg--c-fg p-10>
+  <div flex grow flex-col fn-outline bg--c-fg p-10>
     <div mb-15 h-80>
       <PortfolioChart
         :name="`${currentSymbol} Trend`"
         :data="trend"
       />
     </div>
-    <div grow>
-      <DataTable
-        :asset-map="assetQtyMap"
-        :quotes="quotes"
-        @selected="quote => {
-          trend = generateData(quote.symbol, 2000)
-          currentSymbol = quote.symbol
-        }"
-      />
+    <div flex grow>
+      <div v-if="loading" flex grow items-center justify-center>
+        <n-spin />
+      </div>
+      <div v-else grow>
+        <DataTable
+          :asset-map="assetQtyMap"
+          :quotes="quotes"
+          @selected="quote => {
+            trend = generateData(quote.symbol, 2000)
+            currentSymbol = quote.symbol
+          }"
+        />
+      </div>
     </div>
   </div>
 </template>
