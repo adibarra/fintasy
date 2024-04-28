@@ -88,9 +88,9 @@ onMounted(async () => {
 
   <!-- right side div -->
   <div flex grow flex-col fn-outline bg--c-fg p-10>
-    <div mb-15 h-80>
+    <div mb-20 h-80 sm:mb-12>
       <PortfolioChart
-        :name="`${currentSymbol} Trend`"
+        :name="currentSymbol.length > 6 ? currentSymbol : `${currentSymbol} Trend`"
         :data="trend"
       />
     </div>
