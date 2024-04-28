@@ -713,7 +713,7 @@ paths:
         default:
           $ref: '#/components/responses/APIResponseError'
 
-  /quotes/historical/{symbol}:
+  /quotes/{symbol}/historical:
     get:
       security:
         - bearerAuth: []
