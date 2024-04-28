@@ -20,7 +20,7 @@ function createPortfolio(slotCloseFunc: Function) {
 
   // add portfolio
   fintasy.createPortfolio({ name: portfolioName.value })
-  state.refresh.portfolio()
+  state.refresh.portfolios()
   close(slotCloseFunc)
 }
 

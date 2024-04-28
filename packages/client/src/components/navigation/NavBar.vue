@@ -67,8 +67,7 @@ watch(() => fintasy.authenticated.value, () => {
 
 // get state on mount, manually refresh when needed
 onMounted(() => {
-  state.refresh.user()
-  state.refresh.portfolio()
+  state.refresh.all()
 })
 </script>
 
