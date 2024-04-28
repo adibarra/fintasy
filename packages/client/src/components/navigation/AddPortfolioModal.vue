@@ -4,22 +4,37 @@
 -->
 
 <script setup lang="ts">
+import { useMessage } from 'naive-ui'
+
 const isOpen = defineModel<boolean>()
 
 const fintasy = useAPI()
 const state = useStateStore()
+const message = useMessage()
 
 const portfolioName = ref('')
 const error = ref('')
 
-function createPortfolio(slotCloseFunc: Function) {
+async function createPortfolio(slotCloseFunc: Function) {
   if (!portfolioName.value) {
     error.value = 'Portfolio name is required'
     return
   }
 
   // add portfolio
-  fintasy.createPortfolio({ name: portfolioName.value })
+  const response = await fintasy.createPortfolio({ name: portfolioName.value })
+  switch (response.code) {
+    case 400:
+      error.value = 'Portfolio name does not meet requirements'
+      return
+    case 200:
+      break
+    default:
+      error.value = 'An unknown error occurred. Please try again later.'
+      return
+  }
+
+  message.info('Portfolio created successfully')
   state.refresh.portfolios()
   close(slotCloseFunc)
 }
