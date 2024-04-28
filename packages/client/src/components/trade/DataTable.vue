@@ -81,17 +81,15 @@ function handleRadioFilter(filter: string) {
 <template>
   <div>
     <div class="flex items-center">
-      <div mx-2 my-2>
-        <input
-          type="text"
-          placeholder="Search"
-          grow fn-outline bg--c-fg py-0.5 pl-2 text--c-inverse
-          @input="(e) => {
-            const target = e.target as HTMLInputElement
-            handleSearch(target.value)
-          }"
-        >
-      </div>
+      <input
+        type="text"
+        placeholder="Search"
+        my-2 max-w-50 grow fn-outline bg--c-fg py-0.5 pl-2 text--c-inverse
+        @input="(e) => {
+          const target = e.target as HTMLInputElement
+          handleSearch(target.value)
+        }"
+      >
 
       <div grow />
 
@@ -105,7 +103,7 @@ function handleRadioFilter(filter: string) {
     </div>
   </div>
 
-  <table class="flex flex-col text-sm">
+  <table class="flex flex-col text-sm" fn-outline>
     <thead class="text-xs uppercase">
       <tr flex>
         <template
@@ -124,7 +122,7 @@ function handleRadioFilter(filter: string) {
         v-for="quote in filteredQuotes"
         :key="quote.symbol"
         :class="{ 'bg--c-accent text--c-bg': selected === quote }"
-        flex border-b font-900 first:border-t
+        flex border-b font-900 first:border-t last:border-b-none
         @click="() => {
           emit('selected', quote)
           selected = quote
