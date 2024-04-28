@@ -32,7 +32,8 @@ async function createTransaction(action: ACTION) {
     action,
     quantity: quantity.value,
   })
-  await state.refresh.transactions()
+  // refresh the portfolios so that the new balance is loaded
+  await state.refresh.portfolios()
 }
 </script>
 
