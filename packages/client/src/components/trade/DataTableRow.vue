@@ -48,8 +48,7 @@ async function createTransaction(action: ACTION) {
       min="0"
       max="100"
       placeholder="Qty"
-      class="bg-gray-50 text-gray-900"
-      w-15 fn-outline text-center
+      w-15 fn-outline bg--c-fg text-center text--c-inverse
       @input="quantity = Math.abs(quantity)"
     >
   </td>

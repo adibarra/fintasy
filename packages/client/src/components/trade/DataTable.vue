@@ -68,8 +68,7 @@ function handleRadioFilter(filter: string) {
         <input
           type="text"
           placeholder="Search"
-          class="bg-gray-50 pl-2 text-gray-900"
-          grow fn-outline
+          grow fn-outline bg--c-fg py-0.5 pl-2 text--c-inverse
           @input="(e) => {
             const target = e.target as HTMLInputElement
             handleSearch(target.value)
