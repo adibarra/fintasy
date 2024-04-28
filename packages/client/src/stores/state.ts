@@ -49,6 +49,7 @@ export const useStateStore = defineStore('state', () => {
 
     portfolio.value.active = 0
     portfolio.value.available = portfoliosRequest.data
+      .toSorted((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
 
     if (portfoliosRequest.data.length !== 0)
       return
