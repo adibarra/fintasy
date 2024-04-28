@@ -169,10 +169,11 @@ onMounted(() => {
           { key: 2, label: 'Logout', icon: renderIcon(LogoutIcon) },
         ]"
         trigger="click"
-        @select="(key: any, option: any) => {
-          message.info(`Selected ${option.label}`)
-          if (key === 0)
-            fintasy.logout()
+        @select="async (key: any, option: any) => {
+          if (key === 2) {
+            message.success('Logged out')
+            await fintasy.logout()
+          }
         }"
       >
         <n-avatar
