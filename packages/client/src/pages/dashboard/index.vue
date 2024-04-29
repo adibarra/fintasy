@@ -43,34 +43,41 @@ const chartData = computed(() => generateData(
 ))
 const assets = computed(() => {
   const assets: Asset[] = []
+  const symbols: string[] = []
+
+  if (transactions.value.length === 0)
+    return assets
+
   transactions.value.forEach((transaction) => {
-    const index = assets.findIndex(a => a.symbol === transaction.symbol)
-    const quantity = transaction.action === ACTION.BUY ? transaction.quantity : -transaction.quantity
-    if (index === -1) {
-      assets.push({
-        symbol: transaction.symbol,
-        quantity: transaction.quantity,
-        price_cents: transaction.price_cents / transaction.quantity,
-        avg_price_cents: transaction.price_cents / transaction.quantity,
-        pl_total: 0,
-      })
-    }
-    else {
-      assets[index].quantity += quantity
-      assets[index].price_cents = transaction.price_cents / transaction.quantity
-      assets[index].avg_price_cents += transaction.price_cents
-    }
+    if (!symbols.includes(transaction.symbol))
+      symbols.push(transaction.symbol)
   })
-  assets.forEach((asset) => {
-    if (asset.quantity === 0)
-      return
-    asset.avg_price_cents /= asset.quantity
-    asset.pl_total = (asset.price_cents - asset.avg_price_cents) * asset.quantity
-    asset.quantity = transactions.value.filter(t => t.symbol === asset.symbol).reduce((acc, t) => {
+
+  symbols.forEach((symbol) => {
+    const symbol_transactions = transactions.value.filter(t => t.symbol === symbol)
+    const owned = symbol_transactions.reduce((acc, t) => {
       return t.action === ACTION.BUY ? acc + t.quantity : acc - t.quantity
     }, 0)
+
+    if (owned === 0)
+      return
+
+    const price_cents = symbol_transactions[0].price_cents
+    const avg_price_cents = symbol_transactions.reduce((acc, t) => {
+      return t.action === ACTION.BUY ? acc + t.price_cents : acc - t.price_cents
+    }, 0)
+    const pl_total = (price_cents - avg_price_cents) * owned
+
+    assets.push({
+      symbol,
+      quantity: owned,
+      price_cents,
+      avg_price_cents,
+      pl_total,
+    })
   })
-  return assets.filter(asset => asset.quantity > 0)
+
+  return assets
 })
 
 // update chart data every 2 seconds
