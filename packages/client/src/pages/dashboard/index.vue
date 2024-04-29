@@ -32,7 +32,7 @@ const transactions = computed(() => state.transactions)
 const startTime = computed(() => {
   if (state.portfolio.available.length < state.portfolio.active + 1)
     return new Date().getTime()
-  return new Date(state.portfolio.available[state.portfolio.active].created_at).getTime()
+  return new Date(state.portfolio.available[state.portfolio.active].created_at).getTime() - new Date().getTimezoneOffset() * 60000
 })
 const deltaTime = ref(0)
 
@@ -115,7 +115,7 @@ function generateData(seed: string, count: number, startDate: number) {
       continue
 
     // if date is when stock market is closed, don't change value
-    if (new Date(date).getUTCHours() < 13 || new Date(date).getUTCHours() > 20)
+    if (new Date(date).getUTCHours() < 11 || new Date(date).getUTCHours() > 18)
       continue
 
     // if date is on a weekend, don't change value
