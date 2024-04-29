@@ -25,15 +25,24 @@ const trend = ref(generateData(state.user.username, 2000))
 const quotes = ref<Quote[]>([])
 const availableSymbols = ref<string[]>([
   'AAPL',
-  'GOOGL',
+  'ADBE',
+  'AMC',
+  'AMD',
   'AMZN',
+  'BBW',
+  'GME',
+  'GOOGL',
+  'JPM',
+  'META',
   'MSFT',
-  'TSLA',
-  'FB',
+  'NFLX',
+  'NIO',
   'NVDA',
   'PYPL',
-  'INTC',
-  'ADBE',
+  'RACE',
+  'TSLA',
+  'TWNK',
+  'TWTR',
 ])
 
 // get quotes for available symbols
