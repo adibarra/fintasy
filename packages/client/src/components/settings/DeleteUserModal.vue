@@ -25,7 +25,7 @@ async function deleteUser(slotCloseFunc: Function) {
       return
   }
 
-  message.info('User deleted successfully')
+  message.success('User deleted successfully')
   state.refresh.user()
   close(slotCloseFunc)
 }
