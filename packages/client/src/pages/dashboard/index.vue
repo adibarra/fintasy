@@ -77,7 +77,9 @@ function generateData(seed: string, count: number, startDate: number) {
   const data = []
   const endDate = new Date().getTime()
 
-  if (count > 100)
+  if (count > 10000)
+    count /= 100
+  else if (count > 1000)
     count /= 10
 
   const interval = Math.floor((endDate - startDate) / count)
