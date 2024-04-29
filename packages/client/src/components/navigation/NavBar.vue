@@ -16,7 +16,7 @@ import { NIcon, useMessage } from 'naive-ui'
 import { createAvatar } from '@dicebear/core'
 import { identicon } from '@dicebear/collection'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const fintasy = useAPI()
 const state = useStateStore()
 const message = useMessage()
@@ -50,6 +50,13 @@ const portfolios = computed(() => {
 
 const avatar = computed(() => {
   return createAvatar(identicon, { seed: state.user.username }).toDataUriSync()
+})
+
+const balance = computed(() => {
+  const moneyFormat = new Intl.NumberFormat(locale.value, { style: 'currency', currency: 'USD' })
+  if (state.portfolio.available.length === 0)
+    return moneyFormat.format(0)
+  return moneyFormat.format(state.portfolio.available[state.portfolio.active].balance_cents / 100)
 })
 
 function renderIcon(icon: Component) {
@@ -106,9 +113,9 @@ onMounted(() => {
       <!-- spacer to push the rest of the items to the right -->
       <div grow />
 
-      <!-- coins -->
+      <!-- portfolio balance -->
       <div hidden w-fit items-center justify-center fn-outline px-2 op-85 md:flex>
-        Coins: 🪙 {{ state.user.coins }}
+        Balance: {{ balance }}
       </div>
 
       <!-- switch user portfolio account -->
