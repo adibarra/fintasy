@@ -146,6 +146,7 @@ watch(() => props.filters, () => {
         &gt;
       </button>
     </div>
+    <TournamentModal :visible="showModal" :tournament="tournamentDetails" @close="closeTournamentModal" />
   </div>
 </template>
 

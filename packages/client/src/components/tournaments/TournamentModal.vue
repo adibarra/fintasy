@@ -19,7 +19,6 @@ function closeModal() {
 }
 
 function formatDate(date: string) {
-  // Adjust format as necessary
   return new Date(date).toLocaleDateString('en-US')
 }
 </script>
@@ -33,8 +32,14 @@ function formatDate(date: string) {
       <p><strong>Status:</strong> {{ props.tournament.status }}</p>
       <p><strong>Start Date:</strong> {{ formatDate(props.tournament.start_date) }}</p>
       <p><strong>End Date:</strong> {{ formatDate(props.tournament.end_date) }}</p>
-      <p><strong>Created At:</strong> {{ formatDate(props.tournament.created_at) }}</p>
-      <p><strong>Updated At:</strong> {{ formatDate(props.tournament.updated_at) }}</p>
+      <p><strong>Created On:</strong> {{ formatDate(props.tournament.created_at) }}</p>
+      <p><strong>Last Updated:</strong> {{ formatDate(props.tournament.updated_at) }}</p>
+      <button
+        fn-outline px-2 py-1 fn-hover
+        @click="closeModal"
+      >
+        Close
+      </button>
     </div>
   </div>
 </template>
