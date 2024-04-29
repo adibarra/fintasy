@@ -49,16 +49,16 @@ const assets = computed(() => {
     if (index === -1) {
       assets.push({
         symbol: transaction.symbol,
-        quantity,
-        price_cents: transaction.price_cents,
-        avg_price_cents: transaction.price_cents,
+        quantity: transaction.quantity,
+        price_cents: transaction.price_cents / transaction.quantity,
+        avg_price_cents: transaction.price_cents / transaction.quantity,
         pl_total: 0,
       })
     }
     else {
       assets[index].quantity += quantity
-      assets[index].price_cents = transaction.price_cents
-      assets[index].avg_price_cents += transaction.price_cents * quantity
+      assets[index].price_cents = transaction.price_cents / transaction.quantity
+      assets[index].avg_price_cents += transaction.price_cents
     }
   })
   assets.forEach((asset) => {
@@ -66,6 +66,9 @@ const assets = computed(() => {
       return
     asset.avg_price_cents /= asset.quantity
     asset.pl_total = (asset.price_cents - asset.avg_price_cents) * asset.quantity
+    asset.quantity = transactions.value.filter(t => t.symbol === asset.symbol).reduce((acc, t) => {
+      return t.action === ACTION.BUY ? acc + t.quantity : acc - t.quantity
+    }, 0)
   })
   return assets.filter(asset => asset.quantity > 0)
 })
