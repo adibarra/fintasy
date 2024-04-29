@@ -24,7 +24,8 @@ class TestAlpaca(unittest.TestCase):
         self.assertIsNotNone(a1)
         # Test case for an invalid custom interval (should default to 5 minutes)
         a2 = AlpacaService.get_historical_quote("AAPL", datetime(2023, 10, 3), datetime(2023, 10, 5), "22m", quote_limit=100)
-        self.assertIsNotNone(a2)
+        a3 = AlpacaService.get_historical_quote("AAPL", datetime(2023, 10, 3), datetime(2023, 10, 5), "5m", quote_limit=100)
+        self.assertDictEqual(a2, a3)
 
     def test_historical_limit(self):
         """ Test Historical Quote limit """
