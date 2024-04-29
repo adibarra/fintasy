@@ -112,6 +112,13 @@ def create_transaction(
             detail="Forbidden",
         )
 
+    # check if quantity is valid
+    if data.quantity <= 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Bad Request",
+        )
+
     # get the stock quote
     quote = AlpacaService.get_quote(data.symbol)
     if quote is None:
