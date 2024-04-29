@@ -112,9 +112,14 @@ class AlpacaService:
 
         return None
 
-    def get_historical_quote(self, symbol: str, start_time : datetime,  end_time : datetime , interval : str = "5m", quote_limit: int = 10, offset : int = 0):
+    def get_historical_quote(self, symbol: str, start_time : datetime,  end_time : datetime , interval : str = "5m", quote_limit: int = 10, offset : int = 0) -> dict | None:
         """Sends GET request to Alpaca API to get the latest historical quotes"""
-
+        # Validate offset parameter
+        if not isinstance(offset, int) or offset < 0:
+            raise ValueError("Offset must be a non-negative integer.")
+        # Validate quote limit parameter
+        if not isinstance(quote_limit, int) or quote_limit <= 0:
+            raise ValueError("Quote limit must be a positive integer.")
         # Convert start and end time string to appropriate format for request
         start = str(start_time).split()
         start = start[0] + 'T' + start[1] + 'Z'
@@ -134,6 +139,10 @@ class AlpacaService:
             # Return none if response object is empty
             if response_data["trades"] == {}:
                 return None
+            # Handle invalid input for interval
+            if interval not in intervalIncrement.keys():
+                # Set to default (could also return None)
+                interval = '5m'
             # Queue to store quotes
             q = deque()
             # Data array for return call
@@ -150,14 +159,14 @@ class AlpacaService:
             # Get first quote
             quote = q[0]
             quoteTime = datetime.strptime(quote["t"][:-4], "%Y-%m-%dT%H:%M:%S.%f")
-            # Start the interval time at the first quote
-            intStartTime = quoteTime
-            # print(intStartTime)
+
 
             while q:
                 # Update intStartTime and intEndTime
                 intStartTime = quoteTime
                 intEndTime = intStartTime + intervalIncrement[interval]
+                
+                    
                 # While queue is not empty and within interval
                 # Split up quotes according to the time interval
                 numQuotes = 0
