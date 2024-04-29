@@ -47,6 +47,7 @@ pages:
     symbol: প্রতীক
     quantity: পরিমাণ
     price: মূল্য
+    avg-price: গড় মূল্য
     profit-loss-day: লাভ / ক্ষতি দিন
     profit-loss-total: মোট লাভ / ক্ষতি
     buy-sell-action: অ্যাকশন

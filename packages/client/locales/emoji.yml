@@ -43,6 +43,7 @@ pages:
     symbol: 🔣
     quantity: 💹
     price: 💰
+    avg-price: 🧮💰
     profit-loss-day: 📈/📉
     profit-loss-total: 📈/📉
     buy-sell-action: ➕/➖

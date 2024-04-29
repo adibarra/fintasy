@@ -142,7 +142,11 @@ export default defineConfig({
     }),
 
     // https://github.com/feat-agency/vite-plugin-webfont-dl
-    WebfontDownload(),
+    WebfontDownload([
+      'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap',
+      'https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400;500;700&display=swap',
+      'https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&display=swap',
+    ]),
   ],
 
   // https://github.com/vitest-dev/vitest

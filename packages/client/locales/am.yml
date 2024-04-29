@@ -47,6 +47,7 @@ pages:
     symbol: ምርመራ
     quantity: ብዛት
     price: ዋጋ
+    avg-price: መደብ ዋጋ
     profit-loss-day: የአሁኑ ግንዛቤ
     profit-loss-total: የሚኖሩ ግንዛቤ
     buy-sell-action: ቅጥያ/ሽያጭ እንቅስቃሴ

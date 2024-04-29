@@ -18,7 +18,7 @@ interface Asset {
   symbol: string
   quantity: number
   price_cents: number
-  pl_day: number
+  avg_price_cents: number
   pl_total: number
 }
 
@@ -29,17 +29,15 @@ const cash = computed(() => {
   return (balance_cents / 100)
 })
 const transactions = computed(() => state.transactions)
+const startTime = computed(() => new Date(state.user.created_at).getTime())
+const deltaTime = ref(0)
+
 const chartData = computed(() => generateData(
   state.user.username,
-  transactions.value.length > 0
-    ? (new Date().getTime()
-    - new Date(transactions.value[transactions.value.length - 1].created_at).getTime())
-    / 1000 / 60 / 15
-    : 0,
-),
-)
+  deltaTime.value,
+  startTime.value,
+))
 const assets = computed(() => {
-  const rand = seedrandom(state.user.username)
   const assets: Asset[] = []
   transactions.value.forEach((transaction) => {
     const index = assets.findIndex(a => a.symbol === transaction.symbol)
@@ -49,34 +47,67 @@ const assets = computed(() => {
         symbol: transaction.symbol,
         quantity,
         price_cents: transaction.price_cents,
-        pl_day: 0,
+        avg_price_cents: transaction.price_cents * quantity,
         pl_total: 0,
       })
     }
     else {
       assets[index].quantity += quantity
+      assets[index].price_cents = transaction.price_cents
+      assets[index].avg_price_cents += transaction.price_cents * quantity
     }
   })
   assets.forEach((asset) => {
-    asset.pl_day = asset.quantity * asset.price_cents * (rand() * 0.01)
-    asset.pl_total = asset.pl_day * 1.3
+    if (asset.quantity === 0)
+      return
+    asset.avg_price_cents /= asset.quantity
+    asset.pl_total = (asset.price_cents - asset.avg_price_cents) * asset.quantity
   })
-  return assets
+  return assets.filter(asset => asset.quantity > 0)
 })
 
+// update chart data every second
+setInterval(() => {
+  deltaTime.value = Math.floor((new Date().getTime() - startTime.value) / 1000)
+}, 1000)
+
 // generate random data
-function generateData(seed: string, count: number) {
+function generateData(seed: string, count: number, startDate: number) {
   const rand = seedrandom(seed)
   const data = []
-  const startDate = new Date().getTime() - 1000 * 60 * 15 * count
+  const endDate = new Date().getTime()
+
+  if (count > 10000)
+    count /= 100
+  else if (count > 1000)
+    count /= 10
+
+  const interval = Math.floor((endDate - startDate) / count)
+  let date = startDate
   let value = 10000
 
-  for (let i = 0; i < count - 1; i++) {
-    data.push({
-      date: startDate + 1000 * 60 * 15 * i,
-      value,
-    })
-    value = Math.round((rand() * 1 - 0.4995) * 100 + value)
+  for (let i = 0; i < count; ++i) {
+    data.push({ date, value })
+
+    date += interval
+
+    // if user has no transactions, don't change value
+    if (transactions.value.length === 0)
+      continue
+
+    // if date is before when user made their first transaction, don't change value
+    if (date < new Date(transactions.value[0].created_at).getTime())
+      continue
+
+    // if date is when stock market is closed, don't change value
+    if (new Date(date).getUTCHours() < 13 || new Date(date).getUTCHours() > 20)
+      continue
+
+    // if date is on a weekend, don't change value
+    if (new Date(date).getUTCDay() === 0 || new Date(date).getUTCDay() === 6)
+      continue
+
+    value = Math.round((rand() * 1 - 0.49995) * 5 + value)
   }
   return data
 }
