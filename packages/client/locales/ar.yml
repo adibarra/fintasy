@@ -47,6 +47,7 @@ pages:
     symbol: رمز
     quantity: الكمية
     price: السعر
+    avg-price: السعر المتوسط
     profit-loss-day: الربح/الخسارة اليومية
     profit-loss-total: الربح/الخسارة الإجمالية
     buy-sell-action: الإجراء

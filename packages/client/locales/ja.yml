@@ -47,6 +47,7 @@ pages:
     symbol: シンボル
     quantity: 量
     price: 価格
+    avg-price: 平均価格
     profit-loss-day: 日次損益
     profit-loss-total: 累計損益
     buy-sell-action: アクション

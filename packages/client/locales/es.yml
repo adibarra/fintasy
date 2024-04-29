@@ -47,6 +47,7 @@ pages:
     symbol: Símbolo
     quantity: Cant.
     price: Precio
+    avg-price: Precio Promedio
     profit-loss-day: P/L Día
     profit-loss-total: P/L Total
     buy-sell-action: Acción

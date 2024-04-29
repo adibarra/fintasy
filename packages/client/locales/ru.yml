@@ -47,6 +47,7 @@ pages:
     symbol: Символ
     quantity: Количество
     price: Цена
+    avg-price: Средняя цена
     profit-loss-day: Прибыль/Убыток за день
     profit-loss-total: Общая прибыль/убыток
     buy-sell-action: Действие

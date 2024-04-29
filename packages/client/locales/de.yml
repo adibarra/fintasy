@@ -47,6 +47,7 @@ pages:
     symbol: Symbol
     quantity: Menge
     price: Preis
+    avg-price: Durchschnittspreis
     profit-loss-day: Gewinn/Verlust Tag
     profit-loss-total: Gewinn/Verlust Gesamt
     buy-sell-action: Aktion

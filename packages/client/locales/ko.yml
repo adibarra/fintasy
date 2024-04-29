@@ -47,6 +47,7 @@ pages:
     symbol: 심볼
     quantity: 수량
     price: 가격
+    avg-price: 평균 가격
     profit-loss-day: 일일 수익/손실
     profit-loss-total: 총 수익/손실
     buy-sell-action: 동작
