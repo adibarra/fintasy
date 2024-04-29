@@ -2,6 +2,7 @@
 # @description: Helper function to retrieve stock info from Alpaca Markets API
 
 
+
 import math
 from collections import deque
 from dataclasses import asdict, dataclass
@@ -122,7 +123,7 @@ class AlpacaService:
         end = end[0] + 'T' + end[1] + 'Z'
         # print(end)
         # Construct request url
-        historical_url = f"{api_host}?symbols={symbol}&start={start}&end={end}&limit={quote_limit}&feed=iex&currency=USD"
+        historical_url = f"{api_host}?symbols={symbol}&start={start}&end={end}&limit={quote_limit+offset}&feed=iex&currency=USD"
         # print(historical_url)
         # Create response object
         response = requests.get(historical_url, headers=headers)
@@ -130,7 +131,9 @@ class AlpacaService:
         # Check if the request was successful
         if response.status_code == 200:
             response_data = response.json()
-
+            # Return none if response object is empty
+            if response_data["trades"] == {}:
+                return None
             # Queue to store quotes
             q = deque()
             # Data array for return call
@@ -177,7 +180,7 @@ class AlpacaService:
                     pricecents = totalPriceCents / numQuotes
                     timestamp = totalTime / numQuotes
                     # Convert back to datetime object
-                    timestamp = datetime.fromtimestamp(timestamp=timestamp)
+                    timestamp = datetime.fromtimestamp(timestamp=timestamp, tz=timezone.utc)
                     # Add quote object to data array
                     quote_obj = Quote(symbol, pricecents, timestamp)
                     data.append(asdict(quote_obj))
@@ -191,4 +194,5 @@ class AlpacaService:
         else:
             print(f"Error: {response.status_code} - {response.text}")
             return None
+
 
