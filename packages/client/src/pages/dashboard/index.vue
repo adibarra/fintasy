@@ -29,7 +29,11 @@ const cash = computed(() => {
   return (balance_cents / 100)
 })
 const transactions = computed(() => state.transactions)
-const startTime = computed(() => new Date(state.user.created_at).getTime())
+const startTime = computed(() => {
+  if (state.portfolio.available.length < state.portfolio.active + 1)
+    return new Date().getTime()
+  return new Date(state.portfolio.available[state.portfolio.active].created_at).getTime()
+})
 const deltaTime = ref(0)
 
 const chartData = computed(() => generateData(
@@ -45,16 +49,16 @@ const assets = computed(() => {
     if (index === -1) {
       assets.push({
         symbol: transaction.symbol,
-        quantity,
-        price_cents: transaction.price_cents,
-        avg_price_cents: transaction.price_cents * quantity,
+        quantity: transaction.quantity,
+        price_cents: transaction.price_cents / transaction.quantity,
+        avg_price_cents: transaction.price_cents / transaction.quantity,
         pl_total: 0,
       })
     }
     else {
       assets[index].quantity += quantity
-      assets[index].price_cents = transaction.price_cents
-      assets[index].avg_price_cents += transaction.price_cents * quantity
+      assets[index].price_cents = transaction.price_cents / transaction.quantity
+      assets[index].avg_price_cents += transaction.price_cents
     }
   })
   assets.forEach((asset) => {
@@ -62,14 +66,17 @@ const assets = computed(() => {
       return
     asset.avg_price_cents /= asset.quantity
     asset.pl_total = (asset.price_cents - asset.avg_price_cents) * asset.quantity
+    asset.quantity = transactions.value.filter(t => t.symbol === asset.symbol).reduce((acc, t) => {
+      return t.action === ACTION.BUY ? acc + t.quantity : acc - t.quantity
+    }, 0)
   })
   return assets.filter(asset => asset.quantity > 0)
 })
 
-// update chart data every second
+// update chart data every 2 seconds
 setInterval(() => {
   deltaTime.value = Math.floor((new Date().getTime() - startTime.value) / 1000)
-}, 1000)
+}, 2000)
 
 // generate random data
 function generateData(seed: string, count: number, startDate: number) {
@@ -96,7 +103,7 @@ function generateData(seed: string, count: number, startDate: number) {
       continue
 
     // if date is before when user made their first transaction, don't change value
-    if (date < new Date(transactions.value[0].created_at).getTime())
+    if (date < new Date(transactions.value[transactions.value.length - 1].created_at).getTime())
       continue
 
     // if date is when stock market is closed, don't change value
