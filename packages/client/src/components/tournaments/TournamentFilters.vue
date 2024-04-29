@@ -39,7 +39,6 @@ function applyFilters() {
       <!-- might need to use event instead of v-model to properly extract data we need -->
       <n-date-picker v-model="dateTimeRange" type="datetimerange" clearable />
 
-      <pre>{{ JSON.stringify(dateTimeRange) }}</pre>
       <select v-model="filters.status">
         <option :value="undefined">
           All
