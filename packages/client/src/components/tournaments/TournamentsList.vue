@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra), Zedfoura (Tinatsei Chingaya)
+  @description: This component is used to display the list of tournaments on the tournaments page of the application.
+-->
+
 <script setup lang="ts">
 import { useMessage } from 'naive-ui'
 import type { STATUS, Tournament } from '~/types'
@@ -50,7 +55,6 @@ async function fetchTournaments(page: number) {
 }
 
 async function viewTournament(uuid: string) {
-  console.log(`Viewing tournament ${uuid}`)
   const response = await fintasy.getTournament({ uuid })
   if (response.code !== 200) {
     console.error('Failed to load tournament details.') // Or handle this error differently
@@ -62,15 +66,11 @@ async function viewTournament(uuid: string) {
 }
 
 async function joinTournament(uuid: string) {
-  console.log(`Joining tournament ${uuid}`)
-
   const tournamentResponse = await fintasy.getTournament({ uuid })
   if (tournamentResponse.code !== 200) {
     console.error('Failed to fetch tournament details')
     return
   }
-  // Construct the portfolio name based on the tournament name
-  const portfolioName = tournamentResponse.data.name
 
   // Proceed to create a portfolio
   const portfolioResponse = await fintasy.createPortfolio({ name: tournamentResponse.data.name, tournament: uuid })
@@ -146,7 +146,7 @@ watch(() => props.filters, () => {
         &gt;
       </button>
     </div>
-    <TournamentModal :visible="showModal" :tournament="tournamentDetails" @close="closeTournamentModal" />
+    <TournamentModal v-if="tournamentDetails" :visible="showModal" :tournament="tournamentDetails" @close="closeTournamentModal" />
   </div>
 </template>
 

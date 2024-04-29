@@ -1,3 +1,8 @@
+<!--
+  @author: Zedfoura (Tinatsei Chingaya)
+  @description: This component is used to display the filters for the tournaments page of the application.
+-->
+
 <script setup lang="ts">
 import { STATUS } from '~/types'
 

@@ -1,3 +1,8 @@
+<!--
+  @author: adibarra (Alec Ibarra), Zedfoura (Tinatsei Chingaya)
+  @description: This component is used to display the tournaments page of the application.
+-->
+
 <script setup lang="ts">
 import type { STATUS } from '~/types'
 

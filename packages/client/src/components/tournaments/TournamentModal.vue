@@ -1,3 +1,8 @@
+<!--
+  @author: Zedfoura (Tinatsei Chingaya)
+  @description: This component is used to display the tournament modal.
+-->
+
 <script setup lang="ts">
 import type { Tournament } from '~/types'
 
@@ -55,6 +60,7 @@ function formatDate(date: string) {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 999;
 }
 .modal-content {
   background: black;
