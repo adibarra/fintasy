@@ -1,6 +1,7 @@
 # @Author: adibarra (Alec Ibarra), omer8 (Omer Siddiqui)
 # @description: Helper function to retrieve stock info from Alpaca Markets API
 
+
 import math
 from collections import deque
 from dataclasses import asdict, dataclass
@@ -62,7 +63,7 @@ CACHE = Cache(100)
 
 
 class AlpacaService:
-    def get_quote(symbol: str) -> dict | None:
+    def get_quote(self, symbol: str) -> dict | None:
         """Sends a GET Request to Alpaca API to retrieve latest quote"""
         # Check if the symbol is in the cache
         if CACHE.has(symbol):
@@ -93,16 +94,18 @@ class AlpacaService:
 
         return None
 
-    def get_historical_quote(symbol: str, start_time, end_time, quote_limit: int):
+    def get_historical_quote(self, symbol: str, start_time, end_time, quote_limit: int):
         """Sends GET request to Alpaca API to get the latest historical quotes"""
 
         # Convert start and end time string to appropriate format for request
-        start_time = start_time.replace(":", "%3A")
-        print(start_time)
-        end_time = end_time.replace(":", "%3A")
-        print(end_time)
+        start = str(start_time).split()
+        start = start[0] + 'T' + start[1] + 'Z'
+        #print(start)
+        end = str(end_time).split()
+        end = end[0] + 'T' + end[1] + 'Z'
+        #print(end)
         # Construct request url
-        historical_url = f"{api_host}?symbols={symbol}&start={start_time}&end={end_time}&limit={quote_limit}&feed=iex&currency=USD"
+        historical_url = f"{api_host}?symbols={symbol}&start={start}&end={end}&limit={quote_limit}&feed=iex&currency=USD"
         # Create response object
         response = requests.get(historical_url, headers=headers)
 
@@ -126,3 +129,4 @@ class AlpacaService:
         else:
             print(f"Error: {response.status_code} - {response.text}")
             return None
+
