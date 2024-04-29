@@ -10,6 +10,7 @@ from datetime import datetime, timedelta, timezone
 import requests
 from config import APCA_API_KEY, APCA_API_SECRET
 
+
 api_host = "https://data.alpaca.markets/v2/stocks/trades"
 headers = {
     "APCA-API-KEY-ID": APCA_API_KEY,
@@ -80,6 +81,11 @@ class AlpacaService:
         # Check if the request was successful
         if response.status_code == 200:
             response_data = response.json()
+            
+            # Return none if response object is empty
+            if response_data["trades"] == {}:
+                return None
+                
 
             price_cents = math.floor(response_data["trades"][symbol]["p"] * 100)
             timestamp_str = response_data["trades"][symbol]["t"]
@@ -94,7 +100,7 @@ class AlpacaService:
 
         return None
 
-    def get_historical_quote(self, symbol: str, start_time, end_time, quote_limit: int):
+    def get_historical_quote(self, symbol: str, start_time,  end_time, quote_limit: int = None):
         """Sends GET request to Alpaca API to get the latest historical quotes"""
 
         # Convert start and end time string to appropriate format for request
@@ -116,12 +122,10 @@ class AlpacaService:
 
             data = []
             for quote in response_data["trades"][symbol]:
-                quote_data = {
-                    "symbol": symbol,
-                    "price_cents": quote["p"],
-                    "timestamp": quote["t"],
-                }
-                data.append(quote_data)
+                price = quote["p"],
+                timestamp = quote["t"],
+                quote = Quote(symbol, price, timestamp)
+                data.append(asdict(quote))
 
             return data
 
