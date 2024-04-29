@@ -13,6 +13,7 @@
     "Bedane",
     "charliermarsh",
     "chartdiv",
+    "Chingaya",
     "cirolosapio",
     "composables",
     "corepack",
@@ -72,6 +73,7 @@
     "tabout",
     "taze",
     "TIMESTAMPTZ",
+    "Tinatsei",
     "transpiling",
     "Triggerable",
     "typecheck",
@@ -85,7 +87,8 @@
     "VITE",
     "vitesse",
     "vueuse",
-    "webfont"
+    "webfont",
+    "Zedfoura"
   ],
 
   // Enable the ESlint flat config support
