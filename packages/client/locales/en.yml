@@ -48,7 +48,7 @@ pages:
     price: Price
     avg-price: Avg Price
     profit-loss-day: P/L Day
-    profit-loss-total: P/L Total
+    profit-loss-total: P/L (Realized)
     buy-sell-action: Action
     date: Date
     trade:
