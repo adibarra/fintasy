@@ -41,7 +41,7 @@ async function changePassword(slotCloseFunc: Function) {
       return
   }
 
-  message.info('Password changed successfully')
+  message.success('Password changed successfully')
   state.refresh.user()
   close(slotCloseFunc)
 }

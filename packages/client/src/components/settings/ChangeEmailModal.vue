@@ -38,7 +38,7 @@ async function changeEmail(slotCloseFunc: Function) {
       return
   }
 
-  message.info('Email changed successfully')
+  message.success('Email changed successfully')
   state.refresh.user()
   close(slotCloseFunc)
 }

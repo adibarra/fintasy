@@ -118,7 +118,7 @@ onMounted(() => {
         Balance: {{ balance }}
       </div>
 
-      <!-- switch user portfolio account -->
+      <!-- switch / create portfolio -->
       <div h-fit flex gap-2>
         <div w-fit cursor-pointer items-center justify-center fn-outline px-2 op-85 fn-hover>
           <n-dropdown
@@ -126,7 +126,7 @@ onMounted(() => {
             trigger="click"
             @select="(key: any, option: any) => {
               state.portfolio.active = key
-              message.info(`Selected ${option.label}`)
+              message.info(`Switched to ${option.label}`)
             }"
           >
             <div gap-1>

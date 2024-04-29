@@ -38,7 +38,7 @@ async function changeUsername(slotCloseFunc: Function) {
       return
   }
 
-  message.info('Username changed successfully')
+  message.success('Username changed successfully')
   state.refresh.user()
   close(slotCloseFunc)
 }
