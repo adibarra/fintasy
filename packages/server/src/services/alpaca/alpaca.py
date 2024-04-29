@@ -63,6 +63,17 @@ class Cache:
 CACHE = Cache(100)
 
 
+# Dictionary to convert interval to datetime increment
+intervalIncrement = {
+    "5m" : timedelta(minutes=5),
+    "15m": timedelta(minutes=15),
+    "30m": timedelta(minutes=30),
+    "1h" : timedelta(hours=1),
+    "1d" : timedelta(days=1) 
+}
+
+
+
 class AlpacaService:
     def get_quote(self, symbol: str) -> dict | None:
         """Sends a GET Request to Alpaca API to retrieve latest quote"""
@@ -100,33 +111,80 @@ class AlpacaService:
 
         return None
 
-    def get_historical_quote(self, symbol: str, start_time,  end_time, quote_limit: int = None):
+    def get_historical_quote(self, symbol: str, start_time : datetime,  end_time : datetime , interval : str = "5m", quote_limit: int = 10, offset : int = 0):
         """Sends GET request to Alpaca API to get the latest historical quotes"""
 
         # Convert start and end time string to appropriate format for request
         start = str(start_time).split()
         start = start[0] + 'T' + start[1] + 'Z'
-        #print(start)
+        # print(start)
         end = str(end_time).split()
         end = end[0] + 'T' + end[1] + 'Z'
-        #print(end)
+        # print(end)
         # Construct request url
         historical_url = f"{api_host}?symbols={symbol}&start={start}&end={end}&limit={quote_limit}&feed=iex&currency=USD"
+        # print(historical_url)
         # Create response object
         response = requests.get(historical_url, headers=headers)
 
         # Check if the request was successful
         if response.status_code == 200:
             response_data = response.json()
-            # print(response_data)
 
+            # Queue to store quotes
+            q = deque()
+            # Data array for return call
             data = []
-            for quote in response_data["trades"][symbol]:
-                price = quote["p"],
-                timestamp = quote["t"],
-                quote = Quote(symbol, price, timestamp)
-                data.append(asdict(quote))
+            
+            # print(f"{response_data["trades"][symbol][offset:]}\n\n")
+            # Add each quote to our queue
+            for quote in response_data["trades"][symbol][offset:]:
+                q.append(quote)
+            
+            
+            # print(f"Num Quotes: {len(q)}\n")
 
+            # Get first quote
+            quote = q[0]
+            quoteTime = datetime.strptime(quote["t"][:-4], "%Y-%m-%dT%H:%M:%S.%f")
+            # Start the interval time at the first quote
+            intStartTime = quoteTime
+            # print(intStartTime)
+
+            while q:
+                # Update intStartTime and intEndTime
+                intStartTime = quoteTime
+                intEndTime = intStartTime + intervalIncrement[interval]
+                # While queue is not empty and within interval
+                # Split up quotes according to the time interval
+                numQuotes = 0
+                totalTime = 0.0
+                totalPriceCents = 0.0
+                print(f"Interval Range: {intStartTime} - {intEndTime}")
+                while q and quoteTime < intEndTime:
+                    print(f"Quote time: {quoteTime}")
+                    totalPriceCents += quote['p'] * 100
+                    totalTime += quoteTime.timestamp()
+                    numQuotes += 1
+                    # Move to next quote
+                    quote = q.popleft()
+                    quoteTime = datetime.strptime(quote["t"][:-4], "%Y-%m-%dT%H:%M:%S.%f")
+                    
+                    
+                # print("\n")
+                # Average out entries over the interval
+                if numQuotes:
+                    pricecents = totalPriceCents / numQuotes
+                    timestamp = totalTime / numQuotes
+                    # Convert back to datetime object
+                    timestamp = datetime.fromtimestamp(timestamp=timestamp)
+                    # Add quote object to data array
+                    quote_obj = Quote(symbol, pricecents, timestamp)
+                    data.append(asdict(quote_obj))
+                # Update interval
+                intStartTime = intEndTime
+
+            # print(data)
             return data
 
         # Otherwise print error message
