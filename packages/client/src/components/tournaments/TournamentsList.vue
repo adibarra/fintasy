@@ -116,15 +116,25 @@ watch(() => props.filters, () => {
       :key="index"
       class="tournament-card"
     >
-      <h3>{{ tournament.name }}</h3>
-      <p>{{ tournament.status }}</p>
-      <div flex gap-5>
-        <button @click="viewTournament(tournament.uuid)">
-          View
-        </button>
-        <button @click="joinTournament(tournament.uuid)">
-          Quick Join
-        </button>
+      <div flex justify-between>
+        <div>
+          <h3>{{ tournament.name }}</h3>
+          <p>{{ tournament.status }}</p>
+        </div>
+        <div flex gap-2>
+          <button
+            fn-outline px-2 py-1 fn-hover
+            @click="viewTournament(tournament.uuid)"
+          >
+            View
+          </button>
+          <button
+            fn-outline px-2 py-1 fn-hover
+            @click="joinTournament(tournament.uuid)"
+          >
+            Quick Join
+          </button>
+        </div>
       </div>
     </div>
     <div flex justify-center gap-5>

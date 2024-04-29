@@ -54,7 +54,10 @@ function applyFilters() {
         </option>
       </select>
       <!-- More filters can be added here -->
-      <button type="submit">
+      <button
+        fn-outline px-2 py-1 fn-hover
+        type="submit"
+      >
         Apply Filters
       </button>
     </form>

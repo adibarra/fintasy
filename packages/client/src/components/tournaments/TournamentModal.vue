@@ -40,7 +40,7 @@ function formatDate(date: string) {
       <p><strong>Created On:</strong> {{ formatDate(props.tournament.created_at) }}</p>
       <p><strong>Last Updated:</strong> {{ formatDate(props.tournament.updated_at) }}</p>
       <button
-        fn-outline px-2 py-1 fn-hover
+        justify-center fn-outline px-2 py-1 fn-hover
         @click="closeModal"
       >
         Close
