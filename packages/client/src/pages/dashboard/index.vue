@@ -62,10 +62,11 @@ const assets = computed(() => {
     if (owned === 0)
       return
 
-    const price_cents = symbol_transactions[0].price_cents
-    const avg_price_cents = symbol_transactions.reduce((acc, t) => {
+    const price_cents = symbol_transactions[0].price_cents / symbol_transactions[0].quantity
+    const tot_price_cents = symbol_transactions.reduce((acc, t) => {
       return t.action === ACTION.BUY ? acc + t.price_cents : acc - t.price_cents
     }, 0)
+    const avg_price_cents = tot_price_cents / owned
     const pl_total = (price_cents - avg_price_cents) * owned
 
     assets.push({
