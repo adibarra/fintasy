@@ -13,6 +13,7 @@ export const useStateStore = defineStore('state', () => {
     uuid: string
     username: string
     coins: number
+    created_at: string
   }
 
   interface PortfolioState {
@@ -24,6 +25,7 @@ export const useStateStore = defineStore('state', () => {
     uuid: '',
     username: '',
     coins: 0,
+    created_at: '',
   })
   const portfolio = ref<PortfolioState>({
     active: 0,
@@ -39,6 +41,7 @@ export const useStateStore = defineStore('state', () => {
 
     user.value.username = userRequest.data.username
     user.value.coins = userRequest.data.coins
+    user.value.created_at = userRequest.data.created_at
 
     await refreshPortfolios()
   }
@@ -52,20 +55,23 @@ export const useStateStore = defineStore('state', () => {
     portfolio.value.available = portfoliosRequest.data
       .toSorted((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
 
-    if (portfoliosRequest.data.length !== 0)
-      return
+    if (portfoliosRequest.data.length === 0) {
+      const createPortfolioRequest = await fintasy.createPortfolio({ name: 'Default Portfolio' })
+      if (createPortfolioRequest.code !== 200)
+        return
 
-    const createPortfolioRequest = await fintasy.createPortfolio({ name: 'Default Portfolio' })
-    if (createPortfolioRequest.code !== 200)
-      return
-
-    portfolio.value.available = [createPortfolioRequest.data]
+      portfolio.value.available = [createPortfolioRequest.data]
+    }
 
     await refreshTransactions()
   }
 
   async function refreshTransactions() {
-    const transactionsRequest = await fintasy.getTransactions({ portfolio: portfolio.value.available[portfolio.value.active].uuid, limit: 999 })
+    if (portfolio.value.available.length === 0)
+      return
+
+    const portfolioUUID = portfolio.value.available[portfolio.value.active].uuid
+    const transactionsRequest = await fintasy.getTransactions({ portfolio: portfolioUUID, limit: 999 })
     if (transactionsRequest.code !== 200)
       return
 

@@ -47,6 +47,7 @@ pages:
     symbol: प्रतीक
     quantity: मात्रा
     price: मूल्य
+    avg-price: औसत मूल्य
     profit-loss-day: लाभ/हानि दिन
     profit-loss-total: लाभ/हानि कुल
     buy-sell-action: कार्रवाई

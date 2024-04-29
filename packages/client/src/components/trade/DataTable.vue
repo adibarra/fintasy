@@ -62,7 +62,7 @@ function ownedFilter(assetMap: Record<string, number>, quote: Quote) {
       return assetMap[quote.symbol] > 0
 
     case 'Not Owned':
-      return assetMap[quote.symbol] === 0
+      return assetMap[quote.symbol] === undefined
 
     default:
       return true

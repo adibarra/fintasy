@@ -47,6 +47,7 @@ pages:
     symbol: 符号
     quantity: 数量
     price: 价格
+    avg-price: 平均价格
     profit-loss-day: 每日盈亏
     profit-loss-total: 总盈亏
     buy-sell-action: 操作

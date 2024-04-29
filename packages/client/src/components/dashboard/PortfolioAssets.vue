@@ -25,7 +25,7 @@ interface Asset {
   symbol: string
   quantity: number
   price_cents: number
-  pl_day: number
+  avg_price_cents: number
   pl_total: number
 }
 
@@ -33,8 +33,8 @@ const columns = computed(() => [
   { key: 'symbol', title: t('pages.dashboard.symbol'), width: '20%' },
   { key: 'quantity', title: t('pages.dashboard.quantity'), width: '15%' },
   { key: 'price_cents', title: t('pages.dashboard.price'), width: '20%' },
-  { key: 'pl_day', title: t('pages.dashboard.profit-loss-day') },
-  { key: 'pl_total', title: t('pages.dashboard.profit-loss-total') },
+  { key: 'avg_price_cents', title: t('pages.dashboard.avg-price'), width: '20%' },
+  { key: 'pl_total', title: t('pages.dashboard.profit-loss-total'), width: '25%' },
 ])
 
 const data = ref()
@@ -60,7 +60,7 @@ function handlePageChange() {
           symbol: asset.symbol,
           quantity: `x${asset.quantity}`,
           price_cents: moneyFormat.format(asset.price_cents / 100),
-          pl_day: moneyFormat.format(asset.pl_day / 100),
+          avg_price_cents: moneyFormat.format(asset.avg_price_cents / 100),
           pl_total: moneyFormat.format(asset.pl_total / 100),
         }
       })

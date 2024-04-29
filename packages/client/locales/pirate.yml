@@ -47,6 +47,7 @@ pages:
     symbol: Symbol
     quantity: Quantity
     price: Price
+    avg-price: Average Price
     profit-loss-day: Booty Gained/Lost Today
     profit-loss-total: Booty Gained/Lost Overall
     buy-sell-action: Action

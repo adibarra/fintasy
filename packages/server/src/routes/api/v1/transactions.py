@@ -164,6 +164,18 @@ def create_transaction(
                 detail="Bad Request",
             )
 
+        # calculate the new balance
+        new_balance = portfolio["balance_cents"] + (
+            quote["price_cents"] * data.quantity
+        )
+
+        # update the portfolio balance
+        if not db.update_portfolio_balance(portfolio["uuid"], new_balance):
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Internal Server Error",
+            )
+
     # attempt creating transaction
     transaction = db.create_transaction(
         uuid_portfolio=str(data.portfolio),
