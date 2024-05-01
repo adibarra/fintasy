@@ -81,10 +81,10 @@ const assets = computed(() => {
   return assets
 })
 
-// update chart data every 2 seconds
+// update chart data every 5 seconds
 setInterval(() => {
   deltaTime.value = Math.floor((new Date().getTime() - startTime.value) / 1000)
-}, 2000)
+}, 5000)
 
 // generate random data
 function generateData(seed: string, count: number, startDate: number) {
