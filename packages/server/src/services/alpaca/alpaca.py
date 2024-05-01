@@ -58,9 +58,11 @@ class Cache:
         self.key_queue.clear()
 
 
-CACHE = Cache(100)
+CACHE = Cache(500)
 
 
+# TODO: add mechanism for rate limiting requests in addition to the cache
+# limit to 200 requests per minute
 class AlpacaService:
     def get_quote(symbol: str) -> dict | None:
         """Sends a GET Request to Alpaca API to retrieve latest quote"""
