@@ -30,8 +30,8 @@ importers:
   packages/client:
     dependencies:
       '@amcharts/amcharts5':
-        specifier: ^5.9.4
-        version: 5.9.4
+        specifier: ^5.9.5
+        version: 5.9.5
       '@dicebear/collection':
         specifier: ^8.0.1
         version: 8.0.1(@dicebear/core@8.0.1)
@@ -82,7 +82,7 @@ importers:
         version: 0.12.0
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
-        version: 5.0.4(vite@5.2.10(terser@5.31.0))(vue@3.4.26(typescript@5.4.5))
+        version: 5.0.4(vite@5.2.11(terser@5.31.0))(vue@3.4.26(typescript@5.4.5))
       '@vue-macros/volar':
         specifier: ^0.18.18
         version: 0.18.18(@vue-macros/reactivity-transform@0.4.4(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5)))(rollup@4.17.1)(typescript@5.4.5)(vue@3.4.26(typescript@5.4.5))
@@ -112,7 +112,7 @@ importers:
         version: 3.0.5
       unocss:
         specifier: ^0.59.4
-        version: 0.59.4(postcss@8.4.38)(rollup@4.17.1)(vite@5.2.10(terser@5.31.0))
+        version: 0.59.4(postcss@8.4.38)(rollup@4.17.1)(vite@5.2.11(terser@5.31.0))
       unplugin-auto-import:
         specifier: ^0.17.5
         version: 0.17.5(@vueuse/core@10.9.0(vue@3.4.26(typescript@5.4.5)))(rollup@4.17.1)
@@ -121,25 +121,25 @@ importers:
         version: 0.27.0(@babel/parser@7.24.5)(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
       unplugin-vue-macros:
         specifier: ^2.9.1
-        version: 2.9.1(@vueuse/core@10.9.0(vue@3.4.26(typescript@5.4.5)))(esbuild@0.20.2)(rollup@4.17.1)(typescript@5.4.5)(vite@5.2.10(terser@5.31.0))(vue@3.4.26(typescript@5.4.5))
+        version: 2.9.1(@vueuse/core@10.9.0(vue@3.4.26(typescript@5.4.5)))(esbuild@0.20.2)(rollup@4.17.1)(typescript@5.4.5)(vite@5.2.11(terser@5.31.0))(vue@3.4.26(typescript@5.4.5))
       unplugin-vue-markdown:
         specifier: ^0.26.2
-        version: 0.26.2(rollup@4.17.1)(vite@5.2.10(terser@5.31.0))
+        version: 0.26.2(rollup@4.17.1)(vite@5.2.11(terser@5.31.0))
       unplugin-vue-router:
         specifier: ^0.8.6
         version: 0.8.6(rollup@4.17.1)(vue-router@4.3.2(vue@3.4.26(typescript@5.4.5)))(vue@3.4.26(typescript@5.4.5))
       vite:
-        specifier: ^5.2.10
-        version: 5.2.10(terser@5.31.0)
+        specifier: ^5.2.11
+        version: 5.2.11(terser@5.31.0)
       vite-plugin-pwa:
         specifier: ^0.20.0
-        version: 0.20.0(vite@5.2.10(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0)
+        version: 0.20.0(vite@5.2.11(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0)
       vite-plugin-vue-layouts:
         specifier: ^0.11.0
-        version: 0.11.0(vite@5.2.10(terser@5.31.0))(vue-router@4.3.2(vue@3.4.26(typescript@5.4.5)))(vue@3.4.26(typescript@5.4.5))
+        version: 0.11.0(vite@5.2.11(terser@5.31.0))(vue-router@4.3.2(vue@3.4.26(typescript@5.4.5)))(vue@3.4.26(typescript@5.4.5))
       vite-plugin-webfont-dl:
         specifier: ^3.9.4
-        version: 3.9.4(vite@5.2.10(terser@5.31.0))
+        version: 3.9.4(vite@5.2.11(terser@5.31.0))
       vue:
         specifier: ^3.4.26
         version: 3.4.26(typescript@5.4.5)
@@ -180,8 +180,8 @@ importers:
 
 packages:
 
-  '@amcharts/amcharts5@5.9.4':
-    resolution: {integrity: sha512-ltJH0gjs2XjZEYEFiPnCsNE5I2HSFvfcOR23k9vmrJD73HQ5mDpW03ZRW+ppmGf3+b/1xIlDeLTVDeWk8sUcJQ==}
+  '@amcharts/amcharts5@5.9.5':
+    resolution: {integrity: sha512-8AH8Bd2xEjEicXaHXzuRDcrvG76VSf8m+a+03ylxo1KhZawzwRf7oIls3qgwtSW+4cjPhmLuRETyfIadHBlvEw==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -4809,8 +4809,8 @@ packages:
     peerDependencies:
       vite: ^2 || ^3 || ^4 || ^5
 
-  vite@5.2.10:
-    resolution: {integrity: sha512-PAzgUZbP7msvQvqdSD+ErD5qGnSFiGOoWmV5yAKUEI0kdhjbH6nMWVyZQC/hSc4aXwc0oJ9aEdIiF9Oje0JFCw==}
+  vite@5.2.11:
+    resolution: {integrity: sha512-HndV31LWW05i1BLPMUCE1B9E9GFbOu1MbenhS58FuK6owSO5qHm7GiCotrNY1YE5rMeQSFBGmT5ZaLEjFizgiQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -5063,7 +5063,7 @@ packages:
 
 snapshots:
 
-  '@amcharts/amcharts5@5.9.4':
+  '@amcharts/amcharts5@5.9.5':
     dependencies:
       '@types/d3': 7.4.3
       '@types/d3-chord': 3.0.6
@@ -6922,13 +6922,13 @@ snapshots:
       unhead: 1.9.8
       vue: 3.4.26(typescript@5.4.5)
 
-  '@unocss/astro@0.59.4(rollup@4.17.1)(vite@5.2.10(terser@5.31.0))':
+  '@unocss/astro@0.59.4(rollup@4.17.1)(vite@5.2.11(terser@5.31.0))':
     dependencies:
       '@unocss/core': 0.59.4
       '@unocss/reset': 0.59.4
-      '@unocss/vite': 0.59.4(rollup@4.17.1)(vite@5.2.10(terser@5.31.0))
+      '@unocss/vite': 0.59.4(rollup@4.17.1)(vite@5.2.11(terser@5.31.0))
     optionalDependencies:
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
     transitivePeerDependencies:
       - rollup
 
@@ -7079,7 +7079,7 @@ snapshots:
     dependencies:
       '@unocss/core': 0.59.4
 
-  '@unocss/vite@0.59.4(rollup@4.17.1)(vite@5.2.10(terser@5.31.0))':
+  '@unocss/vite@0.59.4(rollup@4.17.1)(vite@5.2.11(terser@5.31.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@rollup/pluginutils': 5.1.0(rollup@4.17.1)
@@ -7091,7 +7091,7 @@ snapshots:
       chokidar: 3.6.0
       fast-glob: 3.3.2
       magic-string: 0.30.10
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
     transitivePeerDependencies:
       - rollup
 
@@ -7111,9 +7111,9 @@ snapshots:
 
   '@vicons/tabler@0.12.0': {}
 
-  '@vitejs/plugin-vue@5.0.4(vite@5.2.10(terser@5.31.0))(vue@3.4.26(typescript@5.4.5))':
+  '@vitejs/plugin-vue@5.0.4(vite@5.2.11(terser@5.31.0))(vue@3.4.26(typescript@5.4.5))':
     dependencies:
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
       vue: 3.4.26(typescript@5.4.5)
 
   '@vitest/expect@1.5.3':
@@ -7262,12 +7262,12 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  '@vue-macros/devtools@0.2.0(typescript@5.4.5)(vite@5.2.10(terser@5.31.0))':
+  '@vue-macros/devtools@0.2.0(typescript@5.4.5)(vite@5.2.11(terser@5.31.0))':
     dependencies:
       sirv: 2.0.4
       vue: 3.4.26(typescript@5.4.5)
     optionalDependencies:
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
     transitivePeerDependencies:
       - typescript
 
@@ -10141,9 +10141,9 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss@0.59.4(postcss@8.4.38)(rollup@4.17.1)(vite@5.2.10(terser@5.31.0)):
+  unocss@0.59.4(postcss@8.4.38)(rollup@4.17.1)(vite@5.2.11(terser@5.31.0)):
     dependencies:
-      '@unocss/astro': 0.59.4(rollup@4.17.1)(vite@5.2.10(terser@5.31.0))
+      '@unocss/astro': 0.59.4(rollup@4.17.1)(vite@5.2.11(terser@5.31.0))
       '@unocss/cli': 0.59.4(rollup@4.17.1)
       '@unocss/core': 0.59.4
       '@unocss/extractor-arbitrary-variants': 0.59.4
@@ -10162,9 +10162,9 @@ snapshots:
       '@unocss/transformer-compile-class': 0.59.4
       '@unocss/transformer-directives': 0.59.4
       '@unocss/transformer-variant-group': 0.59.4
-      '@unocss/vite': 0.59.4(rollup@4.17.1)(vite@5.2.10(terser@5.31.0))
+      '@unocss/vite': 0.59.4(rollup@4.17.1)(vite@5.2.11(terser@5.31.0))
     optionalDependencies:
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
     transitivePeerDependencies:
       - postcss
       - rollup
@@ -10185,14 +10185,14 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  unplugin-combine@0.9.0(esbuild@0.20.2)(rollup@4.17.1)(vite@5.2.10(terser@5.31.0)):
+  unplugin-combine@0.9.0(esbuild@0.20.2)(rollup@4.17.1)(vite@5.2.11(terser@5.31.0)):
     dependencies:
       '@antfu/utils': 0.7.7
       unplugin: 1.10.1
     optionalDependencies:
       esbuild: 0.20.2
       rollup: 4.17.1
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
 
   unplugin-vue-components@0.27.0(@babel/parser@7.24.5)(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5)):
     dependencies:
@@ -10222,7 +10222,7 @@ snapshots:
       - rollup
       - vue
 
-  unplugin-vue-macros@2.9.1(@vueuse/core@10.9.0(vue@3.4.26(typescript@5.4.5)))(esbuild@0.20.2)(rollup@4.17.1)(typescript@5.4.5)(vite@5.2.10(terser@5.31.0))(vue@3.4.26(typescript@5.4.5)):
+  unplugin-vue-macros@2.9.1(@vueuse/core@10.9.0(vue@3.4.26(typescript@5.4.5)))(esbuild@0.20.2)(rollup@4.17.1)(typescript@5.4.5)(vite@5.2.11(terser@5.31.0))(vue@3.4.26(typescript@5.4.5)):
     dependencies:
       '@vue-macros/better-define': 1.7.5(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
       '@vue-macros/boolean-prop': 0.3.3(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
@@ -10235,7 +10235,7 @@ snapshots:
       '@vue-macros/define-props-refs': 1.2.3(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
       '@vue-macros/define-render': 1.5.3(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
       '@vue-macros/define-slots': 1.1.3(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
-      '@vue-macros/devtools': 0.2.0(typescript@5.4.5)(vite@5.2.10(terser@5.31.0))
+      '@vue-macros/devtools': 0.2.0(typescript@5.4.5)(vite@5.2.11(terser@5.31.0))
       '@vue-macros/export-expose': 0.1.3(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
       '@vue-macros/export-props': 0.4.3(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
       '@vue-macros/export-render': 0.2.3(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
@@ -10250,7 +10250,7 @@ snapshots:
       '@vue-macros/short-emits': 1.5.3(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
       '@vue-macros/short-vmodel': 1.4.3(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
       unplugin: 1.10.1
-      unplugin-combine: 0.9.0(esbuild@0.20.2)(rollup@4.17.1)(vite@5.2.10(terser@5.31.0))
+      unplugin-combine: 0.9.0(esbuild@0.20.2)(rollup@4.17.1)(vite@5.2.11(terser@5.31.0))
       unplugin-vue-define-options: 1.4.3(rollup@4.17.1)(vue@3.4.26(typescript@5.4.5))
       vue: 3.4.26(typescript@5.4.5)
     transitivePeerDependencies:
@@ -10261,7 +10261,7 @@ snapshots:
       - vite
       - webpack
 
-  unplugin-vue-markdown@0.26.2(rollup@4.17.1)(vite@5.2.10(terser@5.31.0)):
+  unplugin-vue-markdown@0.26.2(rollup@4.17.1)(vite@5.2.11(terser@5.31.0)):
     dependencies:
       '@mdit-vue/plugin-component': 2.1.2
       '@mdit-vue/plugin-frontmatter': 2.1.2
@@ -10270,7 +10270,7 @@ snapshots:
       '@types/markdown-it': 14.0.1
       markdown-it: 14.1.0
       unplugin: 1.10.1
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
     transitivePeerDependencies:
       - rollup
 
@@ -10332,7 +10332,7 @@ snapshots:
       debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -10343,38 +10343,38 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-pwa@0.20.0(vite@5.2.10(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0):
+  vite-plugin-pwa@0.20.0(vite@5.2.11(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0):
     dependencies:
       debug: 4.3.4(supports-color@5.5.0)
       fast-glob: 3.3.2
       pretty-bytes: 6.1.1
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
       workbox-build: 7.1.0
       workbox-window: 7.1.0
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-vue-layouts@0.11.0(vite@5.2.10(terser@5.31.0))(vue-router@4.3.2(vue@3.4.26(typescript@5.4.5)))(vue@3.4.26(typescript@5.4.5)):
+  vite-plugin-vue-layouts@0.11.0(vite@5.2.11(terser@5.31.0))(vue-router@4.3.2(vue@3.4.26(typescript@5.4.5)))(vue@3.4.26(typescript@5.4.5)):
     dependencies:
       debug: 4.3.4(supports-color@5.5.0)
       fast-glob: 3.3.2
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
       vue: 3.4.26(typescript@5.4.5)
       vue-router: 4.3.2(vue@3.4.26(typescript@5.4.5))
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-webfont-dl@3.9.4(vite@5.2.10(terser@5.31.0)):
+  vite-plugin-webfont-dl@3.9.4(vite@5.2.11(terser@5.31.0)):
     dependencies:
       axios: 1.6.8
       clean-css: 5.3.3
       flat-cache: 3.2.0
       picocolors: 1.0.0
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
     transitivePeerDependencies:
       - debug
 
-  vite@5.2.10(terser@5.31.0):
+  vite@5.2.11(terser@5.31.0):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
@@ -10402,7 +10402,7 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.2.10(terser@5.31.0)
+      vite: 5.2.11(terser@5.31.0)
       vite-node: 1.5.3(terser@5.31.0)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
