@@ -32,7 +32,7 @@ jobs:
       - name: Build and push ${{ matrix.name }} image
         uses: docker/build-push-action@v5
         env:
-          COMMIT_SHA: ${{ github.sha }}
+          VITE_COMMIT_SHA: ${{ github.sha }}
         with:
           context: .
           push: true
