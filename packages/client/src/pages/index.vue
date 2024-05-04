@@ -4,6 +4,8 @@
 -->
 
 <script setup lang="ts">
+import process from 'node:process'
+
 const { t } = useI18n()
 
 useHead({
@@ -31,6 +33,8 @@ useHead({
       </div>
     </div>
   </div>
+  <div grow />
+  <span op-10>{{ process.env.GITHUB_SHA ?? '' }}</span>
 </template>
 
 <route lang="yaml">

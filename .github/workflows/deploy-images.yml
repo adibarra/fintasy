@@ -34,5 +34,7 @@ jobs:
         with:
           context: .
           push: true
+          secrets: |
+            "GITHUB_SHA"=${{ GITHUB.sha }}
           file: Dockerfile.${{ matrix.name }}
           tags: ghcr.io/${{ GITHUB.repository }}/${{ matrix.name }}:latest
