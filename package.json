@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.16.1",
-    "eslint": "^9.1.1",
+    "eslint": "^9.2.0",
     "eslint-plugin-format": "^0.1.1",
     "lint-staged": "^15.2.2",
     "simple-git-hooks": "^2.11.1",

@@ -18,7 +18,7 @@
     "@intlify/unplugin-vue-i18n": "^4.0.0",
     "@shikijs/markdown-it": "^1.4.0",
     "@types/markdown-it-link-attributes": "^3.0.5",
-    "@unhead/vue": "^1.9.8",
+    "@unhead/vue": "^1.9.9",
     "@unocss/reset": "^0.59.4",
     "@vicons/antd": "^0.12.0",
     "@vicons/carbon": "^0.12.0",
@@ -34,7 +34,7 @@
     "@vueuse/core": "^10.9.0",
     "fuzzysort": "^2.0.4",
     "markdown-it-link-attributes": "^4.0.1",
-    "naive-ui": "^2.38.1",
+    "naive-ui": "^2.38.2",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "seedrandom": "^3.0.5",
@@ -59,6 +59,6 @@
     "@unocss/eslint-config": "^0.59.4",
     "@unocss/eslint-plugin": "^0.59.4",
     "typescript": "^5.4.5",
-    "vitest": "^1.5.3"
+    "vitest": "^1.6.0"
   }
 }
