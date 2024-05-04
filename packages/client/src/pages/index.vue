@@ -9,8 +9,6 @@ const { t } = useI18n()
 useHead({
   title: `${t('pages.main.title')} • Fintasy`,
 })
-
-const commitSha = ref<string>(import.meta.env.VITE_COMMIT_SHA)
 </script>
 
 <template>
@@ -34,9 +32,6 @@ const commitSha = ref<string>(import.meta.env.VITE_COMMIT_SHA)
     </div>
   </div>
   <div grow />
-  <span v-if="commitSha" op-10>
-    {{ commitSha.slice(0, 7) }}
-  </span>
 </template>
 
 <route lang="yaml">
