@@ -32,7 +32,9 @@ useHead({
     </div>
   </div>
   <div grow />
-  <span op-10>{{ (import.meta.env.COMMIT_SHA ?? '').slice(0, 7) }}</span>
+  <span v-if="import.meta.env.COMMIT_SHA" op-10>
+    {{ import.meta.env.COMMIT_SHA.slice(0, 7) }}
+  </span>
 </template>
 
 <route lang="yaml">
