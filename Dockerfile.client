@@ -10,6 +10,7 @@ WORKDIR /app
 COPY . .
 
 RUN echo "VITE_COMMIT_SHA=$VITE_COMMIT_SHA" > .env
+RUN echo "$VITE_COMMIT_SHA"
 
 RUN corepack enable
 RUN pnpm install --prod --frozen-lockfile --ignore-scripts
