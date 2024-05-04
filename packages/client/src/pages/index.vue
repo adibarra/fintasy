@@ -34,7 +34,7 @@ useHead({
     </div>
   </div>
   <div grow />
-  <span op-10>{{ process.env.GITHUB_SHA ?? '' }}</span>
+  <span op-10>{{ process.env.COMMIT_SHA?.slice(0, 7) ?? '' }}</span>
 </template>
 
 <route lang="yaml">

@@ -31,10 +31,10 @@ jobs:
 
       - name: Build and push ${{ matrix.name }} image
         uses: docker/build-push-action@v5
+        env:
+          COMMIT_SHA: ${{ github.sha }}
         with:
           context: .
           push: true
-          secrets: |
-            "GITHUB_SHA"=${{ GITHUB.sha }}
           file: Dockerfile.${{ matrix.name }}
-          tags: ghcr.io/${{ GITHUB.repository }}/${{ matrix.name }}:latest
+          tags: ghcr.io/${{ github.repository }}/${{ matrix.name }}:latest
