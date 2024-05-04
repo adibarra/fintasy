@@ -4,8 +4,6 @@
 -->
 
 <script setup lang="ts">
-import process from 'node:process'
-
 const { t } = useI18n()
 
 useHead({
@@ -34,7 +32,7 @@ useHead({
     </div>
   </div>
   <div grow />
-  <span op-10>{{ process.env.COMMIT_SHA?.slice(0, 7) ?? '' }}</span>
+  <span op-10>{{ (import.meta.env.COMMIT_SHA ?? '').slice(0, 7) }}</span>
 </template>
 
 <route lang="yaml">
