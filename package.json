@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "pnpm@9.0.6",
+  "packageManager": "pnpm@9.1.0",
   "description": "CS.3354 Project: Competitive paper trading platform",
   "contributors": [
     "adibarra <github@adibarra.com> (https://adibarra.com)"
