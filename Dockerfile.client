@@ -1,7 +1,7 @@
 # @author: adibarra (Alec Ibarra)
 # @description: Dockerfile to build and run client
 
-FROM node:alpine AS build_client
+FROM node:alpine AS builder
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -14,9 +14,9 @@ RUN pnpm install --prod --frozen-lockfile --ignore-scripts
 RUN pnpm run build
 
 
-FROM ghcr.io/adibarra/nginx-static:latest AS client
+FROM adibarra/nginx-static:latest
 
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
-COPY --from=build_client /app/packages/client/dist /srv
+COPY --from=builder /app/packages/client/dist /srv
 
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
