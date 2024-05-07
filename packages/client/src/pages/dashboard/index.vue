@@ -31,7 +31,7 @@ const cash = computed(() => {
 const transactions = computed(() => state.transactions)
 const startTime = computed(() => {
   if (state.portfolio.available.length < state.portfolio.active + 1)
-    return new Date().getTime()
+    return 0
   return new Date(state.portfolio.available[state.portfolio.active].created_at).getTime() - new Date().getTimezoneOffset() * 60000
 })
 const deltaTime = ref(0)
@@ -81,21 +81,16 @@ const assets = computed(() => {
   return assets
 })
 
-// update chart data every 5 seconds
-setInterval(() => {
-  deltaTime.value = Math.floor((new Date().getTime() - startTime.value) / 1000)
-}, 5000)
-
-// generate random data
 function generateData(seed: string, count: number, startDate: number) {
+  if (count === 0 || startDate === 0)
+    return []
+
+  if (count > 10000)
+    count = 10000
+
   const rand = seedrandom(seed)
   const data = []
   const endDate = new Date().getTime()
-
-  if (count > 10000)
-    count /= 100
-  else if (count > 1000)
-    count /= 10
 
   const interval = Math.floor((endDate - startDate) / count)
   let date = startDate
@@ -126,6 +121,13 @@ function generateData(seed: string, count: number, startDate: number) {
   }
   return data
 }
+
+onMounted(() => {
+  // update chart data every 2 seconds
+  setInterval(() => {
+    deltaTime.value = Math.floor((new Date().getTime() - startTime.value) / 1000)
+  }, 2000)
+})
 </script>
 
 <template>
