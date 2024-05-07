@@ -149,6 +149,11 @@ export default defineConfig({
     ]),
   ],
 
+  // https://vitejs.dev/config/build-options
+  build: {
+    reportCompressedSize: false,
+  },
+
   // https://github.com/vitest-dev/vitest
   test: {
     include: ['tests/**/*.test.ts'],
