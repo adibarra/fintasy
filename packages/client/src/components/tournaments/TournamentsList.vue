@@ -27,7 +27,7 @@ const state = useStateStore()
 const router = useRouter()
 const message = useMessage()
 
-const tournaments = ref<Tournament[]>([])
+const tournaments = state.tournaments
 const tournamentDetails = ref<Tournament>()
 const showModal = ref(false)
 const currentPage = ref(1)
@@ -50,7 +50,7 @@ async function fetchTournaments(page: number) {
     return
   }
 
-  tournaments.value = response.data.slice(0, 10)
+  // tournaments.values = response.data.slice(0, 10)
   hasNextPage.value = response.data.length === 11
 }
 
@@ -132,7 +132,7 @@ watch(() => props.filters, () => {
             fn-outline px-2 py-1 fn-hover
             @click="joinTournament(tournament.uuid)"
           >
-            Quick Join
+            Join Tournament
           </button>
         </div>
       </div>
