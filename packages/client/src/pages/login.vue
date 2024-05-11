@@ -35,8 +35,13 @@ async function handleSubmit() {
 }
 
 async function createAccount() {
-  if (!email.value || !username.value || !password.value || password.value !== confirmPassword.value) {
+  if (!email.value || !username.value || !password.value) {
     error.value = t('pages.login.missing-credentials')
+    return
+  }
+
+  if (password.value !== confirmPassword.value) {
+    error.value = t('pages.login.password-mismatch')
     return
   }
 

@@ -27,6 +27,7 @@ pages:
     no-account: No account?
     already-have-account: Already have an account?
     missing-credentials: Please fill out all fields.
+    password-mismatch: Passwords do not match.
     unique-taken: Username or email is already taken. Try signing in.
     invalid-registration: Make sure your account information meets the requirements.
     invalid-credentials: Make sure your password is correct.

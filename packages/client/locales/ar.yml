@@ -28,6 +28,7 @@ pages:
     no-account: ليس لديك حساب؟
     already-have-account: هل لديك حساب بالفعل؟
     missing-credentials: يرجى ملء جميع الحقول.
+    password-mismatch: كلمات المرور غير متطابقة.
     unique-taken: اسم المستخدم أو البريد الإلكتروني مستخدم بالفعل. حاول تسجيل الدخول.
     invalid-registration: تأكد من أن معلومات حسابك تلبي المتطلبات.
     invalid-credentials: تأكد من أن كلمة المرور الخاصة بك صحيحة.

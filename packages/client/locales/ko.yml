@@ -28,6 +28,7 @@ pages:
     no-account: 계정이 없으신가요?
     already-have-account: 이미 계정이 있으신가요?
     missing-credentials: 모든 필드를 작성해 주세요.
+    password-mismatch: 비밀번호가 일치하지 않습니다.
     unique-taken: 해당 이메일 주소 또는 사용자 이름은 이미 사용 중입니다. 로그인해 보세요.
     invalid-registration: 계정 정보가 요구 사항을 충족하는지 확인하세요.
     invalid-credentials: 비밀번호가 올바른지 확인하세요.

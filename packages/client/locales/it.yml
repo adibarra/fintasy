@@ -28,6 +28,7 @@ pages:
     no-account: Nessun account?
     already-have-account: Hai già un account?
     missing-credentials: Si prega di compilare tutti i campi.
+    password-mismatch: Le password non corrispondono.
     unique-taken: L'indirizzo email o il nome utente è già in uso. Prova ad accedere.
     invalid-registration: Assicurati che le informazioni del tuo account soddisfino i requisiti.
     invalid-credentials: Assicurati che la password sia corretta.
