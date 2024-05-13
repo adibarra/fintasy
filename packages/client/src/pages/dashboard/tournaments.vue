@@ -6,6 +6,8 @@
 <script setup lang="ts">
 import type { STATUS } from '~/types'
 
+const state = useStateStore()
+
 interface TournamentFilter {
   owner?: string
   name?: string
@@ -26,6 +28,9 @@ function applyFilters(filters: any) {
   // Ensuring reactivity by spreading into a new object
   currentFilters.value = { ...filters }
 }
+onMounted(async () => {
+  await state.refresh.tournaments()
+})
 </script>
 
 <template>

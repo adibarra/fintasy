@@ -16,6 +16,10 @@ interface TournamentFilter {
 }
 
 const props = defineProps({
+  tournamentMap: {
+    type: Object as PropType<Tournament[]>,
+    required: false,
+  },
   filters: {
     type: Object as PropType<TournamentFilter>,
     required: true,
@@ -32,6 +36,7 @@ const tournamentDetails = ref<Tournament>()
 const showModal = ref(false)
 const currentPage = ref(1)
 const hasNextPage = ref(false)
+const itemsPerPage = ref(10)
 
 async function fetchTournaments(page: number) {
   const params = {
@@ -137,24 +142,45 @@ watch(() => props.filters, () => {
         </div>
       </div>
     </div>
-    <div flex justify-center gap-5>
-      <button
-        :disabled="currentPage <= 1"
-        :class="{ 'op-50': currentPage <= 1 }"
-        fn-outline px-2 py-1 fn-hover
-        @click="prevPage"
-      >
-        &lt; Prev
-      </button>
-      <button
-        :disabled="!hasNextPage"
-        :class="{ 'op-50': !hasNextPage }"
-        fn-outline px-2 py-1 fn-hover
-        @click="nextPage"
-      >
-        Next
-        &gt;
-      </button>
+    <div>
+      <div flex justify-center gap-5>
+        <button
+          :disabled="currentPage <= 1"
+          :class="{ 'op-50': currentPage <= 1 }"
+          fn-outline px-2 py-1 fn-hover
+          @click="prevPage"
+        >
+          &lt; Prev
+        </button>
+        <button
+          :disabled="!hasNextPage"
+          :class="{ 'op-50': !hasNextPage }"
+          fn-outline px-2 py-1 fn-hover
+          @click="nextPage"
+        >
+          Next
+          &gt;
+        </button>
+      </div>
+      <div flex justify-right>
+        <select v-model="itemsPerPage.valueOf">
+          <option :value="5">
+            5
+          </option>
+          <option default :value="10">
+            10
+          </option>
+          <option :value="20">
+            20
+          </option>
+          <option :value="40">
+            40
+          </option>
+          <option :value="60">
+            60
+          </option>
+        </select>
+      </div>
     </div>
     <TournamentModal v-if="tournamentDetails" :visible="showModal" :tournament="tournamentDetails" @close="closeTournamentModal" />
   </div>
@@ -164,6 +190,12 @@ watch(() => props.filters, () => {
 .tournaments-list {
   display: flex;
   flex-direction: column;
+  select {
+    margin-bottom: 8px;
+    color: #000;
+    border: 1px solid #ccc;
+    font: #ccc;
+  }
 }
 .tournament-card {
   border: 1px solid #ccc;
