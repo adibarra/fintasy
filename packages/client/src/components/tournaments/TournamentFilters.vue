@@ -70,12 +70,50 @@ function updateDateRange([start, end]: [Date | null, Date | null]) {
 </template>
 
 <style scoped>
-.filters form {
+.filters {
+  background-color: #202020; /* Dark background for the filter area */
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.filters input,
+.filters select,
+.n-date-picker {
+  background-color: #202020; /* Dark background for all inputs */
+  color: #fff; /* White text color for contrast */
+  margin-bottom: 8px;
+  width: 100%; /* Full-width inputs */
+  padding: 8px;
+  border: 1px solid #ddd; /* Subtle border for inputs */
+  border-radius: 4px; /* Rounded corners for inputs */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Inset shadow */
+}
+
+.filters input:focus,
+.filters select:focus,
+.n-date-picker:focus {
+  border-color: #0056b3; /* Blue border for focused elements */
+  outline: none;
+}
+
+.filters select {
+  appearance: none; /* Custom appearance for dropdown */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%230056b3" d="M2 0L0 2h4L2 0zm0 5L0 3h4l-2 2z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center; /* Position of custom arrow */
+  background-size: 10px;
+  cursor: pointer;
+}
+
+.n-date-picker {
+  background-color: #202020; /* Ensuring background is consistently black */
+  color: #fff; /* Ensuring text color is white for readability */
+}
+
+.filters > div {
   display: flex;
   flex-direction: column;
-}
-.filters input,
-.filters select {
-  margin-bottom: 8px;
 }
 </style>

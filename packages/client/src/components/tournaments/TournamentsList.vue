@@ -193,7 +193,7 @@ watch(() => props.filters, () => {
 
 .items-per-page-selector {
   padding: 5px 10px; /* Adjust padding as needed for visual consistency */
-  background: white; /* Optional: changes background color */
+  background: rgb(22, 22, 22); /* Optional: changes background color */
   border: 1px solid #ccc; /* Optional: adds border */
 }
 
