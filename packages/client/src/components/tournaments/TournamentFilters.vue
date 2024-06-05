@@ -4,40 +4,52 @@
 -->
 
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import { STATUS } from '~/types'
 
 interface TournamentFilter {
   owner?: string
   name?: string
   status?: STATUS
-  start_date?: Date
-  end_date?: Date
+  start_date?: Date | null
+  end_date?: Date | null
 }
 
 const emit = defineEmits(['filter'])
-const dateTimeRange = ref<[Date?, Date?]>([undefined, undefined])
 const filters = ref<TournamentFilter>({
   name: undefined,
   owner: undefined,
   status: undefined,
-  start_date: dateTimeRange.value[0],
-  end_date: dateTimeRange.value[1],
+  start_date: null,
+  end_date: null,
 })
 
-function applyFilters() {
-  emit('filter', filters.value)
+// Watch the filters object to emit changes
+watch(filters, (newFilters) => {
+  emit('filter', newFilters)
+}, { deep: true })
+
+// Update function handles direct input from the date range picker
+function updateDateRange([start, end]: [Date | null, Date | null]) {
+  filters.value.start_date = start
+  filters.value.end_date = end
 }
 </script>
 
 <template>
   <div class="filters">
     <h2>Filters</h2>
-    <form @submit.prevent="applyFilters">
+    <div>
       <input v-model="filters.name" placeholder="Tournament Name">
       <input v-model="filters.owner" placeholder="Owner">
 
-      <!-- might need to use event instead of v-model to properly extract data we need -->
-      <n-date-picker v-model="dateTimeRange" type="datetimerange" clearable />
+      <!-- Directly bind start_date and end_date -->
+      <n-date-picker
+        :model-value="[filters.start_date, filters.end_date]"
+        type="datetimerange"
+        clearable
+        @update:model-value="updateDateRange"
+      />
 
       <select v-model="filters.status">
         <option :value="undefined">
@@ -53,14 +65,7 @@ function applyFilters() {
           Finished
         </option>
       </select>
-      <!-- More filters can be added here -->
-      <button
-        fn-outline px-2 py-1 fn-hover
-        type="submit"
-      >
-        Apply Filters
-      </button>
-    </form>
+    </div>
   </div>
 </template>
 
