@@ -28,6 +28,7 @@ pages:
     no-account: アカウントがありませんか？
     already-have-account: 既にアカウントをお持ちですか？
     missing-credentials: 全ての項目を入力してください。
+    password-mismatch: パスワードが一致しません。
     unique-taken: そのメールアドレスまたはユーザー名はすでに使用されています。サインインしてください。
     invalid-registration: アカウント情報が要件を満たしていることを確認してください。
     invalid-credentials: パスワードが正しいことを確認してください。

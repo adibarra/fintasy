@@ -28,6 +28,7 @@ pages:
     no-account: কোন অ্যাকাউন্ট নেই?
     already-have-account: ইতিমধ্যে একটি অ্যাকাউন্ট আছে?
     missing-credentials: দয়া করে সমস্ত ক্ষেত্র পূরণ করুন।
+    password-mismatch: পাসওয়ার্ড মেলে না।
     unique-taken: ইউজারনেম বা ইমেল ইতিমধ্যে ব্যবহৃত হয়েছে। সাইন ইন করুন।
     invalid-registration: আপনার অ্যাকাউন্ট তথ্য প্রয়োজনের মানগুলি পূরণ করে নিন।
     invalid-credentials: আপনার পাসওয়ার্ড সঠিক কিনা তা নিশ্চিত করুন।

@@ -28,6 +28,7 @@ pages:
     no-account: No Account?
     already-have-account: Already Have an Account?
     missing-credentials: Please fill out all fields, ye scallywag.
+    password-mismatch: Secret Codes do not match, ye bilge rat.
     unique-taken: Arrr! This email address or username be already plundered. Give signin' a try, ye landlubber.
     invalid-registration: Make sure yer account information meets the requirements, ye scurvy dog.
     invalid-credentials: Make sure yer secret code be correct, ye scallywag.

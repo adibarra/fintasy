@@ -100,7 +100,7 @@ def create_user(
 
     # Attempt creating user
     user = db.create_user(data.username, data.email, User.hash_password(data.password))
-    if not user:
+    if user is None:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="Conflict",
@@ -146,7 +146,7 @@ def patch_user(
 ):
     # Attempt fetching user
     user = db.get_user(str(uuid))
-    if not user:
+    if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Not Found",
@@ -194,7 +194,7 @@ def delete_user(
 ):
     # Check if the user exists
     user = db.get_user(str(uuid))
-    if not user:
+    if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Not Found",

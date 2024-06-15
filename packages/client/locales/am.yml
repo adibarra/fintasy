@@ -28,6 +28,7 @@ pages:
     no-account: መለያ የለዎትም።
     already-have-account: በዚህ በመለያ እንደሚሆን አስተያየት አለዎት?
     missing-credentials: እባኮትን እንደተከሳሹ መረጃዎች ይምረጡ።
+    password-mismatch: የይለፍ ቃል አይዛመዱም።
     unique-taken: ኢሜል ወደታተለው ሄደ። የመልዕክት መረጃ አያስፈልጋቸውም።
     invalid-registration: የመለያዎት መረጃዎች የሚያስፈልጉትን እንቅስቃሴ እንደምታውቅ ለማስገባት ያግኙ።
     invalid-credentials: የመለያዎት የይለፍ ቃል ተሳሳቢ ነው።

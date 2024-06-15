@@ -26,6 +26,7 @@ pages:
     no-account: ❌📝❓
     already-have-account: ✅📝❓
     missing-credentials: ❌📝🔘📝
+    password-mismatch: 🔑❌🔑
     unique-taken: 🔒🔑🆔📧❌ 📝🔢📬 🔁🔄🔛 🔓🆔
     invalid-registration: 🚫✅📝🔗🔑❌
     invalid-credentials: 🚫✅🔑❌

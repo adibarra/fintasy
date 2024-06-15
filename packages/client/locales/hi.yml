@@ -28,6 +28,7 @@ pages:
     no-account: कोई खाता नहीं?
     already-have-account: पहले से ही खाता है?
     missing-credentials: कृपया सभी फ़ील्ड भरें।
+    password-mismatch: पासवर्ड मेल नहीं खाता।
     unique-taken: उपयोगकर्ता नाम या ईमेल पहले से उपयोग में है। साइन इन करें।
     invalid-registration: अपने खाता जानकारी को योग्यता मानकों को पूरा करने के लिए सुनिश्चित करें।
     invalid-credentials: अपना पासवर्ड सही हैं सुनिश्चित करें।

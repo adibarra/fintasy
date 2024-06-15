@@ -28,6 +28,7 @@ pages:
     no-account: 没有账号？
     already-have-account: 已经有账号了？
     missing-credentials: 请填写所有字段。
+    password-mismatch: 密码不匹配。
     unique-taken: 该电子邮件地址或用户名已被使用。请尝试登录。
     invalid-registration: 确保您的帐户信息符合要求。
     invalid-credentials: 确保您的密码是正确的。
