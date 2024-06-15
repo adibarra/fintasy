@@ -4,7 +4,6 @@
 -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { useMessage } from 'naive-ui'
 import type { STATUS, Tournament } from '~/types'
 
@@ -98,10 +97,7 @@ function prevPage() {
     currentPage.value--
 }
 
-watch(itemsPerPage, () => {
-  currentPage.value = 1 // Reset to first page when itemsPerPage changes
-})
-watch(() => props.filters, () => {
+watch([itemsPerPage, () => props.filters], () => {
   currentPage.value = 1 // Resets to first page when any filter changes
 }, { deep: true })
 </script>

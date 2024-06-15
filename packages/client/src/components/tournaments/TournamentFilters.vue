@@ -4,7 +4,6 @@
 -->
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import { STATUS } from '~/types'
 
 interface TournamentFilter {
