@@ -27,37 +27,34 @@ const state = useStateStore()
 const router = useRouter()
 const message = useMessage()
 
-const tournaments = ref<Tournament[]>([])
 const tournamentDetails = ref<Tournament>()
 const showModal = ref(false)
 const currentPage = ref(1)
-const hasNextPage = ref(false)
+const itemsPerPage = ref(10)
 
-async function fetchTournaments(page: number) {
-  const params = {
-    owner: props.filters.owner,
-    name: props.filters.name,
-    status: props.filters.status,
-    start_date: props.filters.start_date?.toISOString() ?? undefined,
-    end_date: props.filters.end_date?.toISOString() ?? undefined,
-    offset: (page - 1) * 10,
-    limit: 11,
-  }
+const filteredTournaments = computed(() => {
+  return state.tournaments.filter((tournament) => {
+    const filters = props.filters
+    const meetsOwner = !filters.owner || tournament.owner.includes(filters.owner)
+    const meetsName = !filters.name || tournament.name.toLowerCase().includes(filters.name.toLowerCase())
+    const meetsStatus = !filters.status || tournament.status === filters.status
+    const meetsStartDate = !filters.start_date || new Date(tournament.start_date) >= new Date(filters.start_date)
+    const meetsEndDate = !filters.end_date || new Date(tournament.end_date) <= new Date(filters.end_date)
 
-  const response = await fintasy.getTournaments(params)
-  if (response.code !== 200) {
-    console.error('Failed to fetch tournaments:', response)
-    return
-  }
+    return meetsOwner && meetsName && meetsStatus && meetsStartDate && meetsEndDate
+  })
+})
 
-  tournaments.value = response.data.slice(0, 10)
-  hasNextPage.value = response.data.length === 11
-}
+const numFilteredTournaments = computed(() => filteredTournaments.value.length)
+const totalPages = computed(() => Math.ceil(numFilteredTournaments.value / itemsPerPage.value))
+const displayedTournaments = computed(() => {
+  return filteredTournaments.value.slice((currentPage.value - 1) * itemsPerPage.value, currentPage.value * itemsPerPage.value)
+})
 
 async function viewTournament(uuid: string) {
   const response = await fintasy.getTournament({ uuid })
   if (response.code !== 200) {
-    console.error('Failed to load tournament details.') // Or handle this error differently
+    console.error('Failed to load tournament details.')
     return
   }
 
@@ -91,28 +88,24 @@ function closeTournamentModal() {
 }
 
 function nextPage() {
-  if (hasNextPage.value) {
+  if (currentPage.value < totalPages.value)
     currentPage.value++
-    fetchTournaments(currentPage.value)
-  }
 }
 
 function prevPage() {
-  if (currentPage.value > 1) {
+  if (currentPage.value > 1)
     currentPage.value--
-    fetchTournaments(currentPage.value)
-  }
 }
 
-watch(() => props.filters, () => {
-  fetchTournaments(currentPage.value)
-}, { deep: true, immediate: true })
+watch([itemsPerPage, () => props.filters], () => {
+  currentPage.value = 1 // Resets to first page when any filter changes
+}, { deep: true })
 </script>
 
 <template>
   <div class="tournaments-list">
     <div
-      v-for="(tournament, index) in tournaments"
+      v-for="(tournament, index) in displayedTournaments"
       :key="index"
       class="tournament-card"
     >
@@ -122,52 +115,86 @@ watch(() => props.filters, () => {
           <p>{{ tournament.status }}</p>
         </div>
         <div flex gap-2>
-          <button
-            fn-outline px-2 py-1 fn-hover
-            @click="viewTournament(tournament.uuid)"
-          >
+          <button fn-outline px-2 py-1 fn-hover @click="viewTournament(tournament.uuid)">
             View
           </button>
-          <button
-            fn-outline px-2 py-1 fn-hover
-            @click="joinTournament(tournament.uuid)"
-          >
-            Quick Join
+          <button fn-outline px-2 py-1 fn-hover @click="joinTournament(tournament.uuid)">
+            Join Tournament
           </button>
         </div>
       </div>
     </div>
-    <div flex justify-center gap-5>
-      <button
-        :disabled="currentPage <= 1"
-        :class="{ 'op-50': currentPage <= 1 }"
-        fn-outline px-2 py-1 fn-hover
-        @click="prevPage"
-      >
-        &lt; Prev
-      </button>
-      <button
-        :disabled="!hasNextPage"
-        :class="{ 'op-50': !hasNextPage }"
-        fn-outline px-2 py-1 fn-hover
-        @click="nextPage"
-      >
-        Next
-        &gt;
-      </button>
+    <div>
+      <div class="pagination-container">
+        <button
+          fn-outline px-2 py-1 fn-hover
+          :disabled="currentPage <= 1"
+          :class="{ 'op-50': currentPage <= 1 }"
+          @click="prevPage"
+        >
+          &lt; Prev
+        </button>
+        <span class="page-indicator">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button
+          fn-outline px-2 py-1 fn-hover
+          :disabled="currentPage >= totalPages"
+          :class="{ 'op-50': currentPage >= totalPages }"
+          @click="nextPage"
+        >
+          Next &gt;
+        </button>
+      </div>
+      <div flex justify-right>
+        <select v-model="itemsPerPage" class="items-per-page-selector">
+          <option :value="5">
+            5
+          </option>
+          <option default :value="10">
+            10
+          </option>
+          <option :value="20">
+            20
+          </option>
+          <option :value="40">
+            40
+          </option>
+          <option :value="60">
+            60
+          </option>
+        </select>
+      </div>
     </div>
     <TournamentModal v-if="tournamentDetails" :visible="showModal" :tournament="tournamentDetails" @close="closeTournamentModal" />
   </div>
 </template>
 
 <style scoped>
+.pagination-container {
+  display: flex;
+  align-items: center; /* Ensures vertical centering */
+  justify-content: center; /* Centers the pagination horizontally */
+  gap: 10px; /* Adds space between elements */
+}
+
 .tournaments-list {
   display: flex;
   flex-direction: column;
 }
+
 .tournament-card {
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 10px;
+}
+
+.items-per-page-selector {
+  padding: 5px 10px; /* Adjust padding as needed for visual consistency */
+  background: rgb(22, 22, 22); /* Optional: changes background color */
+  border: 1px solid #ccc; /* Optional: adds border */
+}
+
+.page-indicator {
+  min-width: 120px; /* Ensures the page indicator has sufficient width */
+  text-align: center; /* Centers the text inside the span */
 }
 </style>
