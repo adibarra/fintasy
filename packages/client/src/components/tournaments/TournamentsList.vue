@@ -104,6 +104,7 @@ watch([itemsPerPage, () => props.filters], () => {
 
 <template>
   <div class="tournaments-list">
+    <!-- Loop through filtered tournaments and display them -->
     <div
       v-for="(tournament, index) in displayedTournaments"
       :key="index"
@@ -111,21 +112,33 @@ watch([itemsPerPage, () => props.filters], () => {
     >
       <div flex justify-between>
         <div>
+          <!-- Display tournament name and status -->
           <h3>{{ tournament.name }}</h3>
           <p>{{ tournament.status }}</p>
         </div>
         <div flex gap-2>
-          <button fn-outline px-2 py-1 fn-hover @click="viewTournament(tournament.uuid)">
+          <!-- Button to view tournament details -->
+          <button
+            fn-outline px-2 py-1 fn-hover
+            @click="viewTournament(tournament.uuid)"
+          >
             View
           </button>
-          <button fn-outline px-2 py-1 fn-hover @click="joinTournament(tournament.uuid)">
+          <!-- Button to join tournament, disabled if status is FINISHED -->
+          <button
+            fn-outline px-2 py-1 fn-hover
+            :disabled="tournament.status === 'FINISHED'"
+            :class="{ 'op-50': tournament.status === 'FINISHED' }"
+            @click="joinTournament(tournament.uuid)"
+          >
             Join Tournament
           </button>
         </div>
       </div>
     </div>
     <div>
-      <div class="pagination-container">
+      <div flex items-center justify-center gap-5>
+        <!-- Pagination buttons and current page display -->
         <button
           fn-outline px-2 py-1 fn-hover
           :disabled="currentPage <= 1"
@@ -134,7 +147,8 @@ watch([itemsPerPage, () => props.filters], () => {
         >
           &lt; Prev
         </button>
-        <span class="page-indicator">Page {{ currentPage }} of {{ totalPages }}</span>
+        <!-- Display current page and total pages -->
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
         <button
           fn-outline px-2 py-1 fn-hover
           :disabled="currentPage >= totalPages"
@@ -144,8 +158,9 @@ watch([itemsPerPage, () => props.filters], () => {
           Next &gt;
         </button>
       </div>
-      <div flex justify-right>
-        <select v-model="itemsPerPage" class="items-per-page-selector">
+      <div mt-4 flex items-center justify-end>
+        <!-- Items per page selector -->
+        <select v-model="itemsPerPage">
           <option :value="5">
             5
           </option>
@@ -164,6 +179,7 @@ watch([itemsPerPage, () => props.filters], () => {
         </select>
       </div>
     </div>
+    <!-- Tournament modal component -->
     <TournamentModal v-if="tournamentDetails" :visible="showModal" :tournament="tournamentDetails" @close="closeTournamentModal" />
   </div>
 </template>
