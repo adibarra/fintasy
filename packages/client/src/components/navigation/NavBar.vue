@@ -49,7 +49,7 @@ const portfolios = computed(() => {
 })
 
 const avatar = computed(() => {
-  return createAvatar(identicon, { seed: state.user.username }).toDataUriSync()
+  return createAvatar(identicon, { seed: state.user.username }).toDataUri()
 })
 
 const balance = computed(() => {
