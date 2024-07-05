@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "clean": "find . -regex '^.*\\(__pycache__\\|\\.py[co]\\)$' -delete",
-    "clean:all": "pnpm run clean && rm -rf .venv/",
+    "clean:all": "pnpm run clean && rm -rf node_modules/ .venv/",
     "dev": "nodemon -e py -x 'python3 src/main.py'",
     "lint": "python3 -m ruff format --check; exit 0",
     "lint:fix": "ruff check --select I --fix; python3 -m ruff format; exit 0",
