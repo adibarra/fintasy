@@ -13,6 +13,6 @@
     "test": "python3 -m unittest discover tests '*_test.py'"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.4"
   }
 }
