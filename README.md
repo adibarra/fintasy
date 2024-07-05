@@ -124,6 +124,7 @@ Make sure you are in the repo's root directory before running these commands.
 | pnpm clean:all | removes build artifacts and dependencies           |
 | pnpm lint      | prints warnings about code formatting              |
 | pnpm lint:fix  | auto-fixes the code formatting                     |
+| pnpm typecheck | checks for type errors in the code                 |
 | pnpm build     | builds the app for production                      |
 | pnpm preview   | runs the full built app in production preview mode |
 

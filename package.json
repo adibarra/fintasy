@@ -9,18 +9,19 @@
     "adibarra <github@adibarra.com> (https://adibarra.com)"
   ],
   "scripts": {
-    "build": "pnpm -r --parallel run build",
-    "clean": "pnpm -r run clean",
-    "clean:all": "pnpm -r run clean:all && rm -rf node_modules/ .pnpm-store/",
-    "dev": "pnpm -r run clean && pnpm -r --parallel run dev",
-    "dev:client": "pnpm -r run clean && pnpm -r --parallel --filter client run dev",
-    "dev:server": "pnpm -r run clean && pnpm -r --parallel --filter server run dev",
-    "lint": "pnpm -r run lint; eslint . --cache; exit 0",
-    "lint:fix": "pnpm -r run lint:fix; eslint . --fix --cache; exit 0",
-    "postinstall": "npx simple-git-hooks",
-    "preview": "pnpm -r run clean && pnpm -r --parallel run preview",
-    "taze": "taze major -r -I",
-    "test": "pnpm -r --parallel run test"
+    "build": "pnpm --parallel --color run build",
+    "clean": "pnpm --parallel run clean",
+    "clean:all": "pnpm --parallel run clean:all && rm -rf node_modules/ .pnpm-store/",
+    "dev": "pnpm -r run clean && pnpm --parallel --color run dev",
+    "dev:client": "pnpm -r run clean && pnpm --parallel --color --filter client run dev",
+    "dev:server": "pnpm -r run clean && pnpm --parallel --color --filter server run dev",
+    "lint": "pnpm --parallel --color run lint; eslint . --cache; exit 0",
+    "lint:fix": "pnpm --parallel --color run lint:fix; eslint . --fix --cache; exit 0",
+    "postinstall": "pnpm simple-git-hooks",
+    "preview": "pnpm -r run clean && pnpm --parallel --color run preview",
+    "taze": "taze -r -I",
+    "test": "pnpm --parallel --color run test",
+    "typecheck": "pnpm --parallel run typecheck"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.21.2",

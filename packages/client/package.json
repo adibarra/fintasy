@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "build": "vite build",
-    "clean": "rm -rf dist/ src/auto-imports.d.ts src/components.d.ts",
+    "clean": "rm -rf dist/ src/auto-imports.d.ts src/components.d.ts vite.config.ts.timestamp-*",
     "clean:all": "pnpm run clean && rm -rf node_modules/",
-    "dev": "vite dev --port 3333",
+    "dev": "vite dev --port 3333 --clearScreen false",
     "preview": "pnpm build && vite preview --port 3000",
-    "test": "vitest run"
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit; exit 0"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.9.13",
