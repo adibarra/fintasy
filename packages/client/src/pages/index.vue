@@ -1,10 +1,12 @@
 <!--
-  @author: Mariptime (Akshay)
+  @author: adibarra (Alec Ibarra), Mariptime (Akshay)
   @description: This component is used to display the home page of the application.
 -->
 
 <script setup lang="ts">
 const { t } = useI18n()
+
+const commitHash = import.meta.env.VITE_COMMIT_HASH
 
 useHead({
   title: `${t('pages.main.title')} • Fintasy`,
@@ -32,6 +34,9 @@ useHead({
     </div>
   </div>
   <div grow />
+  <span pointer-events-none absolute bottom-0.5 left-1 text-sm op-2>
+    {{ commitHash }}
+  </span>
 </template>
 
 <route lang="yaml">

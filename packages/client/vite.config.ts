@@ -4,6 +4,7 @@
  */
 
 import path from 'node:path'
+import { execSync } from 'node:child_process'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Shiki from '@shikijs/markdown-it'
@@ -21,6 +22,8 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 import WebfontDownload from 'vite-plugin-webfont-dl'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import { unheadVueComposablesImports } from '@unhead/vue'
+
+const commitHash = execSync('git rev-parse --short HEAD').toString()
 
 export default defineConfig({
   resolve: {
@@ -163,6 +166,10 @@ export default defineConfig({
   ssr: {
     // workaround until they support native ESM
     noExternal: ['workbox-window', /vue-i18n/, 'naive-ui'],
+  },
+
+  define: {
+    'import.meta.env.VITE_COMMIT_HASH': JSON.stringify(commitHash),
   },
 
   envDir: path.resolve(__dirname, '..', '..'),
