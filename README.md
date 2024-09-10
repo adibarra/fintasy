@@ -3,7 +3,7 @@
   @description: This is the README page for the project.
 -->
 
-# CS.3354 Project: Fintasy
+# Fintasy
 
 <p align="center">
   <a href="https://github.com/adibarra/fintasy">
@@ -29,7 +29,6 @@
 
 ## Overview
 
-This is our group project for CS.3354 Software Engineering.
 Our goal is to be able to create a platform for paper trading which can also host competitions. The project's documentation can be found here: [Fintasy Documentation](https://adibarra.github.io/fintasy/).
 
 There is a live demo of the project which deploys the latest changes from the `main` branch. You can access the demo [here](https://fintasy.adibarra.com).
